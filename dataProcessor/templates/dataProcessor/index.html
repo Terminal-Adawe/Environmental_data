@@ -1,0 +1,23 @@
+{% include "dataProcessor/head.html" %}
+{% load static %}
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-1 left-side">
+			</div>
+			<div class="col-10">
+				{% if user.is_authenticated %}
+					<div>user is {{ request.user.username }}</div>
+				{% endif %}
+				<input type="hidden" value="Grease_and_hydocarbon_spillage" id="form_type">
+				<input type="hidden" value={{ request.user.username }} id="username">
+				<div id="form"></div>
+			</div>
+			<div class="col-1 left-side">
+			</div>
+		</div>
+	</div>
+	<script src="{% static 'index-bundle.js' %}"></script>
+</body>
+
+{% include "dataProcessor/footer.html" %}

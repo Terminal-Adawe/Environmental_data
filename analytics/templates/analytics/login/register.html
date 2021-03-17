@@ -1,0 +1,27 @@
+{% load static %}
+{% include "analytics/landingpage/head.html" %}
+
+<div class="register">
+	<div class="container">
+		<div class="d-flex justify-content-center">
+			<div class="card">
+  				<div class="card-body">
+  					{% if error_message %}
+                            <p class="bg-danger p-d ml-b">{{ error_message }}</p>
+                        {% endif %}
+  					{% block content %}
+  					<form action="{% url 'analytics:register_user' %}" class="was-validated"  method="POST" name="form">
+  						{% csrf_token %}
+  						<table>
+					  {{ form.as_table }}
+					  	</table>
+					  <button type="submit" class="btn btn-primary">Submit</button>
+					</form> 
+					{% endblock %}
+  				</div>
+			</div>
+		</div> 
+</div>
+
+
+{% include "analytics/landingpage/footer.html" %}

@@ -1,0 +1,48 @@
+input[type=text], input[type=email], textarea, select, input[type=date] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 1px solid #57e7e7;
+  height: 50px;
+}
+
+.form-control-selectpicker{
+	width: 100%;
+  	/*padding: 12px 20px;*/
+  	padding: 0;
+  	margin: 8px 0;
+  	box-sizing: border-box;
+  	border: 1px solid #57e7e7;
+  	height: 50px;
+}
+
+.select-design{
+	width: 100%;
+  /*padding: 12px 20px;*/
+  	height: 100%;
+  	margin: 8px 0;
+  	/*box-sizing: border-box;*/
+  	position: relative;
+  	/*border: 1px solid #57e7e7;*/
+}
+
+.selector-design{
+      width: 100%;
+      /*height: 100%;*/
+      /*margin:8px 0;*/
+      position: relative;
+      /*padding: 12px 20px;*/
+      height: 50px;
+    }
+
+input[type=text]:focus, input[type=email]:focus, textarea:focus, select:focus,input[type=date]:focus {
+  background-color: #e5eff3;
+  border: 1px solid #566573;
+  outline: none;
+}
+
+label{
+	font-family: 'Florence';
+	font-weight: 600;
+}

@@ -1,0 +1,90 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Dashboard</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="Dashboard">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="{% static 'analytics/bootstrap-4.3.1-dist/css/bootstrap.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'analytics/css/analytics.css' %}">
+{% comment "Optional note" %}
+<!-- <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" /> -->
+<!-- <link rel="stylesheet" type="text/css" href="{{mix('/css/app.css')}}"> -->
+<!-- <script src="https://unpkg.com/react@16.6.3/umd/react.production.min.js"></script> -->
+<!-- <script src="https://unpkg.com/react-dom@16.6.3/umd/react-dom.production.min.js"></script> -->
+{% endcomment %}
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="{% static 'analytics/js/jquery-3.2.1.js' %}"></script>
+<script src="https://kit.fontawesome.com/967d61a618.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+<header>
+	<nav class="navbar navbar-icon-top navbar-expand-lg bg-dark navbar-dark">
+
+		<a class="navbar-brand" href="#">Navbar</a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <input type="hidden" name="sub-category-type" id="sub-cateogory-type" value="">
+    <ul class="navbar-nav mr-auto">
+      
+      <li class="nav-item  position-static mx-4">
+        <form action="" method="get" id="catSaveForm" enctype="multipart/form-data" class="form-horizontal mx-auto">
+            {% csrf_token %}
+          <input type="hidden" class="nav-catid" name="categoryid" value="">
+          <input type="hidden" name="type" value="category">
+          <input type="hidden" name="extracategory" value="none">
+          <button class="btn btn-link" type="submit" id="navbarDropdown" aria-haspopup="true" aria-expanded="false">
+            Home
+          </button>
+        </form>
+        <div class="dropdown-menu w-100" aria-labelledby="navbarDropdown">
+          <div class="container-fluid">
+          	<div class="row">
+          		<div class="col-lg-8 col mt-3">
+                <input type="hidden" name="" class="feature-start">
+          			<div class="dropdown-divider"></div>
+          			<input type="hidden" name="" class="purpose-start">
+          		</div>
+          		<div class="col-lg-4">
+          			<div style="width: 100%; height: 350px; overflow: hidden;">
+          				<img src="" width="100%">
+          			</div>
+          		</div>
+          	</div>
+          </div>
+        </div>
+      </li>
+      <li class="nav-item mx-4">
+        <a class="nav-link" href="{% url 'analytics:dashboard' %}">
+          Dashboard
+        </a>
+      </li>
+      <li class="nav-item mx-4">
+        <a class="nav-link" href="#">
+          get data test
+        </a>
+      </li>
+  </ul>
+  <ul class="navbar-nav ">
+  	<li class="nav-item mx-4">
+        <a class="nav-link" href="{% url 'analytics:login' %}">
+          Login
+        </a>
+      </li>
+      <li class="nav-item mx-4">
+        <a class="nav-link" href="{% url 'analytics:register_user' %}">
+          Register
+        </a>
+      </li>
+  </ul>
+  </div>
+</nav>
+</header>
