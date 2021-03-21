@@ -6,6 +6,8 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.shortcuts import redirect
 
+from analytics.models import ComplianceValue
+
 from  analytics.forms import loginForm
 from  analytics.forms import registerForm
 

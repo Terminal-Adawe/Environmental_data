@@ -332,8 +332,6 @@ class Form extends React.Component {
 
 
     getDetails(){
-    	var axios = require('axios');
-
 		axios.get(`/api/get-details/`)
         	.then(response => {
         		console.log(response)
@@ -528,7 +526,7 @@ class Form extends React.Component {
             	<div id="message">
             	</div>
               <div className="row">
-                <div className="col-8">
+                <div className="col-12">
                   <form action={ this.state.url } className="needs-validation" method='post' id="form" ref={this.formRef} noValidate>
                     <input type="hidden" name="_token" value={ this.state.csrfField } />
                     <input type="hidden" value={this.state.hiddencheck} id="hiddencheck" name='hiddencheck' />
@@ -553,8 +551,6 @@ class Form extends React.Component {
 
                     	<AddButton states={ this.state } updateEntries={ this.updateEntries }/>
                   </form>
-                </div>
-                <div className="col-4" style={{backgroundImage: `url(${url})`, backgroundSize: "cover", backgroundPosition: "center"}}>
                 </div>
               </div>
             </div>

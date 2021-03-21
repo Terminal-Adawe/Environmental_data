@@ -33,6 +33,15 @@ class Units(models.Model):
 	active = models.IntegerField(default=1)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
+
+class modules(models.Model):
+	module_name = models.CharField(max_length=100)
+	url = models.CharField(max_length=100)
+	description = models.CharField(max_length=200, default="None")
+	active = models.IntegerField(default=1)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+		
 		
 class Storage_facility(models.Model):
 	GOOD = 'GD'

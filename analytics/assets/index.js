@@ -1,0 +1,51 @@
+import React from 'react';
+import ReactDOM from "react-dom";
+import Template from './template';
+
+import axios from "axios";
+import cookie from "react-cookies";
+
+
+class Index extends React.Component {
+	constructor(){
+		super()
+
+		this.state={
+			data: []
+		}
+
+		this.getDetails = this.getDetails.bind(this)
+	}
+
+	componentDidMount(){
+		this.getDetails()
+	}
+
+	getDetails(){
+		axios.get(`http://127.0.0.1:8002/analytics/get-details/`)
+        	.then(response => {
+        		console.log("response is ")
+        		console.log(response.data)
+          this.setState({
+            data: response.data,
+          })
+        })
+        .catch(error => {
+          // here catch error messages from laravel validator and show them 
+          console.log(error)
+     	})
+	}
+
+
+	render(){
+		return (<React.Fragment>
+				<Template data={ this.state.data } />
+  			</React.Fragment>)
+	}
+}
+
+export default Index
+
+if (document.getElementById('dashboard-graphs')) {
+    ReactDOM.render(<Index />, document.getElementById('dashboard-graphs'));
+}

@@ -42,7 +42,7 @@ class Storage_facilitySerializer_serializer(serializers.Serializer):
 	def create(self, validated_data):
 		return Storage_facility(id=None, **validated_data)
 
-class Grease_and_hydrogenSerializer(serializers.Serializer):
+class Grease_and_hydrogenSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Grease_and_hydocarbon_spillage
 		fields = ('report_name','storage_condition','comment')

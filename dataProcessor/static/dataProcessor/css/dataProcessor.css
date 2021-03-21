@@ -46,3 +46,53 @@ label{
 	font-family: 'Florence';
 	font-weight: 600;
 }
+
+.header{
+  height: 100vh;
+  width: 100%;
+  background-image: url('../images/Flat-Mountains.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+body{
+  min-height: 100vh;
+  width: 100%;
+  background-image: url('../images/Tortoise-Shell.svg');
+  /*background-repeat: no-repeat;*/
+  /*background-position: center;*/
+  /*background-size: cover;*/
+}
+
+.carded-modules{
+  height: 250px;
+}
+
+.carded-modules a{
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+.centerDiv{
+  position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.link_name{
+  text-decoration: none;
+  color: black;
+}
+
+.link_name:hover{
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+}
+
+.form-container{
+  padding-top: 100px;
+}

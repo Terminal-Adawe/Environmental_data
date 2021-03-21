@@ -1,0 +1,9 @@
+.row-link{
+	text-decoration: none;
+	color: black;
+}
+
+.row-link:hover{
+	text-decoration: none;
+	color: gray;
+}

@@ -1,0 +1,45 @@
+{% extends "analytics/dashboard/template.html" %}
+
+{% load static %}
+
+{% block content %}
+	<div class="container-fluid">
+		<section class="panel">
+			<header class="panel-heading">
+				<div class="panel-actions">
+					<a href="#" class="fa fa-caret-down"></a>
+					<!-- <a href="#" class="fa fa-times"></a> -->
+				</div>
+		
+				<h2 class="panel-title">Components</h2>
+			</header>
+			<div class="panel-body">
+				<table class="table table-bordered table-striped mb-none" id="datatable-details">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Key Name</th>
+							<th>Maximum value</th>
+							<th>Minimum value</th>
+							<th>Unit</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for value in data %}
+						<tr class="grade">
+							<td>{{ value.parameter }}</td>
+							<td>{{ value.key_name }}</td>
+							<td>{{ value.min_limit }}</td>
+							<td>{{ value.max_limit }}</td>
+							<td class="center">{{ value.unit_id }}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</section>
+
+	</div>
+
+	<script src="{% static 'index-bundle.js' %}"></script>
+{% endblock %}

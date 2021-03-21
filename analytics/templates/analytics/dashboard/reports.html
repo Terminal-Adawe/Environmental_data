@@ -1,0 +1,72 @@
+{% extends "analytics/dashboard/template.html" %}
+
+{% load static %}
+
+{% block content %}
+	<div class="container-fluid">
+		<section class="panel">
+			<header class="panel-heading">
+				<div class="panel-actions">
+					<a href="#" class="fa fa-caret-down"></a>
+					<!-- <a href="#" class="fa fa-times"></a> -->
+				</div>
+		
+				<h2 class="panel-title">Storage Facilities</h2>
+			</header>
+			<div class="panel-body">
+				<table class="table table-bordered table-striped mb-none" id="datatable-details">
+					<thead>
+						<tr>
+							<th>Report Name</th>
+							<th>Report Type</th>
+							<th>Report Date</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for value in data1 %}
+						<tr class="grade">
+							<td><a class="row-link" href="{% url 'analytics:view_report' report_id=value.id module='storage_facility' %}">{{ value.report_name }}</a></td>
+							<td>Storage facilities</td>
+							<td>{{ value.created_at }}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</section>
+
+		<section class="panel">
+			<header class="panel-heading">
+				<div class="panel-actions">
+					<a href="#" class="fa fa-caret-down"></a>
+					<!-- <a href="#" class="fa fa-times"></a> -->
+				</div>
+		
+				<h2 class="panel-title">Grease and Hydrogen</h2>
+			</header>
+			<div class="panel-body">
+				<table class="table table-bordered table-striped mb-none" id="datatable-details">
+					<thead>
+						<tr>
+							<th>Report Name</th>
+							<th>Report Type</th>
+							<th>Report Date</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for value in data2 %}
+						<tr class="grade">
+							<td><a class="row-link" href="#">{{ value.report_name }}</a></td>
+							<td>Grease and Hydrogen</td>
+							<td>{{ value.created_at }}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</section>
+
+	</div>
+
+	<script src="{% static 'index-bundle.js' %}"></script>
+{% endblock %}

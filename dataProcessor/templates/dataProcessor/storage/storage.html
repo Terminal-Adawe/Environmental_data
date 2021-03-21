@@ -1,23 +1,22 @@
-{% include "dataProcessor/head.html" %}
+{% extends "dataProcessor/template.html" %}
+
 {% load static %}
+
+{% block content %}
 <body>
-	<div class="container">
+	<div class="container form-container">
 		<div class="row">
-			<div class="col-1 left-side">
+			<div class="col-1">
 			</div>
 			<div class="col-10">
-				{% if user.is_authenticated %}
-					<div>user is {{ request.user.username }}</div>
-				{% endif %}
 				<input type="hidden" value="storage" id="form_type">
 				<input type="hidden" value={{ request.user.username }} id="username">
 				<div id="form"></div>
 			</div>
-			<div class="col-1 left-side">
+			<div class="col-1">
 			</div>
 		</div>
 	</div>
-	<script src="{% static 'index-bundle.js' %}"></script>
+	<script src="{% static 'dataProcessor/index-bundle.js' %}"></script>
 </body>
-
-{% include "dataProcessor/footer.html" %}
+{% endblock %}

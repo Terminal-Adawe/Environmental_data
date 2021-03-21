@@ -61,4 +61,14 @@ class Storage_facilityViewSet(viewsets.ViewSet):
     	else:
     		return Response(status=201)
         
-    	
+def storage_facilityView(request):
+	return render(request, 'dataProcessor/storage/storage.html')
+
+def grease_and_hydrocarbonView(request):
+	return render(request, 'dataProcessor/grease_and_hydrocarbon/grease_and_hydrocarbon.html')
+
+def waste_managementView(request):
+	return render(request, 'dataProcessor/waste_management/waste_management.html')
+
+def incenerationView(request):
+	return render(request, 'dataProcessor/inceneration/inceneration.html')

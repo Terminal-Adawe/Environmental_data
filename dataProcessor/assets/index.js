@@ -20,5 +20,5 @@ class Index extends React.Component {
 export default Index
 
 if (document.getElementById('form')) {
-    ReactDOM.render(<Form />, document.getElementById('form'));
+    ReactDOM.render(<Index />, document.getElementById('form'));
 }

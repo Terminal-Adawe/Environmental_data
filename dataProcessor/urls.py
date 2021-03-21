@@ -18,6 +18,10 @@ router.register(r'add-liquid-waste-oil', views.Storage_facilityViewSet, basename
 urlpatterns = [
     path('', index.index, name='index'),
     path('add/', include(router.urls)),
+    path('storage_facility', views.storage_facilityView, name='storage_facility'),
+    path('grease-and-hydrocarbon', views.grease_and_hydrocarbonView, name='grease-and-hydrocarbon'),
+    path('waste-management', views.waste_managementView, name='waste-management'),
+    path('inceneration', views.incenerationView, name='inceneration')
     # path('/analytics/',include('analytics.urls')),
     # path('add', views.Storage_facilityViewSet, name='add'),
 ]
