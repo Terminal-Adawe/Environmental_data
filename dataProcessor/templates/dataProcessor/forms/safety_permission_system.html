@@ -1,0 +1,22 @@
+{% extends "dataProcessor/template.html" %}
+
+{% load static %}
+
+{% block content %}
+<body>
+	<div class="container form-container">
+		<div class="row">
+			<div class="col-1">
+			</div>
+			<div class="col-10">
+				<input type="hidden" value="Safety_permission_system" id="form_type">
+				<input type="hidden" value={{ request.user.username }} id="username">
+				<div id="form"></div>
+			</div>
+			<div class="col-1">
+			</div>
+		</div>
+	</div>
+	<script src="{% static 'dataProcessor/index-bundle.js' %}"></script>
+</body>
+{% endblock %}

@@ -6,6 +6,7 @@ from analytics.models import Storage_facility
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.contrib.auth.models import User
+from analytics.models import modules
 import io
 
 # Create your views here.
@@ -62,13 +63,51 @@ class Storage_facilityViewSet(viewsets.ViewSet):
     		return Response(status=201)
         
 def storage_facilityView(request):
-	return render(request, 'dataProcessor/storage/storage.html')
+	queryset = modules.objects.all()
+	return render(request, 'dataProcessor/storage/storage.html', {'modules' : queryset})
 
 def grease_and_hydrocarbonView(request):
-	return render(request, 'dataProcessor/grease_and_hydrocarbon/grease_and_hydrocarbon.html')
+	queryset = modules.objects.all()
+	return render(request, 'dataProcessor/grease_and_hydrocarbon/grease_and_hydrocarbon.html', {'modules' : queryset})
 
 def waste_managementView(request):
-	return render(request, 'dataProcessor/waste_management/waste_management.html')
+	queryset = modules.objects.all()
+	return render(request, 'dataProcessor/waste_management/waste_management.html', {'modules' : queryset})
 
 def incenerationView(request):
-	return render(request, 'dataProcessor/inceneration/inceneration.html')
+	queryset = modules.objects.all()
+	return render(request, 'dataProcessor/inceneration/inceneration.html', {'modules' : queryset})
+
+def liquid_waste_oilView(request):
+	queryset = modules.objects.all()
+	return render(request, 'dataProcessor/liquid_waste_and_oil/liquid_waste_and_oil.html', {'modules' : queryset})
+
+def health_and_hygiene_awarenessView(request):
+	queryset = modules.objects.all()
+	return render(request, 'dataProcessor/health_and_hygiene_awareness/health_and_hygiene_awareness.html', {'modules' : queryset})
+
+def energy_managementView(request):
+	queryset = modules.objects.all()
+	return render(request, 'dataProcessor/energy_management/energy_management.html', {'modules' : queryset})
+
+def complaints_registerView(request):
+	queryset = modules.objects.all()
+	return render(request, 'dataProcessor/forms/complaints_register.html', {'modules' : queryset})
+
+def slope_stabilizationView(request):
+	queryset = modules.objects.all()
+	return render(request, 'dataProcessor/forms/slope_stabilization.html', {'modules' : queryset})
+
+def safety_permission_systemView(request):
+	queryset = modules.objects.all()
+	return render(request, 'dataProcessor/forms/safety_permission_system.html', {'modules' : queryset})
+
+def safety_trainingView(request):
+	queryset = modules.objects.all()
+	return render(request, 'dataProcessor/forms/safety_training.html', {'modules' : queryset})
+
+def safety_toolsView(request):
+	queryset = modules.objects.all()
+	return render(request, 'dataProcessor/forms/safety_tools.html', {'modules' : queryset})
+
+

@@ -261,12 +261,43 @@ class Safety_permission_system(models.Model):
 
 	STATUS_S = [
 		(WORK_ENDED_SAFELY,'Work Ended Safely'),
-		(WORK_ENDED_UNSAFELY,'WWork did not end safely'),
+		(WORK_ENDED_UNSAFELY,'Work did not end safely'),
 	]
 
 	report_name = models.CharField(max_length=100, default='REPORT_1', null=True, blank=True)
 	no_of_permits_issued = models.CharField(max_length=10)
 	status = models.CharField(max_length=100,choices=STATUS_S)
+	comment = models.TextField(null=True, blank=True)
+	created_by = models.ForeignKey(User,
+		on_delete=models.PROTECT)
+	updated_by = models.IntegerField(null=True, blank=True)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+
+class Safety_tools(models.Model):
+	ACTIVE = 'AC'
+	NOT_ACTIVE = 'INA'
+	MINE = 'MN'
+	PORT = 'PRT'
+	SERVICED = 'SER'
+	EXPIRED = 'EX'
+
+	STATUS_S = [
+		(ACTIVE,'Active'),
+		(NOT_ACTIVE,'Inactive'),
+	]
+
+	STATUS_T = [
+		(MINE,'Mine'),
+		(PORT,'Port'),
+		(SERVICED,'Serviced'),
+		(EXPIRED,'Expired'),
+	]
+
+	report_name = models.CharField(max_length=100, default='REPORT_1', null=True, blank=True)
+	no_of_estinquishers = models.CharField(max_length=10)
+	fire_alarm = models.CharField(max_length=100,choices=STATUS_S)
+	status_of_estinguishers = models.CharField(max_length=100,choices=STATUS_T)
 	comment = models.TextField(null=True, blank=True)
 	created_by = models.ForeignKey(User,
 		on_delete=models.PROTECT)

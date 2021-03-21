@@ -169,7 +169,6 @@ class Form extends React.Component {
 			url: '',
 			trigger: true,
 			hiddencheck: '',
-			certifications: [{ certification: 'none' }],
 		}
 
 		this.Grease_and_hydocarbon_spillageTags = this.Grease_and_hydocarbon_spillageTags.bind(this)
@@ -177,6 +176,12 @@ class Form extends React.Component {
 		this.Waste_ManagementTags = this.Waste_ManagementTags.bind(this)
 		this.IncenerationTags = this.IncenerationTags.bind(this)
 		this.Liquid_waste_oilTags = this.Liquid_waste_oilTags.bind(this)
+		this.Safety_trainingTags = this.Safety_trainingTags.bind(this)
+		this.Energy_managementTags = this.Energy_managementTags.bind(this)
+		this.Health_and_hygiene_awarenessTags = this.Health_and_hygiene_awarenesTags.bind(this)
+		this.Slope_stabilization_and_surface_water_retentionTags = this.Slope_stabilization_and_surface_water_retentionTags.bind(this)
+		this.Safety_trainingTags = this.Safety_trainingTags.bind(this)
+		this.Safety_toolsTags = this.Safety_toolsTags.bind(this)
 
 
 		this.handleInputChanged = this.handleInputChanged.bind(this)
@@ -192,7 +197,7 @@ class Form extends React.Component {
 	}
 
 	componentDidMount(){
-		console.log("componet mounted")
+		console.log("component mounted")
 		if (this.state.formtype=="storage"){
 			console.log("Storage chosen")
 			this.storage_facilitiesTags()
@@ -210,22 +215,25 @@ class Form extends React.Component {
 			this.Liquid_waste_oilTags()
 		} else if (this.state.formtype=="Health_and_hygiene_awareness"){
 			console.log("Health_and_hygiene_awareness chosen")
-			this.storage_facilitiesTags()
+			this.Health_and_hygiene_awarenessTags()
 		} else if (this.state.formtype=="Energy_management"){
 			console.log("Energy_management chosen")
-			this.storage_facilitiesTags()
+			this.Energy_managementTags()
 		} else if (this.state.formtype=="Complaints_register"){
 			console.log("Complaints_register chosen")
-			this.storage_facilitiesTags()
+			this.Complaints_registerTags()
 		} else if (this.state.formtype=="Slope_stabilization_and_surface_water_retention"){
 			console.log("Slope_stabilization_and_surface_water_retention chosen")
-			this.storage_facilitiesTags()
+			this.Slope_stabilization_and_surface_water_retentionTags()
 		} else if (this.state.formtype=="Safety_training"){
 			console.log("Safety_training chosen")
-			this.storage_facilitiesTags()
+			this.Safety_trainingTags()
 		} else if (this.state.formtype=="Safety_permission_system"){
 			console.log("Safety_permission_system chosen")
-			this.storage_facilitiesTags()
+			this.Safety_permission_systemTags()
+		} else if (this.state.formtype=="Safety_tools"){
+			console.log("Safety_tools chosen")
+			this.Safety_toolsTags()
 		}
 
 		
@@ -331,6 +339,11 @@ class Form extends React.Component {
 	}
 
 
+	toggleLoader(state){
+    	this.props.loader(state)
+    }
+
+
     getDetails(){
 		axios.get(`/api/get-details/`)
         	.then(response => {
@@ -351,16 +364,18 @@ class Form extends React.Component {
 		},()=>{
 			let form = this.state.form
 
+			console.log("Tags is ")
+			console.log(tags)
 
 			tags.map((tag,i)=>{
 				tag.formField.map((field,i)=>{
-					// console.log("Field is ")
-					// console.log(field[0].name)
+					console.log("Field is ")
+					console.log(field[0].name)
 					form.[field[0].name] = ""
 				})
 			})
 
-			console.log("form after manipulation is ")
+			console.log("This form after manipulation is ")
 			console.log(form)
 
 			this.setState({
@@ -440,6 +455,107 @@ class Form extends React.Component {
 			]
 
 		const action_url = 'add/add-liquid-waste-oil/'
+
+		this.tagDeclaration(tags, action_url)
+	}
+
+	Health_and_hygiene_awarenessTags(){
+		const tags = [
+			{formField: [[{inputtype: 'text', name:'report_name',placeholder:'Report Name',label:'Name of Report',showlabel:1}]]},
+			{formField: [[{inputtype: 'text', name:'training',placeholder:'Training title',label:'Training title',showlabel:1}]]},
+			{formField: [[{inputtype: 'text', name:'no_of_staff',placeholder:'Number of Staff',label:'Number of staff',showlabel:1}]]},
+			{formField: [[{inputtype: 'text', name:'no_of_visitors',placeholder:'Number of Visitors',label:'Number of Visitors',showlabel:1}]]},
+			{formField: [[{inputtype: 'text', name:'duration',placeholder:'Duration of training',label:'Training duration',showlabel:1}]]},
+			{formField: [[{inputtype: 'text', name:'comment',placeholder:'Any Comment?',label:'Comment',showlabel:1}]]},
+			]
+
+		const action_url = 'add/add-health-and-hygiene-awareness/'
+
+		this.tagDeclaration(tags, action_url)
+	}
+
+	Energy_managementTags(){
+		const tags = [
+			{formField: [[{inputtype: 'text', name:'report_name',placeholder:'Report Name',label:'Name of Report',showlabel:1}]]},
+			{formField: [[{inputtype: 'text', name:'total_energy_available',placeholder:'Total Energy Available',label:'Total Energy Available',showlabel:1}]]},
+			{formField: [[{inputtype: 'text', name:'camp_consumption',placeholder:'Camp Consumption',label:'Camp Consumption',showlabel:1}]]},
+			{formField: [[{inputtype: 'text', name:'admin_consumption',placeholder:'Admin Consumption',label:'Admin Consumption',showlabel:1}]]},
+			{formField: [[{inputtype: 'text', name:'workshop_consumption',placeholder:'Workshop Consumption',label:'Workshop Consumption',showlabel:1}]]},
+			{formField: [[{inputtype: 'text', name:'mine_plant_consumption',placeholder:'Mine Plant Consumption',label:'Mine Plant Consumption',showlabel:1}]]},
+			{formField: [[{inputtype: 'text', name:'other_consumption',placeholder:'Other Consumption',label:'Other Consumption',showlabel:1}]]},
+			{formField: [[{inputtype: 'text', name:'comment',placeholder:'Any Comment?',label:'Comment',showlabel:1}]]},
+			]
+
+		const action_url = 'add/add-energy-management/'
+
+		this.tagDeclaration(tags, action_url)
+	}
+
+	Complaints_registerTags(){
+		const tags = [
+			{formField: [[{inputtype: 'text', name:'report_name',placeholder:'Report Name',label:'Name of Report',showlabel:1}]]},
+			{formField: [[{inputtype: 'text', name:'no_of_complaints',placeholder:'Number of complaints',label:'Total Energy Available',showlabel:1}]]},
+			{formField: [[{inputtype:'dropdown',name:'status_of_complaints',placeholder:'',label:'Status',showlabel:1,options:[['Resolved','RSD'],['Pending','PEN'],['Other (State reason in comments)','OTR']]}]]},
+			{formField: [[{inputtype: 'text', name:'comment',placeholder:'Any Comment?',label:'Comment',showlabel:1}]]},
+			]
+
+		const action_url = 'add/add-complaints-register/'
+
+		this.tagDeclaration(tags, action_url)
+	}
+
+	Slope_stabilization_and_surface_water_retentionTags(){
+		const tags = [
+			{formField: [[{inputtype: 'text', name:'report_name',placeholder:'Report Name',label:'Name of Report',showlabel:1}]]},
+			{formField: [[{inputtype: 'text', name:'no_of_exposed_unstabilized_slopes',placeholder:'Number of exposed unstabilized slopes',label:'Number of exposed unstabilized slopes',showlabel:1}]]},
+			{formField: [[{inputtype:'dropdown',name:'status',placeholder:'',label:'Source',showlabel:1,options:[['Stabilized','STD'],['Working Progress','WP'],['Pending','PEN'],['Other (State reason in comments)','OTR']]}]]},
+			{formField: [[{inputtype: 'text', name:'comment',placeholder:'Any Comment?',label:'Comment',showlabel:1}]]},
+			]
+
+		const action_url = 'add/add-slope-stabilization/'
+
+		this.tagDeclaration(tags, action_url)
+	}
+
+	Safety_trainingTags(){
+		const tags = [
+			{formField: [[{inputtype: 'text', name:'report_name',placeholder:'Report Name',label:'Name of Report',showlabel:1}]]},
+			{formField: [[{inputtype: 'text', name:'training',placeholder:'Training title',label:'Training title',showlabel:1}]]},
+			{formField: [[{inputtype: 'text', name:'no_of_staff',placeholder:'Number of Staff',label:'Number of staff',showlabel:1}]]},
+			{formField: [[{inputtype: 'text', name:'no_of_inductions',placeholder:'Number of Inductions',label:'Number of Inductions',showlabel:1}]]},
+			{formField: [[{inputtype: 'text', name:'no_of_visitors',placeholder:'Number of Visitors',label:'Number of Visitors',showlabel:1}]]},
+			{formField: [[{inputtype: 'text', name:'duration',placeholder:'Duration of training',label:'Training duration',showlabel:1}]]},
+			{formField: [[{inputtype: 'text', name:'comment',placeholder:'Any Comment?',label:'Comment',showlabel:1}]]},
+			]
+
+		const action_url = 'add/add-safety-training/'
+
+		this.tagDeclaration(tags, action_url)
+	}
+
+	Safety_permission_systemTags(){
+		const tags = [
+			{formField: [[{inputtype: 'text', name:'report_name',placeholder:'Report Name',label:'Name of Report',showlabel:1}]]},
+			{formField: [[{inputtype: 'text', name:'no_of_permits_issued',placeholder:'Number of permits issued',label:'Number of exposed unstabilized slopes',showlabel:1}]]},
+			{formField: [[{inputtype:'dropdown',name:'status',placeholder:'',label:'Source',showlabel:1,options:[['Work Ended Safely','WES'],['Work did not end safely','WEU']]}]]},
+			{formField: [[{inputtype: 'text', name:'comment',placeholder:'Any Comment?',label:'Comment',showlabel:1}]]},
+			]
+
+		const action_url = 'add/add-safety-permission-system/'
+
+		this.tagDeclaration(tags, action_url)
+	}
+
+	Safety_toolsTags(){
+		const tags = [
+			{formField: [[{inputtype: 'text', name:'report_name',placeholder:'Report Name',label:'Name of Report',showlabel:1}]]},
+			{formField: [[{inputtype: 'text', name:'no_of_permits_issued',placeholder:'Number of permits issued',label:'Number of exposed unstabilized slopes',showlabel:1}]]},
+			{formField: [[{inputtype:'dropdown',name:'fire_alarm',placeholder:'',label:'Fire Alarm',showlabel:1,options:[['Active','AC'],['Not Active','INA']]}]]},
+			{formField: [[{inputtype:'dropdown',name:'status_of_estinguishers',placeholder:'',label:'Status of Estinguishers',showlabel:1,options:[['Mine','MN'],['Port','PRT'],['Serviced','SER'],['Expired','EX']]}]]},
+			{formField: [[{inputtype: 'text', name:'comment',placeholder:'Any Comment?',label:'Comment',showlabel:1}]]},
+			]
+
+		const action_url = 'add/add-safety-tools/'
 
 		this.tagDeclaration(tags, action_url)
 	}
@@ -549,7 +665,7 @@ class Form extends React.Component {
                     		
 
 
-                    	<AddButton states={ this.state } updateEntries={ this.updateEntries }/>
+                    	<AddButton states={ this.state } updateEntries={ this.updateEntries } loader={ this.toggleLoader }/>
                   </form>
                 </div>
               </div>

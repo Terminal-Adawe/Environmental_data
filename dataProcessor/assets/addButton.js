@@ -38,6 +38,8 @@ class AddButton extends React.Component {
 		console.log("Info sent is ")
 		console.log(this.props.states.form)
 
+        this.props.loader(true)
+
 		this.insertData(this.props.states.form)
 	}
 
@@ -57,6 +59,7 @@ class AddButton extends React.Component {
       .then(response => {
         console.log("Response is ")
         console.log(response)
+        this.props.loader(false)
         if(response.status == "200"){
         	console.log(response.statusText)
         	console.log("Set everything to empty")
