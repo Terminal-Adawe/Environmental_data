@@ -471,6 +471,8 @@ class Form extends React.Component {
 
 		const action_url = 'add/add-health-and-hygiene-awareness/'
 
+		console.log("Health and hygeine tags section")
+
 		this.tagDeclaration(tags, action_url)
 	}
 
@@ -622,21 +624,9 @@ class Form extends React.Component {
 
 	render(){
 
-		let url = ""
-		let action_url = ""
-        if(this.state.formtype == "education"){
-        	url = '/images/collegeboy.png'
-        	action_url = '/saveeducation'
-        } else if(this.state.formtype == "professional"){
-        	url = '/images/worker.png'
-        	action_url = '/saveprofesionaldetails'
-        }
-
 		return (<div className="row">
 				<div className="col-lg-11 col-md-11 col-sm-12">
         <div className="card input-div-card">
-          { this.header }
-
           <div className="card-body">
             <div className="container-fluid">
             	<div id="message">

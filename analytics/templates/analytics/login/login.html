@@ -1,24 +1,30 @@
 {% load static %}
 {% include "analytics/landingpage/head.html" %}
 
-<div class="login">
-	<div class="container">
-		<div class="d-flex justify-content-center">
-			<div class="card login-card">
-  				<div class="card-body">
-  					{% block content %}
-  					<form action="{% url 'analytics:login' %}" class="was-validated"  method="POST" name="form">
-  						{% csrf_token %}
-  						<table>
-					  {{ form.as_p }}
-					  	</table>
-					  <button type="submit" class="btn btn-primary">Submit</button>
-					</form> 
-					{% endblock %}
-  				</div>
+	<div class="container-fluid">
+		<div class="row" style="height: 100vh;">
+			<div class="col-6">
+				<div class="d-flex justify-content-center">
+					<div class="card login-card login">
+  						<div class="card-body">
+  							{% block content %}
+  							<form action="{% url 'analytics:login' %}" class="was-validated" method="POST" name="form">
+  								{% csrf_token %}
+  								<table>
+							  		{{ form.as_p }}
+							  	</table>
+							  <button type="submit" class="btn btn-primary">Submit</button>
+							</form> 
+							{% endblock %}
+  						</div>
+					</div>
+				</div> 
 			</div>
-		</div> 
-</div>
+			<div class="col-6">
+				<img src="{% static 'analytics/images/worker.jpg' %}" height="100%" />
+			</div>
+		</div>
+	</div>
 
 
 {% include "analytics/landingpage/footer.html" %}

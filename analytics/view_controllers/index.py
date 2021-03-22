@@ -9,12 +9,34 @@ from django.shortcuts import redirect
 from analytics.models import ComplianceValue
 
 from  analytics.forms import loginForm
+from  analytics.forms import indexloginForm
 from  analytics.forms import registerForm
 
 # Create your views here.
 
 def index(request):
-    return render(request, 'analytics/landingpage/index.html')
+    if request.method == 'POST':
+        form = loginForm(request.POST)
+
+        if form.is_valid():
+                username = form.cleaned_data['username']
+                password = form.cleaned_data['password']
+
+                user = authenticate(username=username,password=password)
+
+                if user is not None:
+                    auth_login(request, user)
+                    user = User.objects.get(username=username)
+
+                    if user.is_staff == 1:
+                        return HttpResponseRedirect('/analytics/dashboard')
+                    else:
+                        return HttpResponseRedirect('/dataProcessor/')
+                else:
+                    return HttpResponseRedirect('login')
+    else:
+        form = loginForm()
+        return render(request, 'analytics/landingpage/index.html',{'form': form})
 
 def dashboard(request):
     return render(request, 'analytics/dashboard/dashboard.html')
@@ -72,9 +94,6 @@ def registerUser(request):
     else:
         form = registerForm()
         return render(request, 'analytics/login/register.html',{'form': form})
-
-def dashboard(request):
-    return render(request, 'analytics/dashboard/dashboard.html')
 
 def logout_user(request):
     logout(request)

@@ -2,6 +2,32 @@
 {% include "analytics/landingpage/head.html" %}
 
 <div class="header">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-6 col-sm-12">
+				
+			</div>
+			<div class="col-lg-6 col-sm-12">
+				<div class="landingLogin_" style="margin-top: 100px;">
+					<div class="card login-card">
+						<div class="card-body">
+							{% block content %}
+							<form action="{% url 'analytics:login' %}" class="was-validated"  method="POST" name="form">
+  								{% csrf_token %}
+  								<table>
+							  {{ form.as_p }}
+							  	</table>
+							  <button type="submit" class="btn btn-primary">Submit</button>
+							</form>
+							{% endblock %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
+
+
 
 {% include "analytics/landingpage/footer.html" %}
