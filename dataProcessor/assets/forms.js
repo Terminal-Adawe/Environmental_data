@@ -118,8 +118,8 @@ function DropdownInput(props){
 		console.log(props.certifications)
 
 		return <select id={props.tag.name} name={props.tag.name} defaultValue={ props.form.[props.tag.name] } className="input-element" onChange={(e)=>props.handleInputChanged(e)}>
+					<option value=""></option>
 					{
-
 						props.tag.options.map((option,i)=>{
 							return <option key={i} value={ option[1] }>{ option[0] }</option>
 						})

@@ -36,7 +36,7 @@ class Storage_facilitySerializer_serializer(serializers.Serializer):
 	current_capacity = serializers.CharField(max_length=10)
 	spillways_capacity = serializers.CharField(max_length=10)
 	spillways_stability = serializers.CharField(max_length=50)
-	comment = serializers.CharField(max_length=500)
+	comment = serializers.CharField(max_length=500, required=False,allow_blank=True)
 	# signs_of_erosion_spillway_tip = serializers.CharField(max_length=10)
 	username = serializers.CharField(max_length=100)
 
@@ -57,12 +57,12 @@ class Grease_and_hydrogenSerializer_serializer(serializers.Serializer):
 	def create(self, validated_data):
 		return Grease_and_hydocarbon_spillage(id=None, **validated_data)
 
-class Waste_managementSerializer(serializers.ModelSerializer):
+class Waste_ManagementSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Waste_Management
 		fields = ('report_name','segregation_at_source_and_bins','glass_waste_source','glass_waste_weight','plastic_waste_source','plastic_waste_weight','metal_waste_source','metal_waste_weight','comment')
 
-class Waste_managementSerializer_serializer(serializers.Serializer):
+class Waste_ManagementSerializer_serializer(serializers.Serializer):
 	segregation_at_source_and_bins = serializers.ChoiceField(choices=Waste_Management.SEGREGATION_S)
 	glass_waste_source = serializers.CharField(max_length=100)
 	glass_waste_weight = serializers.CharField(max_length=100)
@@ -70,7 +70,7 @@ class Waste_managementSerializer_serializer(serializers.Serializer):
 	plastic_waste_weight = serializers.CharField(max_length=100)
 	metal_waste_source = serializers.CharField(max_length=100)
 	metal_waste_weight = serializers.CharField(max_length=100)
-	comment = serializers.CharField(max_length=500)
+	comment = serializers.CharField(max_length=500, required=False,allow_blank=True)
 	username = serializers.CharField(max_length=100)
 	report_name = serializers.CharField(max_length=100)
 
@@ -86,7 +86,7 @@ class IncenerationSerializer_serializer(serializers.Serializer):
 	items_incenerated = serializers.CharField(max_length=100)
 	quantity = serializers.CharField(max_length=100)
 	temperature = serializers.CharField(max_length=100)
-	comment = serializers.CharField(max_length=500)
+	comment = serializers.CharField(max_length=500, required=False,allow_blank=True)
 	username = serializers.CharField(max_length=100)
 	report_name = serializers.CharField(max_length=100)
 
@@ -101,7 +101,7 @@ class Liquid_waste_oilSerializer(serializers.ModelSerializer):
 class Liquid_waste_oilSerializer_serializer(serializers.Serializer):
 	discharge_point = serializers.CharField(max_length=100)
 	source = serializers.ChoiceField(choices=Liquid_waste_oil.SOURCE)
-	comment = serializers.CharField(max_length=500)
+	comment = serializers.CharField(max_length=500, required=False,allow_blank=True)
 	username = serializers.CharField(max_length=100)
 	report_name = serializers.CharField(max_length=100)
 
@@ -118,7 +118,7 @@ class Health_and_hygiene_awarenessSerializer_serializer(serializers.Serializer):
 	no_of_staff = serializers.CharField(max_length=100)
 	no_of_visitors = serializers.CharField(max_length=100)
 	duration = serializers.CharField(max_length=100)
-	comment = serializers.CharField(max_length=500)
+	comment = serializers.CharField(max_length=500,required=False,allow_blank=True)
 	username = serializers.CharField(max_length=100)
 	report_name = serializers.CharField(max_length=100)
 
@@ -137,7 +137,7 @@ class Energy_managementSerializer_serializer(serializers.Serializer):
 	workshop_consumption = serializers.CharField(max_length=100)
 	mine_plant_consumption = serializers.CharField(max_length=100)
 	other_consumption = serializers.CharField(max_length=100)
-	comment = serializers.CharField(max_length=500)
+	comment = serializers.CharField(max_length=500,required=False,allow_blank=True)
 	username = serializers.CharField(max_length=100)
 	report_name = serializers.CharField(max_length=100)
 
@@ -152,7 +152,7 @@ class Complaints_registerSerializer(serializers.ModelSerializer):
 class Complaints_registerSerializer_serializer(serializers.Serializer):
 	no_of_complaints = serializers.CharField(max_length=100)
 	status_of_complaints = serializers.ChoiceField(choices=Complaints_register.STATUS_S)
-	comment = serializers.CharField(max_length=500)
+	comment = serializers.CharField(max_length=500,required=False,allow_blank=True)
 	username = serializers.CharField(max_length=100)
 	report_name = serializers.CharField(max_length=100)
 
@@ -167,7 +167,7 @@ class Slope_stabilization_and_surface_water_retentionSerializer(serializers.Mode
 class Slope_stabilization_and_surface_water_retentionSerializer_serializer(serializers.Serializer):
 	no_of_exposed_unstabilized_slopes = serializers.CharField(max_length=100)
 	status = serializers.ChoiceField(choices=Slope_stabilization_and_surface_water_retention.STATUS_S)
-	comment = serializers.CharField(max_length=500)
+	comment = serializers.CharField(max_length=500,required=False,allow_blank=True)
 	username = serializers.CharField(max_length=100)
 	report_name = serializers.CharField(max_length=100)
 
@@ -185,7 +185,7 @@ class Safety_trainingSerializer_serializer(serializers.Serializer):
 	no_of_inductions = serializers.CharField(max_length=100)
 	no_of_visitors = serializers.CharField(max_length=100)
 	duration = serializers.CharField(max_length=100)
-	comment = serializers.CharField(max_length=500)
+	comment = serializers.CharField(max_length=500,required=False,allow_blank=True)
 	username = serializers.CharField(max_length=100)
 	report_name = serializers.CharField(max_length=100)
 
@@ -200,7 +200,7 @@ class Safety_permission_systemSerializer(serializers.ModelSerializer):
 class Safety_permission_systemSerializer_serializer(serializers.Serializer):
 	no_of_permits_issued = serializers.CharField(max_length=100)
 	status = serializers.ChoiceField(choices=Safety_permission_system.STATUS_S)
-	comment = serializers.CharField(max_length=500)
+	comment = serializers.CharField(max_length=500,required=False,allow_blank=True)
 	username = serializers.CharField(max_length=100)
 	report_name = serializers.CharField(max_length=100)
 
@@ -216,7 +216,7 @@ class Safety_toolsSerializer_serializer(serializers.Serializer):
 	no_of_estinquishers = serializers.CharField(max_length=100)
 	fire_alarm = serializers.ChoiceField(choices=Safety_tools.STATUS_S)
 	status_of_estinguishers = serializers.ChoiceField(choices=Safety_tools.STATUS_T)
-	comment = serializers.CharField(max_length=500)
+	comment = serializers.CharField(max_length=500,required=False,allow_blank=True)
 	username = serializers.CharField(max_length=100)
 	report_name = serializers.CharField(max_length=100)
 

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets
-from dataProcessor.serializers import Waste_managementSerializer
-from dataProcessor.serializers import Waste_managementSerializer_serializer
+from dataProcessor.serializers import Waste_ManagementSerializer
+from dataProcessor.serializers import Waste_ManagementSerializer_serializer
 from analytics.models import Waste_Management
 from rest_framework.response import Response
 from django.contrib.auth.models import User
@@ -26,7 +26,7 @@ class Waste_managementViewSet(viewsets.ViewSet):
             outData = queryset
 
             if queryset.exists():
-                return Response(Waste_managementSerializer(outData).data, status=status_code)
+                return Response(Waste_ManagementSerializer(outData).data, status=status_code)
             else:
                 gah_sav = Waste_Management(
                     report_name=serializer.data['report_name'],
@@ -44,6 +44,6 @@ class Waste_managementViewSet(viewsets.ViewSet):
                 status_code= 200
                 outData = gah_sav
 
-            return Response(Waste_managementSerializer(outData).data, status=status_code)
+            return Response(Waste_ManagementSerializer(outData).data, status=status_code)
         else:
             return Response(status=201)
