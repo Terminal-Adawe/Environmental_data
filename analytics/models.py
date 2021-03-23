@@ -125,11 +125,11 @@ class Waste_Management(models.Model):
 
 	report_name = models.CharField(max_length=100, default='REPORT_1', null=True, blank=True)
 	segregation_at_source_and_bins = models.CharField(max_length=100, choices=SEGREGATION_S)
-	glass_waste_source = models.CharField(max_length=10)
+	glass_waste_source = models.CharField(max_length=100)
 	glass_waste_weight = models.CharField(max_length=10)
-	plastic_waste_source = models.CharField(max_length=10)
+	plastic_waste_source = models.CharField(max_length=100)
 	plastic_waste_weight = models.CharField(max_length=10)
-	metal_waste_source = models.CharField(max_length=10)
+	metal_waste_source = models.CharField(max_length=100)
 	metal_waste_weight = models.CharField(max_length=10)
 	comment = models.TextField(null=True, blank=True)
 	created_by = models.ForeignKey(User,

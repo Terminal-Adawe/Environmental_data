@@ -91,6 +91,7 @@ CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000',
     'http://localhost:8002',
     'http://localhost:8000',
+    'http://localhost:8003',
 ]
 
 # Database
@@ -106,6 +107,8 @@ DATABASES = {
         'PORT': '3306',
     }
 }
+
+# STATICFILES_DIRS = (os.path.join(BASE_DIR, "analytics", "static","dataProcessor"), )
 
 
 # Password validation
@@ -143,9 +146,9 @@ USE_TZ = True
 LOGIN_REDIRECT_URL = "home"
 
 
-CSRF_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = True
 
-CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ALLOW_HEADERS = list(default_headers) + [
     'X-CSRFTOKEN',
