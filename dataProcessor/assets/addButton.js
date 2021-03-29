@@ -51,7 +51,7 @@ class AddButton extends React.Component {
 
         const url = this.props.states.url
 
-		axios.post(`http://127.0.0.1:8002/api/${url}`,formData,{
+		axios.post(`http://3.9.132.4/api/${url}`,formData,{
                 headers: {
                      'X-CSRFTOKEN': cookie.load("csrftoken")
                  },
