@@ -660,7 +660,7 @@ class Form extends React.Component {
                     		
 
 
-                    	<AddButton states={ this.state } updateEntries={ this.updateEntries } loader={ this.toggleLoader }/>
+                    	<AddButton states={ this.state } updateEntries={ this.updateEntries } loader={ this.toggleLoader } baseUrl={ this.props.baseUrl } />
                   </form>
                 </div>
               </div>

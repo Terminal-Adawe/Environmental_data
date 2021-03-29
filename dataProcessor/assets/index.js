@@ -10,6 +10,7 @@ class Index extends React.Component {
 
 		this.state={
 			loader: false,
+			baseUrl: "http://3.9.132.4",
 		}
 
 		this.toggleLoader = this.toggleLoader.bind(this)
@@ -30,7 +31,7 @@ class Index extends React.Component {
   					spinner
   					text='Loading...'
   				>
-				<Form loader={ this.toggleLoader } />
+				<Form loader={ this.toggleLoader } baseUrl={ this.state.baseUrl } />
   			</LoadingOverlay>)
 	}
 }

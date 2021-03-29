@@ -50,8 +50,9 @@ class AddButton extends React.Component {
         axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
 
         const url = this.props.states.url
+        const baseUrl = this.props.baseUrl
 
-		axios.post(`http://3.9.132.4/api/${url}`,formData,{
+		axios.post(`${baseUrl}/api/${url}`,formData,{
                 headers: {
                      'X-CSRFTOKEN': cookie.load("csrftoken")
                  },
