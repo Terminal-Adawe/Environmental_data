@@ -23,7 +23,7 @@ class Index extends React.Component {
 	}
 
 	getDetails(){
-		axios.get(`http://127.0.0.1:8002/analytics/get-details/`)
+		axios.get(`http://3.9.132.4/analytics/get-details/`)
         	.then(response => {
         		console.log("response is ")
         		console.log(response.data)
