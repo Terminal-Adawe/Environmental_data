@@ -11,6 +11,7 @@ from .models import Slope_stabilization_and_surface_water_retention
 from .models import Safety_training
 from .models import Safety_permission_system
 from .models import ComplianceValue
+from .models import modules
 
 
 
@@ -33,4 +34,8 @@ class ComplianceValueSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = ComplianceValue
 		fields = ("parameter","key_name","value","min_limit","max_limit","unit_id")
-		
+
+class ModulesSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = modules
+		fields = ("module_name","url","description","active")

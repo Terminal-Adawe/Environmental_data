@@ -1,0 +1,47 @@
+{% load static %}
+	<div class="card">
+		<form>
+			<table class="table table-striped">
+				<!-- <thead>
+ 				   <tr>
+ 				     <th scope="col">Status of Seepaget Points</th>
+ 				     <th scope="col">Stability of dam walls</th>
+ 				     <th scope="col">Holding Capacity</th>
+ 				     <th scope="col">Current Capacity</th>
+ 				     <th scope="col">Spillways Capacity</th>
+ 				     <th scope="col">Spillways Stability</th>
+ 				     <th scope="col">Status of Seepaget Points</th>
+ 				     <th scope="col">Signs of Erosion on spillway tip</th>
+ 				   </tr>
+ 				 </thead> -->
+ 				 <tbody>
+ 				 	<tr>
+    				  <th scope="col">Number of Complaints</th>
+    				  <td>{{ data.no_of_complaints }}</td>
+    				</tr>
+    				<tr>
+    					<th scope="col">Status of Complaints</th>
+    				  	<td>{{ data.status_of_complaints }}</td>
+    				</tr>
+    				<tr>
+    					<th scope="col">Comments</th>
+    				  	<td>{{ data.comment }}</td>
+    				</tr>
+                    <tr>
+                        <th scope="col">Report Date</th>
+                        <td>{{ data.created_at }}</td>
+                    </tr>
+                    <tr>
+                        <th colspan="2">
+                            <input type="hidden" name="data" id="module" value="complaints_register">
+                            <div id="report-graphs"></div>
+
+                            <script src="{% static 'report-bundle.js' %}"></script>
+                        </th>
+                    </tr>
+ 				 </tbody>
+				</table>
+  		</form>
+  			<button class="mr-4 btn btn-danger" type="button">Print</button>
+            <button class="mx-4 btn btn-info" type="button">Export to Excel</button>
+	</div>

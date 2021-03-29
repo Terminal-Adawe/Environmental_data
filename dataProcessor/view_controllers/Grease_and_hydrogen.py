@@ -5,6 +5,7 @@ from dataProcessor.serializers import Grease_and_hydrogenSerializer_serializer
 from analytics.models import Grease_and_hydocarbon_spillage
 from rest_framework.response import Response
 from django.contrib.auth.models import User
+from rest_framework import status
 
 
 class Grease_and_hydrogenViewSet(viewsets.ViewSet):
@@ -26,7 +27,8 @@ class Grease_and_hydrogenViewSet(viewsets.ViewSet):
             outData = queryset
 
             if queryset.exists():
-                return Response(Grease_and_hydrogenSerializer(outData).data, status=status_code)
+                statusMessage = "Report name already exists"
+                return Response({'message': statusMessage}, status=status.HTTP_208_ALREADY_REPORTED)
             else:
                 gah_sav = Grease_and_hydocarbon_spillage(report_name=serializer.data['report_name'],
                   storage_condition=serializer.data['storage_condition'],
@@ -37,9 +39,9 @@ class Grease_and_hydrogenViewSet(viewsets.ViewSet):
                 status_code= 200
                 outData = gah_sav
 
-            return Response(Grease_and_hydrogenSerializer(outData).data, status=status_code)
+            return Response(Grease_and_hydrogenSerializer(outData).data, status=status.HTTP_201_CREATED)
         else:
-            return Response(status=201)
+            return Response(status=status.HTTP_400_BAD_REQUEST)
         
         
    

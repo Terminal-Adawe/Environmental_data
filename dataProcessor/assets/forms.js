@@ -178,12 +178,15 @@ class Form extends React.Component {
 		this.Liquid_waste_oilTags = this.Liquid_waste_oilTags.bind(this)
 		this.Safety_trainingTags = this.Safety_trainingTags.bind(this)
 		this.Energy_managementTags = this.Energy_managementTags.bind(this)
-		this.Health_and_hygiene_awarenessTags = this.Health_and_hygiene_awarenesTags.bind(this)
+		this.Health_and_hygiene_awarenessTags = this.Health_and_hygiene_awarenessTags.bind(this)
 		this.Slope_stabilization_and_surface_water_retentionTags = this.Slope_stabilization_and_surface_water_retentionTags.bind(this)
 		this.Safety_trainingTags = this.Safety_trainingTags.bind(this)
 		this.Safety_toolsTags = this.Safety_toolsTags.bind(this)
+		this.Complaints_registerTags = this.Complaints_registerTags.bind(this)
+		this.Safety_permission_systemTags = this.Safety_permission_systemTags.bind(this)
 
 
+		this.toggleLoader = this.toggleLoader.bind(this)
 		this.handleInputChanged = this.handleInputChanged.bind(this)
 		this.countrydropdownChange = this.countrydropdownChange.bind(this)
 		this.updateEntries = this.updateEntries.bind(this)
@@ -477,6 +480,7 @@ class Form extends React.Component {
 	}
 
 	Energy_managementTags(){
+		console.log("I have been called")
 		const tags = [
 			{formField: [[{inputtype: 'text', name:'report_name',placeholder:'Report Name',label:'Name of Report',showlabel:1}]]},
 			{formField: [[{inputtype: 'text', name:'total_energy_available',placeholder:'Total Energy Available',label:'Total Energy Available',showlabel:1}]]},
@@ -494,6 +498,7 @@ class Form extends React.Component {
 	}
 
 	Complaints_registerTags(){
+		console.log("Complaints tags have been called")
 		const tags = [
 			{formField: [[{inputtype: 'text', name:'report_name',placeholder:'Report Name',label:'Name of Report',showlabel:1}]]},
 			{formField: [[{inputtype: 'text', name:'no_of_complaints',placeholder:'Number of complaints',label:'Total Energy Available',showlabel:1}]]},

@@ -5,6 +5,7 @@ from dataProcessor.serializers import Slope_stabilization_and_surface_water_rete
 from analytics.models import Slope_stabilization_and_surface_water_retention
 from rest_framework.response import Response
 from django.contrib.auth.models import User
+from rest_framework import status
 
 
 class Slope_stabilization_and_surface_water_retentionViewSet(viewsets.ViewSet):
@@ -26,7 +27,8 @@ class Slope_stabilization_and_surface_water_retentionViewSet(viewsets.ViewSet):
             outData = queryset
 
             if queryset.exists():
-                return Response(Slope_stabilization_and_surface_water_retentionSerializer(outData).data, status=status_code)
+                statusMessage = "Report name already exists"
+                return Response({'message': statusMessage}, status=status.HTTP_208_ALREADY_REPORTED)
             else:
                 gah_sav = Slope_stabilization_and_surface_water_retention(
                     report_name=serializer.data['report_name'],
@@ -38,6 +40,6 @@ class Slope_stabilization_and_surface_water_retentionViewSet(viewsets.ViewSet):
                 status_code= 200
                 outData = gah_sav
 
-            return Response(Slope_stabilization_and_surface_water_retentionSerializer(outData).data, status=status_code)
+            return Response(Slope_stabilization_and_surface_water_retentionSerializer(outData).data, status=status.HTTP_201_CREATED)
         else:
-            return Response(status=201)
+            return Response(status=status.HTTP_400_BAD_REQUEST)

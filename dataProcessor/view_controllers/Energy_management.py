@@ -5,6 +5,7 @@ from dataProcessor.serializers import Energy_managementSerializer_serializer
 from analytics.models import Energy_management
 from rest_framework.response import Response
 from django.contrib.auth.models import User
+from rest_framework import status
 
 
 class Energy_managementViewSet(viewsets.ViewSet):
@@ -26,7 +27,8 @@ class Energy_managementViewSet(viewsets.ViewSet):
             outData = queryset
 
             if queryset.exists():
-                return Response(Energy_managementSerializer(outData).data, status=status_code)
+                statusMessage = "Report name already exists"
+                return Response({'message': statusMessage}, status=status.HTTP_208_ALREADY_REPORTED)
             else:
                 gah_sav = Energy_management(
                     report_name=serializer.data['report_name'],
@@ -43,6 +45,6 @@ class Energy_managementViewSet(viewsets.ViewSet):
                 status_code= 200
                 outData = gah_sav
 
-            return Response(Energy_managementSerializer(outData).data, status=status_code)
+            return Response(Energy_managementSerializer(outData).data, status=status.HTTP_201_CREATED)
         else:
-            return Response(status=201)
+            return Response(status=status.HTTP_400_BAD_REQUEST)

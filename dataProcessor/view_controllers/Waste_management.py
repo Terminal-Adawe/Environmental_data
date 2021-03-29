@@ -5,6 +5,7 @@ from dataProcessor.serializers import Waste_ManagementSerializer_serializer
 from analytics.models import Waste_Management
 from rest_framework.response import Response
 from django.contrib.auth.models import User
+from rest_framework import status
 
 
 class Waste_managementViewSet(viewsets.ViewSet):
@@ -26,7 +27,8 @@ class Waste_managementViewSet(viewsets.ViewSet):
             outData = queryset
 
             if queryset.exists():
-                return Response(Waste_ManagementSerializer(outData).data, status=status_code)
+                statusMessage = "Report name exists"
+                return Response({'message': statusMessage}, status=status.HTTP_208_ALREADY_REPORTED)
             else:
                 gah_sav = Waste_Management(
                     report_name=serializer.data['report_name'],
@@ -44,6 +46,6 @@ class Waste_managementViewSet(viewsets.ViewSet):
                 status_code= 200
                 outData = gah_sav
 
-            return Response(Waste_ManagementSerializer(outData).data, status=status_code)
+            return Response(Waste_ManagementSerializer(outData).data, status=status.HTTP_201_CREATED)
         else:
-            return Response(status=201)
+            return Response(status=status.HTTP_400_BAD_REQUEST)

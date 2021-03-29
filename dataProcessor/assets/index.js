@@ -12,14 +12,23 @@ class Index extends React.Component {
 			loader: false,
 		}
 
+		this.toggleLoader = this.toggleLoader.bind(this)
 	}
+
+	toggleLoader(state){
+    	console.log('loader is '+state)
+
+    	this.setState({
+    		loader: state
+    	})
+    }
 
 
 	render(){
 		return (<LoadingOverlay
   					active={this.state.loader}
   					spinner
-  					text='Loading your content...'
+  					text='Loading...'
   				>
 				<Form loader={ this.toggleLoader } />
   			</LoadingOverlay>)
@@ -29,5 +38,5 @@ class Index extends React.Component {
 export default Index
 
 if (document.getElementById('form')) {
-    ReactDOM.render(<Form />, document.getElementById('form'));
+    ReactDOM.render(<Index />, document.getElementById('form'));
 }

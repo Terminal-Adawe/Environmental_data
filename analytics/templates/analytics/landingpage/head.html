@@ -1,90 +1,106 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<title>Dashboard</title>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="description" content="Dashboard">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" href="{% static 'analytics/bootstrap-4.3.1-dist/css/bootstrap.min.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'analytics/css/analytics.css' %}">
-{% comment "Optional note" %}
-<!-- <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" /> -->
-<!-- <link rel="stylesheet" type="text/css" href="{{mix('/css/app.css')}}"> -->
-<!-- <script src="https://unpkg.com/react@16.6.3/umd/react.production.min.js"></script> -->
-<!-- <script src="https://unpkg.com/react-dom@16.6.3/umd/react-dom.production.min.js"></script> -->
-{% endcomment %}
-<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
-<script src="{% static 'analytics/js/jquery-3.2.1.js' %}"></script>
-<script src="https://kit.fontawesome.com/967d61a618.js" crossorigin="anonymous"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>GeoMining Consultancy</title>
+  <link rel="shortcut icon" href="{% static 'analytics/image/png/favicon.png' %}" type="image/x-icon">
+  <!-- Bootstrap , fonts & icons  -->
+  <link rel="stylesheet" href="{% static 'analytics/css/bootstrap.css' %}">
+  <link rel="stylesheet" href="{% static 'analytics/fonts/icon-font/css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'analytics/fonts/typography-font/typo.css' %}">
+  <link rel="stylesheet" href="{% static 'analytics/fonts/typography-font/lucida-grande/typo.css' %}">
+  <link rel="stylesheet" href="{% static 'analytics/fonts/fontawesome-5/css/all.css' %}">
+  <!-- Plugin'stylesheets  -->
+  <link rel="stylesheet" href="{% static 'analytics/plugins/aos/aos.min.css' %}">
+  <link rel="stylesheet" href="{% static 'analytics/plugins/fancybox/jquery.fancybox.min.css' %}">
+  <link rel="stylesheet" href="{% static 'analytics/plugins/nice-select/nice-select.min.css' %}">
+  <link rel="stylesheet" href="{% static 'analytics/plugins/slick/slick.min.css' %}">
+  <!-- Vendor stylesheets  -->
+  <link rel="stylesheet" href="{% static 'analytics/plugins/theme-mode-switcher/switcher-panel.css' %}">
+  <link rel="stylesheet" href="{% static 'analytics/css/main.css' %}">
+  <!-- Custom stylesheet -->
+
 </head>
 
-<body>
-<header>
-	<nav class="navbar navbar-icon-top navbar-expand-lg bg-dark navbar-dark">
-
-		<a class="navbar-brand" href="#">Navbar</a>
-
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <input type="hidden" name="sub-category-type" id="sub-cateogory-type" value="">
-    <ul class="navbar-nav mr-auto">
-      
-      <li class="nav-item  position-static mx-4">
-        <form action="" method="get" id="catSaveForm" enctype="multipart/form-data" class="form-horizontal mx-auto">
-            {% csrf_token %}
-          <input type="hidden" class="nav-catid" name="categoryid" value="">
-          <input type="hidden" name="type" value="category">
-          <input type="hidden" name="extracategory" value="none">
-          <button class="btn btn-link" type="submit" id="navbarDropdown" aria-haspopup="true" aria-expanded="false">
-            Home
-          </button>
-        </form>
-        <div class="dropdown-menu w-100" aria-labelledby="navbarDropdown">
-          <div class="container-fluid">
-          	<div class="row">
-          		<div class="col-lg-8 col mt-3">
-                <input type="hidden" name="" class="feature-start">
-          			<div class="dropdown-divider"></div>
-          			<input type="hidden" name="" class="purpose-start">
-          		</div>
-          		<div class="col-lg-4">
-          			<div style="width: 100%; height: 350px; overflow: hidden;">
-          				<img src="" width="100%">
-          			</div>
-          		</div>
-          	</div>
+<body data-theme="light">
+  <div class="site-wrapper overflow-hidden">
+    <!-- Header start  -->
+    <!-- Header Area -->
+    <header class="site-header site-header--menu-left sticky-bg-white light-mode-texts menu-link-hover-dodgerblue site-header--absolute site-header--sticky">
+      <div class="container">
+        <nav class="navbar site-navbar offcanvas-active navbar-expand-lg px-0">
+          <!-- Brand Logo-->
+          <div class="brand-logo d-inline-block">
+            <a href="{% url 'analytics:index' %}">
+              <!-- light version logo (logo must be black)-->
+              <!-- <img src="{% static 'analytics/images/png/logo-blue.png' %}" alt=""> -->
+              GeoMining Consultancy
+              <!-- Dark version logo (logo must be White)-->
+            </a>
           </div>
-        </div>
-      </li>
-      <li class="nav-item mx-4">
-        <a class="nav-link" href="{% url 'analytics:dashboard' %}">
-          Dashboard
-        </a>
-      </li>
-      <!-- <li class="nav-item mx-4">
-        <a class="nav-link" href="#">
-          get data test
-        </a>
-      </li> -->
-  </ul>
-  <ul class="navbar-nav ">
-  	<li class="nav-item mx-4">
-        <a class="nav-link" href="{% url 'analytics:login' %}">
-          Login
-        </a>
-      </li>
-      <li class="nav-item mx-4">
-        <a class="nav-link" href="{% url 'analytics:register_user' %}">
-          Register
-        </a>
-      </li>
-  </ul>
-  </div>
-</nav>
-</header>
+          <div class="collapse navbar-collapse" id="mobile-menu">
+            <div class="navbar-nav-wrapper">
+              <ul class="navbar-nav main-menu">
+                {% if user.is_authenticated %}
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle gr-toggle-arrow" id="navbarDropdown" href="{% url 'analytics:dashboard' %}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dashboard <i class="icon icon-small-down"></i></a>
+                  <ul class="gr-menu-dropdown dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li class="drop-menu-item">
+                      <a href="{% url 'analytics:dashboard' %}">
+                        Dashboard
+                      </a>
+                    </li>
+                    <li class="drop-menu-item">
+                      <a href="{% url 'analytics:reports' %}">
+                        Reports
+                      </a>
+                    </li>
+                    <li class="drop-menu-item">
+                      <a href="{% url 'analytics:media' %}">
+                        Media
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                {% endif %}
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Features</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#" role="button" aria-expanded="false">Support</a>
+                </li>
+              </ul>
+            </div>
+            <button class="d-block d-lg-none offcanvas-btn-close" type="button" data-toggle="collapse" data-target="#mobile-menu" aria-controls="mobile-menu" aria-expanded="true" aria-label="Toggle navigation">
+              <i class="gr-cross-icon"></i>
+            </button>
+          </div>
+          {% if user.is_authenticated %}
+            Welcome, {{ request.user.username }}
+          {% else %}
+          <div class="header-btns ml-auto pr-2 ml-lg-9 d-none d-xs-flex">
+            <a class="btn btn-transparent btn-small border border-mineshaft font-size-5 letter-spacing-n1 font-weight-normal heading-default-color focus-reset mr-lg-6 mr-lg-0 mr-6" href="{% url 'analytics:login' %}">
+              Login
+            </a>
+            <a class="btn btn-lg-1 btn-dodgerblue border border-dodgerblue font-size-5 letter-spacing-n1" href="{% url 'analytics:register_user' %}">
+              Register
+            </a>
+          </div>
+          {% endif %}
+          <!-- Mobile Menu Hamburger-->
+          <button class="navbar-toggler btn-close-off-canvas  hamburger-icon border-0" type="button" data-toggle="collapse" data-target="#mobile-menu" aria-controls="mobile-menu" aria-expanded="false" aria-label="Toggle navigation">
+            <!-- <i class="icon icon-simple-remove icon-close"></i> -->
+            <span class="hamburger hamburger--squeeze js-hamburger">
+          <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+            </span>
+            </span>
+          </button>
+          <!--/.Mobile Menu Hamburger Ends-->
+        </nav>
+      </div>
+    </header>

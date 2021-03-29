@@ -38,6 +38,7 @@ class AddButton extends React.Component {
 		console.log("Info sent is ")
 		console.log(this.props.states.form)
 
+        this.props.loader(true)
 		this.insertData(this.props.states.form)
 	}
 
@@ -59,8 +60,8 @@ class AddButton extends React.Component {
       .then(response => {
         console.log("Response generated is ")
         console.log(response)
-        z
-        if(response.status == "200"){
+        this.props.loader(false)
+        if(response.status == "201"){
         	console.log(response.statusText)
         	console.log("Set everything to empty")
         	var inputs = document.querySelectorAll('.input-element')
@@ -82,7 +83,10 @@ class AddButton extends React.Component {
 
       })
       .catch(error => {
+        this.props.loader(false)
         console.log(error)
+        document.getElementById('message').innerHTML = error
+        // console.log("an error occurred!!")
       })
 	}
 

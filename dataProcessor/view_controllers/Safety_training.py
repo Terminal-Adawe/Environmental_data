@@ -5,6 +5,7 @@ from dataProcessor.serializers import Safety_trainingSerializer_serializer
 from analytics.models import Safety_training
 from rest_framework.response import Response
 from django.contrib.auth.models import User
+from rest_framework import status
 
 
 class Safety_trainingViewSet(viewsets.ViewSet):
@@ -26,7 +27,8 @@ class Safety_trainingViewSet(viewsets.ViewSet):
             outData = queryset
 
             if queryset.exists():
-                return Response(Safety_trainingSerializer(outData).data, status=status_code)
+                statusMessage = "Report name already exists"
+                return Response({'message': statusMessage}, status=status.HTTP_208_ALREADY_REPORTED)
             else:
                 gah_sav = Safety_training(
                     report_name=serializer.data['report_name'],
@@ -42,6 +44,6 @@ class Safety_trainingViewSet(viewsets.ViewSet):
                 status_code= 200
                 outData = gah_sav
 
-            return Response(Safety_trainingSerializer(outData).data, status=status_code)
+            return Response(Safety_trainingSerializer(outData).data, status=status.HTTP_201_CREATED)
         else:
-            return Response(status=201)
+            return Response(status=status.HTTP_400_BAD_REQUEST)

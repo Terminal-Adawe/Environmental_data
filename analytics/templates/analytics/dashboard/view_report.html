@@ -11,10 +11,34 @@
 					<!-- <a href="#" class="fa fa-times"></a> -->
 				</div>
 		
-				<h2 class="panel-title">Components</h2>
+				<h2 class="panel-title">Report</h2>
 			</header>
 			<div class="panel-body">
-				{% include "analytics/dashboard/reports/storage_facility.html" %}
+				{% if module == 'storage_facility' %}
+					{% include "analytics/dashboard/reports/storage_facility.html" %}
+				{% elif module == 'Grease_and_hydocarbon' %}
+					{% include "analytics/dashboard/reports/Grease_and_hydocarbon.html" %}
+				{% elif module == 'Waste_Management' %}
+					{% include "analytics/dashboard/reports/Waste_Management.html" %}
+				{% elif module == 'Inceneration' %}
+					{% include "analytics/dashboard/reports/Inceneration.html" %}
+				{% elif module == 'liquid_waste_and_oil' %}
+					{% include "analytics/dashboard/reports/liquid_waste_and_oil.html" %}
+				{% elif module == 'health_and_hygiene_awareness' %}
+					{% include "analytics/dashboard/reports/health_and_hygiene_awareness.html" %}
+				{% elif module == 'energy_management' %}
+					{% include "analytics/dashboard/reports/energy_management.html" %}
+				{% elif module == 'complaints_register' %}
+					{% include "analytics/dashboard/reports/complaints_register.html" %}
+				{% elif module == 'slope_stabilization' %}
+					{% include "analytics/dashboard/reports/slope_stabilization.html" %}
+				{% elif module == 'safety_permission_system' %}
+					{% include "analytics/dashboard/reports/safety_permission_system.html" %}
+				{% elif module == 'safety_training' %}
+					{% include "analytics/dashboard/reports/safety_training.html" %}
+				{% elif module == 'safety_tools' %}
+					{% include "analytics/dashboard/reports/safety_tools.html" %}
+				{% endif %}
 			</div>
 		</section>
 

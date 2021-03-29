@@ -5,6 +5,7 @@ from dataProcessor.serializers import Health_and_hygiene_awarenessSerializer_ser
 from analytics.models import Health_and_hygiene_awareness
 from rest_framework.response import Response
 from django.contrib.auth.models import User
+from rest_framework import status
 
 
 class Health_and_hygieneViewSet(viewsets.ViewSet):
@@ -26,7 +27,8 @@ class Health_and_hygieneViewSet(viewsets.ViewSet):
             outData = queryset
 
             if queryset.exists():
-                return Response(Health_and_hygiene_awarenessSerializer(outData).data, status=status_code)
+                statusMessage = "Report name already exists"
+                return Response({'message': statusMessage}, status=status.HTTP_208_ALREADY_REPORTED)
             else:
                 gah_sav = Health_and_hygiene_awareness(
                     report_name=serializer.data['report_name'],
@@ -40,6 +42,6 @@ class Health_and_hygieneViewSet(viewsets.ViewSet):
                 status_code= 200
                 outData = gah_sav
 
-            return Response(Health_and_hygiene_awarenessSerializer(outData).data, status=status_code)
+            return Response(Health_and_hygiene_awarenessSerializer(outData).data, status=status.HTTP_201_CREATED)
         else:
-            return Response(status=201)
+            return Response(status=status.HTTP_400_BAD_REQUEST)

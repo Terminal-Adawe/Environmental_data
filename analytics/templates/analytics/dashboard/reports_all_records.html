@@ -1,0 +1,43 @@
+{% extends "analytics/dashboard/template.html" %}
+
+{% load static %}
+
+{% block content %}
+	<div class="container-fluid">
+		{% for module1 in modules %}
+			{% if module1.module_name == module %}
+			<section class="panel">
+				<header class="panel-heading">
+					<div class="panel-actions">
+						<a href="#" class="fa fa-caret-down"></a>
+						<!-- <a href="#" class="fa fa-times"></a> -->
+					</div>
+			
+					<h2 class="panel-title">{{ module1.description }}</h2>
+				</header>
+				<div class="panel-body">
+					<table class="table table-bordered table-striped mb-none" id="datatable-details">
+						<thead>
+							<tr>
+								<th>Report Name</th>
+								<th>Report Type</th>
+								<th>Report Date</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for value in data %}
+							<tr class="grade">
+								<td><a class="row-link" href="{% url 'analytics:view_report' report_id=value.id module=module1.module_name %}">{{ value.report_name }}</a></td>
+								<td>{{ module1.description }}</td>
+								<td>{{ value.created_at }}</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</section>
+			{% endif %}
+		{% endfor %}
+
+	</div>
+{% endblock %}

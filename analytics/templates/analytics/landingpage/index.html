@@ -1,31 +1,87 @@
 {% load static %}
 {% include "analytics/landingpage/head.html" %}
-
-<div class="header">
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-lg-6 col-sm-12">
-				
-			</div>
-			<div class="col-lg-6 col-sm-12">
-				<div class="landingLogin_" style="margin-top: 100px;">
-					<div class="card login-card">
+<div class="pt-21 pt-sm-24 pt-md-25 pt-lg-30 pb-lg-0 pb-md-9 pb-11 position-relative z-index-1 overflow-hidden">
+      <div class="container position-relative">
+        <div class="row position-relative justify-content-center">
+          <!-- hero area content start -->
+          <div class="col-xl-8 col-lg-9 col-md-12 pb-lg-21 pb-md-17 pb-sm-15 pb-10 pr-0" data-aos="fade-left" data-aos-duration="800" data-aos-once="true">
+            <!-- hero area section title start -->
+            <h1 class="font-size-18 font-family-1 font-wieght-extra-bold heading-default-color letter-spacing-n3 line-height-1p228 mb-11 ">GeoMining Consultancy <br> Company Limited.</h1>
+            <!-- hero area section title end -->
+            <div class="row">
+              <!-- hero area content start -->
+              <div class="col-lg-8 col-md-8 col-sm-10 pr-md-6 pr-sm-0">
+                <p class="font-size-9 letter-spacing-np4 line-height-1p714 position-relative pr-xl-14 pr-lg-0 pr-md-9 pl-lg-11 pl-9">
+                	{% if user.is_authenticated %}
+                		You can monitor records and be alerted once any threshold is breached. Simple checkout the dashboard section.
+                	{% else %}
+                	Login
+                	<div class="card login-card">
 						<div class="card-body">
 							{% block content %}
 							<form action="{% url 'analytics:login' %}" class="was-validated"  method="POST" name="form">
   								{% csrf_token %}
   								<table>
-							  {{ form.as_p }}
-							  	</table>
-							  <button type="submit" class="btn btn-primary">Submit</button>
+									{{ form.as_p }}
+								</table>
+								<button type="submit" class="btn btn-xl btn-dodgerblue rounder-5 font-size-7 letter-spacing-np9 btn-lg px-lg-9 px-7 py-5 mb-md-0 mb-sm-8">Submit</button>
 							</form>
 							{% endblock %}
 						</div>
 					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+					{% endif %}
+                	<span class="pos-abs-tl px-1 h-50 bg-selago-2"></span> </p>
+              </div>
+              <!-- hero area content end -->
+              <!-- btn start -->
+              <div class="col-lg-4 col-md-4 col-sm-6 pl-md-0 pl-sm-12 flex-y-center">
+               <!--  <a class="btn btn-xl btn-dodgerblue rounder-5 font-size-7 letter-spacing-np9 btn-lg px-lg-9 px-7 py-5 mb-md-0 mb-sm-8" href="#">Download free trial</a> -->
+              </div>
+              <!-- btn end -->
+            </div>
+            <!-- compatible-icon start -->
+            <div class="row">
+              <div class="col-xl-3 col-lg-4 pr-0 pl-lg-15 pl-sm-12">
+                <div class="pt-7 mt-sm-1 mt-8 border-top d-inline-block">
+                  <p class="font-size-5 line-height-reset letter-spacing-np4">Sponsors:</p>
+                  <!-- compatible-icon list start -->
+                  <div class="compatible-icon flex-y-center img-grayscale">
+                    <a href="#" class="font-size-13 mr-7"><img src="{% static 'analytics/images/l2/svg/windows.svg' %}" alt=""></a>
+                    <a href="#" class="font-size-13 mr-7"><img src="{% static 'analytics/images/l2/svg/apple.svg' %}" alt=""></a>
+                    <a href="#" class="font-size-13"><img src="{% static 'analytics/images/l2/svg/penguine.svg' %}" alt=""></a>
+                  </div>
+                  <!-- compatible-icon list end -->
+                </div>
+              </div>
+            </div>
+            <!-- compatible-icon end -->
+          </div>
+          <!-- hero area content end -->
+        </div>
+        <!-- shape-1 start -->
+        <div class="pos-abs-bl mb-28 ml-xl-n18 ml-lg-n10 ml-sm-n10 translate-n50 z-index-n1">
+          <img src="{% static 'analytics/images/l2/svg/hero-shape-1.svg' %}" alt="" class="animate-1">
+        </div>
+        <!-- shape-1 end -->
+        <!-- shape-2 start -->
+        <div class="pos-abs-br mb-lg-5 mr-lg-n18 z-index-n1">
+          <img src="{% static 'analytics/images/l2/png/hero-shape-2.png' %}" alt="" class="animate-1">
+        </div>
+        <!-- shape-2 end -->
+      </div>
+    </div>
+
+    <div class="pt-21pb-lg-0 pb-md-9 pb-11 position-relative z-index-1 overflow-hidden">
+      <div class="container">
+        <div class="row position-relative justify-content-center">
+          <!-- hero-area content-img start -->
+          <div class="col-lg-9" data-aos="zoom-in-left" data-aos-duration="800" data-aos-once="true">
+            <img src="{% static 'analytics/images/l2/png/laptop-screen.png' %}" alt="" class="w-100">
+          </div>
+          <!-- hero-area content-img end -->
+        </div>
+      </div>
+    </div>
 </div>
 
 

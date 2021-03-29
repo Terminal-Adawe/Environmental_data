@@ -1,0 +1,71 @@
+{% load static %}
+<div class="card">
+    <form>
+      <table class="table table-striped">
+        <!-- <thead>
+           <tr>
+             <th scope="col">Status of Seepaget Points</th>
+             <th scope="col">Stability of dam walls</th>
+             <th scope="col">Holding Capacity</th>
+             <th scope="col">Current Capacity</th>
+             <th scope="col">Spillways Capacity</th>
+             <th scope="col">Spillways Stability</th>
+             <th scope="col">Status of Seepaget Points</th>
+             <th scope="col">Signs of Erosion on spillway tip</th>
+           </tr>
+         </thead> -->
+         <tbody>
+            <tr>
+                <th scope="col">Report Name</th>
+                <td>{{ data.report_name }}</td>
+            </tr>
+          <tr>
+              <th scope="col">Segregation at Source and use of colored bins</th>
+              <td>{{ data.segregation_at_source_and_bins }}</td>
+            </tr>
+            <tr>
+              <th scope="col">Source of Glass waste</th>
+              <td>{{ data.glass_waste_source  }}</td>
+            </tr>
+            <tr>
+              <th scope="col">Glass weightage</th>
+              <td>{{ data.glass_waste_weight  }}</td>
+            </tr>
+            <tr>
+              <th scope="col">Source of Plastic waste</th>
+              <td>{{ data.plastic_waste_source  }}</td>
+            </tr>
+            <tr>
+              <th scope="col">Plastic weightage</th>
+              <td>{{ data.plastic_waste_weight  }}</td>
+            </tr>
+            <tr>
+              <th scope="col">Source of Metal waste</th>
+              <td>{{ data.metal_waste_source  }}</td>
+            </tr>
+            <tr>
+              <th scope="col">Metal weightage</th>
+              <td>{{ data.metal_waste_weight  }}</td>
+            </tr>
+            <tr>
+              <th scope="col">Comment</th>
+                <td>{{ data.comment }}</td>
+            </tr>
+            <tr>
+              <th scope="col">Report Date</th>
+                <td>{{ data.created_at }}</td>
+            </tr>
+            <tr>
+              <th colspan="2">
+                  <input type="hidden" name="data" id="module" value="Waste_Management">
+                    <div id="report-graphs"></div>
+
+                    <script src="{% static 'report-bundle.js' %}"></script>
+              </th>
+             </tr>
+         </tbody>
+        </table>
+      </form>
+        <button class="mr-4 btn btn-danger" type="button">Print</button>
+        <button class="mx-4 btn btn-info" type="button">Export to Excel</button>
+</div>

@@ -1,93 +1,84 @@
 import React from 'react';
 import ReactDOM from "react-dom";
-import {XYPlot, XAxis, YAxis, HorizontalGridLines, VerticalBarSeries as BarSeries, LineSeries} from 'react-vis';
-import Widgets from './widget';
+import Widgets_custom from './widget_custom';
+import Widgets_a from './widget1';
+import Widgets_b from './widget2';
+import Widgets_c from './widget3';
+import FormulateGraphData from './formulateGraphData';
 
 function ColumnMaker(props){
-	let data = []
+	
 	console.log("Props are ")
-	console.log(props.data.Storage_facility)
+	// console.log(props.data.Storage_facility)
 	console.log(props)
 
-	const storage_facility_data = props.data.Storage_facility
+	
+  let data = ""
+  let module_name = ""
 
-	storage_facility_data ?
-	storage_facility_data.map((val, i)=>{
-		console.log("Value given is "+val.current_capacity)
-				data = [...data, {'x': i, y: val.current_capacity}]
-			})
-		
-		: ""
+  props.data ? data = props.data : data = ""
+  props.module.descriptions ? module_name=props.module.description : ""
 
-
+  console.log("module name is "+props.module.description)
 									
-										return (<div className="col-lg-6 col-sm-12">
-											<XYPlot
-  width={300}
-  height={300}>
-  <HorizontalGridLines />
-  <BarSeries
-  	color="red"
-    data={data}
-    onValueMouseOver={(datapoint, event)=>{
-    // does something on click
-    // you can access the value of the event
-    // console.log("datapoint is ")
-    // console.log(datapoint)
-    // console.log(" and event is ")
-    // console.log(event)
-    
-  }}
-  animation
-    />
-  <BarSeries
-  	color="blue"
-    data={data}
-    onValueMouseOver={(datapoint, event)=>{
-    // does something on click
-    // you can access the value of the event
-    // console.log("datapoint is ")
-    // console.log(datapoint)
-    // console.log(" and event is ")
-    // console.log(event)
-    
-  }}/>
-  <BarSeries
-  	color="green"
-    data={data}
-    onValueMouseOver={(datapoint, event)=>{
-    // does something on click
-    // you can access the value of the event
-    // console.log("datapoint is ")
-    // console.log(datapoint)
-    // console.log(" and event is ")
-    // console.log(event)
-    
-  }}
-  animation/>
-  <XAxis />
-  <YAxis />
-</XYPlot>
-</div>)
+		return (<div className="col-lg-6 col-sm-12">
+              <FormulateGraphData data={data} module={props.module}/>
+            </div>)
 									
 								
 	}
 
+
+function Widget_generator(props){
+      // props.widgets.map((widget,i)=>{
+      //   console.log('widget 1 ')
+      //   console.log(props.data)
+      //   props.data ? 
+      //    <Widgets_custom compliance={ props.data.ComplianceValue } parameter={ widget[0] } background={ widget[1] } />
+      //   : ""
+      // })
+
+      return <React.Fragment>
+                <Widgets_a compliance={ props.data.ComplianceValue } parameter={ props.parameter } />
+                <Widgets_b compliance={ props.data.ComplianceValue } parameter={ props.parameter } />
+                <Widgets_c compliance={ props.data.ComplianceValue } parameter={ props.parameter } />
+            </React.Fragment>
+} 
+
+
+
 class Template extends React.Component {
 	constructor(){
 		super()
+
+    this.state={
+      widget1: "Turbidity",
+      widget2: "Chemical Oxygen Demand",
+      widget3: "Total Arsenic",
+      widgets: [["Turbidity","blue"],["Chemical Oxygen Demand","green"],["Total Arsenic","yellow"]],
+    }
+
 	}
 
 
+  
 
 
 	render(){
 		return (<div className="row">
 					<div className="col-12">
 						<div className="row">
-								<Widgets compliance={ this.props.data.ComplianceValue } />
-								<ColumnMaker data={ this.props.data}/>
-							
+              {
+                this.props.module=="all" ? <Widget_generator data={ this.props.data } widgets={ this.state.widgets } module={ this.props.module } parameter={ this.state.widget1 } /> : ""
+              }
+                
+                
+								
+                {
+                  this.props.data.modules ? this.props.data.modules.filter(module=>module.module_name==this.props.module || this.props.module=="all").map((module,i)=>{
+                    return <ColumnMaker key={i} data={ this.props.data } module={ module } />
+                  }) : ""
+                }
 						</div>
 					</div>
   			</div>)

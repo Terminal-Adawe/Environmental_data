@@ -11,7 +11,8 @@ class Index extends React.Component {
 		super()
 
 		this.state={
-			data: []
+			data: [],
+			module: "all"
 		}
 
 		this.getDetails = this.getDetails.bind(this)
@@ -39,7 +40,7 @@ class Index extends React.Component {
 
 	render(){
 		return (<React.Fragment>
-				<Template data={ this.state.data } />
+				<Template data={ this.state.data } module={ this.state.module }/>
   			</React.Fragment>)
 	}
 }

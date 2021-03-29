@@ -39,7 +39,10 @@ def index(request):
         return render(request, 'analytics/landingpage/index.html',{'form': form})
 
 def dashboard(request):
-    return render(request, 'analytics/dashboard/dashboard.html')
+    if request.user.is_authenticated:
+        return render(request, 'analytics/dashboard/dashboard.html')
+    else:
+        return HttpResponseRedirect('login')
 
 def login(request):
     if request.method == 'POST':
@@ -98,3 +101,9 @@ def registerUser(request):
 def logout_user(request):
     logout(request)
     return HttpResponseRedirect('login')
+
+def media(request):
+    if request.user.is_authenticated:
+        return render(request, 'analytics/dashboard/media.html')
+    else:
+        return HttpResponseRedirect('login')
