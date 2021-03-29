@@ -1,0 +1,122 @@
+input[type=text], input[type=email], textarea, select, input[type=date] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 1px solid #85c1e9;
+  height: 50px;
+}
+
+.form-control-selectpicker{
+	width: 100%;
+  	/*padding: 12px 20px;*/
+  	padding: 0;
+  	margin: 8px 0;
+  	box-sizing: border-box;
+  	border: 1px solid #85c1e9;
+  	height: 50px;
+}
+
+.select-design{
+	width: 100%;
+  /*padding: 12px 20px;*/
+  	height: 100%;
+  	margin: 8px 0;
+  	/*box-sizing: border-box;*/
+  	position: relative;
+  	/*border: 1px solid #57e7e7;*/
+}
+
+.selector-design{
+      width: 100%;
+      /*height: 100%;*/
+      /*margin:8px 0;*/
+      position: relative;
+      /*padding: 12px 20px;*/
+      height: 50px;
+    }
+
+input[type=text]:focus, input[type=email]:focus, textarea:focus, select:focus,input[type=date]:focus {
+  background-color: #dce6f0;
+  border: 1px solid #377ec1;
+  outline: none;
+}
+
+label{
+	font-family: 'Florence';
+	font-weight: 600;
+}
+
+.header{
+  height: 100vh;
+  width: 100%;
+  background-image: url('../images/Flat-Mountains.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+body{
+  min-height: 100vh;
+  width: 100%;
+  background-image: url('../images/Tortoise-Shell.svg');
+  /*background-repeat: no-repeat;*/
+  /*background-position: center;*/
+  /*background-size: cover;*/
+}
+
+.stylessbutton {
+    text-decoration: none;
+    color: #111;
+    font-size: 1rem;
+    border: none;
+    transition: 0.2s all ease-in;
+    width: 100%;
+    background-color: whitesmoke; 
+    padding-top: 8px; 
+    padding-bottom: 8px;
+}
+
+.stylessbutton:hover{
+  filter: brightness(90%);
+  font-weight: 600;
+  transition: 0.2s all ease-in;
+}
+
+
+.carded-modules{
+  height: 250px;
+}
+
+.carded-modules a{
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+.centerDiv{
+  position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.link_name{
+  text-decoration: none;
+  color: black;
+}
+
+.link_name:hover{
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+}
+
+.form-container{
+  padding-top: 100px;
+}
+
+#message{
+  color: #C70039;
+}
+
