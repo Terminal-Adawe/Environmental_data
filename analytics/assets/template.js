@@ -21,7 +21,7 @@ function ColumnMaker(props){
 
   console.log("module name is "+props.module.description)
 									
-		return (<div className="col-lg-6 col-sm-12">
+		return (<div className="col-lg-6 col-sm-12 mt-3">
               <FormulateGraphData data={data} module={props.module}/>
             </div>)
 									
