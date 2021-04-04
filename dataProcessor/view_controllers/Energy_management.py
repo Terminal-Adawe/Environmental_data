@@ -39,6 +39,7 @@ class Energy_managementViewSet(viewsets.ViewSet):
                     mine_plant_consumption=serializer.data['mine_plant_consumption'],
                     other_consumption=serializer.data['other_consumption'],
                     comment=serializer.data['comment'],
+                    location=serializer.data['location'],
                     created_by_id=created_by_id)
 
                 gah_sav.save()

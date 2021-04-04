@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework import viewsets
 from dataProcessor.serializers import IncenerationSerializer
 from dataProcessor.serializers import IncenerationSerializer_serializer
-from analytics.models import Waste_Management
+from analytics.models import Inceneration
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 from rest_framework import status
@@ -36,6 +36,7 @@ class IncenerationViewSet(viewsets.ViewSet):
                     quantity=serializer.data['quantity'],
                     temperature=serializer.data['temperature'],
                     comment=serializer.data['comment'],
+                    location=serializer.data['location'],
                     created_by_id=created_by_id)
 
                 gah_sav.save()

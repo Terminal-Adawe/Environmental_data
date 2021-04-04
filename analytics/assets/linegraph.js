@@ -25,6 +25,7 @@ class LineGraph extends React.Component {
 
 
 
+
 	render(){
 		console.log("All data graph is ")
 		console.log(this.props.data)

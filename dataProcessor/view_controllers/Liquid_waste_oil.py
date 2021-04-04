@@ -35,6 +35,7 @@ class liquid_waste_oilViewSet(viewsets.ViewSet):
                     discharge_point=serializer.data['discharge_point'],
                     source=serializer.data['source'],
                     comment=serializer.data['comment'],
+                    location=serializer.data['location'],
                     created_by_id=created_by_id)
 
                 gah_sav.save()

@@ -34,6 +34,7 @@ class Complaints_registerViewSet(viewsets.ViewSet):
                     no_of_complaints=serializer.data['no_of_complaints'],
                     status_of_complaints=serializer.data['status_of_complaints'],
                     comment=serializer.data['comment'],
+                    location=serializer.data['location'],
                     created_by_id=created_by_id)
 
                 gah_sav.save()

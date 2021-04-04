@@ -47,6 +47,33 @@
                     <script src="{% static 'report-bundle.js' %}"></script>
               </th>
              </tr>
+             <tr>
+              <td colspan="2">
+                <div class="container-fluid">
+                  <div class="row">
+                    {% for image in images %}
+                      <div class="col-lg-3 col-sm-6">
+                        <div class="media-holder" >
+                          <img src="{{ MEDIA_URL }}{{ image.image.url }}" width="100%" data-toggle="modal" data-target="#imageModal" class="report_image">
+                        </div>
+                      </div>
+                    {% endfor %}
+                  </div>
+                </div>
+              </td>
+             </tr>
+             <tr>
+              <td colspan="2">
+                <div class="container-fluid">
+                  <div class="row">
+                   <!-- <div class="col-12 my-4"> -->
+                    <input type="hidden" class="location" value="{{ data.location }}" />
+                    <div id="map" class="my-4 mx-auto"></div>
+                   <!-- </div> -->
+                  </div>
+                </div>
+              </td>
+             </tr>
          </tbody>
         </table>
       </form>

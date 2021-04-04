@@ -11,16 +11,41 @@ class Index extends React.Component {
 		this.state={
 			loader: false,
 			baseUrl: "http://3.9.132.4",
+			// baseUrl: "http://localhost:8002",
+			location: [],
 		}
 
 		this.toggleLoader = this.toggleLoader.bind(this)
+		this.getLocation = this.getLocation.bind(this)
+		this.showPosition = this.showPosition.bind(this)
+	}
+
+	componentDidMount(){
+		this.getLocation()
 	}
 
 	toggleLoader(state){
-    	console.log('loader is '+state)
-
     	this.setState({
     		loader: state
+    	})
+    }
+
+    getLocation(){
+    	if (navigator.geolocation) {
+    		navigator.geolocation.getCurrentPosition(this.showPosition);
+  		} else {
+
+  		}
+    }
+
+    showPosition(position){
+    	var data = position.coords.latitude+","+position.coords.longitude
+
+    	console.log("Geo location is ")
+    	console.log(data)
+
+    	this.setState({
+    		location: data
     	})
     }
 
@@ -29,9 +54,9 @@ class Index extends React.Component {
 		return (<LoadingOverlay
   					active={this.state.loader}
   					spinner
-  					text='Loading...'
+  					text='Uploading Data...'
   				>
-				<Form loader={ this.toggleLoader } baseUrl={ this.state.baseUrl } />
+				<Form loader={ this.toggleLoader } baseUrl={ this.state.baseUrl } getLocation={ this.getLocation } location={ this.state.location } />
   			</LoadingOverlay>)
 	}
 }

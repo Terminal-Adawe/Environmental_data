@@ -30,6 +30,8 @@ function Inputs(props){
 			return <CountryDropdownInput tag={props.tag} countrydropdownChange={ props.countrydropdownChange } country={ props.country } region={ props.region } form={ props.form }/>
 		} else if (props.tag.inputtype=='checkbox'){
 			return <CheckBox tag={props.tag} handleInputChanged={ props.handleInputChanged } form={ props.form }/>
+		} else if (props.tag.inputtype=='image'){
+			return <ImageInput tag={props.tag} handleImageChange={ props.handleImageChange } form={ props.form }/>
 		} else if (props.tag.inputtype=='' || props.tag.inputtype == "textarea"){
 			console.log("Nothing to render..")
 			return <></>
@@ -72,6 +74,7 @@ function FormFieldTemplate(props){
 											{ formFieldz.showlabel==1 ? <Label tag={ formFieldz } /> : <Label tag=""/> }
 											<Inputs tag={ formFieldz } 
 												handleInputChanged={ props.handleInputChanged } 
+												handleImageChange={ props.handleImageChange }
 												country={ props.country } 
 												region={ props.region }
 												countrydropdownChange={ props.countrydropdownChange }
@@ -98,6 +101,20 @@ function TextInput(props){
 					defaultValue={ props.form.[props.tag.name] }
 					className="input-element" 
 					onChange={(e)=>props.handleInputChanged(e)}
+					required />
+
+	}
+
+function ImageInput(props){
+		return  <input 
+					type="file" 
+					id="image" 
+					placeholder={props.tag.placeholder} 
+					name={props.tag.name} 
+					defaultValue={ props.form.[props.tag.name] }
+					className="input-element" 
+					onChange={(e)=>props.handleImageChange(e)}
+					multiple="multiple"
 					required />
 
 	}
@@ -165,8 +182,10 @@ class Form extends React.Component {
 			region: '',
 			form: {
 				username: document.getElementById("username").value,
+				location: "",
 			},
 			url: '',
+			image_url:'add/upload_image/',
 			trigger: true,
 			hiddencheck: '',
 		}
@@ -189,6 +208,7 @@ class Form extends React.Component {
 		this.toggleLoader = this.toggleLoader.bind(this)
 		this.handleInputChanged = this.handleInputChanged.bind(this)
 		this.countrydropdownChange = this.countrydropdownChange.bind(this)
+		this.handleImageChange = this.handleImageChange.bind(this)
 		this.updateEntries = this.updateEntries.bind(this)
 		this.submitForm = this.submitForm.bind(this)
 		this.getDetails = this.getDetails.bind(this)
@@ -200,7 +220,11 @@ class Form extends React.Component {
 	}
 
 	componentDidMount(){
-		console.log("component mounted")
+		var location = this.props.location
+
+		console.log("Form Mounted. Location is ")
+		console.log(location)
+
 		if (this.state.formtype=="storage"){
 			console.log("Storage chosen")
 			this.storage_facilitiesTags()
@@ -217,7 +241,7 @@ class Form extends React.Component {
 			console.log("Liquid_waste_oil chosen")
 			this.Liquid_waste_oilTags()
 		} else if (this.state.formtype=="Health_and_hygiene_awareness"){
-			console.log("Health_and_hygiene_awareness chosen")
+			console.log("Health_and_hygiene_awareness likely chosen...")
 			this.Health_and_hygiene_awarenessTags()
 		} else if (this.state.formtype=="Energy_management"){
 			console.log("Energy_management chosen")
@@ -324,6 +348,19 @@ class Form extends React.Component {
     		// console.log("updated form is ")
     		// console.log(this.state.form)
     	}
+
+    	if(prevProps.location != this.props.location){
+    		var form = this.state.form
+
+    		form.location = this.props.location
+
+    		console.log('new form with location is ')
+    		console.log(form)
+
+    		this.setState({
+    			form: form
+    		})
+    	}
     }
 
     getCookie(name) {
@@ -401,6 +438,7 @@ class Form extends React.Component {
 			{formField: [[{inputtype:'text',name:'spillways_stability',placeholder:'Enter Spillways Stability',label:'Spillways Stability',showlabel:1}]]},
 			{formField: [[{inputtype:'dropdown',name:'signs_of_erosion_spillway_tip',placeholder:'Erosion Signs',label:'Signs of Erosion on Spillway Tip',showlabel:1,options:[['Yes','Y'],['No','N']]}]]},
 			{formField: [[{inputtype: 'text', name:'comment',placeholder:'Any Comment?',label:'Comment',showlabel:1}]]},
+			{formField: [[{inputtype: 'image', name:'image',placeholder:'',label:'Upload image(s)',showlabel:1}]]},
 		]
 
 		const action_url = 'add/add-seepage/'
@@ -413,6 +451,7 @@ class Form extends React.Component {
 			{formField: [[{inputtype: 'text', name:'report_name',placeholder:'Report Name',label:'Name of Report',showlabel:1}]]},
 			{formField: [[{inputtype:'dropdown',name:'storage_condition',placeholder:'',label:'Storage Condition',showlabel:1,options:[['Completely Impervious Surface','CIS'],['Partially Impervious','PI'],['Non Impervious','NI'],['Stored in Containment','SIC'],['Not Stored in Containment','NSIC']]}]]},
 			{formField: [[{inputtype: 'text', name:'comment',placeholder:'Any Comment?',label:'Comment',showlabel:1}]]},
+			{formField: [[{inputtype: 'image', name:'image',placeholder:'',label:'Upload image(s)',showlabel:1}]]},
 			]
 
 		const action_url = 'add/add-grease-and-hydrocarbon/'
@@ -428,6 +467,7 @@ class Form extends React.Component {
 			{formField: [[{inputtype: 'text', name:'plastic_waste_source',placeholder:'Source',label:'Plastic waste source',showlabel:1}],[{inputtype: 'text', name:'plastic_waste_weight',placeholder:'Weight',label:'Plastic waste weightage',showlabel:1}]]},
 			{formField: [[{inputtype: 'text', name:'metal_waste_source',placeholder:'Source',label:'Metal waste source',showlabel:1}],[{inputtype: 'text', name:'metal_waste_weight',placeholder:'Weight',label:'Metal waste weightage',showlabel:1}]]},
 			{formField: [[{inputtype: 'text', name:'comment',placeholder:'Any Comment?',label:'Comment',showlabel:1}]]},
+			{formField: [[{inputtype: 'image', name:'image',placeholder:'',label:'Upload image(s)',showlabel:1}]]},
 			]
 
 		const action_url = 'add/add-waste-management/'
@@ -442,6 +482,7 @@ class Form extends React.Component {
 			{formField: [[{inputtype: 'text', name:'quantity',placeholder:'Quantity',label:'Quantity',showlabel:1}]]},
 			{formField: [[{inputtype: 'text', name:'temperature',placeholder:'Temperature',label:'Temperature',showlabel:1}]]},
 			{formField: [[{inputtype: 'text', name:'comment',placeholder:'Any Comment?',label:'Comment',showlabel:1}]]},
+			{formField: [[{inputtype: 'image', name:'image',placeholder:'',label:'Upload image(s)',showlabel:1}]]},
 			]
 
 		const action_url = 'add/add-inceneration/'
@@ -455,6 +496,7 @@ class Form extends React.Component {
 			{formField: [[{inputtype: 'text', name:'discharge_point',placeholder:'Effluent Discharge Point',label:'Effluent Discharge Point',showlabel:1}]]},
 			{formField: [[{inputtype:'dropdown',name:'source',placeholder:'',label:'Source',showlabel:1,options:[['Maintenance Workshop','MW'],['Other Area','OA']]}]]},
 			{formField: [[{inputtype: 'text', name:'comment',placeholder:'Any Comment?',label:'Comment',showlabel:1}]]},
+			{formField: [[{inputtype: 'image', name:'image',placeholder:'',label:'Upload image(s)',showlabel:1}]]},
 			]
 
 		const action_url = 'add/add-liquid-waste-oil/'
@@ -470,11 +512,12 @@ class Form extends React.Component {
 			{formField: [[{inputtype: 'text', name:'no_of_visitors',placeholder:'Number of Visitors',label:'Number of Visitors',showlabel:1}]]},
 			{formField: [[{inputtype: 'text', name:'duration',placeholder:'Duration of training',label:'Training duration',showlabel:1}]]},
 			{formField: [[{inputtype: 'text', name:'comment',placeholder:'Any Comment?',label:'Comment',showlabel:1}]]},
+			{formField: [[{inputtype: 'image', name:'image',placeholder:'',label:'Upload image(s)',showlabel:1}]]},
 			]
 
 		const action_url = 'add/add-health-and-hygiene-awareness/'
 
-		console.log("Health and hygeine tags section")
+	    console.log("Health and hygeine tags section")
 
 		this.tagDeclaration(tags, action_url)
 	}
@@ -490,6 +533,7 @@ class Form extends React.Component {
 			{formField: [[{inputtype: 'text', name:'mine_plant_consumption',placeholder:'Mine Plant Consumption',label:'Mine Plant Consumption',showlabel:1}]]},
 			{formField: [[{inputtype: 'text', name:'other_consumption',placeholder:'Other Consumption',label:'Other Consumption',showlabel:1}]]},
 			{formField: [[{inputtype: 'text', name:'comment',placeholder:'Any Comment?',label:'Comment',showlabel:1}]]},
+			{formField: [[{inputtype: 'image', name:'image',placeholder:'',label:'Upload image(s)',showlabel:1}]]},
 			]
 
 		const action_url = 'add/add-energy-management/'
@@ -504,6 +548,7 @@ class Form extends React.Component {
 			{formField: [[{inputtype: 'text', name:'no_of_complaints',placeholder:'Number of complaints',label:'Total Energy Available',showlabel:1}]]},
 			{formField: [[{inputtype:'dropdown',name:'status_of_complaints',placeholder:'',label:'Status',showlabel:1,options:[['Resolved','RSD'],['Pending','PEN'],['Other (State reason in comments)','OTR']]}]]},
 			{formField: [[{inputtype: 'text', name:'comment',placeholder:'Any Comment?',label:'Comment',showlabel:1}]]},
+			{formField: [[{inputtype: 'image', name:'image',placeholder:'',label:'Upload image(s)',showlabel:1}]]},
 			]
 
 		const action_url = 'add/add-complaints-register/'
@@ -517,6 +562,7 @@ class Form extends React.Component {
 			{formField: [[{inputtype: 'text', name:'no_of_exposed_unstabilized_slopes',placeholder:'Number of exposed unstabilized slopes',label:'Number of exposed unstabilized slopes',showlabel:1}]]},
 			{formField: [[{inputtype:'dropdown',name:'status',placeholder:'',label:'Source',showlabel:1,options:[['Stabilized','STD'],['Working Progress','WP'],['Pending','PEN'],['Other (State reason in comments)','OTR']]}]]},
 			{formField: [[{inputtype: 'text', name:'comment',placeholder:'Any Comment?',label:'Comment',showlabel:1}]]},
+			{formField: [[{inputtype: 'image', name:'image',placeholder:'',label:'Upload image(s)',showlabel:1}]]},
 			]
 
 		const action_url = 'add/add-slope-stabilization/'
@@ -533,6 +579,7 @@ class Form extends React.Component {
 			{formField: [[{inputtype: 'text', name:'no_of_visitors',placeholder:'Number of Visitors',label:'Number of Visitors',showlabel:1}]]},
 			{formField: [[{inputtype: 'text', name:'duration',placeholder:'Duration of training',label:'Training duration',showlabel:1}]]},
 			{formField: [[{inputtype: 'text', name:'comment',placeholder:'Any Comment?',label:'Comment',showlabel:1}]]},
+			{formField: [[{inputtype: 'image', name:'image',placeholder:'',label:'Upload image(s)',showlabel:1}]]},
 			]
 
 		const action_url = 'add/add-safety-training/'
@@ -546,6 +593,7 @@ class Form extends React.Component {
 			{formField: [[{inputtype: 'text', name:'no_of_permits_issued',placeholder:'Number of permits issued',label:'Number of exposed unstabilized slopes',showlabel:1}]]},
 			{formField: [[{inputtype:'dropdown',name:'status',placeholder:'',label:'Source',showlabel:1,options:[['Work Ended Safely','WES'],['Work did not end safely','WEU']]}]]},
 			{formField: [[{inputtype: 'text', name:'comment',placeholder:'Any Comment?',label:'Comment',showlabel:1}]]},
+			{formField: [[{inputtype: 'image', name:'image',placeholder:'',label:'Upload image(s)',showlabel:1}]]},
 			]
 
 		const action_url = 'add/add-safety-permission-system/'
@@ -556,10 +604,11 @@ class Form extends React.Component {
 	Safety_toolsTags(){
 		const tags = [
 			{formField: [[{inputtype: 'text', name:'report_name',placeholder:'Report Name',label:'Name of Report',showlabel:1}]]},
-			{formField: [[{inputtype: 'text', name:'no_of_permits_issued',placeholder:'Number of permits issued',label:'Number of exposed unstabilized slopes',showlabel:1}]]},
+			{formField: [[{inputtype: 'text', name:'no_of_estinquishers',placeholder:'Number of Estinguishers',label:'Number of Estinguishers',showlabel:1}]]},
 			{formField: [[{inputtype:'dropdown',name:'fire_alarm',placeholder:'',label:'Fire Alarm',showlabel:1,options:[['Active','AC'],['Not Active','INA']]}]]},
 			{formField: [[{inputtype:'dropdown',name:'status_of_estinguishers',placeholder:'',label:'Status of Estinguishers',showlabel:1,options:[['Mine','MN'],['Port','PRT'],['Serviced','SER'],['Expired','EX']]}]]},
 			{formField: [[{inputtype: 'text', name:'comment',placeholder:'Any Comment?',label:'Comment',showlabel:1}]]},
+			{formField: [[{inputtype: 'image', name:'image',placeholder:'',label:'Upload image(s)',showlabel:1}]]},
 			]
 
 		const action_url = 'add/add-safety-tools/'
@@ -590,6 +639,14 @@ class Form extends React.Component {
 		this.setState({
 			name: e.target.name,
 			value: value
+		})
+	}
+
+	handleImageChange(e){
+
+		this.setState({
+			name: e.target.name,
+			value: e.target.files,
 		})
 	}
 
@@ -634,7 +691,9 @@ class Form extends React.Component {
         <div className="card input-div-card">
           <div className="card-body">
             <div className="container-fluid">
-            	<div id="message">
+            	<div id="error-message">
+            	</div>
+            	<div id="success-message">
             	</div>
               <div className="row">
                 <div className="col-12">
@@ -647,6 +706,7 @@ class Form extends React.Component {
                     				 return <FormFieldTemplate key={i} 
                     				 	tag={ tag.formField } 
                     				 	handleInputChanged={ this.handleInputChanged } 
+                    				 	handleImageChange={ this.handleImageChange } 
                     				 	countrydropdownChange={ this.countrydropdownChange } 
                     				 	country={ this.state.country } 
                     				 	region={ this.state.region }
@@ -660,7 +720,7 @@ class Form extends React.Component {
                     		
 
 
-                    	<AddButton states={ this.state } updateEntries={ this.updateEntries } loader={ this.toggleLoader } baseUrl={ this.props.baseUrl } />
+                    	<AddButton states={ this.state } updateEntries={ this.updateEntries } loader={ this.toggleLoader } baseUrl={ this.props.baseUrl } getLocation={ this.props.getLocation } />
                   </form>
                 </div>
               </div>

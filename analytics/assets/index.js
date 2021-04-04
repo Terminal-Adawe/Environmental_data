@@ -14,6 +14,7 @@ class Index extends React.Component {
 			data: [],
 			module: "all",
 			baseUrl: "http://3.9.132.4",
+			// baseUrl: "http://localhost:8002",
 		}
 
 		this.getDetails = this.getDetails.bind(this)

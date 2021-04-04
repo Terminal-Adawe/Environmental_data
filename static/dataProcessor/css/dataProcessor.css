@@ -116,7 +116,11 @@ body{
   padding-top: 100px;
 }
 
-#message{
+#error-message{
   color: #C70039;
+}
+
+#success-message{
+  color: #5dade2;
 }
 

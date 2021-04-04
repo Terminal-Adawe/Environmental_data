@@ -36,6 +36,7 @@ class Safety_trainingViewSet(viewsets.ViewSet):
                     no_of_staff=serializer.data['no_of_staff'],
                     no_of_inductions=serializer.data['no_of_inductions'],
                     no_of_visitors=serializer.data['no_of_visitors'],
+                    location=serializer.data['location'],
                     duration=serializer.data['duration'],
                     comment=serializer.data['comment'],
                     created_by_id=created_by_id)

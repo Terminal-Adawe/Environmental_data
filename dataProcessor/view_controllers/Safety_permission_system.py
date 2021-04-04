@@ -35,6 +35,7 @@ class Safety_permission_systemViewSet(viewsets.ViewSet):
                     no_of_permits_issued=serializer.data['no_of_permits_issued'],
                     status=serializer.data['status'],
                     comment=serializer.data['comment'],
+                    location=serializer.data['location'],
                     created_by_id=created_by_id)
 
                 gah_sav.save()

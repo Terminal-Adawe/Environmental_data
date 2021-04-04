@@ -48,6 +48,7 @@ class Storage_facilityViewSet(viewsets.ViewSet):
                     stability_of_dam_walls=serializer.data['stability_of_dam_walls'],
                     holding_capacity=serializer.data['holding_capacity'],
                     comment=serializer.data['comment'],
+                    location=serializer.data['location'],
                     current_capacity=serializer.data['current_capacity'],
                     spillways_capacity=serializer.data['spillways_capacity'],
                     spillways_stability=serializer.data['spillways_stability'],

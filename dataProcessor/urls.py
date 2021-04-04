@@ -14,6 +14,7 @@ from .view_controllers import Slope_stabilization_and_surface_water_retention
 from .view_controllers import Safety_training
 from .view_controllers import Safety_permission_system
 from .view_controllers import Safety_tools
+from .view_controllers import ImageUploader
 from .view_controllers import index
 
 app_name = 'dataProcessor'
@@ -31,6 +32,7 @@ router.register(r'add-slope-stabilization', Slope_stabilization_and_surface_wate
 router.register(r'add-safety-training', Safety_training.Safety_trainingViewSet, basename='add-safety-training')
 router.register(r'add-safety-permission-system', Safety_permission_system.Safety_permission_systemViewSet, basename='add-safety-permission-system')
 router.register(r'add-safety-tools', Safety_tools.Safety_toolsViewSet, basename='add-safety-tools')
+router.register(r'upload_image', ImageUploader.ImageUploader, basename='upload_image')
 
 
 urlpatterns = [

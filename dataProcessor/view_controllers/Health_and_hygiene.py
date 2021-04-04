@@ -36,6 +36,7 @@ class Health_and_hygieneViewSet(viewsets.ViewSet):
                     no_of_staff=serializer.data['no_of_staff'],
                     duration=serializer.data['duration'],
                     comment=serializer.data['comment'],
+                    location=serializer.data['location'],
                     created_by_id=created_by_id)
 
                 gah_sav.save()

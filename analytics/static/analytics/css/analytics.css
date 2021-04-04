@@ -40,3 +40,18 @@ body{
     top: 50%;
     transform: translate(-50%, -50%);
 }
+
+.media-holder{
+	width: 98%;
+	overflow: hidden;
+	border-radius: 5px;
+}
+
+#map {
+    height: 400px;
+    width: 400px;
+  }
+
+.report_image:hover{
+	cursor: pointer;
+}

@@ -154,7 +154,7 @@ class FormulateGraphData extends React.Component {
 			rawData ?
     		rawData.map((val, i)=>{
     		  // console.log("Value given is "+val.items_incenerated)
-    		      data = [...data, {'x': i, 'y': val.items_incenerated}]
+    		      data = [...data, {'x': i, 'y': val.quantity}]
     		    })
     		  : ""
 

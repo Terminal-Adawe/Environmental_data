@@ -34,6 +34,7 @@ class Slope_stabilization_and_surface_water_retentionViewSet(viewsets.ViewSet):
                     report_name=serializer.data['report_name'],
                     no_of_exposed_unstabilized_slopes=serializer.data['no_of_exposed_unstabilized_slopes'],
                     status=serializer.data['status'],
+                    location=serializer.data['location'],
                     created_by_id=created_by_id)
 
                 gah_sav.save()

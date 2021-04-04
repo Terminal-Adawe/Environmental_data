@@ -39,6 +39,7 @@ class Waste_managementViewSet(viewsets.ViewSet):
                     plastic_waste_weight=serializer.data['plastic_waste_weight'],
                     metal_waste_source=serializer.data['metal_waste_source'],
                     metal_waste_weight=serializer.data['metal_waste_weight'],
+                    location=serializer.data['location'],
                     comment=serializer.data['comment'],
                     created_by_id=created_by_id)
 

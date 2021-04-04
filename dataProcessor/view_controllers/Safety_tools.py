@@ -36,6 +36,7 @@ class Safety_toolsViewSet(viewsets.ViewSet):
                     fire_alarm=serializer.data['fire_alarm'],
                     status_of_estinguishers=serializer.data['status_of_estinguishers'],
                     comment=serializer.data['comment'],
+                    location=serializer.data['location'],
                     created_by_id=created_by_id)
 
                 gah_sav.save()

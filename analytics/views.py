@@ -14,6 +14,7 @@ from analytics.models import Safety_training
 from analytics.models import Safety_permission_system
 from analytics.models import Safety_tools
 from analytics.models import modules
+from analytics.models import Image
 
 # Create your views here.
 
@@ -89,7 +90,10 @@ def view_report(request, module, report_id):
 
 	queryset = myModel.objects.filter(id=reportid).get()
 
-	return render(request, 'analytics/dashboard/view_report.html',{'data':queryset,'module':module})
+	modules_queryset = modules.objects.filter(module_name=module)
+	image_queryset = Image.objects.filter(report_id=reportid, module_id__in=modules_queryset.values('id'))
+
+	return render(request, 'analytics/dashboard/view_report.html',{'data':queryset,'module':module,'images':image_queryset})
 
 def view_all_reports(request, module):
 	module = module

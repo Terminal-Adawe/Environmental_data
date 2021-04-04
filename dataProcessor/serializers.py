@@ -11,6 +11,7 @@ from analytics.models import Slope_stabilization_and_surface_water_retention
 from analytics.models import Safety_training
 from analytics.models import Safety_permission_system
 from analytics.models import Safety_tools
+from analytics.models import Image
 
 
 
@@ -21,8 +22,21 @@ class Storage_facilitySerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = Storage_facility
-		fields = ('report_name','status_of_seepage_point','stability_of_dam_walls','holding_capacity','current_capacity','spillways_capacity','spillways_stability','signs_of_erosion_spillway_tip',)
+		fields = '__all__'
 
+class ImageSerializer_serializer(serializers.Serializer):
+	image = serializers.ImageField(required=False)
+	username = serializers.CharField(max_length=100)
+	report_id = serializers.CharField(max_length=10)
+	module_id = serializers.CharField(max_length=10)
+
+	def create(self, validated_data):
+		return Image(id=None, **validated_data)
+
+class ImageSerializer(serializers.Serializer):
+	class Meta:
+		model = Image
+		fields = ('image','module_id','report_id')
 
 class Storage_facilitySerializer_serializer(serializers.Serializer):
 	stability_of_dam_walls = serializers.ChoiceField(choices=Storage_facility.DAM_WALLS_STABILITY)
@@ -37,6 +51,7 @@ class Storage_facilitySerializer_serializer(serializers.Serializer):
 	spillways_capacity = serializers.CharField(max_length=10)
 	spillways_stability = serializers.CharField(max_length=50)
 	comment = serializers.CharField(max_length=500, required=False,allow_blank=True)
+	location = serializers.CharField(max_length=200)
 	# signs_of_erosion_spillway_tip = serializers.CharField(max_length=10)
 	username = serializers.CharField(max_length=100)
 
@@ -46,13 +61,14 @@ class Storage_facilitySerializer_serializer(serializers.Serializer):
 class Grease_and_hydrogenSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Grease_and_hydocarbon_spillage
-		fields = ('report_name','storage_condition','comment')
+		fields = '__all__'
 
 class Grease_and_hydrogenSerializer_serializer(serializers.Serializer):
 	storage_condition = serializers.ChoiceField(choices=Grease_and_hydocarbon_spillage.STORAGE_CONDITION_S)
 	report_name = serializers.CharField(max_length=100)
-	comment = serializers.CharField(max_length=500)
+	comment = serializers.CharField(max_length=500, required=False,allow_blank=True)
 	username = serializers.CharField(max_length=100)
+	location = serializers.CharField(max_length=200)
 
 	def create(self, validated_data):
 		return Grease_and_hydocarbon_spillage(id=None, **validated_data)
@@ -60,7 +76,7 @@ class Grease_and_hydrogenSerializer_serializer(serializers.Serializer):
 class Waste_ManagementSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Waste_Management
-		fields = ('report_name','segregation_at_source_and_bins','glass_waste_source','glass_waste_weight','plastic_waste_source','plastic_waste_weight','metal_waste_source','metal_waste_weight','comment')
+		fields = '__all__'
 
 class Waste_ManagementSerializer_serializer(serializers.Serializer):
 	segregation_at_source_and_bins = serializers.ChoiceField(choices=Waste_Management.SEGREGATION_S)
@@ -73,6 +89,7 @@ class Waste_ManagementSerializer_serializer(serializers.Serializer):
 	comment = serializers.CharField(max_length=500, required=False,allow_blank=True)
 	username = serializers.CharField(max_length=100)
 	report_name = serializers.CharField(max_length=100)
+	location = serializers.CharField(max_length=100)
 
 	def create(self, validated_data):
 		return Waste_Management(id=None, **validated_data)
@@ -80,15 +97,16 @@ class Waste_ManagementSerializer_serializer(serializers.Serializer):
 class IncenerationSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Inceneration
-		fields = ('report_name','items_incenerated','quantity','temperature','comment')
+		fields = '__all__'
 
 class IncenerationSerializer_serializer(serializers.Serializer):
-	items_incenerated = serializers.CharField(max_length=100)
+	items_incenerated = serializers.CharField(max_length=200)
 	quantity = serializers.CharField(max_length=100)
 	temperature = serializers.CharField(max_length=100)
 	comment = serializers.CharField(max_length=500, required=False,allow_blank=True)
 	username = serializers.CharField(max_length=100)
 	report_name = serializers.CharField(max_length=100)
+	location = serializers.CharField(max_length=100)
 
 	def create(self, validated_data):
 		return Inceneration(id=None, **validated_data)
@@ -96,7 +114,7 @@ class IncenerationSerializer_serializer(serializers.Serializer):
 class Liquid_waste_oilSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Liquid_waste_oil
-		fields = ('report_name','discharge_point','source','comment')
+		fields = '__all__'
 
 class Liquid_waste_oilSerializer_serializer(serializers.Serializer):
 	discharge_point = serializers.CharField(max_length=100)
@@ -104,6 +122,7 @@ class Liquid_waste_oilSerializer_serializer(serializers.Serializer):
 	comment = serializers.CharField(max_length=500, required=False,allow_blank=True)
 	username = serializers.CharField(max_length=100)
 	report_name = serializers.CharField(max_length=100)
+	location = serializers.CharField(max_length=100)
 
 	def create(self, validated_data):
 		return Liquid_waste_oil(id=None, **validated_data)
@@ -111,7 +130,7 @@ class Liquid_waste_oilSerializer_serializer(serializers.Serializer):
 class Health_and_hygiene_awarenessSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Health_and_hygiene_awareness
-		fields = ('report_name','training','no_of_staff','no_of_visitors','duration','comment')
+		fields = '__all__'
 
 class Health_and_hygiene_awarenessSerializer_serializer(serializers.Serializer):
 	training = serializers.CharField(max_length=100)
@@ -121,6 +140,7 @@ class Health_and_hygiene_awarenessSerializer_serializer(serializers.Serializer):
 	comment = serializers.CharField(max_length=500,required=False,allow_blank=True)
 	username = serializers.CharField(max_length=100)
 	report_name = serializers.CharField(max_length=100)
+	location = serializers.CharField(max_length=100)
 
 	def create(self, validated_data):
 		return Health_and_hygiene_awareness(id=None, **validated_data)
@@ -128,7 +148,7 @@ class Health_and_hygiene_awarenessSerializer_serializer(serializers.Serializer):
 class Energy_managementSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Energy_management
-		fields = ('report_name','total_energy_available','camp_consumption','admin_consumption','workshop_consumption','mine_plant_consumption','other_consumption','comment')
+		fields = '__all__'
 
 class Energy_managementSerializer_serializer(serializers.Serializer):
 	total_energy_available = serializers.CharField(max_length=100)
@@ -140,6 +160,7 @@ class Energy_managementSerializer_serializer(serializers.Serializer):
 	comment = serializers.CharField(max_length=500,required=False,allow_blank=True)
 	username = serializers.CharField(max_length=100)
 	report_name = serializers.CharField(max_length=100)
+	location = serializers.CharField(max_length=100)
 
 	def create(self, validated_data):
 		return Energy_management(id=None, **validated_data)
@@ -147,7 +168,7 @@ class Energy_managementSerializer_serializer(serializers.Serializer):
 class Complaints_registerSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Complaints_register
-		fields = ('report_name','status_of_complaints','comment')
+		fields = '__all__'
 
 class Complaints_registerSerializer_serializer(serializers.Serializer):
 	no_of_complaints = serializers.CharField(max_length=100)
@@ -155,6 +176,8 @@ class Complaints_registerSerializer_serializer(serializers.Serializer):
 	comment = serializers.CharField(max_length=500,required=False,allow_blank=True)
 	username = serializers.CharField(max_length=100)
 	report_name = serializers.CharField(max_length=100)
+	location = serializers.CharField(max_length=200)
+	image = ImageSerializer_serializer
 
 	def create(self, validated_data):
 		return Complaints_register(id=None, **validated_data)
@@ -162,7 +185,7 @@ class Complaints_registerSerializer_serializer(serializers.Serializer):
 class Slope_stabilization_and_surface_water_retentionSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Slope_stabilization_and_surface_water_retention
-		fields = ('report_name','status','comment')
+		fields = '__all__'
 
 class Slope_stabilization_and_surface_water_retentionSerializer_serializer(serializers.Serializer):
 	no_of_exposed_unstabilized_slopes = serializers.CharField(max_length=100)
@@ -170,6 +193,7 @@ class Slope_stabilization_and_surface_water_retentionSerializer_serializer(seria
 	comment = serializers.CharField(max_length=500,required=False,allow_blank=True)
 	username = serializers.CharField(max_length=100)
 	report_name = serializers.CharField(max_length=100)
+	location = serializers.CharField(max_length=200)
 
 	def create(self, validated_data):
 		return Slope_stabilization_and_surface_water_retention(id=None, **validated_data)
@@ -177,7 +201,7 @@ class Slope_stabilization_and_surface_water_retentionSerializer_serializer(seria
 class Safety_trainingSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Safety_training
-		fields = ('report_name','training','no_of_staff','no_of_inductions','no_of_visitors','duration','comment')
+		fields = '__all__'
 
 class Safety_trainingSerializer_serializer(serializers.Serializer):
 	training = serializers.CharField(max_length=100)
@@ -188,6 +212,7 @@ class Safety_trainingSerializer_serializer(serializers.Serializer):
 	comment = serializers.CharField(max_length=500,required=False,allow_blank=True)
 	username = serializers.CharField(max_length=100)
 	report_name = serializers.CharField(max_length=100)
+	location = serializers.CharField(max_length=200)
 
 	def create(self, validated_data):
 		return Safety_training(id=None, **validated_data)
@@ -195,7 +220,7 @@ class Safety_trainingSerializer_serializer(serializers.Serializer):
 class Safety_permission_systemSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Safety_permission_system
-		fields = ('report_name','no_of_permits_issued','status','comment')
+		fields = '__all__'
 
 class Safety_permission_systemSerializer_serializer(serializers.Serializer):
 	no_of_permits_issued = serializers.CharField(max_length=100)
@@ -203,6 +228,7 @@ class Safety_permission_systemSerializer_serializer(serializers.Serializer):
 	comment = serializers.CharField(max_length=500,required=False,allow_blank=True)
 	username = serializers.CharField(max_length=100)
 	report_name = serializers.CharField(max_length=100)
+	location = serializers.CharField(max_length=200)
 
 	def create(self, validated_data):
 		return Safety_permission_system(id=None, **validated_data)
@@ -210,7 +236,7 @@ class Safety_permission_systemSerializer_serializer(serializers.Serializer):
 class Safety_toolsSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Safety_tools
-		fields = ('report_name','no_of_estinquishers','fire_alarm','status_of_estinguishers','comment')
+		fields = '__all__'
 
 class Safety_toolsSerializer_serializer(serializers.Serializer):
 	no_of_estinquishers = serializers.CharField(max_length=100)
@@ -219,7 +245,26 @@ class Safety_toolsSerializer_serializer(serializers.Serializer):
 	comment = serializers.CharField(max_length=500,required=False,allow_blank=True)
 	username = serializers.CharField(max_length=100)
 	report_name = serializers.CharField(max_length=100)
+	location = serializers.CharField(max_length=200)
 
 	def create(self, validated_data):
 		return Safety_tools(id=None, **validated_data)
+
+
+class Graph_configSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Safety_tools
+		fields = '__all__'
+
+class Graph_configSerializer_serializer(serializers.Serializer):
+	graph_type = serializers.CharField(max_length=50)
+	module_name = serializers.CharField(max_length=40)
+	x_column = serializers.CharField(max_length=40)
+	y_column = serializers.CharField(max_length=40)
+	predictive = serializers.BooleanField()
+
+	def create(self, validated_data):
+		return Safety_tools(id=None, **validated_data)
+
+
 		
