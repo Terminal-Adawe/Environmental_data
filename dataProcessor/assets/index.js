@@ -4,7 +4,7 @@ import Form from './forms';
 import LoadingOverlay from 'react-loading-overlay';
 
 			// baseUrl: "http://localhost:8002",
-			
+
 class Index extends React.Component {
 	constructor(){
 		super()
@@ -22,6 +22,15 @@ class Index extends React.Component {
 
 	componentDidMount(){
 		this.getLocation()
+
+		const baseUrl = document.getElementById("baseUrl").value
+
+		this.setState({
+			baseUrl: baseUrl
+		},()=>{
+			
+		})
+
 	}
 
 	toggleLoader(state){

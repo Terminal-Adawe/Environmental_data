@@ -11,6 +11,7 @@ class AddButton extends React.Component {
 		this.state={
 			type: "",
 			description: "",
+            baseUrl: "",
 		}
 
 		this.getFormData = this.getFormData.bind(this)
@@ -19,6 +20,9 @@ class AddButton extends React.Component {
 	}
 
 	componentDidMount(){
+        this.setState({
+                baseUrl: this.props.baseUrl
+            })
 
 		if(this.props.states.formtype=="education"){
 			this.setState({
@@ -32,6 +36,14 @@ class AddButton extends React.Component {
 			})
 		}
 	}
+
+    componentDidUpdate(prevProps, prevState){
+        if(prevProps.baseUrl != this.props.baseUrl){
+            this.setState({
+                baseUrl: this.props.baseUrl
+            })
+        }
+    }
 
 	getFormData(){		
 
@@ -77,7 +89,7 @@ class AddButton extends React.Component {
 
         const url = this.props.states.url
         const image_url = this.props.states.image_url
-        const baseUrl = this.props.baseUrl
+        const baseUrl = this.state.baseUrl
 
         console.log("base url is ")
         console.log(baseUrl)

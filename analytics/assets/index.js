@@ -6,7 +6,7 @@ import axios from "axios";
 import cookie from "react-cookies";
 
 			// baseUrl: "http://localhost:8002",
-			
+
 class Index extends React.Component {
 	constructor(){
 		super()
@@ -21,7 +21,13 @@ class Index extends React.Component {
 	}
 
 	componentDidMount(){
-		this.getDetails()
+		const baseUrl = document.getElementById("baseUrl").value
+
+		this.setState({
+			baseUrl: baseUrl
+		},()=>{
+			this.getDetails()
+		})
 	}
 
 	getDetails(){
