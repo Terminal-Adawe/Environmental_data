@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import Form from './forms';
 import LoadingOverlay from 'react-loading-overlay';
 
-
+			// baseUrl: "http://localhost:8002",
+			
 class Index extends React.Component {
 	constructor(){
 		super()
@@ -11,7 +12,6 @@ class Index extends React.Component {
 		this.state={
 			loader: false,
 			baseUrl: "http://3.9.132.4",
-			// baseUrl: "http://localhost:8002",
 			location: [],
 		}
 
