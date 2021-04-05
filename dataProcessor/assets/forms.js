@@ -225,6 +225,11 @@ class Form extends React.Component {
 		console.log("Form Mounted. Location is ")
 		console.log(location)
 
+		const formType = document.getElementById("form_type").value
+
+		this.setState({
+			formtype: formType
+		},()=>{
 		if (this.state.formtype=="storage"){
 			console.log("Storage chosen")
 			this.storage_facilitiesTags()
@@ -263,6 +268,7 @@ class Form extends React.Component {
 			this.Safety_toolsTags()
 		}
 
+		})
 		
 	}
 
@@ -545,7 +551,7 @@ class Form extends React.Component {
 		console.log("Complaints tags have been called")
 		const tags = [
 			{formField: [[{inputtype: 'text', name:'report_name',placeholder:'Report Name',label:'Name of Report',showlabel:1}]]},
-			{formField: [[{inputtype: 'text', name:'no_of_complaints',placeholder:'Number of complaints',label:'Total Energy Available',showlabel:1}]]},
+			{formField: [[{inputtype: 'text', name:'no_of_complaints',placeholder:'Number of complaints',label:'Number of complaints',showlabel:1}]]},
 			{formField: [[{inputtype:'dropdown',name:'status_of_complaints',placeholder:'',label:'Status',showlabel:1,options:[['Resolved','RSD'],['Pending','PEN'],['Other (State reason in comments)','OTR']]}]]},
 			{formField: [[{inputtype: 'text', name:'comment',placeholder:'Any Comment?',label:'Comment',showlabel:1}]]},
 			{formField: [[{inputtype: 'image', name:'image',placeholder:'',label:'Upload image(s)',showlabel:1}]]},
@@ -590,8 +596,8 @@ class Form extends React.Component {
 	Safety_permission_systemTags(){
 		const tags = [
 			{formField: [[{inputtype: 'text', name:'report_name',placeholder:'Report Name',label:'Name of Report',showlabel:1}]]},
-			{formField: [[{inputtype: 'text', name:'no_of_permits_issued',placeholder:'Number of permits issued',label:'Number of exposed unstabilized slopes',showlabel:1}]]},
-			{formField: [[{inputtype:'dropdown',name:'status',placeholder:'',label:'Source',showlabel:1,options:[['Work Ended Safely','WES'],['Work did not end safely','WEU']]}]]},
+			{formField: [[{inputtype: 'text', name:'no_of_permits_issued',placeholder:'Number of permits issued',label:'Number of permits issued',showlabel:1}]]},
+			{formField: [[{inputtype:'dropdown',name:'status',placeholder:'',label:'Status',showlabel:1,options:[['Work Ended Safely','WES'],['Work did not end safely','WEU']]}]]},
 			{formField: [[{inputtype: 'text', name:'comment',placeholder:'Any Comment?',label:'Comment',showlabel:1}]]},
 			{formField: [[{inputtype: 'image', name:'image',placeholder:'',label:'Upload image(s)',showlabel:1}]]},
 			]
