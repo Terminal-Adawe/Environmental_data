@@ -93,6 +93,7 @@ CORS_ORIGIN_WHITELIST = [
     'http://localhost:8002',
     'http://localhost:8000',
     'http://localhost:8003',
+    'http://3.9.132.4'
 ]
 
 # Database

@@ -51,6 +51,13 @@ class Index extends React.Component {
 
 	render(){
 		return (<React.Fragment>
+				<div className="container">
+					<div className="row">
+						<div className="col-12">
+							<h2>Dashboard</h2>
+						</div>
+					</div>
+				</div>
 				<Template data={ this.state.data } module={ this.state.module }/>
   			</React.Fragment>)
 	}
