@@ -14,6 +14,19 @@ let location_array
  		console.log(image_url)
  	})
 
+
+ 	$('.mg-zoom').off('click').on('click',function(){
+ 		console.log("image url ")
+ 		var image_url = $(this).parent().siblings('.thumb-image').children('img').attr("src")
+ 		
+ 		console.log("image url is "+image_url)
+
+ 		$('.modal_image').attr("src",image_url)
+
+ 		console.log('image source is ')
+ 		console.log(image_url)
+ 	})
+
  });
 
  let map;

@@ -47,8 +47,9 @@
               <ul class="navbar-nav main-menu">
                 {% if user.is_authenticated %}
                 <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle gr-toggle-arrow" id="navbarDropdown" href="{% url 'analytics:dashboard' %}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dashboard <i class="icon icon-small-down"></i></a>
+                  <a class="nav-link dropdown-toggle gr-toggle-arrow" id="navbarDropdown" href="{% url 'analytics:dashboard' %}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Home <i class="icon icon-small-down"></i></a>
                   <ul class="gr-menu-dropdown dropdown-menu" aria-labelledby="navbarDropdown">
+                    {% if user.is_staff == 1 %}
                     <li class="drop-menu-item">
                       <a href="{% url 'analytics:dashboard' %}">
                         Dashboard
@@ -64,6 +65,13 @@
                         Media
                       </a>
                     </li>
+                    {% else %}
+                    <li class="drop-menu-item">
+                      <a href="{% url 'dataProcessor:index' %}">
+                        Input data
+                      </a>
+                    </li>
+                    {% endif %}
                   </ul>
                 </li>
                 {% endif %}

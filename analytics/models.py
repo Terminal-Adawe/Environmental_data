@@ -331,10 +331,13 @@ class Safety_tools(models.Model):
 	updated_at = models.DateTimeField(auto_now=True)
 	
 class Image(models.Model):
-	module_id = models.CharField(max_length=10)
+	module = models.ForeignKey(modules,
+		related_name="modules_key",
+		on_delete=models.PROTECT)
 	report_id = models.CharField(max_length=10)
 	image = models.ImageField(upload_to='report_images')
 	created_by = models.ForeignKey(User,
+		related_name="users_key",
 		on_delete=models.PROTECT)
 	updated_by = models.IntegerField(null=True, blank=True)
 	created_at = models.DateTimeField(auto_now_add=True)
@@ -342,18 +345,43 @@ class Image(models.Model):
 
 class Graph_config(models.Model):
 	graph_type = models.CharField(max_length=50)
-	module_id = models.CharField(max_length=10)
-	x_column = models.CharField(max_length=20,null=True, blank=True)
-	y_column = models.CharField(max_length=20, null=True, blank=True)
-	predictive = models.BooleanField()
+	graph_name = models.CharField(max_length=100, null=True, blank=True)
+	module = models.ForeignKey(modules,
+		related_name="modulesz",
+		on_delete=models.PROTECT)
+	x_column = models.CharField(max_length=90,null=True, blank=True)
+	y_column = models.CharField(max_length=90, null=True, blank=True)
+	predictive = models.BooleanField(default=False)
 	active = models.CharField(max_length=10)
 	created_by = models.ForeignKey(User,
+		related_name="users",
+		on_delete=models.PROTECT)
+	updated_by = models.IntegerField(null=True, blank=True)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+
+class Graph_builder_field(models.Model):
+	module = models.ForeignKey(modules,
+		related_name="graphbuildermodules",
+		on_delete=models.PROTECT)
+	column_fields = models.TextField(null=True, blank=True)
+	active = models.CharField(max_length=10)
+	created_by = models.ForeignKey(User,
+		related_name="graphbuilderuser",
 		on_delete=models.PROTECT)
 	updated_by = models.IntegerField(null=True, blank=True)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 		
-		
+class Chart(models.Model):
+	chart_name = models.CharField(max_length=90)
+	image = models.ImageField(upload_to='chart_images')
+	created_by = models.ForeignKey(User,
+		related_name="chartsuser",
+		on_delete=models.PROTECT)
+	updated_by = models.IntegerField(null=True, blank=True)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
 		
 
 		

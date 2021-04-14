@@ -55,3 +55,7 @@ body{
 .report_image:hover{
 	cursor: pointer;
 }
+
+.isotope-item{
+	height: 40px;
+}

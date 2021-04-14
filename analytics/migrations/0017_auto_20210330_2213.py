@@ -73,33 +73,4 @@ class Migration(migrations.Migration):
             name='location',
             field=models.CharField(default='0,0', max_length=20),
         ),
-        migrations.CreateModel(
-            name='Image',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('module_id', models.CharField(max_length=10)),
-                ('report_id', models.CharField(max_length=10)),
-                ('image', models.ImageField(upload_to='report_images')),
-                ('updated_by', models.IntegerField(blank=True, null=True)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('created_by', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL)),
-            ],
-        ),
-        migrations.CreateModel(
-            name='Graph_config',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('graph_type', models.CharField(max_length=50)),
-                ('module_id', models.CharField(max_length=10)),
-                ('x_column', models.CharField(blank=True, max_length=20, null=True)),
-                ('y_column', models.CharField(blank=True, max_length=20, null=True)),
-                ('predictive', models.BooleanField()),
-                ('active', models.CharField(max_length=10)),
-                ('updated_by', models.IntegerField(blank=True, null=True)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('created_by', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL)),
-            ],
-        ),
     ]

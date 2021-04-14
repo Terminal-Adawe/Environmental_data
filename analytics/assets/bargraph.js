@@ -1,6 +1,15 @@
 import React from 'react';
 import ReactDOM from "react-dom";
-import {XYPlot, XAxis, YAxis, HorizontalGridLines, VerticalGridLines, VerticalBarSeries as BarSeries, LineSeries} from 'react-vis';
+import {XYPlot, XAxis, YAxis, HorizontalGridLines, VerticalGridLines, VerticalBarSeries, LineSeries, LabelSeries} from 'react-vis';
+
+const greenData = [{x: 'A', y: 10}, {x: 'B', y: 5}, {x: 'C', y: 15}];
+
+const blueData = [{x: 'A', y: 12}, {x: 'B', y: 2}, {x: 'C', y: 11}];
+
+const labelData = greenData.map((d, idx) => ({
+  x: d.x,
+  y: Math.max(greenData[idx].y, blueData[idx].y)
+}));
 
 class BarGraph extends React.Component {
 	constructor(){
@@ -24,38 +33,23 @@ class BarGraph extends React.Component {
 
 
 
-	render(){
-		return (<XYPlot
-  width={300}
-  height={300}>
-  <HorizontalGridLines />
-  <VerticalGridLines />
-  <BarSeries
-  	color="#85c1e9"
-    data={this.props.data}
-    onValueMouseOver={(datapoint, event)=>{
-    // does something on click
-    // you can access the value of the event
-    // console.log("datapoint is ")
-    // console.log(datapoint.y)
-    // console.log(" and event is ")
-    // console.log(this.state.showHint)
+	render() {
+    const {useCanvas} = this.state;
 
-    this.showHint(true, datapoint.y)
-    
-  }}
-  onValueMouseOut={(datapoint, event)=>{
-    // does something on click
-    // you can access the value of the event
-    console.log(" mouse out is  ")
-    console.log(this.state.showHint)
-    this.showHint(false, datapoint.y)
-  }}
-  animation/>
-  <XAxis />
-  <YAxis />
-</XYPlot>)
-	}
+    const BarSeries =  VerticalBarSeries;
+    return (
+      <div>
+        <XYPlot xType="ordinal" width={300} height={300} xDistance={100}>
+          <VerticalGridLines />
+          <HorizontalGridLines />
+          <XAxis />
+          <YAxis />
+          <BarSeries data={this.props.data} animation/>
+        </XYPlot>
+      </div>
+    );
+  }
+
 }
 
 export default BarGraph

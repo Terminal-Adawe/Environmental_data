@@ -7,10 +7,28 @@ from django.urls import reverse
 from django.shortcuts import redirect
 
 from analytics.models import ComplianceValue
+from analytics.models import modules
+from analytics.models import Image
+from analytics.models import Storage_facility
+from analytics.models import Grease_and_hydocarbon_spillage
+from analytics.models import Waste_Management
+from analytics.models import Inceneration
+from analytics.models import Liquid_waste_oil
+from analytics.models import Health_and_hygiene_awareness
+from analytics.models import Energy_management
+from analytics.models import Complaints_register
+from analytics.models import Slope_stabilization_and_surface_water_retention
+from analytics.models import Safety_training
+from analytics.models import Safety_permission_system
+from analytics.models import Safety_tools
+from analytics.models import Graph_config
 
 from  analytics.forms import loginForm
 from  analytics.forms import indexloginForm
 from  analytics.forms import registerForm
+
+import json 
+
 
 # Create your views here.
 
@@ -104,6 +122,45 @@ def logout_user(request):
 
 def media(request):
     if request.user.is_authenticated:
-        return render(request, 'analytics/dashboard/media.html')
+        modules_queryset = modules.objects.filter(active=1)
+        image_queryset = Image.objects.select_related('module')
+        return render(request, 'analytics/dashboard/media.html',{'modules':modules_queryset,'images':image_queryset})
+    else:
+        return HttpResponseRedirect('login')
+
+def graph_builder(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            chart_type = request.POST['chart']
+            module_id = request.POST['module']
+            x_axis = request.POST['x-axis']
+            y_axis = request.POST['y-axis']
+            graph_name = request.POST['graph_name']
+
+            if 'predictive' in request.POST:
+                predictive = request.POST['predictive']
+            else:
+                predictive = 0
+
+            create_graph = Graph_config(
+                graph_name=graph_name,
+                graph_type=chart_type, 
+                x_column=x_axis, 
+                y_column=y_axis, 
+                predictive=predictive,
+                module_id=module_id,
+                created_by_id=request.user.id,
+                active=1
+                )
+            create_graph.save()
+            return render(request, 'analytics/dashboard/graph_builder.html')
+        else:
+            return render(request, 'analytics/dashboard/graph_builder.html')
+    else:
+        return HttpResponseRedirect('login')
+
+def report_builder(request):
+    if request.user.is_authenticated:
+        return render(request, 'analytics/dashboard/report_builder.html')
     else:
         return HttpResponseRedirect('login')

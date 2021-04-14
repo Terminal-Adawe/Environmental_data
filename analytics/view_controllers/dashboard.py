@@ -14,6 +14,9 @@ from dataProcessor.serializers import Safety_trainingSerializer
 from dataProcessor.serializers import Safety_permission_systemSerializer
 from dataProcessor.serializers import Safety_toolsSerializer
 from analytics.serializers import ModulesSerializer
+from analytics.serializers import FieldsSerializer_serializer
+from analytics.serializers import ChartSerializer
+from analytics.serializers import GraphConfigSerializer
 from analytics.models import Storage_facility
 from analytics.models import ComplianceValue
 from analytics.models import Grease_and_hydocarbon_spillage
@@ -28,10 +31,15 @@ from analytics.models import Safety_training
 from analytics.models import Safety_permission_system
 from analytics.models import Safety_tools
 from analytics.models import modules
+from analytics.models import Graph_builder_field
+from analytics.models import Chart
+from analytics.models import Graph_config
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 from django.http import HttpResponse, JsonResponse
 from drf_multiple_model.views import ObjectMultipleModelAPIView
+import json
+
 
 # class DashboardViewSet(viewsets.ViewSet):
 #     def list(self, request):
@@ -48,6 +56,7 @@ from drf_multiple_model.views import ObjectMultipleModelAPIView
 
 class DashboardViewSet(ObjectMultipleModelAPIView):
 		querylist=[
+			{'queryset': Graph_config.objects.all(), 'serializer_class': GraphConfigSerializer},
 			{'queryset': Storage_facility.objects.all(), 'serializer_class': Storage_facilitySerializer},
 			{'queryset': ComplianceValue.objects.all(), 'serializer_class': ComplianceValueSerializer},
 			{'queryset': Grease_and_hydocarbon_spillage.objects.all(), 'serializer_class': Grease_and_hydrogenSerializer},
@@ -63,3 +72,13 @@ class DashboardViewSet(ObjectMultipleModelAPIView):
 			{'queryset': Safety_tools.objects.all(), 'serializer_class': Safety_toolsSerializer},
 			{'queryset': modules.objects.all(), 'serializer_class': ModulesSerializer},
 		]
+
+
+class buildGraphViewSet(ObjectMultipleModelAPIView):
+	querylist=[
+			{'queryset': Chart.objects.all(), 'serializer_class': ChartSerializer},
+			{'queryset': Graph_builder_field.objects.all(), 'serializer_class': FieldsSerializer_serializer},
+			{'queryset': ComplianceValue.objects.all(), 'serializer_class': ComplianceValueSerializer},
+			{'queryset': modules.objects.all(), 'serializer_class': ModulesSerializer},
+		]
+		

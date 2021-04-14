@@ -5,7 +5,6 @@ import Template from './template';
 import axios from "axios";
 import cookie from "react-cookies";
 
-			// baseUrl: "http://localhost:8002",
 
 class Index extends React.Component {
 	constructor(){
@@ -14,7 +13,8 @@ class Index extends React.Component {
 		this.state={
 			data: [],
 			module: "all",
-			baseUrl: "http://3.9.132.4",
+			baseUrl: "https://d12m8zkkfoc9oy.cloudfront.net",
+			// baseUrl: "http://localhost:8002",
 		}
 
 		this.getDetails = this.getDetails.bind(this)

@@ -12,6 +12,9 @@ from .models import Safety_training
 from .models import Safety_permission_system
 from .models import ComplianceValue
 from .models import modules
+from .models import Graph_builder_field
+from .models import Chart
+from .models import Graph_config
 
 
 
@@ -38,4 +41,20 @@ class ComplianceValueSerializer(serializers.ModelSerializer):
 class ModulesSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = modules
-		fields = ("module_name","url","description","active")
+		fields = ("id","module_name","url","description","active")
+
+class FieldsSerializer_serializer(serializers.ModelSerializer):
+	class Meta:
+		model = Graph_builder_field
+		fields = '__all__'
+	
+class ChartSerializer(serializers.ModelSerializer):
+	"""docstring for ChartSerializer"""
+	class Meta:
+		model = Chart
+		fields = '__all__'
+
+class GraphConfigSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Graph_config
+		fields = '__all__'

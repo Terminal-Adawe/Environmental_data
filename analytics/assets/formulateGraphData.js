@@ -16,8 +16,7 @@ class FormulateGraphData extends React.Component {
 		}
 
 		this.checkModule = this.checkModule.bind(this)
-		this.Grease_and_hydocarbon = this.Grease_and_hydocarbon.bind(this)
-		this.storage_facility = this.storage_facility.bind(this)
+        this.formulateGraph = this.formulateGraph.bind(this)
 
 	}
 
@@ -26,12 +25,18 @@ class FormulateGraphData extends React.Component {
 			// console.log(this.props)
 			let data = []
 
-    		this.props.data ? data = this.checkModule(this.props.module)
+    		this.props.data ? data = this.checkModule(this.props.module, this.props.graphConfig)
 
     		: data = []
 
+             // this.props.data ? 
+             // data = this.formulateGraph(this.props.graphData)
+             // : data = []
+
     		// console.log("manipulated data is ")
     		// console.log(data)
+
+
 	
 			this.setState({
 				data: data,
@@ -51,14 +56,14 @@ class FormulateGraphData extends React.Component {
 		}
 	}
 
-	checkModule(module){
+	checkModule(module, graphConfig){
 		// console.log("In module check")
 		// console.log(module.module_name)
 		let rawData = []
 		switch(module.module_name){
 			case "storage_facility":
     			rawData = this.props.data.Storage_facility
-    			rawData = this.storage_facility(rawData)
+    			// rawData = this.storage_facility(rawData)
     			break;
     		// case "Grease_and_hydocarbon":
     		// 	rawData = this.props.data.Grease_and_hydocarbon_spillage
@@ -66,7 +71,7 @@ class FormulateGraphData extends React.Component {
     		// 	break;
     		case "Inceneration":
     			rawData = this.props.data.Inceneration
-    			rawData = this.Inceneration(rawData)
+    			// rawData = this.Inceneration(rawData)
     			break;
     		// case "liquid_waste_and_oil":
     		// 	rawData = this.props.data.Liquid_waste_oil
@@ -78,185 +83,66 @@ class FormulateGraphData extends React.Component {
     		// 	break;
     		case "energy_management":
     			rawData = this.props.data.Energy_management
-    			rawData = this.energy_management(rawData)
+    			// rawData = this.energy_management(rawData)
     			break;
     		case "complaints_register":
     			rawData = this.props.data.Complaints_register
-    			rawData = this.complaints_register(rawData)
+    			// rawData = this.complaints_register(rawData)
     			break;
     		case "slope_stabilization":
     			rawData = this.props.data.Slope_stabilization_and_surface_water_retention
-    			rawData = this.slope_stabilization(rawData)
+    			// rawData = this.slope_stabilization(rawData)
     			break;
     		case "safety_permission_system":
     			rawData = this.props.data.Safety_permission_system
-    			rawData = this.safety_permission_system(rawData)
+    			// rawData = this.safety_permission_system(rawData)
     			break;
     		case "safety_training":
     			rawData = this.props.data.Safety_training
-    			rawData = this.safety_training(rawData)
+    			// rawData = this.safety_training(rawData)
     			break;
     		case "safety_tools":
     			rawData = this.props.data.Safety_tools
-    			rawData = this.safety_tools(rawData)
+    			// rawData = this.safety_tools(rawData)
     			break;
     		case "Waste_Management":
     			rawData = this.props.data.Waste_Management
-    			rawData = this.Waste_Management(rawData)
+    			// rawData = this.Waste_Management(rawData)
     			break;
     		default:
     			rawData=""
     			break;
 		}
 
+        rawData = this.formulateGraph(rawData, graphConfig)
+
 		return rawData
     				
 	}
 
-	storage_facility(rawData){
-			let data = []
-			rawData ?
-    		rawData.map((val, i)=>{
-    		  // console.log("Value given is "+val.current_capacity)
-    		      data = [...data, {'x': i, 'y': val.current_capacity}]
-    		    })
-    		  : ""
 
-    		  return data
-	}
+    formulateGraph(data_x, graphConfig){
+        let data = []
+            data_x ?
+            data_x.map((val, i)=>{
+              // console.log("Value given is "+val.current_capacity)
+              let x_column = ""
+              let y_column = ""
+              graphConfig.x_column=="sequence" || graphConfig.graph_type=="Line Chart"
+              ? x_column = i
+              : x_column = val.[graphConfig.x_column]
 
-	Grease_and_hydocarbon(rawData){
-			let data = []
-			rawData ?
-    		rawData.map((val, i)=>{
-    		  // console.log("Value given is "+val.current_capacity)
-    		      data = [...data, {'x': i, 'y': val.current_capacity}]
-    		    })
-    		  : ""
+              graphConfig.y_column=="sequence" 
+              ? y_column = i
+              : y_column = val.[graphConfig.y_column]
 
-    		  return data
-	}
 
-	Waste_Management(rawData){
-			let data = []
-			rawData ?
-    		rawData.map((val, i)=>{
-    		  // console.log("Value given is "+val.glass_waste_source )
-    		      data = [...data, {'x': i, 'y': val.glass_waste_weight }]
-    		    })
-    		  : ""
+                  data = [...data, {x: x_column, y: y_column}]
+                })
+              : ""
 
-    		  return data
-	}
-
-	Inceneration(rawData){
-			let data = []
-			rawData ?
-    		rawData.map((val, i)=>{
-    		  // console.log("Value given is "+val.items_incenerated)
-    		      data = [...data, {'x': i, 'y': val.quantity}]
-    		    })
-    		  : ""
-
-    		  return data
-	}
-
-	liquid_waste_and_oil(rawData){
-			let data = []
-			rawData ?
-    		rawData.map((val, i)=>{
-    		  // console.log("Value given is "+val.current_capacity)
-    		      data = [...data, {'x': i, 'y': val.current_capacity}]
-    		    })
-    		  : ""
-
-    		  return data
-	}
-
-	health_and_hygiene_awareness(rawData){
-			let data = []
-			rawData ?
-    		rawData.map((val, i)=>{
-    		  // console.log("Value given is "+val.no_of_staff )
-    		      data = [...data, {'x': val.training, 'y': val.no_of_staff }]
-    		    })
-    		  : ""
-
-    		  return data
-	}
-
-	energy_management(rawData){
-			let data = []
-			rawData ?
-    		rawData.map((val, i)=>{
-    		  // console.log("Value given is "+val.total_energy_available )
-    		      data = [...data, {'x': i, 'y': val.total_energy_available }]
-    		    })
-    		  : ""
-
-    		  return data
-	}
-
-	complaints_register(rawData){
-			let data = []
-			rawData ?
-    		rawData.map((val, i)=>{
-    		  // console.log("Value given is "+val.no_of_complaints)
-    		      data = [...data, {'x': i, 'y': val.no_of_complaints}]
-    		    })
-    		  : ""
-
-    		  return data
-	}
-
-	slope_stabilization(rawData){
-			let data = []
-			rawData ?
-    		rawData.map((val, i)=>{
-    		  // console.log("Value given is "+val.no_of_exposed_unstabilized_slopes)
-    		      data = [...data, {'x': i, 'y': val.no_of_exposed_unstabilized_slopes}]
-    		    })
-    		  : ""
-
-    		  return data
-	}
-
-	safety_permission_system(rawData){
-			let data = []
-			rawData ?
-    		rawData.map((val, i)=>{
-    		  // console.log("Value given is "+val.no_of_permits_issued)
-    		      data = [...data, {'x': i, 'y': val.no_of_permits_issued}]
-    		    })
-    		  : ""
-
-    		  return data
-	}
-
-	safety_training(rawData){
-			let data = []
-			rawData ?
-    		rawData.map((val, i)=>{
-    		  // console.log("Value given is "+val.no_of_inductions)
-    		      data = [...data, {'x': i, 'y': val.no_of_inductions}]
-    		    })
-    		  : ""
-
-    		  return data
-	}
-
-	safety_tools(rawData){
-			let data = []
-			rawData ?
-    		rawData.map((val, i)=>{
-    		  // console.log("Value given is "+val.no_of_estinquishers )
-    		      data = [...data, {'x': i, 'y': val.no_of_estinquishers }]
-    		    })
-    		  : ""
-
-    		  return data
-	}
-
+              return data
+    }
 
 	
 
@@ -269,9 +155,18 @@ class FormulateGraphData extends React.Component {
 			// console.log(this.state.data)
   			return (<></>)
 		} else {
-			// console.log("Array...")
-			// console.log(this.state.data)
-			return (<React.Fragment><div>{ this.props.module.description }</div><LineGraph data={this.state.data} /></React.Fragment>)
+			console.log("graph configs are...")
+			console.log(this.props.graphConfig)
+            let graph = ""
+            if(this.props.graphConfig.graph_type == "Line Chart"){
+                graph = <LineGraph data={this.state.data} />
+            } else if (this.props.graphConfig.graph_type == "Bar Chart"){
+                graph = <BarGraph data={this.state.data} />
+            }
+
+			return (<React.Fragment><div>{ this.props.module.description }</div>
+                    { graph }
+                    </React.Fragment>)
 		}
 		
 	}

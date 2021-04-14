@@ -27,7 +27,7 @@ class LineGraph extends React.Component {
 
 
 	render(){
-		console.log("All data graph is ")
+		console.log("Line graph data graph is ")
 		console.log(this.props.data)
 		return (<XYPlot
   					width={300}
@@ -38,17 +38,6 @@ class LineGraph extends React.Component {
     					data={this.props.data}
     					style={{ fill: 'none' }}
   					/>
-  					<ChartLabel
-    					text="Y Axis"
-    					className="alt-y-label"
-    					includeMargin={true}
-    					xPercent={0.05}
-    					yPercent={0.10}
-    					style={{
-    					  transform: 'rotate(-90)',
-    					  textAnchor: 'end'
-    					}}
-    				/>
   					<XAxis />
   					<YAxis />
 				</XYPlot>)

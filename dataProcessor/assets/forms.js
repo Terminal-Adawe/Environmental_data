@@ -211,7 +211,6 @@ class Form extends React.Component {
 		this.handleImageChange = this.handleImageChange.bind(this)
 		this.updateEntries = this.updateEntries.bind(this)
 		this.submitForm = this.submitForm.bind(this)
-		this.getDetails = this.getDetails.bind(this)
 		this.getCookie = this.getCookie.bind(this)
 
 		this.tagDeclaration = this.tagDeclaration.bind(this)
@@ -390,19 +389,6 @@ class Form extends React.Component {
     }
 
 
-    getDetails(){
-		axios.get(`/api/get-details/`)
-        	.then(response => {
-        		console.log(response)
-          this.setState({
-            certifications: response.data.certifications,
-          })
-        })
-        .catch(error => {
-          // here catch error messages from laravel validator and show them 
-          console.log(error)
-     	})
-	}
 
 	tagDeclaration(tags, url){
 		this.setState({
