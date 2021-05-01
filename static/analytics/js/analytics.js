@@ -1,9 +1,7 @@
 let location_array
 
  $(document).ready(function(){
- 	const location_i = document.querySelector('.location').value
-
- 	location_array = location_i.split(",")
+ 	console.log("I appear")
 
  	$('.report_image').off('click').on('click',function(){
  		var image_url = $(this).attr("src")
@@ -27,6 +25,49 @@ let location_array
  		console.log(image_url)
  	})
 
+ 	// Date selector processsing
+
+ 	var dtToday = new Date();
+    
+    var month = dtToday.getMonth() + 1;
+    var day = dtToday.getDate();
+    var year = dtToday.getFullYear();
+    if(month < 10)
+        month = '0' + month.toString();
+    if(day < 10)
+        day = '0' + day.toString();
+    
+    var maxDate = year + '-' + month + '-' + day;
+    // alert(maxDate);
+    $('#todate').attr('max', maxDate);
+    $('#fromdate').attr('max', maxDate);
+
+    $('#fromdate').change(function(){
+    	console.log('date change'+$(this).val());
+    	$('#todate').attr('min', $(this).val());
+    });
+
+    $('#todate').change(function(){
+    	console.log('date change'+$(this).val());
+    	$('#fromdate').attr('max', $(this).val());
+    });
+
+    // Fin
+
+    // Export all selected
+    $(".export-all-selected").off("click").on("click",function(){
+    	const module_s = $(this).siblings("#module_s").val();
+    	console.log("Module is "+module_s);
+    	$("#module_name").val(module_s);
+    	console.log("Module is "+$("#module_name").val());
+    })
+
+
+    // All code should be above the code below since it picks location
+    // and location has not been implemented in all the templates
+    const location_i = document.querySelector('.location').value
+
+ 	location_array = location_i.split(",")
  });
 
  let map;
