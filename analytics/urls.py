@@ -29,5 +29,5 @@ urlpatterns = [
     path('/dataProcessor/',include('dataProcessor.urls')),
     path('get-module-details/', dashboard.buildGraphViewSet.as_view(), name='get-module-details'),
     # path(r'^export/csv$', report_exports.export_single_report, name='export_report'),
-    path(r'^export/csv/default/$', report_exports.export_default_report, name='export_report'),
+    path(r'^export/csv/$', report_exports.export_report, name='export_report'),
 ]

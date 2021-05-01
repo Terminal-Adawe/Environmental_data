@@ -21,7 +21,7 @@ from analytics.models import modules
 from analytics.models import Image
 from datetime import *
 
-def export_default_report(request):
+def export_report(request):
 	if request.user.is_authenticated:
 		if request.method == 'POST':
 			module = request.POST['module_name']
