@@ -4,6 +4,7 @@ from rest_framework import routers
 from . import views
 from .view_controllers import index
 from .view_controllers import dashboard
+from .view_controllers import report_exports
 
 app_name = 'analytics'
 
@@ -27,4 +28,6 @@ urlpatterns = [
     path('get-details/', dashboard.DashboardViewSet.as_view(), name='get-details'),
     path('/dataProcessor/',include('dataProcessor.urls')),
     path('get-module-details/', dashboard.buildGraphViewSet.as_view(), name='get-module-details'),
+    # path(r'^export/csv$', report_exports.export_single_report, name='export_report'),
+    path(r'^export/csv/default/$', report_exports.export_default_report, name='export_report'),
 ]

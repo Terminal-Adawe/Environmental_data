@@ -1,6 +1,9 @@
 {% load static %}
 	<div class="card">
-		<form>
+		<form method="POST" action="{% url 'analytics:export_report' %}">
+      {% csrf_token %}
+      <input type="hidden" name="module_name" id="module_name" value="Grease_and_hydocarbon">
+      <input type="hidden" name="report_id" value={{ data.id }}>
 			<table class="table table-striped table-responsive-sm">
 				<!-- <thead>
  				   <tr>
@@ -68,7 +71,7 @@
              </tr>
  				 </tbody>
 				</table>
-  		</form>
-  			<button class="mr-4 btn btn-danger" type="button">Print</button>
-            <button class="mx-4 btn btn-info" type="button">Export to Excel</button>
+  			<!-- <button class="mr-4 btn btn-danger" type="button">Print</button> -->
+        <button class="mx-4 btn btn-info" type="submit">Export to Excel</button>
+      </form>
 	</div>

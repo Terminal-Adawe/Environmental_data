@@ -10,9 +10,9 @@ from rest_framework import status
 
 class Health_and_hygieneViewSet(viewsets.ViewSet):
     def create(self, request):
-        queryset = Health_and_hygiene_awarenessSerializer_serializer.objects.all()
+        queryset = Health_and_hygiene_awareness.objects.all()
 
-        serializer = Liquid_waste_oilSerializer_serializer(data=request.data)
+        serializer = Health_and_hygiene_awarenessSerializer_serializer(data=request.data)
         # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
 
         if serializer.is_valid(raise_exception=True):

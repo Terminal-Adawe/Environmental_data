@@ -1,0 +1,172 @@
+{% load static %}
+
+	<div class="container-fluid">
+		{% for module in modules %}
+		<section class="panel">
+			<header class="panel-heading">
+				<div class="panel-actions">
+					<a href="#" class="fa fa-caret-down"></a>
+					<!-- <a href="#" class="fa fa-times"></a> -->
+				</div>
+		
+				<h2 class="panel-title">{{ module.description }} Reports</h2>
+			</header>
+			<div class="panel-body">
+				<table class="table table-bordered table-striped mb-none" id="datatable-details">
+					<thead>
+						<tr>
+							<th>Report Name</th>
+							<th>Report Type</th>
+							<th>Report Date</th>
+						</tr>
+					</thead>
+					{% if module.id == 1 %}
+					<tbody>
+						{% for value in data1 %}
+						<tr class="grade">
+							<td><a class="row-link" href="{% url 'analytics:view_report' report_id=value.id module=module.module_name %}">{{ value.report_name }}</a></td>
+							<td>{{ module.description }}</td>
+							<td>{{ value.created_at }}</td>
+						</tr>
+						{% endfor %}
+						<tr class="grade"><td colspan="2" style="border: none;"><a href="{% url 'analytics:view_all_reports' module=module.module_name %}" class="btn btn-outline-danger">View all</a></td>
+							<td colspan="1" style="border: none;"><a href="#" class="btn btn-outline-danger export-all-selected"  data-toggle="modal" data-target="#report-date-selector">Export All</a><input type="hidden" id="module_s" value="{{ module.module_name }}"></td></tr>
+					</tbody>
+					{% elif module.id == 2 %}
+					<tbody>
+						{% for value in data2 %}
+						<tr class="grade">
+							<td><a class="row-link" href="{% url 'analytics:view_report' report_id=value.id module=module.module_name %}">{{ value.report_name }}</a></td>
+							<td>{{ module.description }}</td>
+							<td>{{ value.created_at }}</td>
+						</tr>
+						{% endfor %}
+						<tr class="grade"><td colspan="2"><a href="{% url 'analytics:view_all_reports' module=module.module_name %}" class="btn btn-outline-danger">View all</a></td>
+						<td colspan="1" style="border: none;"><a href="#" class="btn btn-outline-danger export-all-selected"  data-toggle="modal" data-target="#report-date-selector">Export All</a><input type="hidden" id="module_s" value="{{ module.module_name }}"></td></tr>
+					</tbody>
+					{% elif module.id == 3 %}
+					<tbody>
+						{% for value in data3 %}
+						<tr class="grade">
+							<td><a class="row-link" href="{% url 'analytics:view_report' report_id=value.id module=module.module_name %}">{{ value.report_name }}</a></td>
+							<td>{{ module.description }}</td>
+							<td>{{ value.created_at }}</td>
+						</tr>
+						{% endfor %}
+						<tr class="grade"><td colspan="2"><a href="{% url 'analytics:view_all_reports' module=module.module_name %}" class="btn btn-outline-danger">View all</a></td>
+						<td colspan="1" style="border: none;"><a href="#" class="btn btn-outline-danger export-all-selected"  data-toggle="modal" data-target="#report-date-selector">Export All</a><input type="hidden" id="module_s" value="{{ module.module_name }}"></td></tr>
+					</tbody>
+					{% elif module.id == 4 %}
+					<tbody>
+						{% for value in data4 %}
+						<tr class="grade">
+							<td><a class="row-link" href="{% url 'analytics:view_report' report_id=value.id module=module.module_name %}">{{ value.report_name }}</a></td>
+							<td>{{ module.description }}</td>
+							<td>{{ value.created_at }}</td>
+						</tr>
+						{% endfor %}
+						<tr class="grade"><td colspan="2"><a href="{% url 'analytics:view_all_reports' module=module.module_name %}" class="btn btn-outline-danger">View all</a></td>
+						<td colspan="1" style="border: none;"><a href="#" class="btn btn-outline-danger export-all-selected"  data-toggle="modal" data-target="#report-date-selector">Export All</a><input type="hidden" id="module_s" value="{{ module.module_name }}"></td></tr>
+					</tbody>
+					{% elif module.id == 5 %}
+					<tbody>
+						{% for value in data5 %}
+						<tr class="grade">
+							<td><a class="row-link" href="{% url 'analytics:view_report' report_id=value.id module=module.module_name %}">{{ value.report_name }}</a></td>
+							<td>{{ module.description }}</td>
+							<td>{{ value.created_at }}</td>
+						</tr>
+						{% endfor %}
+						<tr class="grade"><td colspan="2"><a href="{% url 'analytics:view_all_reports' module=module.module_name %}" class="btn btn-outline-danger">View all</a></td>
+						<td colspan="1" style="border: none;"><a href="#" class="btn btn-outline-danger export-all-selected"  data-toggle="modal" data-target="#report-date-selector">Export All</a><input type="hidden" id="module_s" value="{{ module.module_name }}"></td></tr>
+					</tbody>
+					{% elif module.id == 6 %}
+					<tbody>
+						{% for value in data6 %}
+						<tr class="grade">
+							<td><a class="row-link" href="{% url 'analytics:view_report' report_id=value.id module=module.module_name %}">{{ value.report_name }}</a></td>
+							<td>{{ module.description }}</td>
+							<td>{{ value.created_at }}</td>
+						</tr>
+						{% endfor %}
+						<tr class="grade"><td colspan="2"><a href="{% url 'analytics:view_all_reports' module=module.module_name %}" class="btn btn-outline-danger">View all</a></td>
+						<td colspan="1" style="border: none;"><a href="#" class="btn btn-outline-danger export-all-selected"  data-toggle="modal" data-target="#report-date-selector">Export All</a><input type="hidden" id="module_s" value="{{ module.module_name }}"></td></tr>
+					</tbody>
+					{% elif module.id == 7 %}
+					<tbody>
+						{% for value in data7 %}
+						<tr class="grade">
+							<td><a class="row-link" href="{% url 'analytics:view_report' report_id=value.id module=module.module_name %}">{{ value.report_name }}</a></td>
+							<td>{{ module.description }}</td>
+							<td>{{ value.created_at }}</td>
+						</tr>
+						{% endfor %}
+						<tr class="grade"><td colspan="2"><a href="{% url 'analytics:view_all_reports' module=module.module_name %}" class="btn btn-outline-danger">View all</a></td>
+						<td colspan="1" style="border: none;"><a href="#" class="btn btn-outline-danger export-all-selected"  data-toggle="modal" data-target="#report-date-selector">Export All</a><input type="hidden" id="module_s" value="{{ module.module_name }}"></td></tr>
+					</tbody>
+					{% elif module.id == 8 %}
+					<tbody>
+						{% for value in data8 %}
+						<tr class="grade">
+							<td><a class="row-link" href="{% url 'analytics:view_report' report_id=value.id module=module.module_name %}">{{ value.report_name }}</a></td>
+							<td>{{ module.description }}</td>
+							<td>{{ value.created_at }}</td>
+						</tr>
+						{% endfor %}
+						<tr class="grade"><td colspan="2"><a href="{% url 'analytics:view_all_reports' module=module.module_name %}" class="btn btn-outline-danger">View all</a></td>
+						<td colspan="1" style="border: none;"><a href="#" class="btn btn-outline-danger export-all-selected"  data-toggle="modal" data-target="#report-date-selector">Export All</a><input type="hidden" id="module_s" value="{{ module.module_name }}"></td></tr>
+					</tbody>
+					{% elif module.id == 9 %}
+					<tbody>
+						{% for value in data9 %}
+						<tr class="grade">
+							<td><a class="row-link" href="{% url 'analytics:view_report' report_id=value.id module=module.module_name %}">{{ value.report_name }}</a></td>
+							<td>{{ module.description }}</td>
+							<td>{{ value.created_at }}</td>
+						</tr>
+						{% endfor %}
+						<tr class="grade"><td colspan="2"><a href="{% url 'analytics:view_all_reports' module=module.module_name %}" class="btn btn-outline-danger">View all</a></td>
+						<td colspan="1" style="border: none;"><a href="#" class="btn btn-outline-danger export-all-selected"  data-toggle="modal" data-target="#report-date-selector">Export All</a><input type="hidden" id="module_s" value="{{ module.module_name }}"></td></tr>
+					</tbody>
+					{% elif module.id == 10 %}
+					<tbody>
+						{% for value in data10 %}
+						<tr class="grade">
+							<td><a class="row-link" href="{% url 'analytics:view_report' report_id=value.id module=module.module_name %}">{{ value.report_name }}</a></td>
+							<td>{{ module.description }}</td>
+							<td>{{ value.created_at }}</td>
+						</tr>
+						{% endfor %}
+						<tr class="grade"><td colspan="2"><a href="{% url 'analytics:view_all_reports' module=module.module_name %}" class="btn btn-outline-danger">View all</a></td>
+						<td colspan="1" style="border: none;"><a href="#" class="btn btn-outline-danger export-all-selected"  data-toggle="modal" data-target="#report-date-selector">Export All</a><input type="hidden" id="module_s" value="{{ module.module_name }}"></td></tr>
+					</tbody>
+					{% elif module.id == 11 %}
+					<tbody>
+						{% for value in data11 %}
+						<tr class="grade">
+							<td><a class="row-link" href="{% url 'analytics:view_report' report_id=value.id module=module.module_name %}">{{ value.report_name }}</a></td>
+							<td>{{ module.description }}</td>
+							<td>{{ value.created_at }}</td>
+						</tr>
+						{% endfor %}
+						<tr class="grade"><td colspan="2"><a href="{% url 'analytics:view_all_reports' module=module.module_name %}" class="btn btn-outline-danger">View all</a></td>
+						<td colspan="1" style="border: none;"><a href="#" class="btn btn-outline-danger export-all-selected"  data-toggle="modal" data-target="#report-date-selector">Export All</a><input type="hidden" id="module_s" value="{{ module.module_name }}"></td></tr>
+					</tbody>
+					{% elif module.id == 12 %}
+					<tbody>
+						{% for value in data12 %}
+						<tr class="grade">
+							<td><a class="row-link" href="{% url 'analytics:view_report' report_id=value.id module=module.module_name %}">{{ value.report_name }}</a></td>
+							<td>{{ module.description }}</td>
+							<td>{{ value.created_at }}</td>
+						</tr>
+						{% endfor %}
+						<tr class="grade"><td colspan="2"><a href="{% url 'analytics:view_all_reports' module=module.module_name %}" class="btn btn-outline-danger">View all</a></td>
+						<td colspan="1" style="border: none;"><a href="#" class="btn btn-outline-danger export-all-selected"  data-toggle="modal" data-target="#report-date-selector">Export All</a><input type="hidden" id="module_s" value="{{ module.module_name }}"></td></tr>
+					</tbody>
+					{% endif %}
+				</table>
+			</div>
+		</section>
+		{% endfor %}
+	</div>

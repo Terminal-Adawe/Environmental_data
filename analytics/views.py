@@ -1,3 +1,4 @@
+import csv
 from django.shortcuts import render
 from django.http import HttpResponse
 from analytics.models import ComplianceValue
@@ -81,9 +82,9 @@ def view_report(request, module, report_id):
 	elif module == "slope_stabilization":
 		myModel = Slope_stabilization_and_surface_water_retention
 	elif module == "safety_permission_system":
-		myModel = Safety_training
-	elif module == "safety_training":
 		myModel = Safety_permission_system
+	elif module == "safety_training":
+		myModel = Safety_training
 	elif module == "safety_tools":
 		myModel = Safety_tools
 
@@ -119,9 +120,9 @@ def view_all_reports(request, module):
 	elif module == "slope_stabilization":
 		myModel = Slope_stabilization_and_surface_water_retention
 	elif module == "safety_permission_system":
-		myModel = Safety_training
-	elif module == "safety_training":
 		myModel = Safety_permission_system
+	elif module == "safety_training":
+		myModel = Safety_training
 	elif module == "safety_tools":
 		myModel = Safety_tools
 
@@ -130,4 +131,5 @@ def view_all_reports(request, module):
 	queryset = myModel.objects.all()
 
 	return render(request, 'analytics/dashboard/reports_all_records.html',{'data':queryset,'module':module, 'modules':queryset13})
+
 

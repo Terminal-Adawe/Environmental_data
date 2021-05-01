@@ -1,78 +1,12 @@
 {% load static %}
 {% include "analytics/dashboard/head.html" %}
 
+<!-- value="https://d12m8zkkfoc9oy.cloudfront.net" -->
 <body>
-	<input type="hidden" id="baseUrl" value="https://d12m8zkkfoc9oy.cloudfront.net">
+	<input type="hidden" id="baseUrl" value="http://localhost:8002">
 		<section class="body">
 
-			<!-- start: header -->
-			<header class="header">
-				<div class="logo-container">
-					<a href="../" class="logo">
-						<!-- <img src="{% static 'analytics/assets/images/logo.png' %}" height="35" alt="JSOFT Admin" /> -->
-						GeoMining Consultancy Company Limited
-					</a>
-					<div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
-						<i class="fa fa-bars" aria-label="Toggle sidebar"></i>
-					</div>
-				</div>
-			
-				<!-- start: search & user box -->
-				<div class="header-right">
-			
-					<form action="pages-search-results.html" class="search nav-form">
-						<div class="input-group input-search">
-							<input type="text" class="form-control" name="q" id="q" placeholder="Search...">
-							<span class="input-group-btn">
-								<button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
-							</span>
-						</div>
-					</form>
-			
-					<span class="separator"></span>
-			
-					{% include "analytics/dashboard/notifications.html" %}
-			
-					<span class="separator"></span>
-			
-					<div id="userbox" class="userbox">
-						<a href="#" data-toggle="dropdown">
-							<figure class="profile-picture">
-								<img src="{% static 'analytics/assets/images/!logged-user.jpg' %}" alt="Joseph Doe" class="img-circle" data-lock-picture="{% static 'analytics/assets/images/!logged-user.jpg' %}" />
-							</figure>
-							<div class="profile-info" data-lock-name="John Doe" data-lock-email="johndoe@JSOFT.com">
-								{% if user.is_authenticated %}
-  									<span class="name">{{ request.user.username }}</span>
-  									<span class="role">administrator</span>
-								{% else %}
-        						<a class="nav-link" href="{% url 'analytics:login' %}">
-        						  Login
-        						</a>
-        						{% endif %}
-							</div>
-			
-							<i class="fa custom-caret"></i>
-						</a>
-			
-						<div class="dropdown-menu">
-							<ul class="list-unstyled">
-								<li class="divider"></li>
-								<li>
-									<a role="menuitem" tabindex="-1" href="#"><i class="fa fa-user"></i> My Profile</a>
-								</li>
-								<!-- <li>
-									<a role="menuitem" tabindex="-1" href="#" data-lock-screen="true"><i class="fa fa-lock"></i> Lock Screen</a>
-								</li> -->
-								<li>
-									<a role="menuitem" tabindex="-1" href="{% url 'analytics:logout' %}"><i class="fa fa-power-off"></i> Logout</a>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-				<!-- end: search & user box -->
-			</header>
-			<!-- end: header -->
+			{% include "analytics/dashboard/header.html" %}
 
 			<div class="inner-wrapper">
 				{% include "analytics/dashboard/sidebar.html" %}
@@ -99,96 +33,16 @@
         				{% block content %}{% endblock %}
     				</div>
 					
+					<hr/>
+
+
 				</section>
+				{% include "analytics/dashboard/footer_nav.html" %}
 			</div>
 
-			<aside id="sidebar-right" class="sidebar-right">
-				<div class="nano">
-					<div class="nano-content">
-						<a href="#" class="mobile-close visible-xs">
-							Collapse <i class="fa fa-chevron-right"></i>
-						</a>
-			
-						<div class="sidebar-right-wrapper">
-			
-							<div class="sidebar-widget widget-calendar">
-								<h6>Upcoming Tasks</h6>
-								<div data-plugin-datepicker data-plugin-skin="dark" ></div>
-			
-								<ul>
-									<li>
-										<time datetime="2014-04-19T00:00+00:00">04/19/2014</time>
-										<span>Company Meeting</span>
-									</li>
-								</ul>
-							</div>
-			
-							<div class="sidebar-widget widget-friends">
-								<h6>Friends</h6>
-								<ul>
-									<li class="status-online">
-										<figure class="profile-picture">
-											<img src="{% static 'analytics/assets/images/!sample-user.jpg' %}" alt="Joseph Doe" class="img-circle">
-										</figure>
-										<div class="profile-info">
-											<span class="name">Joseph Doe Junior</span>
-											<span class="title">Hey, how are you?</span>
-										</div>
-									</li>
-									<li class="status-online">
-										<figure class="profile-picture">
-											<img src="{% static 'analytics/assets/images/!sample-user.jpg' %}" alt="Joseph Doe" class="img-circle">
-										</figure>
-										<div class="profile-info">
-											<span class="name">Joseph Doe Junior</span>
-											<span class="title">Hey, how are you?</span>
-										</div>
-									</li>
-									<li class="status-offline">
-										<figure class="profile-picture">
-											<img src="{% static 'analytics/assets/images/!sample-user.jpg' %}" alt="Joseph Doe" class="img-circle">
-										</figure>
-										<div class="profile-info">
-											<span class="name">Joseph Doe Junior</span>
-											<span class="title">Hey, how are you?</span>
-										</div>
-									</li>
-									<li class="status-offline">
-										<figure class="profile-picture">
-											<img src="{% static 'analytics/assets/images/!sample-user.jpg' %}" alt="Joseph Doe" class="img-circle">
-										</figure>
-										<div class="profile-info">
-											<span class="name">Joseph Doe Junior</span>
-											<span class="title">Hey, how are you?</span>
-										</div>
-									</li>
-								</ul>
-							</div>
-			
-						</div>
-					</div>
-				</div>
-			</aside>
+			{% include "analytics/dashboard/calendar.html" %}
 		</section>
 
 
-<!-- The Modal -->
-<div class="modal" id="imageModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-
-      <!-- Modal body -->
-      <div class="modal-body">
-        <img src="" class="modal_image" width="100%">
-      </div>
-
-
-    </div>
-  </div>
-</div>
+{% include "analytics/dashboard/modals.html" %}
 {% include "analytics/dashboard/footer.html" %}
