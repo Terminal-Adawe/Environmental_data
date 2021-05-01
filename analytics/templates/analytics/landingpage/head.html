@@ -35,12 +35,12 @@
         <nav class="navbar site-navbar offcanvas-active navbar-expand-lg px-0">
           <!-- Brand Logo-->
           <div class="brand-logo d-inline-block">
-            <a href="{% url 'analytics:index' %}">
               <!-- light version logo (logo must be black)-->
               <!-- <img src="{% static 'analytics/images/png/logo-blue.png' %}" alt=""> -->
-              GeoMining Consultancy
+              <a href="{% url 'analytics:index' %}" class="logo">
+                <img src="{% static 'analytics/images/companyicon.jpeg' %}" height="35" alt="Geomining" />
+              </a>
               <!-- Dark version logo (logo must be White)-->
-            </a>
           </div>
           <div class="collapse navbar-collapse" id="mobile-menu">
             <div class="navbar-nav-wrapper">
