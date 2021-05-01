@@ -1,6 +1,5 @@
 import csv
 import xlwt
-import pytz
 
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -19,7 +18,6 @@ from analytics.models import Safety_permission_system
 from analytics.models import Safety_tools
 from analytics.models import modules
 from analytics.models import Image
-from datetime import *
 
 def export_report(request):
 	if request.user.is_authenticated:

@@ -1,4 +1,3 @@
-import csv
 from django.shortcuts import render
 from django.http import HttpResponse
 from analytics.models import ComplianceValue
