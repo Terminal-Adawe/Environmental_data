@@ -164,7 +164,13 @@ class FormulateGraphData extends React.Component {
                 graph = <BarGraph data={this.state.data} />
             }
 
-			return (<React.Fragment><div>{ this.props.module.description }</div>
+			return (<React.Fragment>
+                <div className="container-fluid">
+                    <div className="row graph-name">
+                        <h4>{this.props.graphConfig.graph_name}</h4>
+                    </div>
+                    <div className="row">{ this.props.module.description }</div>
+                </div>
                     { graph }
                     </React.Fragment>)
 		}

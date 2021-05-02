@@ -21,8 +21,12 @@ function ColumnMaker(props){
 
   console.log("module name is "+props.module.description)
 									
-		return (<div className="col-lg-6 col-sm-12 mt-3">
-              <FormulateGraphData data={data} module={props.module} graphConfig={ props.graphConfig }/>
+		return (<div className="col-lg-6 col-sm-12 my-2">
+              <div className="card graph-card my-2">
+                <div className="card-body">
+                  <FormulateGraphData data={data} module={props.module} graphConfig={ props.graphConfig }/>
+                </div>
+              </div>
             </div>)
 									
 								
@@ -30,23 +34,17 @@ function ColumnMaker(props){
 
 
 function Widget_generator(props){
-  return (<React.Fragment>
+  return (<div className="container-fluid">
+            <div className="row">
           {
             props.widgets.map((widget,i)=>{
-              console.log('widget 1 ')
-              console.log(widget)
-          //   props.data ? 
-              return <Widgets_custom compliance={ props.data.ComplianceValue } parameter={ widget[0] } background={ widget[1] } />
-          //   : ""
+              return <div className="col-lg-4 col-sm-12">
+              <Widgets_custom compliance={ props.data.ComplianceValue } parameter={ widget[0] } background={ widget[1] } />
+              </div>
             })
           }
-       </React.Fragment>)
-
-      // return <React.Fragment>
-      //           <Widgets_a compliance={ props.data.ComplianceValue } parameter={ props.parameter } />
-      //           <Widgets_b compliance={ props.data.ComplianceValue } parameter={ props.parameter } />
-      //           <Widgets_c compliance={ props.data.ComplianceValue } parameter={ props.parameter } />
-      //       </React.Fragment>
+          </div>
+       </div>)
 } 
 
 
