@@ -4,17 +4,38 @@
 
 {% block content %}
 <body>
-	<div class="container form-container">
-		<div class="row">
-			{% for module in modules %}
-			<div class="col-lg-3 col-sm-6 mt-1">
-				<div class="card carded-modules">
-					<a href="{% url 'dataProcessor:'|add:module.url %}"></a>
-					<span class="centerDiv"><a href="{% url 'dataProcessor:'|add:module.url %}" class="link_name">{{ module.description }}</a></span>
+	<!-- <div class="container-fluid form-container"> -->
+		<section class="panel">
+			<div class="panel-body">
+				<div class="container">
+					<div class="row">
+						{% for module in modules %}
+							{% if module.priority > 2 %}
+								<div class="col-lg-2 col-sm-6 mt-3">
+									<div class="card carded-modules">
+										<a href="{% url 'dataProcessor:get_template' module=module.module_name %}"></a>
+										<span class="centerDiv"><i class="fa {{ module.icon }} fa-2x" style="color: #73c6b6;" aria-hidden="true"></i><br/>{{ module.description }}</span>
+									</div>
+								</div>
+							{% endif %}
+						{% endfor %}
+					</div>
+					<hr>
+					<div class="row mt-2">
+						{% for module in modules %}
+							{% if module.priority < 3 %}
+						<div class="col-lg-2 col-sm-6 mt-3">
+							<div class="card carded-modules">
+								<a href="{% url 'dataProcessor:get_template' module=module.module_name %}"></a>
+								<span class="centerDiv"><i class="fa {{ module.icon }} fa-2x" style="color: #73c6b6;" aria-hidden="true"></i><br/>{{ module.description }}</span>
+							</div>
+						</div>
+							{% endif %}
+						{% endfor %}
+					</div>
 				</div>
 			</div>
-			{% endfor %}
-		</div>
-	</div>
+		</section>
+	<!-- </div> -->
 </body>
 {% endblock %}

@@ -3,9 +3,13 @@ from rest_framework import viewsets
 from dataProcessor.serializers import Complaints_registerSerializer
 from dataProcessor.serializers import Complaints_registerSerializer_serializer
 from analytics.models import Complaints_register
+from analytics.models import Notifications
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 from rest_framework import status
+
+from dataProcessor.view_controllers.formulateID import formulate_insert_id
+from analytics.view_controllers.notifications import insert_notification
 
 
 class Complaints_registerViewSet(viewsets.ViewSet):
@@ -21,26 +25,19 @@ class Complaints_registerViewSet(viewsets.ViewSet):
             created_by_id = user.id
             # created_by_id = 4
 
-            queryset = Complaints_register.objects.filter(report_name=serializer.data['report_name'])
-
-            outData = queryset
-
-            if queryset.exists():
-                statusMessage = "Report name already exists"
-                return Response({'message': statusMessage}, status=status.HTTP_208_ALREADY_REPORTED)
-            else:
-                gah_sav = Complaints_register(
-                    report_name=serializer.data['report_name'],
+            data_save = Complaints_register(
                     no_of_complaints=serializer.data['no_of_complaints'],
                     status_of_complaints=serializer.data['status_of_complaints'],
                     comment=serializer.data['comment'],
                     location=serializer.data['location'],
                     created_by_id=created_by_id)
 
-                gah_sav.save()
-                status_code= 200
-                outData = gah_sav
+            data_save.save()
+            data_save.report_name = formulate_insert_id(15,str(data_save.id))
+            data_save.save()
+            
+            insert_notification(8,"Complaints Register",data_save.report_name,user)
 
-            return Response(Complaints_registerSerializer(outData).data, status=status.HTTP_201_CREATED)
+            return Response(Complaints_registerSerializer(data_save).data, status=status.HTTP_201_CREATED)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)

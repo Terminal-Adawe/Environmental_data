@@ -3,9 +3,13 @@ from rest_framework import viewsets
 from dataProcessor.serializers import Storage_facilitySerializer
 from dataProcessor.serializers import Storage_facilitySerializer_serializer
 from analytics.models import Storage_facility
+from analytics.models import Notifications
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 from rest_framework import status
+
+from dataProcessor.view_controllers.formulateID import formulate_insert_id
+from analytics.view_controllers.notifications import insert_notification
 
 # Create your views here.
 # class Storage_facilityViewSet(APIView):
@@ -28,22 +32,12 @@ class Storage_facilityViewSet(viewsets.ViewSet):
 
         if serializer.is_valid(raise_exception=True):
             storage_type = "Dam"
-            serializer.data['report_name'] = "Zip_1"
+
             user = User.objects.get(username=serializer.data['username'])
             created_by_id = user.id
     		# created_by_id = 4
-
-            queryset = Storage_facility.objects.filter(storage_type=storage_type,report_name=serializer.data['report_name'])
-
-            status_code = 500
-            outData = queryset
-
-            if queryset.exists():
-                statusMessage = "Report name already exists"
-                return Response({'message': statusMessage}, status=status.HTTP_208_ALREADY_REPORTED)
-            else:
-                storage_fac = Storage_facility(storage_type=storage_type,
-                    report_name=serializer.data['report_name'],
+        
+            data_save = Storage_facility(storage_type=storage_type,
                     status_of_seepage_point=serializer.data['status_of_seepage_point'],
                     stability_of_dam_walls=serializer.data['stability_of_dam_walls'],
                     holding_capacity=serializer.data['holding_capacity'],
@@ -55,10 +49,13 @@ class Storage_facilityViewSet(viewsets.ViewSet):
                     signs_of_erosion_spillway_tip=serializer.data['signs_of_erosion_spillway_tip'],
                     created_by_id=created_by_id)
 
-                storage_fac.save()
-                status_code= 200
-                outData = storage_fac
-                return Response(Storage_facilitySerializer(outData).data, status=status.HTTP_201_CREATED)
+            data_save.save()
+            data_save.report_name = formulate_insert_id(1,str(data_save.id))
+            data_save.save()
+
+            insert_notification(1,"Storage Facility",data_save.report_name,user)
+
+            return Response(Storage_facilitySerializer(data_save).data, status=status.HTTP_201_CREATED)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 

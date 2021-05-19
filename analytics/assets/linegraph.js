@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from "react-dom";
-import {XYPlot, XAxis, YAxis, HorizontalGridLines, VerticalGridLines, ChartLabel, VerticalBarSeries as BarSeries, LineSeries} from 'react-vis';
-import './../node_modules/react-vis/dist/style.css';
+import {XYPlot, XAxis, YAxis, 
+  HorizontalGridLines, VerticalGridLines, ChartLabel, 
+  VerticalBarSeries as BarSeries, LineSeries, FlexibleXYPlot,
+  FlexibleWidthXYPlot, Crosshair} from 'react-vis';
 
 class LineGraph extends React.Component {
 	constructor(){
@@ -9,10 +11,13 @@ class LineGraph extends React.Component {
 
     this.state={
       showHint: false,
-      value: ""
+      value: "",
+      crosshairValues: []
     }
 
     this.showHint = this.showHint.bind(this)
+    this._onMouseLeave = this._onMouseLeave.bind(this)
+    this._onNearestX = this._onNearestX.bind(this)
 	}
 
 
@@ -23,24 +28,36 @@ class LineGraph extends React.Component {
     })
   }
 
+  _onMouseLeave () {
+      this.setState({crosshairValues: []});
+    };
+
+  _onNearestX (value, {index}) {
+      this.setState({crosshairValues: this.props.data.map(d => d[index])});
+    };
+
 
 
 
 	render(){
 		console.log("Line graph data graph is ")
 		console.log(this.props.data)
-		return (<XYPlot
-  					width={300}
-  					height={300}>
+		return (<FlexibleWidthXYPlot
+  					height={300}
+            onMouseLeave={this._onMouseLeave}>
   					<HorizontalGridLines />
   					<VerticalGridLines />
   					<LineSeries
     					data={this.props.data}
     					style={{ fill: 'none' }}
+              onNearestX={this._onNearestX}
   					/>
   					<XAxis />
   					<YAxis />
-				</XYPlot>)
+            <Crosshair
+              values={this.state.crosshairValues}
+            />
+				</FlexibleWidthXYPlot>)
 			}
 	}
 

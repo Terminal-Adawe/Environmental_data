@@ -3,9 +3,13 @@ from rest_framework import viewsets
 from dataProcessor.serializers import Energy_managementSerializer
 from dataProcessor.serializers import Energy_managementSerializer_serializer
 from analytics.models import Energy_management
+from analytics.models import Notifications
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 from rest_framework import status
+
+from dataProcessor.view_controllers.formulateID import formulate_insert_id
+from analytics.view_controllers.notifications import insert_notification
 
 
 class Energy_managementViewSet(viewsets.ViewSet):
@@ -21,17 +25,7 @@ class Energy_managementViewSet(viewsets.ViewSet):
             created_by_id = user.id
             # created_by_id = 4
 
-            queryset = Energy_management.objects.filter(report_name=serializer.data['report_name'])
-
-            status_code = 500
-            outData = queryset
-
-            if queryset.exists():
-                statusMessage = "Report name already exists"
-                return Response({'message': statusMessage}, status=status.HTTP_208_ALREADY_REPORTED)
-            else:
-                gah_sav = Energy_management(
-                    report_name=serializer.data['report_name'],
+            data_save = Energy_management(
                     total_energy_available=serializer.data['total_energy_available'],
                     camp_consumption=serializer.data['camp_consumption'],
                     admin_consumption=serializer.data['admin_consumption'],
@@ -42,10 +36,12 @@ class Energy_managementViewSet(viewsets.ViewSet):
                     location=serializer.data['location'],
                     created_by_id=created_by_id)
 
-                gah_sav.save()
-                status_code= 200
-                outData = gah_sav
+            data_save.save()
+            data_save.report_name = formulate_insert_id(15,str(data_save.id))
+            data_save.save()
 
-            return Response(Energy_managementSerializer(outData).data, status=status.HTTP_201_CREATED)
+            insert_notification(7,"Energy Management",data_save.report_name,user)
+
+            return Response(Energy_managementSerializer(data_save).data, status=status.HTTP_201_CREATED)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)

@@ -12,6 +12,12 @@ from analytics.models import Safety_training
 from analytics.models import Safety_permission_system
 from analytics.models import Safety_tools
 from analytics.models import Image
+from analytics.models import GeoReferencePoints
+from analytics.models import FuelFarm
+from analytics.models import WorkEnvCompliance
+from analytics.models import Warehouse
+from analytics.models import Conveyers
+from analytics.models import IncidentReport
 
 
 
@@ -43,7 +49,6 @@ class Storage_facilitySerializer_serializer(serializers.Serializer):
 	status_of_seepage_point = serializers.ChoiceField(choices=Storage_facility.SEEPAGE_POINTS_S)
 	signs_of_erosion_spillway_tip = serializers.ChoiceField(choices=Storage_facility.YES_NO)
 	# storage_type = serializers.CharField(max_length=50)
-	report_name = serializers.CharField(max_length=100)
 	# status_of_seepage_point = serializers.CharField(max_length=50)
 	# stability_of_dam_walls = serializers.CharField(max_length=50)
 	holding_capacity = serializers.CharField(max_length=10)
@@ -65,7 +70,6 @@ class Grease_and_hydrogenSerializer(serializers.ModelSerializer):
 
 class Grease_and_hydrogenSerializer_serializer(serializers.Serializer):
 	storage_condition = serializers.ChoiceField(choices=Grease_and_hydocarbon_spillage.STORAGE_CONDITION_S)
-	report_name = serializers.CharField(max_length=100)
 	comment = serializers.CharField(max_length=500, required=False,allow_blank=True)
 	username = serializers.CharField(max_length=100)
 	location = serializers.CharField(max_length=200)
@@ -80,15 +84,14 @@ class Waste_ManagementSerializer(serializers.ModelSerializer):
 
 class Waste_ManagementSerializer_serializer(serializers.Serializer):
 	segregation_at_source_and_bins = serializers.ChoiceField(choices=Waste_Management.SEGREGATION_S)
-	glass_waste_source = serializers.CharField(max_length=100)
-	glass_waste_weight = serializers.CharField(max_length=100)
-	plastic_waste_source = serializers.CharField(max_length=100)
-	plastic_waste_weight = serializers.CharField(max_length=100)
-	metal_waste_source = serializers.CharField(max_length=100)
-	metal_waste_weight = serializers.CharField(max_length=100)
+	glass_waste_source = serializers.ListField(max_length=100)
+	glass_waste_weight = serializers.ListField(max_length=100)
+	plastic_waste_source = serializers.ListField(max_length=100)
+	plastic_waste_weight = serializers.ListField(max_length=100)
+	metal_waste_source = serializers.ListField(max_length=100)
+	metal_waste_weight = serializers.ListField(max_length=100)
 	comment = serializers.CharField(max_length=500, required=False,allow_blank=True)
 	username = serializers.CharField(max_length=100)
-	report_name = serializers.CharField(max_length=100)
 	location = serializers.CharField(max_length=100)
 
 	def create(self, validated_data):
@@ -105,7 +108,6 @@ class IncenerationSerializer_serializer(serializers.Serializer):
 	temperature = serializers.CharField(max_length=100)
 	comment = serializers.CharField(max_length=500, required=False,allow_blank=True)
 	username = serializers.CharField(max_length=100)
-	report_name = serializers.CharField(max_length=100)
 	location = serializers.CharField(max_length=100)
 
 	def create(self, validated_data):
@@ -121,7 +123,6 @@ class Liquid_waste_oilSerializer_serializer(serializers.Serializer):
 	source = serializers.ChoiceField(choices=Liquid_waste_oil.SOURCE)
 	comment = serializers.CharField(max_length=500, required=False,allow_blank=True)
 	username = serializers.CharField(max_length=100)
-	report_name = serializers.CharField(max_length=100)
 	location = serializers.CharField(max_length=100)
 
 	def create(self, validated_data):
@@ -139,7 +140,6 @@ class Health_and_hygiene_awarenessSerializer_serializer(serializers.Serializer):
 	duration = serializers.CharField(max_length=100)
 	comment = serializers.CharField(max_length=500,required=False,allow_blank=True)
 	username = serializers.CharField(max_length=100)
-	report_name = serializers.CharField(max_length=100)
 	location = serializers.CharField(max_length=100)
 
 	def create(self, validated_data):
@@ -159,7 +159,6 @@ class Energy_managementSerializer_serializer(serializers.Serializer):
 	other_consumption = serializers.CharField(max_length=100)
 	comment = serializers.CharField(max_length=500,required=False,allow_blank=True)
 	username = serializers.CharField(max_length=100)
-	report_name = serializers.CharField(max_length=100)
 	location = serializers.CharField(max_length=100)
 
 	def create(self, validated_data):
@@ -175,7 +174,6 @@ class Complaints_registerSerializer_serializer(serializers.Serializer):
 	status_of_complaints = serializers.ChoiceField(choices=Complaints_register.STATUS_S)
 	comment = serializers.CharField(max_length=500,required=False,allow_blank=True)
 	username = serializers.CharField(max_length=100)
-	report_name = serializers.CharField(max_length=100)
 	location = serializers.CharField(max_length=200)
 	image = ImageSerializer_serializer
 
@@ -192,7 +190,6 @@ class Slope_stabilization_and_surface_water_retentionSerializer_serializer(seria
 	status = serializers.ChoiceField(choices=Slope_stabilization_and_surface_water_retention.STATUS_S)
 	comment = serializers.CharField(max_length=500,required=False,allow_blank=True)
 	username = serializers.CharField(max_length=100)
-	report_name = serializers.CharField(max_length=100)
 	location = serializers.CharField(max_length=200)
 
 	def create(self, validated_data):
@@ -211,7 +208,6 @@ class Safety_trainingSerializer_serializer(serializers.Serializer):
 	duration = serializers.CharField(max_length=100)
 	comment = serializers.CharField(max_length=500,required=False,allow_blank=True)
 	username = serializers.CharField(max_length=100)
-	report_name = serializers.CharField(max_length=100)
 	location = serializers.CharField(max_length=200)
 
 	def create(self, validated_data):
@@ -227,7 +223,6 @@ class Safety_permission_systemSerializer_serializer(serializers.Serializer):
 	status = serializers.ChoiceField(choices=Safety_permission_system.STATUS_S)
 	comment = serializers.CharField(max_length=500,required=False,allow_blank=True)
 	username = serializers.CharField(max_length=100)
-	report_name = serializers.CharField(max_length=100)
 	location = serializers.CharField(max_length=200)
 
 	def create(self, validated_data):
@@ -244,7 +239,6 @@ class Safety_toolsSerializer_serializer(serializers.Serializer):
 	status_of_estinguishers = serializers.ChoiceField(choices=Safety_tools.STATUS_T)
 	comment = serializers.CharField(max_length=500,required=False,allow_blank=True)
 	username = serializers.CharField(max_length=100)
-	report_name = serializers.CharField(max_length=100)
 	location = serializers.CharField(max_length=200)
 
 	def create(self, validated_data):
@@ -266,5 +260,94 @@ class Graph_configSerializer_serializer(serializers.Serializer):
 	def create(self, validated_data):
 		return Safety_tools(id=None, **validated_data)
 
+class GeoReferencePointsSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = GeoReferencePoints
+		fields = '__all__'
 
+class GeoReferencePointsSerializer_serializer(serializers.Serializer):
+	"""docstring for Geo_referenceViewSet"""
+	comment = serializers.CharField(max_length=500,required=False,allow_blank=True)
+	username = serializers.CharField(max_length=100)
+	location = serializers.CharField(max_length=200)
+
+class FuelFarmSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = FuelFarm
+		fields = '__all__'
+
+class FuelFarmSerializer_serializer(serializers.Serializer):
+	"""docstring for Geo_referenceViewSet"""
+	comment = serializers.CharField(max_length=500,required=False,allow_blank=True)
+	username = serializers.CharField(max_length=100)
+	location = serializers.CharField(max_length=200)
+	spillage_status = serializers.ChoiceField(choices=FuelFarm.STATUS_S)
+	impervious_status = serializers.ChoiceField(choices=FuelFarm.STATUS_I)
+
+class WorkEnvComplianceSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = WorkEnvCompliance
+		fields = '__all__'
+
+class WorkEnvComplianceSerializer_serializer(serializers.Serializer):
+	"""docstring for Geo_referenceViewSet"""
+	comment = serializers.CharField(max_length=500,required=False,allow_blank=True)
+	username = serializers.CharField(max_length=100)
+	location = serializers.CharField(max_length=200)
+	first_aid = serializers.ChoiceField(choices=WorkEnvCompliance.STATUS_S)
+	safety_stickers = serializers.ChoiceField(choices=WorkEnvCompliance.STATUS_S)
+	fire_alarm = serializers.ChoiceField(choices=WorkEnvCompliance.STATUS_S)
+	first_aid = serializers.ChoiceField(choices=WorkEnvCompliance.STATUS_S)
+	flooding = serializers.ChoiceField(choices=WorkEnvCompliance.STATUS_S)
+	flammables = serializers.ChoiceField(choices=WorkEnvCompliance.STATUS_S)
+	estinguishers = serializers.ChoiceField(choices=WorkEnvCompliance.STATUS_S)
+	no_of_estinquishers = serializers.CharField(max_length=20)
+
+class WarehouseSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Warehouse
+		fields = '__all__'
+
+class WarehouseSerializer_serializer(serializers.Serializer):
+	"""docstring for Geo_referenceViewSet"""
+	comment = serializers.CharField(max_length=500,required=False,allow_blank=True)
+	username = serializers.CharField(max_length=100)
+	location = serializers.CharField(max_length=200)
+	eye_wash = serializers.ChoiceField(choices=Warehouse.STATUS_S)
+	shower = serializers.ChoiceField(choices=Warehouse.STATUS_S)
+
+class ConveyersSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Conveyers
+		fields = '__all__'
+
+class ConveyersSerializer_serializer(serializers.Serializer):
+	"""docstring for Geo_referenceViewSet"""
+	comment = serializers.CharField(max_length=500,required=False,allow_blank=True)
+	username = serializers.CharField(max_length=100)
+	location = serializers.CharField(max_length=200)
+	electrical_safety_insulation = serializers.ChoiceField(choices=Conveyers.STATUS_S)
+	shower = serializers.ChoiceField(choices=Conveyers.STATUS_S)
+
+class IncidentReportSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = IncidentReport
+		fields = '__all__'
+
+class IncidentReportSerializer_serializer(serializers.Serializer):
+	"""docstring for Geo_referenceViewSet"""
+	comment = serializers.CharField(max_length=500,required=False,allow_blank=True)
+	username = serializers.CharField(max_length=100)
+	location = serializers.CharField(max_length=200)
+	incident_location = serializers.CharField(max_length=200)
+	incident_category = serializers.ChoiceField(choices=IncidentReport.STATUS_C)
+	victim_name = serializers.CharField(max_length=200)
+	incident_start = serializers.DateField()
+	incident_end = serializers.DateField()
+	cause_of_incident = serializers.CharField(max_length=300)
+	actions_taken_immediately = serializers.CharField(max_length=300)
+	further_actions_taken = serializers.CharField(max_length=300)
+	corrective_measures = serializers.CharField(max_length=400)
+	responsible_person = serializers.CharField(max_length=200)
+		
 		

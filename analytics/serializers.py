@@ -15,6 +15,7 @@ from .models import modules
 from .models import Graph_builder_field
 from .models import Chart
 from .models import Graph_config
+from .models import Notifications
 
 
 
@@ -57,4 +58,9 @@ class ChartSerializer(serializers.ModelSerializer):
 class GraphConfigSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Graph_config
+		fields = '__all__'
+
+class NotificationsSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Notifications
 		fields = '__all__'

@@ -8,6 +8,11 @@ from rest_framework.views import APIView
 from django.contrib.auth.models import User
 from analytics.models import modules
 import io
+import logging
+
+
+
+logger = logging.getLogger("django")
 
 # Create your views here.
 # class Storage_facilityViewSet(APIView):
@@ -61,53 +66,129 @@ class Storage_facilityViewSet(viewsets.ViewSet):
     		return Response(Storage_facilitySerializer(outData).data, status=status_code)
     	else:
     		return Response(status=201)
+
+def get_template(request, module):
+    module = module
+    queryset = modules.objects.filter(active=1)
+
+    url = ''
+
+    if module == "storage_facility":
+        url = 'dataProcessor/storage/storage.html'
+    elif module == "Grease_and_hydocarbon":
+        url = 'dataProcessor/grease_and_hydrocarbon/grease_and_hydrocarbon.html'
+    elif module == "Waste_Management":
+        url = 'dataProcessor/waste_management/waste_management.html'
+    elif module == "Inceneration":
+        url = 'dataProcessor/inceneration/inceneration.html'
+    elif module == "liquid_waste_and_oil":
+        url = 'dataProcessor/liquid_waste_and_oil/liquid_waste_and_oil.html'
+    elif module == "health_and_hygiene_awareness":
+        url = 'dataProcessor/health_and_hygiene_awareness/health_and_hygiene_awareness.html'
+    elif module == "energy_management":
+        url = 'dataProcessor/energy_management/energy_management.html'
+    elif module == "complaints_register":
+        url = 'dataProcessor/forms/complaints_register.html'
+    elif module == "slope_stabilization":
+        url = 'dataProcessor/forms/slope_stabilization.html'
+    elif module == "safety_permission_system":
+        url = 'dataProcessor/forms/safety_permission_system.html'
+    elif module == "safety_training":
+        url = 'dataProcessor/forms/safety_training.html'
+    elif module == "safety_tools":
+        url = 'dataProcessor/forms/safety_tools.html'
+    elif module == "geo_reference":
+        url = 'dataProcessor/forms/geoReference.html'
+    elif module == "fuel_farm":
+        url = 'dataProcessor/forms/fuelFarm.html'
+    elif module == "work_env_compliance":
+        url = 'dataProcessor/forms/workEnvCompliance.html'
+    elif module == "warehouse":
+        url = 'dataProcessor/forms/warehouse.html'
+    elif module == "conveyers":
+        url = 'dataProcessor/forms/conveyers.html'
+    elif module == "incident_report":
+        url = 'dataProcessor/forms/incidentReport.html'
+
+    logger.info("url is ")
+    logger.info(url)
+
+    return render(request, url, {'modules' : queryset, 'module' : module})
         
 def storage_facilityView(request):
-	queryset = modules.objects.all()
+	queryset = modules.objects.filter(active=1)
 	return render(request, 'dataProcessor/storage/storage.html', {'modules' : queryset})
 
 def grease_and_hydrocarbonView(request):
-	queryset = modules.objects.all()
+	queryset = modules.objects.filter(active=1)
 	return render(request, 'dataProcessor/grease_and_hydrocarbon/grease_and_hydrocarbon.html', {'modules' : queryset})
 
 def waste_managementView(request):
-	queryset = modules.objects.all()
+	queryset = modules.objects.filter(active=1)
 	return render(request, 'dataProcessor/waste_management/waste_management.html', {'modules' : queryset})
 
 def incenerationView(request):
-	queryset = modules.objects.all()
+	queryset = modules.objects.filter(active=1)
 	return render(request, 'dataProcessor/inceneration/inceneration.html', {'modules' : queryset})
 
 def liquid_waste_oilView(request):
-	queryset = modules.objects.all()
+	queryset = modules.objects.filter(active=1)
 	return render(request, 'dataProcessor/liquid_waste_and_oil/liquid_waste_and_oil.html', {'modules' : queryset})
 
 def health_and_hygiene_awarenessView(request):
-	queryset = modules.objects.all()
+	queryset = modules.objects.filter(active=1)
 	return render(request, 'dataProcessor/health_and_hygiene_awareness/health_and_hygiene_awareness.html', {'modules' : queryset})
 
 def energy_managementView(request):
-	queryset = modules.objects.all()
+	queryset = modules.objects.filter(active=1)
 	return render(request, 'dataProcessor/energy_management/energy_management.html', {'modules' : queryset})
 
 def complaints_registerView(request):
-	queryset = modules.objects.all()
+	queryset = modules.objects.filter(active=1)
 	return render(request, 'dataProcessor/forms/complaints_register.html', {'modules' : queryset})
 
 def slope_stabilizationView(request):
-	queryset = modules.objects.all()
+	queryset = modules.objects.filter(active=1)
 	return render(request, 'dataProcessor/forms/slope_stabilization.html', {'modules' : queryset})
 
 def safety_permission_systemView(request):
-	queryset = modules.objects.all()
+	queryset = modules.objects.filter(active=1)
 	return render(request, 'dataProcessor/forms/safety_permission_system.html', {'modules' : queryset})
 
 def safety_trainingView(request):
-	queryset = modules.objects.all()
+	queryset = modules.objects.filter(active=1)
 	return render(request, 'dataProcessor/forms/safety_training.html', {'modules' : queryset})
 
 def safety_toolsView(request):
-	queryset = modules.objects.all()
+	queryset = modules.objects.filter(active=1)
 	return render(request, 'dataProcessor/forms/safety_tools.html', {'modules' : queryset})
+
+def geoReferenceView(request):
+    queryset = modules.objects.filter(active=1)
+    return render(request, 'dataProcessor/forms/geoReference.html', {'modules' : queryset})
+
+def fuelFarmView(request):
+    queryset = modules.objects.filter(active=1)
+    return render(request, 'dataProcessor/forms/fuelFarm.html', {'modules' : queryset})
+
+def workEnvComplianceView(request):
+    queryset = modules.objects.filter(active=1)
+    return render(request, 'dataProcessor/forms/workEnvCompliance.html', {'modules' : queryset})
+
+def warehouseView(request):
+    queryset = modules.objects.filter(active=1)
+    return render(request, 'dataProcessor/forms/warehouse.html', {'modules' : queryset})
+
+def conveyersView(request):
+    queryset = modules.objects.filter(active=1)
+    return render(request, 'dataProcessor/forms/conveyers.html', {'modules' : queryset})
+
+def incidentReportView(request):
+    queryset = modules.objects.filter(active=1)
+    return render(request, 'dataProcessor/forms/incidentReport.html', {'modules' : queryset})
+
+
+
+
 
 

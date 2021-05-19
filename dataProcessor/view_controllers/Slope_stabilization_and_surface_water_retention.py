@@ -3,9 +3,13 @@ from rest_framework import viewsets
 from dataProcessor.serializers import Slope_stabilization_and_surface_water_retentionSerializer
 from dataProcessor.serializers import Slope_stabilization_and_surface_water_retentionSerializer_serializer
 from analytics.models import Slope_stabilization_and_surface_water_retention
+from analytics.models import Notifications
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 from rest_framework import status
+
+from dataProcessor.view_controllers.formulateID import formulate_insert_id
+from analytics.view_controllers.notifications import insert_notification
 
 
 class Slope_stabilization_and_surface_water_retentionViewSet(viewsets.ViewSet):
@@ -21,26 +25,19 @@ class Slope_stabilization_and_surface_water_retentionViewSet(viewsets.ViewSet):
             created_by_id = user.id
             # created_by_id = 4
 
-            queryset = Slope_stabilization_and_surface_water_retention.objects.filter(report_name=serializer.data['report_name'])
-
-            status_code = 500
-            outData = queryset
-
-            if queryset.exists():
-                statusMessage = "Report name already exists"
-                return Response({'message': statusMessage}, status=status.HTTP_208_ALREADY_REPORTED)
-            else:
-                gah_sav = Slope_stabilization_and_surface_water_retention(
-                    report_name=serializer.data['report_name'],
+            data_save = Slope_stabilization_and_surface_water_retention(
                     no_of_exposed_unstabilized_slopes=serializer.data['no_of_exposed_unstabilized_slopes'],
                     status=serializer.data['status'],
                     location=serializer.data['location'],
                     created_by_id=created_by_id)
 
-                gah_sav.save()
-                status_code= 200
-                outData = gah_sav
+            data_save.save()
 
-            return Response(Slope_stabilization_and_surface_water_retentionSerializer(outData).data, status=status.HTTP_201_CREATED)
+            data_save.report_name = formulate_insert_id(9,str(data_save.id))
+            data_save.save()
+
+            insert_notification(9,"Slope Stabilization and Surface water retention",data_save.report_name,user)
+
+            return Response(Slope_stabilization_and_surface_water_retentionSerializer(data_save).data, status=status.HTTP_201_CREATED)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)

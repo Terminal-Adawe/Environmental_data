@@ -2,7 +2,7 @@
 
 {% load static %}
 
-{% block content %}
+{% block main_content %}
 	<div class="container-fluid">
 		{% for module1 in modules %}
 			{% if module1.module_name == module %}
@@ -27,7 +27,7 @@
 						<tbody>
 							{% for value in data %}
 							<tr class="grade">
-								<td><a class="row-link" href="{% url 'analytics:view_report' report_id=value.id module=module1.module_name %}">{{ value.report_name }}</a></td>
+								<td><a class="row-link" href="{% url 'analytics:view_report' report_id=value.report_name module=module1.id %}">{{ value.report_name }}</a></td>
 								<td>{{ module1.description }}</td>
 								<td>{{ value.created_at }}</td>
 							</tr>

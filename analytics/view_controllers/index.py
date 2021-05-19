@@ -164,3 +164,41 @@ def report_builder(request):
         return render(request, 'analytics/dashboard/report_builder.html')
     else:
         return HttpResponseRedirect('login')
+
+def adduser(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            form = registerForm(request.POST)
+    
+            if form.is_valid():
+                username = form.cleaned_data['username']
+                password = form.cleaned_data['password']
+                password_confirm = form.cleaned_data['password_confirm']
+                firstname = form.cleaned_data['first_name']
+                lastname = form.cleaned_data['last_name']
+                email = form.cleaned_data['email']
+    
+                if  password != password_confirm:
+                     return render(request, 'analytics/dashboard/adduser.html', {
+                        'form': form,
+                        'error_message': ' Passwords do not match '
+                    })
+    
+                else:
+                    user = User.objects.create_user(username, email, password)
+                    user.last_name = lastname
+                    user.first_name = firstname
+                    user.save()
+    
+                    return HttpResponseRedirect('register_user')
+        else:
+            form = registerForm()
+            return render(request, 'analytics/dashboard/adduser.html',{'form': form})
+    else:
+        return HttpResponseRedirect('login')
+
+def edituser(request):
+    if request.user.is_authenticated:
+        return render(request, 'analytics/dashboard/edituser.html')
+    else:
+        return HttpResponseRedirect('login')

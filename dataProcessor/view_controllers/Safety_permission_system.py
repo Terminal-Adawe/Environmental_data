@@ -3,9 +3,13 @@ from rest_framework import viewsets
 from dataProcessor.serializers import Safety_permission_systemSerializer
 from dataProcessor.serializers import Safety_permission_systemSerializer_serializer
 from analytics.models import Safety_permission_system
+from analytics.models import Notifications
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 from rest_framework import status
+
+from dataProcessor.view_controllers.formulateID import formulate_insert_id
+from analytics.view_controllers.notifications import insert_notification
 
 
 class Safety_permission_systemViewSet(viewsets.ViewSet):
@@ -21,27 +25,20 @@ class Safety_permission_systemViewSet(viewsets.ViewSet):
             created_by_id = user.id
             # created_by_id = 4
 
-            queryset = Safety_permission_system.objects.filter(report_name=serializer.data['report_name'])
 
-            status_code = 500
-            outData = queryset
-
-            if queryset.exists():
-                statusMessage = "Report name already exists"
-                return Response({'message': statusMessage}, status=status.HTTP_208_ALREADY_REPORTED)
-            else:
-                gah_sav = Safety_permission_system(
-                    report_name=serializer.data['report_name'],
+            data_save = Safety_permission_system(
                     no_of_permits_issued=serializer.data['no_of_permits_issued'],
                     status=serializer.data['status'],
                     comment=serializer.data['comment'],
                     location=serializer.data['location'],
                     created_by_id=created_by_id)
 
-                gah_sav.save()
-                status_code= 200
-                outData = gah_sav
+            data_save.save()
+            data_save.report_name = formulate_insert_id(15,str(data_save.id))
+            data_save.save()
 
-            return Response(Safety_permission_systemSerializer(outData).data, status=status.HTTP_201_CREATED)
+            insert_notification(10,"Safety Permission System",data_save.report_name,user)
+
+            return Response(Safety_permission_systemSerializer(data_save).data, status=status.HTTP_201_CREATED)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)

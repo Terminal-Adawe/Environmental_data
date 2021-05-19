@@ -2,14 +2,23 @@
 
 {% load static %}
 
+<div class="container">
+	<div class="row">
+		<div class="col-6">
+		</div>
+		<div class="col-6">
+			Taking things one at a time
+		</div>
+	</div>
+</div>
 {% block content %}
-<body>
-	<div class="container form-container">
+<section class="module-space">
+	<div class="container-fluid form-container">
 		<div class="row">
 			<div class="col-1">
 			</div>
 			<div class="col-10">
-				<input type="hidden" value="Safety_tools" id="form_type">
+				<input type="hidden" value="{{ module }}" id="form_type">
 				<input type="hidden" value={{ request.user.username }} id="username">
 				<div class="row my-4"><div class="col-12"><h5>Safety Tools (Fire alarm, fire extinguishers and smoke detectors)</h5></div></div>
 				<div id="form"></div>
@@ -19,5 +28,5 @@
 		</div>
 	</div>
 	<script src="{% static 'dataProcessor/index-bundle.js' %}"></script>
-</body>
+</section>
 {% endblock %}

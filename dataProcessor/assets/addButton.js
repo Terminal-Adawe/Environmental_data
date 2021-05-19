@@ -74,7 +74,7 @@ class AddButton extends React.Component {
         // Looping through object
         for (var key in formData) {
             if (formData.hasOwnProperty(key)) {
-                console.log(key + " -> " + formData[key]);
+                // console.log(key + " -> " + formData[key]);
                 form_data.append(key, formData[key])
             }
         }
@@ -82,10 +82,10 @@ class AddButton extends React.Component {
         // form_data.append('image', formData.image);
         // form_data.append('location', formData.location);
 
-        console.log("User Location is ")
-        console.log(form_data)
-        console.log(" and ")
-        console.log(formData.image)
+        // console.log("User Location is ")
+        // console.log(form_data)
+        // console.log(" and ")
+        // console.log(formData.image)
 
         const url = this.props.states.url
         const image_url = this.props.states.image_url
@@ -108,6 +108,8 @@ class AddButton extends React.Component {
         // Response is successful
         if(response.status == "201"){
         	console.log(response.statusText)
+
+            window.scrollTo({top: 0, behavior: 'smooth'});
         	
         	var inputs = document.querySelectorAll('.input-element')
         	let count_p = 0 
@@ -123,8 +125,8 @@ class AddButton extends React.Component {
                 form_data_2.append('module_id', response.data.module)
                 form_data_2.append('image', formData.image[i])
 
-                console.log("image file is ")
-                console.log(formData.image[i])
+                // console.log("image file is ")
+                // console.log(formData.image[i])
                 axios.post(`${baseUrl}/api/${image_url}`,form_data_2,{
                     headers: {
                      'X-CSRFTOKEN': cookie.load("csrftoken"),

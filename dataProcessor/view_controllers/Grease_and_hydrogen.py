@@ -4,11 +4,15 @@ from dataProcessor.serializers import Grease_and_hydrogenSerializer
 from dataProcessor.serializers import Grease_and_hydrogenSerializer_serializer
 from dataProcessor.serializers import ImageSerializer_serializer
 from analytics.models import Grease_and_hydocarbon_spillage
+from analytics.models import Notifications
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 from rest_framework import status
 from analytics.models import Image
+
+from dataProcessor.view_controllers.formulateID import formulate_insert_id
+from analytics.view_controllers.notifications import insert_notification
 
 
 class Grease_and_hydrogenViewSet(viewsets.ViewSet):
@@ -26,27 +30,21 @@ class Grease_and_hydrogenViewSet(viewsets.ViewSet):
             user = User.objects.get(username=serializer.data['username'])
             created_by_id = user.id
 
-            queryset = Grease_and_hydocarbon_spillage.objects.filter(report_name=serializer.data['report_name'])
+            # queryset = Grease_and_hydocarbon_spillage.objects.filter(report_name=serializer.data['report_name'])
 
-            status_code = 500
-            outData = queryset
-
-
-            if queryset.exists():
-                statusMessage = "Report name already exists"
-                return Response({'message': statusMessage}, status=status.HTTP_208_ALREADY_REPORTED)
-            else:
-                gah_sav = Grease_and_hydocarbon_spillage(report_name=serializer.data['report_name'],
+            data_save = Grease_and_hydocarbon_spillage(
                   storage_condition=serializer.data['storage_condition'],
                   comment=serializer.data['comment'],
                   location=serializer.data['location'],
                   created_by_id=created_by_id)
 
-                gah_sav.save()
-                status_code= 200
-                outData = gah_sav
+            data_save.save()
+            data_save.report_name = formulate_insert_id(15,str(data_save.id))
+            data_save.save()
+            
+            insert_notification(2,"Grease and Hydrocarbon spillage",data_save.report_name,user)
 
-            return Response(Grease_and_hydrogenSerializer(outData).data, status=status.HTTP_201_CREATED)
+            return Response(Grease_and_hydrogenSerializer(data_save).data, status=status.HTTP_201_CREATED)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
         

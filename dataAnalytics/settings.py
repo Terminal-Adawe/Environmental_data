@@ -28,7 +28,7 @@ SECRET_KEY = '!zdtt598w_ajnx_(@(n+$ih=bxtk+9=s3f-d4(@&j483xnj@)6'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -108,6 +108,29 @@ DATABASES = {
         'HOST': '/Applications/MAMP/tmp/mysql/mysql.sock',
         'PORT': '3306',
     }
+}
+
+DJANGO_LOG_LEVEL=DEBUG
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'WARNING',
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+            'propagate': False,
+        },
+    },
 }
 
 # STATICFILES_DIRS = (os.path.join(BASE_DIR, "analytics", "static","dataProcessor"), )

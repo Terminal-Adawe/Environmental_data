@@ -1,6 +1,9 @@
 import React from 'react';
 import ReactDOM from "react-dom";
-import {XYPlot, XAxis, YAxis, HorizontalGridLines, VerticalGridLines, VerticalBarSeries, LineSeries, LabelSeries} from 'react-vis';
+import {XYPlot, XAxis, YAxis, 
+  HorizontalGridLines, VerticalGridLines, VerticalBarSeries, 
+  LineSeries, LabelSeries, FlexibleXYPlot,
+  FlexibleWidthXYPlot,} from 'react-vis';
 
 const greenData = [{x: 'A', y: 10}, {x: 'B', y: 5}, {x: 'C', y: 15}];
 
@@ -39,13 +42,13 @@ class BarGraph extends React.Component {
     const BarSeries =  VerticalBarSeries;
     return (
       <div>
-        <XYPlot xType="ordinal" width={300} height={300} xDistance={100}>
+        <FlexibleWidthXYPlot xType="ordinal" height={300} xDistance={100}>
           <VerticalGridLines />
           <HorizontalGridLines />
           <XAxis />
           <YAxis />
           <BarSeries data={this.props.data} animation/>
-        </XYPlot>
+        </FlexibleWidthXYPlot>
       </div>
     );
   }

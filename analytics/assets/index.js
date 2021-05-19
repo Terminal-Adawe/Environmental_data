@@ -5,6 +5,8 @@ import Template from './template';
 import axios from "axios";
 import cookie from "react-cookies";
 
+import '../node_modules/react-vis/dist/style.css';
+
 
 class Index extends React.Component {
 	constructor(){

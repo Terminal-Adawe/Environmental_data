@@ -39,6 +39,9 @@ class modules(models.Model):
 	url = models.CharField(max_length=100)
 	description = models.CharField(max_length=200, default="None")
 	table = models.CharField(max_length=50, default="None")
+	priority = models.IntegerField(default=1)
+	default_report_path = models.CharField(max_length=200, default="None")
+	icon = models.CharField(max_length=50, default="fa-tasks")
 	active = models.IntegerField(default=1)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
@@ -383,6 +386,222 @@ class Chart(models.Model):
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 		
+class Notifications(models.Model):
+	"""docstring for Notifications"""
+	module = models.IntegerField(null=True, blank=True)
+	message = models.TextField(null=True, blank=True)
+	report = models.CharField(max_length=100,null=True, blank=True)
+	created_by = models.ForeignKey(User,
+		related_name="notificationsuser",
+		on_delete=models.PROTECT)
+	updated_by = models.IntegerField(null=True, blank=True)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
 
+class NotificationViewer(models.Model):
+	"""docstring for NotificationProcessor"""
+	userid = models.ForeignKey(User,
+		related_name="notificationsvieweruser",
+		on_delete=models.PROTECT)
+	notificationsId = models.CharField(max_length=10,null=True, blank=True)
+	created_by = models.ForeignKey(User,
+		related_name="notificationvieweruser",
+		on_delete=models.PROTECT)
+	updated_by = models.IntegerField(null=True, blank=True)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+
+class WasteDetails(models.Model):
+	"""docstring for WasteDetails"""
+	waste_type = models.CharField(max_length=100)
+	waste_source = models.CharField(max_length=100)
+	waste_weightage = models.IntegerField()
+	created_by = models.ForeignKey(User,
+		related_name="wastedetailsvieweruser",
+		on_delete=models.PROTECT)
+	updated_by = models.IntegerField(null=True, blank=True)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+
+class GeoReferencePoints(models.Model):
+	"""docstring for GeoReferencePoints"""
+	report_name = models.CharField(max_length=100, default='REPORT_13', null=True, blank=True)
+	location = models.CharField(max_length=200, default='0,0')
+	comment = models.TextField(null=True, blank=True)
+	module = models.CharField(max_length=50, default="13")
+	created_by = models.ForeignKey(User,
+	on_delete=models.PROTECT)
+	updated_by = models.IntegerField(null=True, blank=True)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+
+class FuelFarm(models.Model):
+	IMPERVIOUS = 'IMPERVIOUS'
+	SEMI_IMPERVIOUS = 'SEMI_IMPERVIOUS'
+	NOT_IMPERVIOUS = 'NOT_IMPERVIOUS'
+	HIGH_SPILLAGE = 'HIGH_SPILLAGE'
+	LOW_SPILLAGE = 'LOW_SPILLAGE'
+	NO_SPILLAGE = 'NO_SPILLAGE'
+
+	STATUS_S = [
+		(NO_SPILLAGE,'No Spillage'),
+		(HIGH_SPILLAGE,'High Spillage'),
+		(LOW_SPILLAGE,'Low Spillage'),
+	]
+
+	STATUS_I = [
+		(NOT_IMPERVIOUS,'Not Impervious'),
+		(IMPERVIOUS,'Impervious'),
+		(SEMI_IMPERVIOUS,'Semi Impervious'),
+	]
+
+	report_name = models.CharField(max_length=100, default='REPORT_14', null=True, blank=True)
+	spillage_status = models.CharField(max_length=100,choices=STATUS_S)
+	impervious_status = models.CharField(max_length=100,choices=STATUS_I)
+	location = models.CharField(max_length=200, default='0,0')								
+	comment = models.TextField(null=True, blank=True)
+	module = models.CharField(max_length=50, default="14")
+	created_by = models.ForeignKey(User,
+	on_delete=models.PROTECT)
+	updated_by = models.IntegerField(null=True, blank=True)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+
+class WorkEnvCompliance(models.Model):
+	"""docstring for WorkEnvCompliance"""
+	YES = 'YES'
+	NO = 'NO'
+
+	STATUS_S = [
+		(YES,'Yes'),
+		(NO,'No'),
+	]
+
+	report_name = models.CharField(max_length=100, default='REPORT_15', null=True, blank=True)
+	first_aid = models.CharField(max_length=10,choices=STATUS_S)
+	safety_stickers = models.CharField(max_length=10,choices=STATUS_S)
+	estinquishers = models.CharField(max_length=10,choices=STATUS_S)
+	no_of_estinquishers = models.CharField(max_length=10, null=True, blank=True)
+	fire_alarm = models.CharField(max_length=10,choices=STATUS_S)
+	flooding = models.CharField(max_length=10,choices=STATUS_S)
+	flammables = models.CharField(max_length=10,choices=STATUS_S)
+	location = models.CharField(max_length=200, default='0,0')								
+	comment = models.TextField(null=True, blank=True)
+	module = models.CharField(max_length=50, default="15")
+	created_by = models.ForeignKey(User,
+	on_delete=models.PROTECT)
+	updated_by = models.IntegerField(null=True, blank=True)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+
+class Warehouse(models.Model):
+	"""docstring for Warehouse"""
+	YES = 'YES'
+	NO = 'NO'
+
+	STATUS_S = [
+		(YES,'Yes'),
+		(NO,'No'),
+	]
+	
+	report_name = models.CharField(max_length=100, default='REPORT_16', null=True, blank=True)
+	eye_wash = models.CharField(max_length=10,choices=STATUS_S)
+	shower = models.CharField(max_length=10,choices=STATUS_S)
+	location = models.CharField(max_length=200, default='0,0')								
+	comment = models.TextField(null=True, blank=True)
+	module = models.CharField(max_length=50, default="16")
+	created_by = models.ForeignKey(User,
+	on_delete=models.PROTECT)
+	updated_by = models.IntegerField(null=True, blank=True)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+
+class Conveyers(models.Model):
+	"""docstring for Warehouse"""
+	YES = 'YES'
+	NO = 'NO'
+
+	STATUS_S = [
+		(YES,'Yes'),
+		(NO,'No'),
+	]
+	
+	report_name = models.CharField(max_length=100, default='REPORT_17', null=True, blank=True)
+	electrical_safety_insulation = models.CharField(max_length=10,choices=STATUS_S)
+	shower = models.CharField(max_length=100,choices=STATUS_S)
+	location = models.CharField(max_length=200, default='0,0')								
+	comment = models.TextField(null=True, blank=True)
+	module = models.CharField(max_length=50, default="17")
+	created_by = models.ForeignKey(User,
+	on_delete=models.PROTECT)
+	updated_by = models.IntegerField(null=True, blank=True)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+
+class IncidentReport(models.Model):
+	"""docstring for IncidentReport"""
+	YES = 'YES'
+	NO = 'NO'
+	PERSONAL_INJURY = 'PERSONAL INJURY'
+	PROPERTY_DAMAGE = 'PROPERTY DAMAGE'
+	FIRES = 'FIRES'
+	LOSS_TO_PROCESS = 'LOSS TO PROCESS'
+	ENVIRONMENT = 'ENVIRONMENT'
+	NEAR_MISS = 'NEAR MISS'
+	COMMUNITY = 'COMMUNITY'
+	DEATH = 'DEATH'
+
+	STATUS_C = [
+		(PERSONAL_INJURY,'Personal Injury'),
+		(PROPERTY_DAMAGE,'Property Damage'),
+		(FIRES,'Fires'),
+		(LOSS_TO_PROCESS,'Loss to Process'),
+		(ENVIRONMENT,'Environment'),
+		(NEAR_MISS,'Near Miss'),
+		(COMMUNITY,'Community'),
+		(DEATH,'Death'),
+	]
+
+	report_name = models.CharField(max_length=100, default='REPORT_18', null=True, blank=True)
+	incident_category = models.CharField(max_length=100,choices=STATUS_C)
+	incident_location = models.CharField(max_length=100)
+	victim_name = models.CharField(max_length=200)
+	incident_start = models.DateTimeField(auto_now=True)
+	incident_end = models.DateTimeField(auto_now=True)
+	cause_of_incident = models.TextField(null=True, blank=True)
+	actions_taken_immediately = models.TextField(null=True, blank=True)
+	further_actions_taken = models.TextField(null=True, blank=True)
+	corrective_measures = models.TextField(null=True, blank=True)
+	responsible_person = models.CharField(max_length=200)
+	location = models.CharField(max_length=200, default='0,0')								
+	comment = models.TextField(null=True, blank=True)
+	module = models.CharField(max_length=50, default="18")
+	created_by = models.ForeignKey(User,
+	on_delete=models.PROTECT)
+	updated_by = models.IntegerField(null=True, blank=True)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+
+class Priority_definition(models.Model):
+	priority = models.CharField(max_length=200)
+	description = models.CharField(max_length=200)
+	created_by = models.ForeignKey(User,
+	on_delete=models.PROTECT)
+	updated_by = models.IntegerField(null=True, blank=True)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
 		
+class Tasks(models.Model):
+	task = models.CharField(max_length=200)
+	task_for = models.ForeignKey(User,
+	on_delete=models.PROTECT,related_name="taskfor")
+	description = models.CharField(max_length=200,null=True, blank=True)
+	start_time = models.DateTimeField()
+	end_time = models.DateTimeField()
+	created_by = models.ForeignKey(User,
+	on_delete=models.PROTECT,related_name="taskcreatedby")
+	updated_by = models.IntegerField(null=True, blank=True)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+
 		

@@ -5,6 +5,7 @@ module.exports = {
     index: './assets/index.js',  // path to our input file
     report: './assets/reportGraphs.js',
     graphbuilder: './assets/graphBuilder.js',
+    notifications: './assets/notifications.js',
   },
   output: {
     filename: '[name]-bundle.js',  // output bundle file name

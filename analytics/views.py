@@ -13,8 +13,26 @@ from analytics.models import Slope_stabilization_and_surface_water_retention
 from analytics.models import Safety_training
 from analytics.models import Safety_permission_system
 from analytics.models import Safety_tools
+from analytics.models import Notifications
+from analytics.models import NotificationViewer
+from analytics.models import WasteDetails
+from analytics.models import GeoReferencePoints
+from analytics.models import FuelFarm
+from analytics.models import WorkEnvCompliance
+from analytics.models import Warehouse
+from analytics.models import Conveyers
+from analytics.models import IncidentReport
 from analytics.models import modules
 from analytics.models import Image
+from django.contrib.auth.models import User
+import logging
+import sys
+
+from analytics.view_controllers.notifications import insert_view_notification
+
+
+# Get an instance of a logger
+logger = logging.getLogger("django")
 
 # Create your views here.
 
@@ -38,8 +56,14 @@ def reports(request):
 	queryset10 = Safety_training.objects.all().order_by('-created_at')[:4]
 	queryset11 = Safety_permission_system.objects.all().order_by('-created_at')[:4]
 	queryset12 = Safety_tools.objects.all().order_by('-created_at')[:4]
+	queryset13 = GeoReferencePoints.objects.all().order_by('-created_at')[:4]
+	queryset14 = FuelFarm.objects.all().order_by('-created_at')[:4]
+	queryset15 = WorkEnvCompliance.objects.all().order_by('-created_at')[:4]
+	queryset16 = Warehouse.objects.all().order_by('-created_at')[:4]
+	queryset17 = Conveyers.objects.all().order_by('-created_at')[:4]
+	queryset18 = IncidentReport.objects.all().order_by('-created_at')[:4]
 
-	queryset13 = modules.objects.all()
+	querysetm = modules.objects.filter(active=1)
 
 	return render(request, 'analytics/dashboard/reports.html',
 		{'data1':queryset,
@@ -54,76 +78,73 @@ def reports(request):
 			'data10':queryset10,
 			'data11':queryset11,
 			'data12':queryset12,
-			'modules':queryset13})
+			'data13':queryset13,
+			'data14':queryset14,
+			'data15':queryset15,
+			'data16':queryset16,
+			'data17':queryset17,
+			'data18':queryset18,
+			'modules':querysetm})
+
+def str_to_class(str):
+    return getattr(sys.modules[__name__], str)
 
 def view_report(request, module, report_id):
-	reportid = report_id
-	module = module
-
-	myModel = Storage_facility
-
-	if module == "storage_facility":
+	if request.user.is_authenticated:
+		user = request.user
+		reportid = report_id
+		module = module
+		modules_queryset = modules.objects.filter(active=1)
+	
+	
+		# queryset = modules.objects.filter(id=module)
+		# module = queryset[0].module_name
+	
+	
 		myModel = Storage_facility
-	elif module == "Grease_and_hydocarbon":
-		myModel = Grease_and_hydocarbon_spillage
-	elif module == "Waste_Management":
-		myModel = Waste_Management
-	elif module == "Inceneration":
-		myModel = Inceneration
-	elif module == "liquid_waste_and_oil":
-		myModel = Liquid_waste_oil
-	elif module == "health_and_hygiene_awareness":
-		myModel = Health_and_hygiene_awareness
-	elif module == "energy_management":
-		myModel = Energy_management
-	elif module == "complaints_register":
-		myModel = Complaints_register
-	elif module == "slope_stabilization":
-		myModel = Slope_stabilization_and_surface_water_retention
-	elif module == "safety_permission_system":
-		myModel = Safety_permission_system
-	elif module == "safety_training":
-		myModel = Safety_training
-	elif module == "safety_tools":
-		myModel = Safety_tools
+	
+		for module_i in modules_queryset.values():
+			logger.info("Model is ")
+			logger.info(module_i['id'])
+			logger.info(" vs ")
+			logger.info(module)
+			if int(module) == module_i['id']:
+				myModel = str_to_class(module_i['table'])
+				logger.info(" Matches!! ")
+				logger.info(module_i['table'])
+	
+	
+		modules_queryset_single = modules.objects.filter(id=module)
+	
+		queryset = myModel.objects.filter(report_name=reportid)
+	
+		logger.info("Queryset is ")
+		logger.info(queryset)
+		logger.info("And report ID is ")
+		logger.info(reportid)
 
+		# try:
+		insert_view_notification(user,reportid,module)
+		# except:
+		# 	logger.info("No notification sent ")
 
-	queryset = myModel.objects.filter(id=reportid).get()
-
-	modules_queryset = modules.objects.filter(module_name=module)
-	image_queryset = Image.objects.filter(report_id=reportid, module_id__in=modules_queryset.values('id'))
-
-	return render(request, 'analytics/dashboard/view_report.html',{'data':queryset,'module':module,'images':image_queryset})
+		
+		image_queryset = Image.objects.filter(report_id=reportid, module_id__in=modules_queryset_single.values('id'))
+	
+		return render(request, 'analytics/dashboard/view_report.html',{'report_data':queryset,'module':int(module),'modules':modules_queryset,'images':image_queryset})
+	else:
+		return HttpResponseRedirect('login')
 
 def view_all_reports(request, module):
 	module = module
 
+	modules_queryset = modules.objects.filter(active=1)
+
 	myModel = Storage_facility
 
-	if module == "storage_facility":
-		myModel = Storage_facility
-	elif module == "Grease_and_hydocarbon":
-		myModel = Grease_and_hydocarbon_spillage
-	elif module == "Waste_Management":
-		myModel = Waste_Management
-	elif module == "Inceneration":
-		myModel = Inceneration
-	elif module == "liquid_waste_and_oil":
-		myModel = Liquid_waste_oil
-	elif module == "health_and_hygiene_awareness":
-		myModel = Health_and_hygiene_awareness
-	elif module == "energy_management":
-		myModel = Energy_management
-	elif module == "complaints_register":
-		myModel = Complaints_register
-	elif module == "slope_stabilization":
-		myModel = Slope_stabilization_and_surface_water_retention
-	elif module == "safety_permission_system":
-		myModel = Safety_permission_system
-	elif module == "safety_training":
-		myModel = Safety_training
-	elif module == "safety_tools":
-		myModel = Safety_tools
+	for module_i in modules_queryset.values():
+			if module == module_i['module_name']:
+				myModel = str_to_class(module_i['table'])
 
 	queryset13 = modules.objects.all()
 

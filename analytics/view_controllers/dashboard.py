@@ -3,6 +3,7 @@ from rest_framework import viewsets
 from analytics.serializers import Storage_facilitySerializer
 from analytics.serializers import Grease_and_hydrogenSerializer
 from analytics.serializers import ComplianceValueSerializer
+from analytics.serializers import NotificationsSerializer
 from dataProcessor.serializers import Waste_ManagementSerializer
 from dataProcessor.serializers import IncenerationSerializer
 from dataProcessor.serializers import Liquid_waste_oilSerializer
@@ -34,6 +35,8 @@ from analytics.models import modules
 from analytics.models import Graph_builder_field
 from analytics.models import Chart
 from analytics.models import Graph_config
+from analytics.models import Notifications
+from analytics.models import NotificationViewer
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 from django.http import HttpResponse, JsonResponse
@@ -82,3 +85,8 @@ class buildGraphViewSet(ObjectMultipleModelAPIView):
 			{'queryset': modules.objects.all(), 'serializer_class': ModulesSerializer},
 		]
 		
+class NotificationsViewSet(ObjectMultipleModelAPIView):
+	viewed_notification = NotificationViewer.objects.all()
+	querylist=[
+			{'queryset': Notifications.objects.exclude(id__in=viewed_notification.values('notificationsId')), 'serializer_class': NotificationsSerializer}
+	]

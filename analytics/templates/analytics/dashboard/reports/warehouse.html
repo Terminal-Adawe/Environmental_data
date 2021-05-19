@@ -1,0 +1,87 @@
+{% load static %}
+<div class="card">
+    <form method="POST" action="{% url 'analytics:export_report' %}">
+      {% csrf_token %}
+      {% for data in report_data %}
+      <input type="hidden" name="report_id" value={{ data.id }}>
+      {% for module_i in modules %}
+        {% if module_i.id == module %}
+        <div><h2>{{ module_i.description }}</h2></div>
+        <input type="hidden" name="module_name" id="module" value="{{ module_i.module_name }}">
+        {% endif %}
+      {% endfor %}
+      <table class="table table-striped table-responsive-sm">
+        <!-- <thead>
+           <tr>
+             <th scope="col">Status of Seepaget Points</th>
+             <th scope="col">Stability of dam walls</th>
+             <th scope="col">Holding Capacity</th>
+             <th scope="col">Current Capacity</th>
+             <th scope="col">Spillways Capacity</th>
+             <th scope="col">Spillways Stability</th>
+             <th scope="col">Status of Seepaget Points</th>
+             <th scope="col">Signs of Erosion on spillway tip</th>
+           </tr>
+         </thead> -->
+         <tbody>
+            <tr>
+                <th scope="col">Report Name</th>
+                <td>{{ data.report_name }}</td>
+            </tr>
+            <tr>
+              <th scope="col">Presence of eyewash</th>
+                <td>{{ data.eye_wash }}</td>
+            </tr>
+            <tr>
+              <th scope="col">Presence of shower</th>
+                <td>{{ data.shower }}</td>
+            </tr>
+            <tr>
+              <th scope="col">Comments</th>
+                <td>{{ data.comment }}</td>
+            </tr>
+            <tr>
+              <th scope="col">Report Date</th>
+                <td>{{ data.created_at }}</td>
+            </tr>
+            <tr>
+              <th colspan="2">
+                    <div id="report-graphs"></div>
+
+                    <script src="{% static 'report-bundle.js' %}"></script>
+              </th>
+             </tr>
+             <tr>
+              <td colspan="2">
+                <div class="container-fluid">
+                  <div class="row">
+                    {% for image in images %}
+                      <div class="col-lg-3 col-sm-6">
+                        <div class="media-holder" >
+                          <img src="{{ MEDIA_URL }}{{ image.image.url }}" width="100%" data-toggle="modal" data-target="#imageModal" class="report_image">
+                        </div>
+                      </div>
+                    {% endfor %}
+                  </div>
+                </div>
+              </td>
+             </tr>
+             <tr>
+              <td colspan="2">
+                <div class="container-fluid">
+                  <div class="row">
+                   <!-- <div class="col-12 my-4"> -->
+                    <input type="hidden" class="location" value="{{ data.location }}" />
+                    <div id="map" class="my-4 mx-auto"></div>
+                   <!-- </div> -->
+                  </div>
+                </div>
+              </td>
+             </tr>
+         </tbody>
+         {% endfor %}
+        </table>
+        <!-- <button class="mr-4 btn btn-danger" type="button">Print</button> -->
+        <button class="mx-4 btn btn-info" type="submit">Export to Excel</button>
+      </form>
+</div>

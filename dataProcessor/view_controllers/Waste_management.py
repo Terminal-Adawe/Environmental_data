@@ -3,9 +3,19 @@ from rest_framework import viewsets
 from dataProcessor.serializers import Waste_ManagementSerializer
 from dataProcessor.serializers import Waste_ManagementSerializer_serializer
 from analytics.models import Waste_Management
+from analytics.models import WasteDetails
+from analytics.models import NotificationViewer
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 from rest_framework import status
+import logging
+
+from analytics.view_controllers.notifications import insert_notification
+from analytics.view_controllers.notifications import insert_notification
+
+
+# Get an instance of a logger
+logger = logging.getLogger("django")
 
 
 class Waste_managementViewSet(viewsets.ViewSet):
@@ -21,32 +31,39 @@ class Waste_managementViewSet(viewsets.ViewSet):
             created_by_id = user.id
             # created_by_id = 4
 
-            queryset = Waste_Management.objects.filter(report_name=serializer.data['report_name'])
-
-            status_code = 500
-            outData = queryset
-
-            if queryset.exists():
-                statusMessage = "Report name exists"
-                return Response({'message': statusMessage}, status=status.HTTP_208_ALREADY_REPORTED)
-            else:
-                gah_sav = Waste_Management(
-                    report_name=serializer.data['report_name'],
-                    segregation_at_source_and_bins=serializer.data['segregation_at_source_and_bins'],
-                    glass_waste_source=serializer.data['glass_waste_source'],
-                    glass_waste_weight=serializer.data['glass_waste_weight'],
-                    plastic_waste_source=serializer.data['plastic_waste_source'],
-                    plastic_waste_weight=serializer.data['plastic_waste_weight'],
-                    metal_waste_source=serializer.data['metal_waste_source'],
-                    metal_waste_weight=serializer.data['metal_waste_weight'],
-                    location=serializer.data['location'],
-                    comment=serializer.data['comment'],
-                    created_by_id=created_by_id)
-
-                gah_sav.save()
-                status_code= 200
-                outData = gah_sav
-
-            return Response(Waste_ManagementSerializer(outData).data, status=status.HTTP_201_CREATED)
+            glassSource = serializer.data['glass_waste_source']
+            glassWeight = serializer.data['glass_waste_weight']
+            logger.debug(glassWeight)
+            i=0
+            for item in glassSource:
+                weight = glassWeight[i][1]
+                logger.debug("Weight is ")
+                logger.debug(weight)
+                if glassWeight[i][1]=='':
+                    weight = 0
+                else:
+                    weight = int(glassWeight[i][1])
+                save_item = WasteDetails(
+                    waste_type="Glass",
+                    waste_source=item[1],
+                    waste_weightage=weight,
+                    created_by_id=created_by_id
+                    )
+                i += 1
+                save_item.save()
+            
+            logger.error("Error processings")
+            logger.debug(glassWeight)
+            data_save = Waste_Management(
+                report_name=serializer.data['report_name'],
+                segregation_at_source_and_bins=serializer.data['segregation_at_source_and_bins'],
+                location=serializer.data['location'],
+                comment=serializer.data['comment'],
+                created_by_id=created_by_id)
+            data_save.save()
+            data_save.report_name = formulate_insert_id(15,str(data_save.id))
+            data_save.save()
+            insert_notification(3,"Waste Management",data_save.report_name,user)
+            return Response(Waste_ManagementSerializer(data_save).data, status=status.HTTP_201_CREATED)
         else:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.validated_data, status=status.HTTP_400_BAD_REQUEST)

@@ -2,8 +2,14 @@
 	<div class="card">
 		<form method="POST" action="{% url 'analytics:export_report' %}">
       {% csrf_token %}
-      <input type="hidden" name="module_name" id="module_name" value="Inceneration">
+      {% for data in report_data %}
       <input type="hidden" name="report_id" value={{ data.id }}>
+      {% for module_i in modules %}
+        {% if module_i.id == module %}
+        <div><h2>{{ module_i.description }}</h2></div>
+        <input type="hidden" name="module_name" id="module" value="{{ module_i.module_name }}">
+        {% endif %}
+      {% endfor %}
 			<table class="table table-striped table-responsive-sm">
 				<!-- <thead>
  				   <tr>
@@ -45,7 +51,6 @@
     				</tr>
             <tr>
               <th colspan="2">
-                  <input type="hidden" name="data" id="module" value="Inceneration">
                     <div id="report-graphs"></div>
 
                     <script src="{% static 'report-bundle.js' %}"></script>
@@ -79,6 +84,7 @@
               </td>
              </tr>
  				 </tbody>
+         {% endfor %}
 				</table>
   			<!-- <button class="mr-4 btn btn-danger" type="button">Print</button> -->
         <button class="mx-4 btn btn-info" type="submit">Export to Excel</button>

@@ -15,6 +15,12 @@ from .view_controllers import Safety_training
 from .view_controllers import Safety_permission_system
 from .view_controllers import Safety_tools
 from .view_controllers import ImageUploader
+from .view_controllers import geo_reference
+from .view_controllers import FuelFarm
+from .view_controllers import WorkEnvCompliance
+from .view_controllers import Warehouse
+from .view_controllers import Conveyers
+from .view_controllers import IncidentReport
 from .view_controllers import index
 
 app_name = 'dataProcessor'
@@ -32,12 +38,19 @@ router.register(r'add-slope-stabilization', Slope_stabilization_and_surface_wate
 router.register(r'add-safety-training', Safety_training.Safety_trainingViewSet, basename='add-safety-training')
 router.register(r'add-safety-permission-system', Safety_permission_system.Safety_permission_systemViewSet, basename='add-safety-permission-system')
 router.register(r'add-safety-tools', Safety_tools.Safety_toolsViewSet, basename='add-safety-tools')
+router.register(r'add-reference-point', geo_reference.Geo_referenceViewSet, basename='add-reference-point')
+router.register(r'add-fuel-farm-data', FuelFarm.FuelFarmViewSet, basename='add-fuel-farm-data')
+router.register(r'add-work-environmental-compliance-data', WorkEnvCompliance.WorkEnvComplianceViewSet, basename='add-work-environmental-compliance-data')
+router.register(r'add-warehouse-data', Warehouse.WarehouseViewSet, basename='add-warehouse-data')
+router.register(r'add-conveyers-data', Conveyers.ConveyersViewSet, basename='add-conveyers-data')
+router.register(r'add-incident-report', IncidentReport.IncidentReportViewSet, basename='add-incident-report')
 router.register(r'upload_image', ImageUploader.ImageUploader, basename='upload_image')
 
 
 urlpatterns = [
     path('', index.index, name='index'),
     path('add/', include(router.urls)),
+    path('get_template/<module>/',views.get_template, name='get_template'),
     path('grease-and-hydrocarbon', views.grease_and_hydrocarbonView, name='grease-and-hydrocarbon'),
     path('waste-management', views.waste_managementView, name='waste-management'),
     path('inceneration', views.incenerationView, name='inceneration'),
@@ -50,6 +63,12 @@ urlpatterns = [
     path('safety-permission-system', views.safety_permission_systemView, name='safety-permission-system'),
     path('safety-tools', views.safety_toolsView, name='safety-tools'),
     path('storage-facility', views.storage_facilityView, name='storage-facility'),
+    path('geo-reference', views.geoReferenceView, name='geo-reference'),
+    path('fuel-farm', views.fuelFarmView, name='fuel-farm'),
+    path('work-environment-compliance', views.workEnvComplianceView, name='work-environment-compliance'),
+    path('warehouse', views.warehouseView, name='warehouse'),
+    path('conveyers', views.conveyersView, name='conveyers'),
+    path('incident-report', views.incidentReportView, name='incident-report'),
     # path('/analytics/',include('analytics.urls')),
     # path('add', views.Storage_facilityViewSet, name='add'),
 ]
