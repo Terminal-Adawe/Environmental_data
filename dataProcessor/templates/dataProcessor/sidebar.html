@@ -24,7 +24,7 @@
 									{% for module in modules %}
 									<li>
 										<!-- <a href="{% url 'dataProcessor:'|add:module.url %}"> -->
-										<a href="{% url 'dataProcessor:get_template' module=module.module_name %}">
+										<a href="{% url 'dataProcessor:get_template' %}">
 											<!-- <span class="pull-right label label-primary">182</span> -->
 											<i class="fa {{ module.icon }}" aria-hidden="true"></i>
 											<span>{{ module.description }}</span>
