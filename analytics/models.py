@@ -593,8 +593,7 @@ class Priority_definition(models.Model):
 		
 class Tasks(models.Model):
 	task = models.CharField(max_length=200)
-	task_for = models.ForeignKey(User,
-	on_delete=models.PROTECT,related_name="taskfor")
+	task_for = models.CharField(max_length=100)
 	description = models.CharField(max_length=200,null=True, blank=True)
 	start_time = models.DateTimeField()
 	end_time = models.DateTimeField()

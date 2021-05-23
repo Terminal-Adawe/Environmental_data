@@ -75,7 +75,7 @@
 
 
 <!-- The Task scheduler Modal -->
-<div class="modal" id="scheduler-modal">
+<div class="modal" id="scheduler">
   <div class="modal-dialog">
     <div class="modal-content">
 
@@ -86,52 +86,23 @@
 
       <!-- Modal body -->
       <div class="modal-body">
-        <form method="POST" action="{% url 'analytics:schedule_task' %}">
-          {% csrf_token %}
-          <input type="hidden" name="module_name" id="module_name" value="">
-          <!-- <input type="hidden" name="switch" id="switch" value="csv"> -->
-          <div class="container-fluid">
-            <div class="row">
-              <input type="text" name="task" class="input-element" required />
-            </div>
-            <div class="row">
-              <label>Add Description</label>
-              <textarea></textarea>
-            </div>
-            <div class="row">
-              <span class="mx-auto">Select a date range</span>
-            </div>
-            <div class="row">
-              <div class="col-lg-6 col-md-6 col-sm-12">
-                <input type="date" name="start_time" id="start_time">
-              </div>
-              <div class="col-lg-6 col-md-6 col-sm-12">
-                <input type="date" name="end_time" id="end_time">
-              </div>
-            </div>
-            <div class="row mt-4">
-              <!-- <div class="col-lg-4 col-sm-12">
-                <span>CSV </span>
-                  <label class="switch">
-                    <input type="checkbox" name="format">
-                    <span class="slider round"></span>
-                  </label>
-                  <span> XLS</span>
-              </div> -->
-              <div class="col-lg-4 col-sm-6">
-                <button class="btn btn-info" type="submit">Schedule Task</button>
-              </div>
-              <div class="col-lg-4 col-sm-6">
-              </div>
-            </div>
-        </div>
-      </form>
+          <input type="hidden" id="task_type" value="self">
+          <form action="{% url 'analytics:add_task' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" id="username" value={{ request.user.username }}>
+            <!-- <input type="hidden" name="switch" id="switch" value="csv"> -->
+            <div id="task_scheduler"></div>
+            <script src="{% static 'task_scheduler-bundle.js' %}"></script>
+          </form>
       </div>
 
 
     </div>
   </div>
 </div>
+
+
+
 
 
 

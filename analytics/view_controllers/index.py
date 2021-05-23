@@ -165,6 +165,12 @@ def report_builder(request):
     else:
         return HttpResponseRedirect('login')
 
+def table_builder(request):
+    if request.user.is_authenticated:
+        return render(request, 'analytics/dashboard/table_builder.html')
+    else:
+        return HttpResponseRedirect('login')
+
 def adduser(request):
     if request.user.is_authenticated:
         if request.method == 'POST':

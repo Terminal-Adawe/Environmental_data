@@ -14,8 +14,10 @@ class Notifications extends React.Component {
 		super()
 
 		this.state={
+			username: "",
 			data: [],
 			notifications: [],
+			tasks: [],
 			baseUrl: "https://d12m8zkkfoc9oy.cloudfront.net",
 			// baseUrl: "http://localhost:8002",
 		}
@@ -28,13 +30,14 @@ class Notifications extends React.Component {
 	componentDidMount(){
 
 		const baseUrl = document.getElementById("baseUrl").value
-		const userid = document.querySelector(".name")
+		const username = document.querySelector(".username").value
 
-		console.log("user id is ")
-		console.log(userid)
+		console.log("notifications user id is ")
+		console.log(username)
 
 		this.setState({
-			baseUrl: baseUrl
+			baseUrl: baseUrl,
+			username: username
 		},()=>{
 			this.getDetails()
 		})
@@ -44,11 +47,20 @@ class Notifications extends React.Component {
 		axios.get(`${this.state.baseUrl}/analytics/get-notifications/`)
         	.then(response => {
         		console.log("Notification response is ")
-        		console.log(response.data.Notifications)
+        		console.log(response.data)
         		console.log("count is ")
         		console.log(response.data.Notifications.length)
+
+        		var tasks = response.data.Tasks.filter(task=>task.task_for==this.state.username)
+        		console.log("modified tasks are ")
+        		console.log(tasks)
+        		console.log(" v ")
+        		console.log(this.state.username)
+
           this.setState({
             notifications: response.data.Notifications,
+            tasks: tasks
+
           })
         })
         .catch(error => {
@@ -80,17 +92,34 @@ class Notifications extends React.Component {
 						<li>
 							<a href="#" className="dropdown-toggle notification-icon" data-toggle="dropdown">
 								<i className="fa fa-tasks"></i>
-								<span className="badge">0</span>
+								<span className="badge">{ this.state.tasks.length }</span>
 							</a>
 			
 							<div className="dropdown-menu notification-menu large">
 								<div className="notification-title">
-									<span className="pull-right label label-default">0</span>
+									<span className="pull-right label label-default">{ this.state.tasks.length }</span>
 									Tasks
 								</div>
 			
 								<div className="content">
 									<ul>
+										{
+											this.state.tasks.map((task,i)=>{
+												return <li key={ i }>
+													<a href="#" className="btn btn-default">
+														<p className="clearfix mb-xs">
+															<span className="custom-message pull-left text-report-notif">{ task.task }</span>
+															<span className="message pull-right text-dark">{ this.formatDate(task.start_time) } to { this.formatDate(task.end_time) }</span>
+														</p>
+														{/*
+														<div className="progress progress-xs light">
+															<div className="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style={{width: '60%'}}></div>
+														</div>
+														*/}
+													 </a>
+													</li>
+											})
+										}
 									</ul>
 								</div>
 							</div>

@@ -20,9 +20,10 @@ class FormulateGraphData extends React.Component {
 
 	}
 
-	componentDidMount(prevProps, prevState){
+	componentDidMount(){
 			// console.log("processing graph ... ")
 			// console.log(this.props)
+            
 			let data = []
 
     		this.props.data ? data = this.checkModule(this.props.module, this.props.graphConfig)
@@ -109,6 +110,26 @@ class FormulateGraphData extends React.Component {
     			rawData = this.props.data.Waste_Management
     			// rawData = this.Waste_Management(rawData)
     			break;
+            case "fuel_farm":
+                rawData = this.props.data.FuelFarm
+                // rawData = this.Waste_Management(rawData)
+                break;
+            case "work_env_compliance":
+                rawData = this.props.data.WorkEnvCompliance
+                // rawData = this.Waste_Management(rawData)
+                break;
+            case "warehouse":
+                rawData = this.props.data.Warehouse
+                // rawData = this.Waste_Management(rawData)
+                break;
+            case "Waste_Management":
+                rawData = this.props.data.Waste_Management
+                // rawData = this.Waste_Management(rawData)
+                break;
+            case "Waste_Management":
+                rawData = this.props.data.Waste_Management
+                // rawData = this.Waste_Management(rawData)
+                break;
     		default:
     			rawData=""
     			break;

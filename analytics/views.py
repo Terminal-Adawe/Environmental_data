@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from rest_framework import viewsets
 from analytics.models import ComplianceValue
 from analytics.models import Storage_facility
 from analytics.models import Grease_and_hydocarbon_spillage
@@ -24,7 +25,13 @@ from analytics.models import Conveyers
 from analytics.models import IncidentReport
 from analytics.models import modules
 from analytics.models import Image
+from analytics.models import Tasks
+from analytics.serializers import TasksSerializer
+from analytics.serializers import UsernameSerializer
 from django.contrib.auth.models import User
+from django.http import HttpResponse, JsonResponse
+from drf_multiple_model.views import ObjectMultipleModelAPIView
+import json
 import logging
 import sys
 
@@ -152,4 +159,42 @@ def view_all_reports(request, module):
 
 	return render(request, 'analytics/dashboard/reports_all_records.html',{'data':queryset,'module':module, 'modules':queryset13})
 
+def add_task(request):
+	if request.user.is_authenticated:
+		if request.method == 'POST':
+			user = request.user
 
+			task_for = request.user.username
+
+			if request.POST['task_for']!="self":
+				task_for = User.objects.get(username=request.POST['task_for'])
+				task_for = task_for.username
+
+
+			task_save = Tasks(
+				task=request.POST['task'],
+				description=request.POST['description'],
+				start_time=request.POST['start_time'],
+				end_time=request.POST['end_time'],
+				created_by=user,
+				task_for=task_for
+			)
+			task_save.save()
+			return redirect(request.META['HTTP_REFERER'])
+		else:
+			return redirect(request.META['HTTP_REFERER'])
+	else:
+		return HttpResponseRedirect('login')
+
+
+class GetUsers(ObjectMultipleModelAPIView):
+	querylist=[
+			{'queryset': User.objects.filter(is_active=1), 'serializer_class': UsernameSerializer},
+	]
+
+class Add_task(viewsets.ViewSet):
+	def create(self, request):
+		serializer = TasksSerializer(data=request.data)
+
+		# user = User.objects.get(username=serializer.data['username'])
+		# created_by_id = user.id

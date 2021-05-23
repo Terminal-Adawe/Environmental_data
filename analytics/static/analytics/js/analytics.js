@@ -62,6 +62,13 @@ let location_array
     	console.log("Module is "+$("#module_name").val());
     })
 
+    $(".scheduler").off("click").on("click",function(){
+        $('#scheduler').modal("toggle")
+
+        // Set task type in modal
+        $('#task_type').val($(this).data("type"))
+        console.log("data attrib is "+$('#task_type').val())
+    })
 
     // All code should be above the code below since it picks location
     // and location has not been implemented in all the templates

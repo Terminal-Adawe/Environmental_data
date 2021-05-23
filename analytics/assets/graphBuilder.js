@@ -159,10 +159,11 @@ class GraphBuilder extends React.Component {
                     			</div>
                     		 </div>
 
-                    		<Axis graphbuilder={ this.state.data.Graph_builder_field } title="X-Axis" handleAxisChanged={ this.handleAxisChanged } moduleid={ this.state.moduleid }/>
+                    		<div className="row mt-2">
+                    			<Axis graphbuilder={ this.state.data.Graph_builder_field } title="X-Axis" name="x-axis" handleAxisChanged={ this.handleAxisChanged } moduleid={ this.state.moduleid } columnLength="col-lg-12 col-sm-12"/>
 
-                    		<Axis graphbuilder={ this.state.data.Graph_builder_field } title="Y-Axis" handleAxisChanged={ this.handleAxisChanged } moduleid={ this.state.moduleid }/>
-
+                    			<Axis graphbuilder={ this.state.data.Graph_builder_field } title="Y-Axis" name="y-axis" handleAxisChanged={ this.handleAxisChanged } moduleid={ this.state.moduleid } columnLength="col-lg-12 col-sm-12"/>
+                    		</div>
                     		<label className="form-check-label predictive_label">
                     		<h5>Predictive</h5>
                       	<input 

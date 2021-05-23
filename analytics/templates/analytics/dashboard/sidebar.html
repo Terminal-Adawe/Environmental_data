@@ -35,6 +35,20 @@
 										</a>
 									</li>
 									<li>
+										<a href="{% url 'analytics:reports' %}">
+											<!-- <span class="pull-right label label-primary">182</span> -->
+											<i class="fa fa-table" aria-hidden="true"></i>
+											<span>Tables</span>
+										</a>
+									</li>
+									<li>
+										<a href="{% url 'analytics:reports' %}">
+											<!-- <span class="pull-right label label-primary">182</span> -->
+											<i class="fa fa-bar-chart-o" aria-hidden="true"></i>
+											<span>Graphs</span>
+										</a>
+									</li>
+									<li>
 										<a href="{% url 'analytics:media' %}">
 											<i class="fa fa-photo" aria-hidden="true"></i>
 											 <span>Media Gallery</span>
@@ -55,7 +69,12 @@
 										<ul class="nav nav-children">
 											<li>
 												<a href="{% url 'analytics:report-builder' %}">
-													 Reports
+													 Create Report
+												</a>
+											</li>
+											<li>
+												<a href="{% url 'analytics:table-builder' %}">
+													 Create New Table
 												</a>
 											</li>
 											<li>

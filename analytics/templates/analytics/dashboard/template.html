@@ -4,7 +4,8 @@
 <!-- value="https://d12m8zkkfoc9oy.cloudfront.net" -->
 <!-- http://localhost:8002 -->
 <body>
-	<input type="hidden" id="baseUrl" value="https://d12m8zkkfoc9oy.cloudfront.net">
+	<input type="hidden" id="baseUrl" value="http://localhost:8002">
+	<input type="hidden" class="username" value={{ request.user.username }}>
 		<section class="body">
 
 			{% include "analytics/dashboard/header.html" %}

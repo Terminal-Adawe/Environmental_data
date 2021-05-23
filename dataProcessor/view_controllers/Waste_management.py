@@ -10,7 +10,7 @@ from django.contrib.auth.models import User
 from rest_framework import status
 import logging
 
-from analytics.view_controllers.notifications import insert_notification
+from dataProcessor.view_controllers.formulateID import formulate_insert_id
 from analytics.view_controllers.notifications import insert_notification
 
 
@@ -26,7 +26,6 @@ class Waste_managementViewSet(viewsets.ViewSet):
         # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
 
         if serializer.is_valid(raise_exception=True):
-            serializer.data['report_name'] = "Zip_1"
             user = User.objects.get(username=serializer.data['username'])
             created_by_id = user.id
             # created_by_id = 4

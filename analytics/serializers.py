@@ -16,6 +16,8 @@ from .models import Graph_builder_field
 from .models import Chart
 from .models import Graph_config
 from .models import Notifications
+from .models import Tasks
+from django.contrib.auth.models import User
 
 
 
@@ -64,3 +66,25 @@ class NotificationsSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Notifications
 		fields = '__all__'
+
+class TasksSerializerGet(serializers.ModelSerializer):
+	class Meta:
+		model = Tasks
+		fields = '__all__'
+
+class TasksSerializer(serializers.Serializer):
+	task = serializers.CharField(max_length=120,required=True)
+	description = serializers.CharField(max_length=500,required=False,allow_blank=True)
+	task_for = serializers.CharField(max_length=50)
+	start_time = serializers.DateTimeField()
+	end_time = serializers.DateTimeField()
+	username = serializers.CharField(max_length=100)
+
+class UsernameSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = User
+		fields = ['username','first_name','last_name','is_staff']
+
+class UsernameSerializerGet(serializers.ModelSerializer):
+	username = serializers.CharField(max_length=120,required=True)
+

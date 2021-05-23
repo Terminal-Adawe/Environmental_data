@@ -14,15 +14,11 @@ class Axis extends React.Component {
 
 
 	render(){
-		let name = ""
-		let axis = ""
-		this.props.title === "Y-Axis" ? 
-		name="y-axis"
-		: 
-		name="x-axis"
+		let name = this.props.name
+		let axis = this.props.name
 
-		return (<div className="row mt-2">
-                    			<div className="col-12">
+
+		return (<div className={ this.props.columnLength }>
 								<label><h5>Select { this.props.title }</h5></label>
                     		 
 							{
@@ -31,7 +27,7 @@ class Axis extends React.Component {
 								this.props.graphbuilder.filter(field=>field.module==this.props.moduleid).map((field,i)=>{
 									let columns = field.column_fields.split(",")
 									return <select key={ i } id={ name } name={ name } defaultValue="" className="input-element" onChange={(e)=>this.props.handleAxisChanged(e,axis)}>
-										{ this.props.title === "Y-Axis" ? <option value="sequence">Sequence</option> : "" }
+										{ this.props.title === "Y-Axis" ? <option value="sequence">Sequence</option> : <option value=""></option> }
 										{
 											columns.map((column,r)=>{
 												return <option key={r} value={ column }>{ column }</option>
@@ -42,8 +38,7 @@ class Axis extends React.Component {
 								})
 								: ""
 							}
-                    		  	</div>
-                    		</div>)
+                    		  	</div>)
 	}
 }
 

@@ -6,6 +6,8 @@ module.exports = {
     report: './assets/reportGraphs.js',
     graphbuilder: './assets/graphBuilder.js',
     notifications: './assets/notifications.js',
+    task_scheduler: './assets/task_scheduler.js',
+    table_builder: './assets/table_builder.js'
   },
   output: {
     filename: '[name]-bundle.js',  // output bundle file name

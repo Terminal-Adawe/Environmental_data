@@ -531,7 +531,7 @@ class Form extends React.Component {
 
 	storage_facilitiesTags(){
 		const tags = [
-			{formField: [[{inputtype:'desc',name:'',placeholder:'Seepage point showing the amount of seepage of the dam walls.',label:'',showlabel:0},
+			{formField: [[{inputtype:'desc',name:'',placeholder:'Seepage point showing the amount of seepage of the dam walls.',label:'',showlabel:0}]]},
 			{formField: [[{inputtype:'dropdown',name:'status_of_seepage_point',placeholder:'',label:'Status of Seepage Point',showlabel:1,options:[['Good','GD'],['Slightly Disturbed','SD'],['Blocked','BL']]}]]},
 			{formField: [[{inputtype:'dropdown',name:'stability_of_dam_walls',placeholder:'',label:'Stability of Dam Walls',showlabel:1,options:[['Stable','STB'],['Signs of Erosion','SOE'],['Rehabilitated','RBT']]}]]},
 			{formField: [[{inputtype: 'text', name:'holding_capacity',placeholder:'Enter Holding Capacity',label:'Holding Capacity',showlabel:1}]]},
@@ -551,7 +551,7 @@ class Form extends React.Component {
 
 	Grease_and_hydocarbon_spillageTags(){
 		const tags = [
-			{formField: [[{inputtype:'desc',name:'',placeholder:'Grease and Hydrocarbon storage condition',label:'',showlabel:0},
+			{formField: [[{inputtype:'desc',name:'',placeholder:'Grease and Hydrocarbon storage condition',label:'',showlabel:0}]]},
 			{formField: [[{inputtype:'dropdown',name:'storage_condition',placeholder:'',label:'Storage Condition',showlabel:1,options:[['Completely Impervious Surface','CIS'],['Partially Impervious','PI'],['Non Impervious','NI'],['Stored in Containment','SIC'],['Not Stored in Containment','NSIC']]}]]},
 			{formField: [[{inputtype: 'text', name:'comment',placeholder:'Any Comment?',label:'Comment',showlabel:1}]]},
 			{formField: [[{inputtype: 'image', name:'image',placeholder:'',label:'Upload image(s)',showlabel:1}]]},
@@ -565,7 +565,7 @@ class Form extends React.Component {
 
 	Waste_ManagementTags(){
 		const tags = [
-			{formField: [[{inputtype:'desc',name:'',placeholder:'Waste management data.',label:'',showlabel:0},
+			{formField: [[{inputtype:'desc',name:'',placeholder:'Waste management data.',label:'',showlabel:0}]]},
 			{formField: [[{inputtype:'dropdown',name:'segregation_at_source_and_bins',placeholder:'',label:'Segregation at source and use of colored bins',showlabel:1,options:[['Effective','EF'],['Not Effective','NEF'],['Partially Effective','PEF'],['Sorted at Dump Site','SDS']]}]]},
 			{formField: [[{inputtype: 'text', position:0, name:'glass_waste_source',type:'array',placeholder:'Source',label:'Glass waste source',showlabel:1}],[{inputtype: 'text', position:0, type:'array', name:'glass_waste_weight',placeholder:'Weight',label:'Glass waste weightage',showlabel:1}],[{inputtype: 'add-more', name:'glass_waste'}]]},
 			{formField: [[{inputtype: 'text', position:0, name:'plastic_waste_source',type:'array',placeholder:'Source',label:'Plastic waste source',showlabel:1}],[{inputtype: 'text', position:0, type:'array', name:'plastic_waste_weight',placeholder:'Weight',label:'Plastic waste weightage',showlabel:1}],[{inputtype: 'add-more', name:'plastic_waste'}]]},
@@ -582,7 +582,7 @@ class Form extends React.Component {
 
 	IncenerationTags(){
 		const tags = [
-			{formField: [[{inputtype:'desc',name:'',placeholder:'Incineration.',label:'',showlabel:0},
+			{formField: [[{inputtype:'desc',name:'',placeholder:'Incineration.',label:'',showlabel:0}]]},
 			{formField: [[{inputtype: 'text', name:'items_incenerated',placeholder:'Item name',label:'Item',showlabel:1}]]},
 			{formField: [[{inputtype: 'text', name:'quantity',placeholder:'Quantity',label:'Quantity',showlabel:1}]]},
 			{formField: [[{inputtype: 'text', name:'temperature',placeholder:'Temperature',label:'Temperature',showlabel:1}]]},
@@ -598,7 +598,7 @@ class Form extends React.Component {
 
 	Liquid_waste_oilTags(){
 		const tags = [
-			{formField: [[{inputtype:'desc',name:'',placeholder:'Liquid waste oil',label:'',showlabel:0},
+			{formField: [[{inputtype:'desc',name:'',placeholder:'Liquid waste oil',label:'',showlabel:0}]]},
 			{formField: [[{inputtype: 'text', name:'discharge_point',placeholder:'Effluent Discharge Point',label:'Effluent Discharge Point',showlabel:1}]]},
 			{formField: [[{inputtype:'dropdown',name:'source',placeholder:'',label:'Source',showlabel:1,options:[['Maintenance Workshop','MW'],['Other Area','OA']]}]]},
 			{formField: [[{inputtype: 'text', name:'comment',placeholder:'Any Comment?',label:'Comment',showlabel:1}]]},
@@ -613,7 +613,7 @@ class Form extends React.Component {
 
 	Health_and_hygiene_awarenessTags(){
 		const tags = [
-			{formField: [[{inputtype:'desc',name:'',placeholder:'Health and Hygiene awareness involving the staff',label:'',showlabel:0},
+			{formField: [[{inputtype:'desc',name:'',placeholder:'Health and Hygiene awareness involving the staff',label:'',showlabel:0}]]},
 			{formField: [[{inputtype: 'text', name:'training',placeholder:'Training title',label:'Training title',showlabel:1}]]},
 			{formField: [[{inputtype: 'text', name:'no_of_staff',placeholder:'Number of Staff',label:'Number of staff',showlabel:1}]]},
 			{formField: [[{inputtype: 'text', name:'no_of_visitors',placeholder:'Number of Visitors',label:'Number of Visitors',showlabel:1}]]},
@@ -633,7 +633,7 @@ class Form extends React.Component {
 	Energy_managementTags(){
 		console.log("I have been called")
 		const tags = [
-			{formField: [[{inputtype:'desc',name:'',placeholder:'Energy consumption in the camp',label:'',showlabel:0},
+			{formField: [[{inputtype:'desc',name:'',placeholder:'Energy consumption in the camp',label:'',showlabel:0}]]},
 			{formField: [[{inputtype: 'text', name:'total_energy_available',placeholder:'Total Energy Available',label:'Total Energy Available',showlabel:1}]]},
 			{formField: [[{inputtype: 'text', name:'camp_consumption',placeholder:'Camp Consumption',label:'Camp Consumption',showlabel:1}]]},
 			{formField: [[{inputtype: 'text', name:'admin_consumption',placeholder:'Admin Consumption',label:'Admin Consumption',showlabel:1}]]},
@@ -653,7 +653,7 @@ class Form extends React.Component {
 	Complaints_registerTags(){
 		console.log("Complaints tags have been called")
 		const tags = [
-			{formField: [[{inputtype:'desc',name:'',placeholder:'Do people complain?',label:'',showlabel:0},
+			{formField: [[{inputtype:'desc',name:'',placeholder:'Do people complain?',label:'',showlabel:0}]]},
 			{formField: [[{inputtype: 'text', name:'no_of_complaints',placeholder:'Number of complaints',label:'Number of complaints',showlabel:1}]]},
 			{formField: [[{inputtype:'dropdown',name:'status_of_complaints',placeholder:'',label:'Status',showlabel:1,options:[['Resolved','RSD'],['Pending','PEN'],['Other (State reason in comments)','OTR']]}]]},
 			{formField: [[{inputtype: 'text', name:'comment',placeholder:'Any Comment?',label:'Comment',showlabel:1}]]},
@@ -668,7 +668,7 @@ class Form extends React.Component {
 
 	Slope_stabilization_and_surface_water_retentionTags(){
 		const tags = [
-			{formField: [[{inputtype:'desc',name:'',placeholder:'Slope stabilization and surface water retention',label:'',showlabel:0},
+			{formField: [[{inputtype:'desc',name:'',placeholder:'Slope stabilization and surface water retention',label:'',showlabel:0}]]},
 			{formField: [[{inputtype: 'text', name:'no_of_exposed_unstabilized_slopes',placeholder:'Number of exposed unstabilized slopes',label:'Number of exposed unstabilized slopes',showlabel:1}]]},
 			{formField: [[{inputtype:'dropdown',name:'status',placeholder:'',label:'Source',showlabel:1,options:[['Stabilized','STD'],['Working Progress','WP'],['Pending','PEN'],['Other (State reason in comments)','OTR']]}]]},
 			{formField: [[{inputtype: 'text', name:'comment',placeholder:'Any Comment?',label:'Comment',showlabel:1}]]},
@@ -683,7 +683,7 @@ class Form extends React.Component {
 
 	Safety_trainingTags(){
 		const tags = [
-			{formField: [[{inputtype:'desc',name:'',placeholder:'Training details if any.',label:'',showlabel:0},
+			{formField: [[{inputtype:'desc',name:'',placeholder:'Training details if any.',label:'',showlabel:0}]]},
 			{formField: [[{inputtype: 'text', name:'training',placeholder:'Training title',label:'Training title',showlabel:1}]]},
 			{formField: [[{inputtype: 'text', name:'no_of_staff',placeholder:'Number of Staff',label:'Number of staff',showlabel:1}]]},
 			{formField: [[{inputtype: 'text', name:'no_of_inductions',placeholder:'Number of Inductions',label:'Number of Inductions',showlabel:1}]]},
@@ -701,6 +701,7 @@ class Form extends React.Component {
 
 	Safety_permission_systemTags(){
 		const tags = [
+			{formField: [[{inputtype:'desc',name:'',placeholder:'Safety Pemitting records',label:'',showlabel:0}]]},
 			{formField: [[{inputtype: 'text', name:'Safety permits',placeholder:'Number of permits issued',label:'Number of permits issued',showlabel:1}]]},
 			{formField: [[{inputtype:'dropdown',name:'status',placeholder:'',label:'Status',showlabel:1,options:[['Work Ended Safely','WES'],['Work did not end safely','WEU']]}]]},
 			{formField: [[{inputtype: 'text', name:'comment',placeholder:'Any Comment?',label:'Comment',showlabel:1}]]},
@@ -715,7 +716,7 @@ class Form extends React.Component {
 
 	Safety_toolsTags(){
 		const tags = [
-			{formField: [[{inputtype:'desc',name:'',placeholder:'Safety Tools available',label:'',showlabel:0},
+			{formField: [[{inputtype:'desc',name:'',placeholder:'Safety Tools available',label:'',showlabel:0}]]},
 			{formField: [[{inputtype: 'text', name:'no_of_estinquishers',placeholder:'Number of Estinguishers',label:'Number of Estinguishers',showlabel:1}]]},
 			{formField: [[{inputtype:'dropdown',name:'fire_alarm',placeholder:'',label:'Fire Alarm',showlabel:1,options:[['Active','AC'],['Not Active','INA']]}]]},
 			{formField: [[{inputtype:'dropdown',name:'status_of_estinguishers',placeholder:'',label:'Status of Estinguishers',showlabel:1,options:[['Mine','MN'],['Port','PRT'],['Serviced','SER'],['Expired','EX']]}]]},
@@ -731,7 +732,7 @@ class Form extends React.Component {
 
 	geo_reference(){
 		const tags = [
-			{formField: [[{inputtype:'desc',name:'',placeholder:'Reference this point and write a description of what may be interesting here',label:'',showlabel:0},
+			{formField: [[{inputtype:'desc',name:'',placeholder:'Reference this point and write a description of what may be interesting here',label:'',showlabel:0}]]},
 			{formField: [[{inputtype: 'text', name:'comment',placeholder:'Reference description',label:'Description',showlabel:1}]]},
 			{formField: [[{inputtype: 'image', name:'image',placeholder:'',label:'Upload image(s)',showlabel:1}]]},
 			]
@@ -744,7 +745,7 @@ class Form extends React.Component {
 
 	fuel_farm(){
 		const tags = [
-			{formField: [[{inputtype:'desc',name:'',placeholder:'Status of the fuel farms on site.',label:'',showlabel:0},
+			{formField: [[{inputtype:'desc',name:'',placeholder:'Status of the fuel farms on site.',label:'',showlabel:0}]]},
 			{formField: [[{inputtype:'dropdown',name:'spillage_status',placeholder:'',label:'Spillage Status',showlabel:1,options:[['No Spillage','NO_SPILLAGE'],['High Spillage','HIGH_SPILLAGE'],['Low Spillage','LOW_SPILLAGE']]}]]},
 			{formField: [[{inputtype:'dropdown',name:'impervious_status',placeholder:'',label:'Impervious Status',showlabel:1,options:[['Not Impervious','NOT_IMPERVIOUS'],['Impervious','IMPERVIOUS'],['Semi Impervious','SEMI_IMPERVIOUS']]}]]},
 			{formField: [[{inputtype: 'text', name:'comment',placeholder:'comment',label:'Comment',showlabel:1}]]},
@@ -759,7 +760,7 @@ class Form extends React.Component {
 
 	work_env_compliance(){
 		const tags = [
-			{formField: [[{inputtype:'desc',name:'',placeholder:'Work environment compliance.',label:'',showlabel:0},
+			{formField: [[{inputtype:'desc',name:'',placeholder:'Work environment compliance.',label:'',showlabel:0}]]},
 			{formField: [[{inputtype:'dropdown',name:'first_aid',placeholder:'',label:'First Aid Available?',showlabel:1,options:[['Yes','YES'],['No','NO']]}]]},
 			{formField: [[{inputtype:'dropdown',name:'safety_stickers',placeholder:'',label:'Safety Stickers Available?',showlabel:1,options:[['Yes','YES'],['No','NO']]}]]},
 			{formField: [[{inputtype:'dropdown',name:'estinquishers',placeholder:'',label:'Fire Estinguishers Available?',showlabel:1,options:[['Yes','YES'],['No','NO']]}]]},
@@ -779,7 +780,7 @@ class Form extends React.Component {
 
 	warehouse(){
 		const tags = [ 
-			{formField: [[{inputtype:'desc',name:'',placeholder:'Warehouse details.',label:'',showlabel:0},
+			{formField: [[{inputtype:'desc',name:'',placeholder:'Warehouse details.',label:'',showlabel:0}]]},
 			{formField: [[{inputtype:'dropdown',name:'eye_wash',placeholder:'',label:'Eye wash Available?',showlabel:1,options:[['Yes','YES'],['No','NO']]}]]},
 			{formField: [[{inputtype:'dropdown',name:'shower',placeholder:'',label:'Shower Available?',showlabel:1,options:[['Yes','YES'],['No','NO']]}]]},
 			{formField: [[{inputtype: 'text', name:'comment',placeholder:'Comment',label:'Description',showlabel:1}]]},
@@ -794,7 +795,7 @@ class Form extends React.Component {
 
 	conveyers(){
 		const tags = [
-			{formField: [[{inputtype:'desc',name:'',placeholder:'Information about conveyors.',label:'',showlabel:0},
+			{formField: [[{inputtype:'desc',name:'',placeholder:'Information about conveyors.',label:'',showlabel:0}]]},
 			{formField: [[{inputtype:'dropdown',name:'electrical_safety_insulation',placeholder:'',label:'Are there Electrical Safety Insulations?',showlabel:1,options:[['Yes','YES'],['No','NO']]}]]},
 			{formField: [[{inputtype: 'text', name:'comment',placeholder:'Comment',label:'Comment',showlabel:1}]]},
 			{formField: [[{inputtype: 'image', name:'image',placeholder:'',label:'Upload image(s)',showlabel:1}]]},
@@ -808,7 +809,7 @@ class Form extends React.Component {
 
 	incident_report(){
 		const tags = [
-			{formField: [[{inputtype:'desc',name:'',placeholder:'Incident report on an incident that may have taken place.',label:'',showlabel:0},
+			{formField: [[{inputtype:'desc',name:'',placeholder:'Incident report on an incident that may have taken place.',label:'',showlabel:0}]]},
 			{formField: [[{inputtype:'dropdown',name:'incident_category',placeholder:'',label:'Select an incident category',showlabel:1,options:[['Personal Injury','PERSONAL INJURY'],['Property Damage','PROPERTY DAMAGE'],['Fires','FIRES'],['Loss to Process','LOSS TO PROCESS'],['Environment','ENVIRONMENT'],['Near Miss','NEAR MISS'],['Community','COMMUNITY'],['Death','DEATH']]}]]},
 			{formField: [[{inputtype: 'text', name:'incident_location',placeholder:'Incident Location',label:'Incident Location',showlabel:1}]]},
 			{formField: [[{inputtype: 'text', name:'victim_name',placeholder:'Victim Name',label:'Victim Name',showlabel:1}]]},
