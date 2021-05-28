@@ -103,21 +103,25 @@ class FormulateReportData extends React.Component {
         if(response.status == "201"){
             console.log(response.statusText)
 
-            window.scrollTo({top: 0, behavior: 'smooth'});
+            // window.scrollTo({top: 0, behavior: 'smooth'});
             
-            var inputs = document.querySelectorAll('.input-element')
-            let count_p = 0 
-            let count_d = 0
+            // var inputs = document.querySelectorAll('.input-element')
+            // let count_p = 0 
+            // let count_d = 0
             
-             console.log("Set everything to empty")
-            // Set everythinng to empty
-            inputs.forEach((input,i)=>{
+            //  console.log("Set everything to empty")
+            // // Set everythinng to empty
+            // inputs.forEach((input,i)=>{
               
-                    input.value = ""
+            //         input.value = ""
                 
-            })
+            // })
 
-            this.props.updateEntries(formData)
+            // this.props.getData(response.data)
+
+            this.setState({
+                data: response.data
+            })
 
             setTimeout(function(){
                 document.getElementById('success-message').innerHTML = ""
@@ -149,9 +153,32 @@ class FormulateReportData extends React.Component {
 
 
 	render(){
-			return (<React.Fragment>
+			return (<div className="container">
                         Report Section
-                    </React.Fragment>)
+                        <div className="table-responsive-md">          
+                        <table className="table table-bordered">
+                          <thead>
+                            <tr>
+                            {
+                                this.state.data.map((row,i)=>{
+                                    return <th key={i}>{ row.row }</th>
+                                })
+                            }
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                                {   
+
+                                    this.state.data.map((row,i)=>{
+                                        return <th key={i}>{ row.value }</th>
+                                    })
+                                }
+                            </tr>
+                           </tbody>
+                        </table>
+                        </div>
+                    </div>)
 		}
 		
 	

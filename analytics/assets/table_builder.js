@@ -34,6 +34,8 @@ class TableBuilder extends React.Component {
 		this.handleGraphInputChanged = this.handleGraphInputChanged.bind(this)
 		this.handleChartChange = this.handleChartChange.bind(this)
 		this.handleOptionChange = this.handleOptionChange.bind(this)
+
+		this.getData = this.getData.bind(this)
 	}
 
 	componentDidMount(){
@@ -60,6 +62,12 @@ class TableBuilder extends React.Component {
           // here catch error messages from laravel validator and show them 
           console.log(error)
      	})
+	}
+
+	getData(data){
+		this.setState({
+			data: data
+		})
 	}
 
 	handleInputChanged(e, name){
@@ -178,7 +186,7 @@ class TableBuilder extends React.Component {
     						<hr/>
 
     						<div className="row mt-2">
-    							<FormulateReportData module_name={this.state.module} x_column={this.state.x_column} y_column={this.state.y_column} valueType={this.state.valueType} groupType={this.state.groupType}/>
+    							<FormulateReportData module_name={this.state.module} x_column={this.state.x_column} y_column={this.state.y_column} valueType={this.state.valueType} groupType={this.state.groupType} getData={ this.getData }/>
     						</div>
 
                       <button type="submit" className="btn btn-primary btn-block">Save table</button>

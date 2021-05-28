@@ -63,28 +63,43 @@ class formulateReportViewSet(viewsets.ViewSet):
             
             data_ = []
 
+            status_ = status.HTTP_200_OK
+
             if y_column is None and x_column is None and value is None:
                 return Response("Continue",status=status.HTTP_200_OK)
-            elif groupType=="sum":
+            elif value is None and y_column is not None or x_column is not None:
                 if y_column is None and x_column is not None:
-                    values=x_column
-                    data_ = myModel.objects.values(values).annotate(sum=Sum(value), row=F(values)).values('sum','row')
+                    data_ = myModel.objects.values(x_column).annotate(row=F(x_column)).values('row')
+                    status_ = status.HTTP_201_CREATED
                 elif x_column is None and y_column is not None:
-                    values=y_column
-                    data_ = myModel.objects.values(values).annotate(sum=Sum(value), column=F(values)).values('sum','column')
+                    data_ = myModel.objects.values(y_column).annotate(column=F(y_column)).values('column')
+                    status_ = status.HTTP_201_CREATED
                 elif x_column is not None and y_column is not None:
-                    data_ = myModel.objects.values(y_column,x_column).annotate(sum=Sum(value), row=F(x_column), column=F(y_column)).values('sum','row','column')
-
-            if groupType=="count":
-                if y_column is None and x_column is not None:
-                    values=x_column
-                    data_ = myModel.objects.values(values).annotate(count=Count(value), row=F(values)).values('count','row')
-                elif x_column is None and y_column is not None:
-                    values=y_column
-                    data_ = myModel.objects.values(values).annotate(count=Count(value), column=F(values)).values('count','column')
-                elif x_column is not None and y_column is not None:
-                    data_ = myModel.objects.values(y_column,x_column).annotate(count=Count(value), row=F(x_column), column=F(y_column)).values('count','row','column')
+                    data_ = myModel.objects.values(y_column,x_column).annotate(row=F(x_column), column=F(y_column)).values('row','column')
+                    status_ = status.HTTP_201_CREATED
+            elif value is not None and y_column is not None or x_column is not None:
+                if groupType=="sum":
+                    if y_column is None and x_column is not None:
+                        data_ = myModel.objects.values(x_column).annotate(value=Sum(value), row=F(x_column)).values('value','row')
+                        status_ = status.HTTP_201_CREATED
+                    elif x_column is None and y_column is not None:
+                        data_ = myModel.objects.values(y_column).annotate(value=Sum(value), column=F(y_column)).values('value','column')
+                        status_ = status.HTTP_201_CREATED
+                    elif x_column is not None and y_column is not None:
+                        data_ = myModel.objects.values(y_column,x_column).annotate(value=Sum(value), row=F(x_column), column=F(y_column)).values('value','row','column')
+                        status_ = status.HTTP_201_CREATED
+    
+                if groupType=="count":
+                    if y_column is None and x_column is not None:
+                        data_ = myModel.objects.values(x_column).annotate(value=Count(value), row=F(x_column)).values('value','row')
+                        status_ = status.HTTP_201_CREATED
+                    elif x_column is None and y_column is not None:
+                        data_ = myModel.objects.values(y_column).annotate(value=Count(value), column=F(y_column)).values('value','column')
+                        status_ = status.HTTP_201_CREATED
+                    elif x_column is not None and y_column is not None:
+                        data_ = myModel.objects.values(y_column,x_column).annotate(value=Count(value), row=F(x_column), column=F(y_column)).values('value','row','column')
+                        status_ = status.HTTP_201_CREATED
             #     return Response(JsonResponse(data_,safe=False).data, status=status.HTTP_201_CREATED)
-            return Response(data_,status=status.HTTP_200_OK)
+            return Response(data_,status=status_)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
