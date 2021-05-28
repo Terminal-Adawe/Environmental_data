@@ -21,6 +21,12 @@ from analytics.models import Slope_stabilization_and_surface_water_retention
 from analytics.models import Safety_training
 from analytics.models import Safety_permission_system
 from analytics.models import Safety_tools
+from analytics.models import GeoReferencePoints
+from analytics.models import FuelFarm
+from analytics.models import WorkEnvCompliance
+from analytics.models import Warehouse
+from analytics.models import Conveyers
+from analytics.models import IncidentReport
 from analytics.models import Graph_config
 
 from  analytics.forms import loginForm

@@ -88,3 +88,20 @@ class UsernameSerializer(serializers.ModelSerializer):
 class UsernameSerializerGet(serializers.ModelSerializer):
 	username = serializers.CharField(max_length=120,required=True)
 
+class reportBuilderSerializerGet(serializers.Serializer):
+	module = serializers.CharField(max_length=120, required=True)
+	x_column = serializers.CharField(max_length=50, allow_null=True)
+	y_column = serializers.CharField(max_length=50, allow_null=True)
+	value = serializers.CharField(max_length=50, allow_null=True)
+	groupType = serializers.CharField(max_length=50, allow_null=True)
+
+class randColumnSerializer(serializers.Serializer):
+	column = serializers.CharField(max_length=100, source='*')
+	# sum = serializers.CharField(max_length=100, source='*')
+	# count = serializers.CharField(max_length=100, source='*')
+		
+
+
+
+
+

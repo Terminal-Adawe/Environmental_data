@@ -40,6 +40,18 @@ def get_model_using_modules(module):
 			myModel = str_to_class(module_i.table)
 			return myModel
 
+def get_model_using_modulesid(module):
+	modules_queryset = modules.objects.filter(active=1)
+	for module_i in modules_queryset:
+		logger.info(module_i.module_name)
+		logger.info(" vs ")
+		logger.info(module)
+		if module_i.id == module:
+			logger.info(" modules match ")
+			logger.info(module)
+			myModel = str_to_class(module_i.table)
+			return myModel
+
 def get_fields_of_model(myModel):
 	field_list = []
 	for field in myModel._meta.get_fields():

@@ -60,6 +60,10 @@ class FormulateReportData extends React.Component {
 			// console.log(this.props)
 			this.getReport(this.props.module_name,this.props.x_column,this.props.y_column,this.props.valueType, this.props.groupType)
 		}
+
+        if(prevProps.groupType != this.props.groupType){
+            
+        }
 	}
 
     getReport(module_, x_column, y_column, valueType, groupType){
@@ -77,7 +81,7 @@ class FormulateReportData extends React.Component {
         form_data.append('module', module_)
         form_data.append('x_column', x_column)
         form_data.append('y_column', y_column)
-        form_data.append('valueType', valueType)
+        form_data.append('value', valueType)
         form_data.append('groupType', groupType)
 
         axios.post(`${baseUrl}/api/${url}`,form_data,{
@@ -88,8 +92,12 @@ class FormulateReportData extends React.Component {
             )
       .then(response => {
         console.log("Response generated is ")
-        console.log(response)
-        this.props.loader(false)
+        console.log(response.data)
+        // this.props.loader(false)
+
+        response.data.map((resp,i)=>{
+            console.log(resp)
+        })
 
         // Response is successful
         if(response.status == "201"){
@@ -101,8 +109,6 @@ class FormulateReportData extends React.Component {
             let count_p = 0 
             let count_d = 0
             
-             document.getElementById('success-message').innerHTML = "Data successfully inserted"
-
              console.log("Set everything to empty")
             // Set everythinng to empty
             inputs.forEach((input,i)=>{

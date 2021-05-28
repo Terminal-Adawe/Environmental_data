@@ -23,19 +23,22 @@ class Axis extends React.Component {
                     		 
 							{
 								this.props.graphbuilder  ?
-							
-								this.props.graphbuilder.filter(field=>field.module==this.props.moduleid).map((field,i)=>{
-									let columns = field.column_fields.split(",")
-									return <select key={ i } id={ name } name={ name } defaultValue="" className="input-element" onChange={(e)=>this.props.handleAxisChanged(e,axis)}>
+								<select id={ name } name={ name } defaultValue="" className="input-element" onChange={(e)=>this.props.handleAxisChanged(e,axis)}>
 										{ this.props.title === "Y-Axis" ? <option value="sequence">Sequence</option> : <option value=""></option> }
 										{
-											columns.map((column,r)=>{
-												return <option key={r} value={ column }>{ column }</option>
-											})
-										}
-										{ this.props.title === "X-Axis" ? <option value="sequence">Sequence</option> : "" }
-										</select>
+								this.props.graphbuilder.filter(field=>field.module==this.props.moduleid).map((field,i)=>{
+											let columns = field.column_fields.split(",")
+											return <React.Fragment key={ i }>
+											{
+												columns.map((column,r)=>{
+													return <option key={r} value={ column }>{ column }</option>
+												})
+											}
+												</React.Fragment>
 								})
+										}
+								{ this.props.title === "X-Axis" ? <option value="sequence">Sequence</option> : "" }
+										</select>
 								: ""
 							}
                     		  	</div>)
