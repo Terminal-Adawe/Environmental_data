@@ -156,9 +156,9 @@ class TableBuilder extends React.Component {
 									}
                     				  </select>
                     			</div>
-                    			<Axis graphbuilder={ this.state.data.Graph_builder_field } title="Rows" name="x_column" handleAxisChanged={ this.handleAxisChanged } moduleid={ this.state.module } columnLength="col-lg-4 col-md-4 col-sm-6"/>
+                    			<Axis graphbuilder={ this.state.data.Graph_builder_field } title="Rows" name="y_column" handleAxisChanged={ this.handleAxisChanged } moduleid={ this.state.module } columnLength="col-lg-4 col-md-4 col-sm-6"/>
 
-                    			<Axis graphbuilder={ this.state.data.Graph_builder_field } title="Columns" name="y_column" handleAxisChanged={ this.handleAxisChanged } moduleid={ this.state.module } columnLength="col-lg-4 col-md-4 col-sm-6"/>
+                    			<Axis graphbuilder={ this.state.data.Graph_builder_field } title="Columns" name="x_column" handleAxisChanged={ this.handleAxisChanged } moduleid={ this.state.module } columnLength="col-lg-4 col-md-4 col-sm-6"/>
                     		 </div>
 
                     		 <div className="row mt-1">
