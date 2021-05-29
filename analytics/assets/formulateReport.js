@@ -18,7 +18,8 @@ class FormulateReportData extends React.Component {
             y_column: "",
             baseUrl: "",
             valueType: "",
-            url: "add/build-report/",
+            table_name: "",
+            url: "add/build-table/",
 		}
 
         this.getReport = this.getReport.bind(this)
@@ -36,7 +37,8 @@ class FormulateReportData extends React.Component {
                 x_column: this.props.x_column,
                 y_column: this.props.y_column,
                 valueType: this.props.valueType,
-                groupType: this.props.groupType
+                groupType: this.props.groupType,
+                table_name: this.props.table_name
 
             },()=>{
                 if(this.props.module_name != ""){
@@ -58,7 +60,7 @@ class FormulateReportData extends React.Component {
 		if(prevProps.module_name != this.props.module_name || prevProps.x_column != this.props.x_column || prevProps.y_column != this.props.y_column || prevProps.valueType != this.props.valueType){
 			// console.log("processing graph 2... ")
 			// console.log(this.props)
-			this.getReport(this.props.module_name,this.props.x_column,this.props.y_column,this.props.valueType, this.props.groupType)
+			this.getReport(this.props.table_name,this.props.module_name,this.props.x_column,this.props.y_column,this.props.valueType, this.props.groupType)
 		}
 
         if(prevProps.groupType != this.props.groupType){
@@ -66,7 +68,7 @@ class FormulateReportData extends React.Component {
         }
 	}
 
-    getReport(module_, x_column, y_column, valueType, groupType){
+    getReport(table_name,module_, x_column, y_column, valueType, groupType){
         let form_data = new FormData();
 
         const url = this.state.url
@@ -78,6 +80,7 @@ class FormulateReportData extends React.Component {
         console.log("Base url is ")
         console.log(this.state.baseUrl)
 
+        form_data.append('table_name', table_name)
         form_data.append('module', module_)
         form_data.append('x_column', x_column)
         form_data.append('y_column', y_column)
@@ -153,32 +156,64 @@ class FormulateReportData extends React.Component {
 
 
 	render(){
-			return (<div className="container">
-                        Report Section
-                        <div className="table-responsive-md">          
-                        <table className="table table-bordered">
-                          <thead>
-                            <tr>
-                            {
-                                this.state.data.map((row,i)=>{
-                                    return <th key={i}>{ row.row }</th>
-                                })
-                            }
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                                {   
-
+			return (<div className="container-fluid">
+                        <div className="row">
+                            <div className="col-12">
+                                { this.state.table_name }
+                            </div>
+                        </div>
+                        <div className="table-responsive">          
+                            <table className="table table-bordered">
+                              <thead>
+                                <tr>
+                                    <th></th>
+                                {
                                     this.state.data.map((row,i)=>{
-                                        return <th key={i}>{ row.value }</th>
+                                        if(row.column){
+                                            return <th key={i}>{ row.column }</th>
+                                        } else {
+                                            return null
+                                        }
                                     })
                                 }
-                            </tr>
-                           </tbody>
-                        </table>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                
+                                    {   
+                                        this.state.data.map((main_row,r)=>{
+                                            if(main_row.column){
+                                            return <tr key={r}>
+                                                <th>{ main_row.row }</th>
+                                                {   
+                                                    
+                                                        this.state.data.map((row,i)=>{
+                                                            if(main_row.column && main_row.row){
+                                                                if(row.column == main_row.column && row.row == main_row.row){
+                                                                    return <th key={i}>{ row.value }</th>
+                                                                } else {
+                                                                    return <th key={i}></th>
+                                                                }
+                                                            } else if (main_row.column && !main_row.row){
+                                    
+                                                                    return <th key={i}>{ row.value }</th>
+    
+                                                            } else {
+                                                                return <th key={i}></th>
+                                                            }
+                                                        })
+                                                    
+                                                }
+                                                </tr>
+                                            } else {
+                                                return <tr><th>{ main_row.row }</th><th>{ main_row.value }</th></tr>
+                                            }
+                                        })
+                                    }
+                               </tbody>
+                            </table>
                         </div>
-                    </div>)
+                        </div>)
 		}
 		
 	

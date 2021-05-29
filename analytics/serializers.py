@@ -89,6 +89,7 @@ class UsernameSerializerGet(serializers.ModelSerializer):
 	username = serializers.CharField(max_length=120,required=True)
 
 class reportBuilderSerializerGet(serializers.Serializer):
+	table_name = serializers.CharField(max_length=50, allow_null=True)
 	module = serializers.CharField(max_length=120, required=True)
 	x_column = serializers.CharField(max_length=50, allow_null=True)
 	y_column = serializers.CharField(max_length=50, allow_null=True)

@@ -603,4 +603,19 @@ class Tasks(models.Model):
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 
+class Custom_table(models.Model):
+	table_name = models.CharField(max_length=50, null=True, blank=True)
+	group_type = models.CharField(max_length=10)
+	module = models.CharField(max_length=10, null=True, blank=True)
+	x_column = models.CharField(max_length=50, null=True, blank=True)
+	y_column = models.CharField(max_length=50, null=True, blank=True)
+	value = models.CharField(max_length=50, null=True, blank=True)
+	active = models.IntegerField(default=1)
+	created_by = models.ForeignKey(User,
+	on_delete=models.PROTECT,related_name="custom_table")
+	updated_by = models.IntegerField(null=True, blank=True)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+
+
 		

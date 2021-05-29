@@ -45,7 +45,8 @@ router.register(r'add-work-environmental-compliance-data', WorkEnvCompliance.Wor
 router.register(r'add-warehouse-data', Warehouse.WarehouseViewSet, basename='add-warehouse-data')
 router.register(r'add-conveyers-data', Conveyers.ConveyersViewSet, basename='add-conveyers-data')
 router.register(r'add-incident-report', IncidentReport.IncidentReportViewSet, basename='add-incident-report')
-router.register(r'build-report', formulate_report.formulateReportViewSet, basename='build-report')
+router.register(r'build-table', formulate_report.formulateReportViewSet, basename='build-table')
+router.register(r'save-table', formulate_report.saveTableViewSet, basename='save-table')
 router.register(r'upload_image', ImageUploader.ImageUploader, basename='upload_image')
 
 

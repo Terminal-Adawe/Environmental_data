@@ -21,6 +21,7 @@ from analytics.models import WorkEnvCompliance
 from analytics.models import Warehouse
 from analytics.models import Conveyers
 from analytics.models import IncidentReport
+from analytics.models import Custom_table
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 from rest_framework import status
@@ -55,11 +56,8 @@ class formulateReportViewSet(viewsets.ViewSet):
             x_column = serializer.data['x_column']
             y_column = serializer.data['y_column']
             value = serializer.data['value']
-            values = x_column
 
             myModel = get_model_using_modulesid(int(module_))
-
-           
             
             data_ = []
 
@@ -67,39 +65,88 @@ class formulateReportViewSet(viewsets.ViewSet):
 
             if y_column is None and x_column is None and value is None:
                 return Response("Continue",status=status.HTTP_200_OK)
-            elif value is None and y_column is not None or x_column is not None:
+            elif ((value is None and y_column is not None) or (value is None and x_column is not None)):
                 if y_column is None and x_column is not None:
-                    data_ = myModel.objects.values(x_column).annotate(row=F(x_column)).values('row')
+                    data_ = myModel.objects.values(x_column).annotate(column=F(x_column)).values('column')
                     status_ = status.HTTP_201_CREATED
                 elif x_column is None and y_column is not None:
-                    data_ = myModel.objects.values(y_column).annotate(column=F(y_column)).values('column')
+                    data_ = myModel.objects.values(y_column).annotate(row=F(y_column)).values('row')
                     status_ = status.HTTP_201_CREATED
                 elif x_column is not None and y_column is not None:
-                    data_ = myModel.objects.values(y_column,x_column).annotate(row=F(x_column), column=F(y_column)).values('row','column')
+                    data_ = myModel.objects.values(y_column,x_column).annotate(column=F(x_column), row=F(y_column)).values('column','row')
                     status_ = status.HTTP_201_CREATED
-            elif value is not None and y_column is not None or x_column is not None:
+            elif ((value is not None and y_column is not None) or (value is not None and x_column is not None)):
                 if groupType=="sum":
                     if y_column is None and x_column is not None:
-                        data_ = myModel.objects.values(x_column).annotate(value=Sum(value), row=F(x_column)).values('value','row')
+                        data_ = myModel.objects.values(x_column).annotate(value=Sum(value), column=F(x_column)).values('value','column')
                         status_ = status.HTTP_201_CREATED
                     elif x_column is None and y_column is not None:
-                        data_ = myModel.objects.values(y_column).annotate(value=Sum(value), column=F(y_column)).values('value','column')
+                        data_ = myModel.objects.values(y_column).annotate(value=Sum(value), row=F(y_column)).values('value','row')
                         status_ = status.HTTP_201_CREATED
                     elif x_column is not None and y_column is not None:
-                        data_ = myModel.objects.values(y_column,x_column).annotate(value=Sum(value), row=F(x_column), column=F(y_column)).values('value','row','column')
+                        data_ = myModel.objects.values(y_column,x_column).annotate(value=Sum(value), row=F(y_column), column=F(x_column)).values('value','row','column')
                         status_ = status.HTTP_201_CREATED
     
                 if groupType=="count":
                     if y_column is None and x_column is not None:
-                        data_ = myModel.objects.values(x_column).annotate(value=Count(value), row=F(x_column)).values('value','row')
+                        data_ = myModel.objects.values(x_column).annotate(value=Count(value), column=F(x_column)).values('value','column')
                         status_ = status.HTTP_201_CREATED
                     elif x_column is None and y_column is not None:
-                        data_ = myModel.objects.values(y_column).annotate(value=Count(value), column=F(y_column)).values('value','column')
+                        data_ = myModel.objects.values(y_column).annotate(value=Count(value), row=F(y_column)).values('value','row')
                         status_ = status.HTTP_201_CREATED
                     elif x_column is not None and y_column is not None:
-                        data_ = myModel.objects.values(y_column,x_column).annotate(value=Count(value), row=F(x_column), column=F(y_column)).values('value','row','column')
+                        data_ = myModel.objects.values(y_column,x_column).annotate(value=Count(value), row=F(y_column), column=F(x_column)).values('value','row','column')
                         status_ = status.HTTP_201_CREATED
             #     return Response(JsonResponse(data_,safe=False).data, status=status.HTTP_201_CREATED)
             return Response(data_,status=status_)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+class saveTableViewSet(viewsets.ViewSet):
+    def create(self, request):
+        serializer = reportBuilderSerializerGet(data=request.data)
+        # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
+
+        if serializer.is_valid(raise_exception=True):
+            # user = User.objects.get(username=serializer.data['username'])
+            # created_by_id = user.id
+            # created_by_id = 4
+            table_name = serializer.data['table_name']
+            groupType = serializer.data['groupType']
+            module_ = serializer.data['module']
+            x_column = serializer.data['x_column']
+            y_column = serializer.data['y_column']
+            value = serializer.data['value']
+
+            myModel = get_model_using_modulesid(int(module_))
+
+            data_ = []
+
+            status_ = status.HTTP_200_OK
+
+            if y_column is None and x_column is None and value is None:
+                return Response("Continue",status=status.HTTP_200_OK)
+            elif value is not None:
+                save_table = Custom_table(
+                        table_name = table_name,
+                        group_type = groupType,
+                        module = module_,
+                        x_column = x_column,
+                        y_column = y_column,
+                        value = value,
+                        active = 1
+                    )
+
+                save_table.save()
+
+                status_ = status.HTTP_201_CREATED
+
+            #     return Response(JsonResponse(data_,safe=False).data, status=status.HTTP_201_CREATED)
+            return Response(data_,status=status_)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+

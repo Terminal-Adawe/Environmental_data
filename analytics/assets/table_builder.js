@@ -17,12 +17,14 @@ class TableBuilder extends React.Component {
 		this.state={
 			data: [],
 			module: "all",
+			table_name: "",
 			moduleid: "",
 			x_column: "",
 			y_column: "",
 			groupType: "sum",
 			baseUrl: "https://d12m8zkkfoc9oy.cloudfront.net",
 			valueType: "",
+			add_report_url: "add/save-table/",
 			// baseUrl: "http://localhost:8002",
 		}
 
@@ -34,6 +36,8 @@ class TableBuilder extends React.Component {
 		this.handleGraphInputChanged = this.handleGraphInputChanged.bind(this)
 		this.handleChartChange = this.handleChartChange.bind(this)
 		this.handleOptionChange = this.handleOptionChange.bind(this)
+		this.handleSaveTableClick = this.handleSaveTableClick.bind(this)
+		this.saveTable = this.saveTable.bind(this)
 
 		this.getData = this.getData.bind(this)
 	}
@@ -121,12 +125,107 @@ class TableBuilder extends React.Component {
   		});
 	}
 
+	handleSaveTableClick(){
+		const module_ = this.state.module
+		const x_column = this.state.x_column
+		const y_column = this.state.y_column
+		const valueType = this.state.valueType
+		const groupType = this.state.groupType
+		const table_name = this.state.table_name
+
+		this.saveTable(table_name,module_,x_column,y_column,valueType,groupType)
+	}
+
+	saveTable(table_name,module_, x_column, y_column, valueType, groupType){
+        let form_data = new FormData();
+
+        const url = this.state.url
+        const baseUrl = this.state.baseUrl
+
+
+        console.log("sending info ... ")
+        console.log(module_+" + "+x_column+" + "+y_column+" + "+valueType+" + "+groupType)
+        console.log("Base url is ")
+        console.log(this.state.baseUrl)
+
+        form_data.append('table_name', table_name)
+        form_data.append('module', module_)
+        form_data.append('x_column', x_column)
+        form_data.append('y_column', y_column)
+        form_data.append('value', valueType)
+        form_data.append('groupType', groupType)
+
+        axios.post(`${baseUrl}/api/${url}`,form_data,{
+                headers: {
+                     'X-CSRFTOKEN': cookie.load("csrftoken"),
+                 },
+            }
+            )
+      .then(response => {
+        console.log("Response generated is ")
+        console.log(response.data)
+        // this.props.loader(false)
+
+        response.data.map((resp,i)=>{
+            console.log(resp)
+        })
+
+        // Response is successful
+        if(response.status == "201"){
+            console.log(response.statusText)
+
+            // window.scrollTo({top: 0, behavior: 'smooth'});
+            
+            // var inputs = document.querySelectorAll('.input-element')
+            // let count_p = 0 
+            // let count_d = 0
+            
+            //  console.log("Set everything to empty")
+            // // Set everythinng to empty
+            // inputs.forEach((input,i)=>{
+              
+            //         input.value = ""
+                
+            // })
+
+            // this.props.getData(response.data)
+
+            this.setState({
+                data: response.data
+            })
+
+            document.getElementById('success-message').innerHTML = "Successful"
+            setTimeout(function(){
+                document.getElementById('success-message').innerHTML = ""
+            },4000)
+
+        } else // response failed
+        {
+            document.getElementById('error-message').innerHTML = response.data.message
+            console.log(response.data.message)
+            setTimeout(function(){
+               document.getElementById('error-message').innerHTML = ""
+            },10000)
+        }
+
+      })
+      .catch(error => {
+        this.props.loader(false)
+        console.log(error)
+        document.getElementById('error-message').innerHTML = error
+        setTimeout(function(){
+             document.getElementById('error-message').innerHTML = ""
+        },10000)
+        // console.log("an error occurred!!")
+      })
+    }
+
 
 	render(){
 		// console.log("INSTANCE")
 		// console.log(this.state.data)
 		return (<div className="row">
-						<div className="col-lg-7 col-md-8 col-sm-12">
+						<div className="col-lg-9 col-md-10 col-sm-12">
 							<div className="row mt-2">
 								<div className="col-12">
 									<label><h4>Table Name</h4></label>
@@ -136,6 +235,7 @@ class TableBuilder extends React.Component {
 										placeholder="Enter name of the table" 
 										name="table_name" 
 										className="input-element" 
+										onChange={(e)=>this.handleInputChanged(e,"table_name")}
 										 />
 								</div>
 							</div>
@@ -186,10 +286,12 @@ class TableBuilder extends React.Component {
     						<hr/>
 
     						<div className="row mt-2">
-    							<FormulateReportData module_name={this.state.module} x_column={this.state.x_column} y_column={this.state.y_column} valueType={this.state.valueType} groupType={this.state.groupType} getData={ this.getData }/>
+    							<div className="col-12">
+    								<FormulateReportData module_name={this.state.module} x_column={this.state.x_column} y_column={this.state.y_column} valueType={this.state.valueType} table_name={this.state.table_name} groupType={this.state.groupType} getData={ this.getData }/>
+    							</div>
     						</div>
 
-                      <button type="submit" className="btn btn-primary btn-block">Save table</button>
+                      <button type="button" className="btn btn-primary btn-block" onClick={ this.handleSaveTableClick }>Save table</button>
 						</div>
 					</div>)
 	}

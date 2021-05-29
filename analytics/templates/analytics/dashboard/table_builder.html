@@ -15,10 +15,12 @@
 			</header>
 			<div class="panel-body">
 				<div class="container-fluid">
-					<form action="{% url 'analytics:table-builder' %}" method="post">
-						{% csrf_token %}
-						<div id="table-builder" class="container-fluid"></div>
-					</form>
+					<div id="error-message">
+            		</div>
+            		<div id="success-message">
+            		</div>
+					<div id="table-builder" class="container-fluid" style="overflow: hidden;"></div>
+
 				</div>
 			</div>
 		</section>
