@@ -12,6 +12,7 @@ class ReportGraphs extends React.Component {
 		this.state={
 			data: [],
 			module: "",
+			view: "graph",
 			baseUrl: "https://d12m8zkkfoc9oy.cloudfront.net",
 			// baseUrl: "http://localhost:8002",
 		}
@@ -49,7 +50,7 @@ class ReportGraphs extends React.Component {
 
 	render(){
 		return (<React.Fragment>
-				<Template data={ this.state.data } module={ this.state.module }/>
+				<Template data={ this.state.data } module={ this.state.module } view={ this.state.view }/>
   			</React.Fragment>)
 	}
 }

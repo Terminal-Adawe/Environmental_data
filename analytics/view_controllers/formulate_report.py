@@ -51,6 +51,7 @@ class formulateReportViewSet(viewsets.ViewSet):
             # created_by_id = user.id
             # created_by_id = 4
 
+            user = User.objects.get(username=serializer.data['username'])
             groupType = serializer.data['groupType']
             module_ = serializer.data['module']
             x_column = serializer.data['x_column']
@@ -111,6 +112,7 @@ class saveTableViewSet(viewsets.ViewSet):
             # user = User.objects.get(username=serializer.data['username'])
             # created_by_id = user.id
             # created_by_id = 4
+            user = User.objects.get(username=serializer.data['username'])
             table_name = serializer.data['table_name']
             groupType = serializer.data['groupType']
             module_ = serializer.data['module']
@@ -134,7 +136,8 @@ class saveTableViewSet(viewsets.ViewSet):
                         x_column = x_column,
                         y_column = y_column,
                         value = value,
-                        active = 1
+                        active = 1,
+                        created_by = user
                     )
 
                 save_table.save()

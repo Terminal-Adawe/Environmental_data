@@ -15,6 +15,7 @@ class Index extends React.Component {
 		this.state={
 			data: [],
 			module: "all",
+			view: "dashboard",
 			baseUrl: "https://d12m8zkkfoc9oy.cloudfront.net",
 			// baseUrl: "http://localhost:8002",
 		}
@@ -60,7 +61,7 @@ class Index extends React.Component {
 						</div>
 					</div>
 				</div>
-				<Template data={ this.state.data } module={ this.state.module }/>
+				<Template data={ this.state.data } module={ this.state.module } view={ this.state.view }/>
   			</React.Fragment>)
 	}
 }

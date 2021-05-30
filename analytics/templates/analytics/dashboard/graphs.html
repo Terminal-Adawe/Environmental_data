@@ -1,0 +1,10 @@
+{% extends "analytics/dashboard/template.html" %}
+
+{% load static %}
+
+{% block main_content %}
+	<input type="hidden" name="module_name" id="module" value="all">
+	<div id="report-graphs"></div>
+
+    <script src="{% static 'report-bundle.js' %}"></script>
+{% endblock %}

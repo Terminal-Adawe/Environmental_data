@@ -95,6 +95,7 @@ class reportBuilderSerializerGet(serializers.Serializer):
 	y_column = serializers.CharField(max_length=50, allow_null=True)
 	value = serializers.CharField(max_length=50, allow_null=True)
 	groupType = serializers.CharField(max_length=50, allow_null=True)
+	username = serializers.CharField(max_length=100)
 
 class randColumnSerializer(serializers.Serializer):
 	column = serializers.CharField(max_length=100, source='*')

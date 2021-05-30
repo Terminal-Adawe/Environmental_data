@@ -13,6 +13,7 @@ class FormulateReportData extends React.Component {
 
 		this.state={
 			data: [],
+            username: "",
             module: "",
             x_column: "",
             y_column: "",
@@ -38,11 +39,12 @@ class FormulateReportData extends React.Component {
                 y_column: this.props.y_column,
                 valueType: this.props.valueType,
                 groupType: this.props.groupType,
-                table_name: this.props.table_name
+                table_name: this.props.table_name,
+                username: this.props.username
 
             },()=>{
                 if(this.props.module_name != ""){
-                    this.getReport(this.props.module_name,this.props.x_column,this.props.y_column,this.props.valueType, this.props.groupType)
+                    this.getReport(this.props.username,this.props.module_name,this.props.x_column,this.props.y_column,this.props.valueType, this.props.groupType)
                 } 
             })
 
@@ -60,7 +62,7 @@ class FormulateReportData extends React.Component {
 		if(prevProps.module_name != this.props.module_name || prevProps.x_column != this.props.x_column || prevProps.y_column != this.props.y_column || prevProps.valueType != this.props.valueType){
 			// console.log("processing graph 2... ")
 			// console.log(this.props)
-			this.getReport(this.props.table_name,this.props.module_name,this.props.x_column,this.props.y_column,this.props.valueType, this.props.groupType)
+			this.getReport(this.props.username,this.props.table_name,this.props.module_name,this.props.x_column,this.props.y_column,this.props.valueType, this.props.groupType)
 		}
 
         if(prevProps.groupType != this.props.groupType){
@@ -68,7 +70,7 @@ class FormulateReportData extends React.Component {
         }
 	}
 
-    getReport(table_name,module_, x_column, y_column, valueType, groupType){
+    getReport(username,table_name,module_, x_column, y_column, valueType, groupType){
         let form_data = new FormData();
 
         const url = this.state.url
@@ -80,6 +82,7 @@ class FormulateReportData extends React.Component {
         console.log("Base url is ")
         console.log(this.state.baseUrl)
 
+        form_data.append('username', username)
         form_data.append('table_name', table_name)
         form_data.append('module', module_)
         form_data.append('x_column', x_column)
@@ -157,11 +160,6 @@ class FormulateReportData extends React.Component {
 
 	render(){
 			return (<div className="container-fluid">
-                        <div className="row">
-                            <div className="col-12">
-                                { this.state.table_name }
-                            </div>
-                        </div>
                         <div className="table-responsive">          
                             <table className="table table-bordered">
                               <thead>

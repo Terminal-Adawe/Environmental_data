@@ -16,6 +16,7 @@ class TableBuilder extends React.Component {
 
 		this.state={
 			data: [],
+			username: "",
 			module: "all",
 			table_name: "",
 			moduleid: "",
@@ -45,9 +46,11 @@ class TableBuilder extends React.Component {
 	componentDidMount(){
 
 		const baseUrl = document.getElementById("baseUrl").value
+		const username = document.querySelector(".username").value
 
 		this.setState({
-			baseUrl: baseUrl
+			baseUrl: baseUrl,
+			username: username
 		},()=>{
 			this.getDetails()
 		})
@@ -132,14 +135,15 @@ class TableBuilder extends React.Component {
 		const valueType = this.state.valueType
 		const groupType = this.state.groupType
 		const table_name = this.state.table_name
+		const username = this.state.username
 
-		this.saveTable(table_name,module_,x_column,y_column,valueType,groupType)
+		this.saveTable(username,table_name,module_,x_column,y_column,valueType,groupType)
 	}
 
-	saveTable(table_name,module_, x_column, y_column, valueType, groupType){
+	saveTable(username,table_name,module_, x_column, y_column, valueType, groupType){
         let form_data = new FormData();
 
-        const url = this.state.url
+        const url = this.state.add_report_url
         const baseUrl = this.state.baseUrl
 
 
@@ -148,6 +152,7 @@ class TableBuilder extends React.Component {
         console.log("Base url is ")
         console.log(this.state.baseUrl)
 
+        form_data.append('username', username)
         form_data.append('table_name', table_name)
         form_data.append('module', module_)
         form_data.append('x_column', x_column)
@@ -174,26 +179,8 @@ class TableBuilder extends React.Component {
         if(response.status == "201"){
             console.log(response.statusText)
 
-            // window.scrollTo({top: 0, behavior: 'smooth'});
-            
-            // var inputs = document.querySelectorAll('.input-element')
-            // let count_p = 0 
-            // let count_d = 0
-            
-            //  console.log("Set everything to empty")
-            // // Set everythinng to empty
-            // inputs.forEach((input,i)=>{
-              
-            //         input.value = ""
-                
-            // })
-
-            // this.props.getData(response.data)
-
-            this.setState({
-                data: response.data
-            })
-
+            window.scrollTo({top: 0, behavior: 'smooth'});
+           
             document.getElementById('success-message').innerHTML = "Successful"
             setTimeout(function(){
                 document.getElementById('success-message').innerHTML = ""
@@ -286,8 +273,11 @@ class TableBuilder extends React.Component {
     						<hr/>
 
     						<div className="row mt-2">
+                                	<h3 className="mx-4">{ this.state.table_name }</h3>
+    						</div>
+    						<div className="row mt-1">
     							<div className="col-12">
-    								<FormulateReportData module_name={this.state.module} x_column={this.state.x_column} y_column={this.state.y_column} valueType={this.state.valueType} table_name={this.state.table_name} groupType={this.state.groupType} getData={ this.getData }/>
+    								<FormulateReportData username={this.state.username} module_name={this.state.module} x_column={this.state.x_column} y_column={this.state.y_column} valueType={this.state.valueType} table_name={this.state.table_name} groupType={this.state.groupType} getData={ this.getData }/>
     							</div>
     						</div>
 

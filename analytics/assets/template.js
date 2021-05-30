@@ -71,7 +71,7 @@ class Template extends React.Component {
 					<div className="col-12">
 						<div className="row">
               {
-                this.props.module=="all" ? <Widget_generator data={ this.props.data } widgets={ this.state.widgets } module={ this.props.module } parameter={ this.state.widget1 } /> : ""
+                this.props.view=="dashboard" ? <Widget_generator data={ this.props.data } widgets={ this.state.widgets } module={ this.props.module } parameter={ this.state.widget1 } /> : ""
               }
                       
 								

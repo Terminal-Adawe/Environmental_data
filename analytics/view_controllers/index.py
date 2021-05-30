@@ -32,6 +32,7 @@ from analytics.models import Graph_config
 from  analytics.forms import loginForm
 from  analytics.forms import indexloginForm
 from  analytics.forms import registerForm
+from  analytics.forms import editForm
 
 import json 
 
@@ -211,6 +212,8 @@ def adduser(request):
 
 def edituser(request):
     if request.user.is_authenticated:
-        return render(request, 'analytics/dashboard/edituser.html')
+        users = User.objects.filter(is_active=1)
+        form = editForm()
+        return render(request, 'analytics/dashboard/edituser.html',{'form': form,'users':users})
     else:
         return HttpResponseRedirect('login')

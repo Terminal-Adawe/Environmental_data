@@ -70,6 +70,35 @@ let location_array
         console.log("data attrib is "+$('#task_type').val())
     })
 
+    $(".edit_user_btn").off("click").on("click",function(){
+        console.log("You have clicked")
+        console.log($(this).children(".username").val())
+
+        const username = $(this).children(".username").val()
+        const email = $(this).children(".email").val()
+        const first_name = $(this).children(".first_name").val()
+        const last_name = $(this).children(".last_name").val()
+
+        var form_fields = document.querySelectorAll(".form-control"), i;
+
+        for (i = 0; i < form_fields.length; ++i) {
+            if(form_fields[i].name=="username"){
+                form_fields[i].value = username
+            }
+            if(form_fields[i].name=="email"){
+                form_fields[i].value = email
+            }
+            if(form_fields[i].name=="first_name"){
+                form_fields[i].value = first_name
+            }
+            if(form_fields[i].name=="last_name"){
+                form_fields[i].value = last_name
+            }
+        }
+
+
+    })
+
     // All code should be above the code below since it picks location
     // and location has not been implemented in all the templates
     const location_i = document.querySelector('.location').value

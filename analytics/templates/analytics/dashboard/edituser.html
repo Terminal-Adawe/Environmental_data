@@ -4,63 +4,73 @@
 
 {% block main_content %}
 	<div class="container-fluid">
-		<section class="body-sign">
-			<div class="center-sign">
-				<a href="{% url 'analytics:index' %}" class="logo pull-left">
-                <img src="{% static 'analytics/images/companyicon.jpeg' %}" height="35" alt="Geomining" />
-                <br>
-				GeoMining Consultancy Company Limited
-              </a>
-
-				<div class="panel panel-sign">
-					<div class="panel-title-sign mt-xl text-right">
-						<h2 class="title text-uppercase text-bold m-none"><i class="fa fa-user mr-xs"></i> Sign Up</h2>
-					</div>
-					<div class="panel-body">
-						<form action="{% url 'analytics:register_user' %}" class="was-validated"  method="POST" name="form">
-							{% csrf_token %}
-							{% if error_message %}
-                    	        <p class="bg-danger p-d ml-b">{{ error_message }}</p>
-                        	{% endif %}
-  							{% block content %}
-  									{% csrf_token %}
-  									<table>
-					  					{{ form.as_table }}
-					  				</table>
-							{% endblock %}
-
-							<div class="row">
-								<div class="col-sm-8">
-									<div class="checkbox-custom checkbox-default">
-										<input id="AgreeTerms" name="agreeterms" type="checkbox"/>
-										<label for="AgreeTerms">I agree with <a href="#">terms of use</a></label>
+		<div class="row">
+		<div class="col-lg-3">
+			<section class="body-sign">
+				<div class="center-sign">
+					{% for user in users %}
+						<button type="button" class="edit_user_btn btn btn-primary btn-block">{{ user.username }}
+							<input type="hidden" class="username" value="{{ user.username }}">
+							<input type="hidden" class="email" value="{{ user.email }}">
+							<input type="hidden" class="first_name" value="{{ user.first_name }}">
+							<input type="hidden" class="last_name" value="{{ user.last_name }}">
+						</button>
+					{% endfor %}
+				</div>
+			</section>
+		</div>
+		<div class="col-lg-9">
+			<section class="body-sign">
+				<div class="center-sign">
+					<a href="{% url 'analytics:index' %}" class="logo pull-left">
+        	        <img src="{% static 'analytics/images/companyicon.jpeg' %}" height="35" 	alt="Geomining" />
+        	        <br>
+					GeoMining Consultancy Company Limited
+        	      </a>
+	
+					<div class="panel panel-sign">
+						<div class="panel-title-sign mt-xl text-right">
+							<h2 class="title text-uppercase text-bold m-none"><i class="fa fa-user mr-xs"></i> Sign Up</h2>
+						</div>
+						<div class="panel-body">
+							<form action="{% url 'analytics:register_user' %}" class="was-validated"  method="POST" name="form">
+								{% csrf_token %}
+								{% if error_message %}
+        	            	        <p class="bg-danger p-d ml-b">{{ error_message }}</p>
+        	                	{% endif %}
+  								{% block content %}
+  										{% csrf_token %}
+  										<table>
+						  					{{ form.as_table }}
+						  				</table>
+								{% endblock %}
+	
+								<div class="row">
+									<div class="col-sm-8">
+										
+									</div>
+									<div class="col-sm-4 text-right">
+										<button type="submit" class="btn btn-primary 	hidden-xs">Save</button>
+										<button type="submit" class="btn btn-primary 	btn-block btn-lg visible-xs mt-lg">Save</button>
 									</div>
 								</div>
-								<div class="col-sm-4 text-right">
-									<button type="submit" class="btn btn-primary hidden-xs">Sign Up</button>
-									<button type="submit" class="btn btn-primary btn-block btn-lg visible-xs mt-lg">Sign Up</button>
-								</div>
-							</div>
-
-							<span class="mt-lg mb-lg line-thru text-center text-uppercase">
-								<span>o</span>
-							</span>
-
-							<!-- <div class="mb-xs text-center">
-								<a class="btn btn-facebook mb-md ml-xs mr-xs">Connect with <i class="fa fa-facebook"></i></a>
-								<a class="btn btn-twitter mb-md ml-xs mr-xs">Connect with <i class="fa fa-twitter"></i></a>
-							</div> -->
-
-							<p class="text-center">Already have an account? <a href="{% url 'analytics:login' %}">Sign In!</a>
-
-						</form>
+	
+								<span class="mt-lg mb-lg line-thru text-center text-uppercase">
+									<span>o</span>
+								</span>
+								<!-- <div class="mb-xs text-center">
+									<a class="btn btn-facebook mb-md ml-xs mr-xs">Connect 	with <i class="fa fa-facebook"></i></a>
+									<a class="btn btn-twitter mb-md ml-xs mr-xs">Connect with <i class="fa fa-twitter"></i></a>
+								</div> -->
+							</form>
+						</div>
 					</div>
+	
+					<p class="text-center text-muted mt-md mb-md">&copy; Copyright 2021. All rights reserved. GeoMining Consultancy.</p>
 				</div>
-
-				<p class="text-center text-muted mt-md mb-md">&copy; Copyright 2021. All rights reserved. GeoMining Consultancy.</p>
-			</div>
-		</section>
-
+			</section>
+		</div>
+		</div>
 	</div>
 
 	<script src="{% static 'graphbuilder-bundle.js' %}"></script>
