@@ -22,7 +22,7 @@ class WorkEnvComplianceViewSet(viewsets.ViewSet):
 
         if serializer.is_valid(raise_exception=True):
             user = User.objects.get(username=serializer.data['username'])
-            created_by_id = user.id
+            # created_by_id = user.id
             # created_by_id = 4
 
             # queryset = GeoReferencePoints.objects.filter(report_name=serializer.data['report_name'])
@@ -37,7 +37,7 @@ class WorkEnvComplianceViewSet(viewsets.ViewSet):
                     no_of_estinquishers=serializer.data['no_of_estinquishers'],
                     comment=serializer.data['comment'],
                     location=serializer.data['location'],
-                    created_by_id=created_by_id)
+                    created_by=user)
 
             data_save.save()
             data_save.report_name = formulate_insert_id(15,str(data_save.id))

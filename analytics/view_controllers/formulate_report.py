@@ -59,6 +59,13 @@ class formulateReportViewSet(viewsets.ViewSet):
             value = serializer.data['value']
 
             myModel = get_model_using_modulesid(int(module_))
+
+            if x_column=='null':
+                x_column=None
+            if y_column == 'null':
+                y_column=None
+            if value == 'null':
+                value = None
             
             data_ = []
 

@@ -20,6 +20,7 @@ from analytics.serializers import ChartSerializer
 from analytics.serializers import GraphConfigSerializer
 from analytics.serializers import UsernameSerializerGet
 from analytics.serializers import TasksSerializerGet
+from analytics.serializers import CustomTablesSerializer
 from analytics.models import Storage_facility
 from analytics.models import ComplianceValue
 from analytics.models import Grease_and_hydocarbon_spillage
@@ -40,6 +41,7 @@ from analytics.models import Graph_config
 from analytics.models import Notifications
 from analytics.models import NotificationViewer
 from analytics.models import Tasks
+from analytics.models import Custom_table
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 from django.http import HttpResponse, JsonResponse
@@ -96,3 +98,9 @@ class NotificationsViewSet(ObjectMultipleModelAPIView):
 			{'queryset': Notifications.objects.exclude(id__in=viewed_notification.values('notificationsId')), 'serializer_class': NotificationsSerializer},
 			{'queryset': Tasks.objects.filter(end_time__gt=datetime.now()), 'serializer_class': TasksSerializerGet}
 	]
+
+class GetTablesViewSet(ObjectMultipleModelAPIView):
+	querylist=[
+			{'queryset': Custom_table.objects.filter(active=1), 'serializer_class': CustomTablesSerializer}
+	]
+

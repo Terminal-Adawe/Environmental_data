@@ -84,6 +84,17 @@ class TableBuilder extends React.Component {
 
 		this.setState({
 			[name]: value
+		},()=>{
+			if(name=="module"){
+				console.log("Module that is changed ")
+				console.log(name)
+				this.setState({
+					x_column: "",
+					y_column: "",
+					valueType: ""
+				})
+			}
+
 		})
 	}
 
@@ -109,6 +120,7 @@ class TableBuilder extends React.Component {
 		this.setState({
 			[name]: value
 		})
+
 
 	}
 
@@ -243,27 +255,27 @@ class TableBuilder extends React.Component {
 									}
                     				  </select>
                     			</div>
-                    			<Axis graphbuilder={ this.state.data.Graph_builder_field } title="Rows" name="y_column" handleAxisChanged={ this.handleAxisChanged } moduleid={ this.state.module } columnLength="col-lg-4 col-md-4 col-sm-6"/>
+                    			<Axis graphbuilder={ this.state.data.Graph_builder_field } title="Rows" name="y_column" handleAxisChanged={ this.handleAxisChanged } moduleid={ this.state.module } valueType={ this.state.y_column } columnLength="col-lg-4 col-md-4 col-sm-6"/>
 
-                    			<Axis graphbuilder={ this.state.data.Graph_builder_field } title="Columns" name="x_column" handleAxisChanged={ this.handleAxisChanged } moduleid={ this.state.module } columnLength="col-lg-4 col-md-4 col-sm-6"/>
+                    			<Axis graphbuilder={ this.state.data.Graph_builder_field } title="Columns" name="x_column" handleAxisChanged={ this.handleAxisChanged } moduleid={ this.state.module } valueType={ this.state.x_column } columnLength="col-lg-4 col-md-4 col-sm-6"/>
                     		 </div>
 
                     		 <div className="row mt-1">
-                    		 	<Axis graphbuilder={ this.state.data.Graph_builder_field } title="Values" name="valueType" handleAxisChanged={ this.handleAxisChanged } moduleid={ this.state.module } columnLength="col-lg-12 col-md-12 col-sm-12"/>
+                    		 	<Axis graphbuilder={ this.state.data.Graph_builder_field } title="Values" name="valueType" handleAxisChanged={ this.handleAxisChanged } moduleid={ this.state.module } valueType={ this.state.valueType } columnLength="col-lg-12 col-md-12 col-sm-12"/>
                     		 </div>
 
                     		 <div className="row mt-1">
 	                    		 <div className="col-12">
     							  <label className="mx-2">
     							    <input type="radio" value="sum" 
-    							                  checked={this.state.valueType === 'sum'} 
+    							                  checked={this.state.groupType === 'sum'} 
     							                  onChange={this.handleOptionChange} />
     							     Sum
     							  </label>
 
     							  <label className="mx-2">
     							    <input type="radio" value="count" 
-    							                  checked={this.state.valueType === 'count'} 
+    							                  checked={this.state.groupType === 'count'} 
     							                  onChange={this.handleOptionChange} />
     							     Count
     							  </label>

@@ -213,7 +213,24 @@ def adduser(request):
 def edituser(request):
     if request.user.is_authenticated:
         users = User.objects.filter(is_active=1)
-        form = editForm()
-        return render(request, 'analytics/dashboard/edituser.html',{'form': form,'users':users})
+        if request.method == 'POST':
+            form = editForm()
+    
+            if form.is_valid():
+                username = form.cleaned_data['username']
+                firstname = form.cleaned_data['first_name']
+                lastname = form.cleaned_data['last_name']
+                email = form.cleaned_data['email']
+    
+                user = User.objects.create_user(username, email, password)
+                user.last_name = lastname
+                user.first_name = firstname
+                user.save()
+            return render(request, 'analytics/dashboard/edituser.html',{'form': form,'users':users})
+        else:
+            form = editForm()
+            return render(request, 'analytics/dashboard/edituser.html',{'form': form,'users':users})
     else:
         return HttpResponseRedirect('login')
+
+

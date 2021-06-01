@@ -7,7 +7,7 @@ import axios from "axios";
 import cookie from "react-cookies";
 
 
-class FormulateReportData extends React.Component {
+class Test extends React.Component {
 	constructor(){
 		super()
 
@@ -166,62 +166,54 @@ class FormulateReportData extends React.Component {
 			return (<div className="container-fluid">
                         <div className="table-responsive">          
                             <table className="table table-bordered table-striped">
-                              <thead>
-                                <tr>
-                                    <th></th>
-                                {
-                                    this.state.data.map((row,i)=>{
+                              {
+                                this.state.data.map((main_row,i)=>{
+                                    if(i==0){
+                                        return <thead key={i}><tr>
+                                                <th></th>
+                                                {
+                                                    this.state.data.map((row,r)=>{
+                                                        let trigger = 0;
+                                                        for(var r = 0; r < columns.length; r++){
+                                                            if(columns[r]==row.column){
+                                                                trigger = 1;
+                
+                                                                break;
+                                                            }
+                                                        }
+                                                        
+                
+                                                        if (trigger == 0){
+                                                            columns = [...columns, row.column]
+                                                            if(row.column){
+                                                                return <th key={i}>{ row.column }</th>
+                                                            } else {
+                                                                return null
+                                                            }
+                                                        }
+                                                        })
+                                                }
+                                            </tr></thead>
+                                    } else {
                                         let trigger = 0;
-                                        if(columns.length){
-                                            for(var r = 0; r < columns.length; r++){
-                                                if(columns[r]==row.column){
-                                                    trigger = 1;
 
-                                                    break;
-                                                }
+                                        for(var r = 0; r < rows.length; r++){
+                                            if(rows[r]==main_row.row){
+                                                trigger = 1;
+
+                                                break;
                                             }
                                         }
-                                        
 
                                         if (trigger == 0){
-                                            columns = [...columns, row.column]
-                                            if(row.column){
-                                                return <th key={i}>{ row.column }</th>
-                                            } else {
-                                                return null
-                                            }
-                                        }
-                                    })
-                                }
-                                </tr>
-                              </thead>
-                              <tbody>
-                                
-                                    {   
-                                        this.state.data.map((main_row,r)=>{
-                                            let trigger = 0;
-
-                                            if(rows.length){
-                                                for(var r = 0; r < rows.length; r++){
-                                                    if(rows[r]==main_row.row){
-                                                    trigger = 1;
-
-                                                    break;
-                                                }
-                                            }
-                                        }
-                                        
-
-                                        if (trigger == 0){
-                                            rows = [...rows, main_row.row]
-                                            if(main_row.row){
-                                            return <tr key={r}>
+                                        rows = [...rows, main_row.row]
+                                        return <tr key={r}>
                                                 <th>{ main_row.row }</th>
                                                 {   
                                                     
                                                         this.state.data.map((row,i)=>{
                                                             if(main_row.column && main_row.row){
-                                                                if(row.column == main_row.column && row.row == main_row.row){
+                                                                if(row.column == columns[i] && row.row == main_row.row){
                                                                     return <th key={i}>{ row.value }</th>
                                                                 } else {
                                                                     return <th key={i}></th>
@@ -236,14 +228,11 @@ class FormulateReportData extends React.Component {
                                                         })
                                                     
                                                 }
-                                                </tr>
-                                            } else {
-                                                return <tr><th>{ main_row.row }</th><th>{ main_row.value }</th></tr>
-                                            }
+                                            </tr>
                                         }
-                                        })
                                     }
-                               </tbody>
+                                })
+                              }
                             </table>
                         </div>
                         </div>)
@@ -252,6 +241,6 @@ class FormulateReportData extends React.Component {
 	
 }
 
-export default FormulateReportData
+export default Test
 
 

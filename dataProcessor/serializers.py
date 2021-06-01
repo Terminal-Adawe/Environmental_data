@@ -294,14 +294,14 @@ class WorkEnvComplianceSerializer_serializer(serializers.Serializer):
 	comment = serializers.CharField(max_length=500,required=False,allow_blank=True)
 	username = serializers.CharField(max_length=100)
 	location = serializers.CharField(max_length=200)
-	first_aid = serializers.ChoiceField(choices=WorkEnvCompliance.STATUS_S)
-	safety_stickers = serializers.ChoiceField(choices=WorkEnvCompliance.STATUS_S)
-	fire_alarm = serializers.ChoiceField(choices=WorkEnvCompliance.STATUS_S)
-	first_aid = serializers.ChoiceField(choices=WorkEnvCompliance.STATUS_S)
-	flooding = serializers.ChoiceField(choices=WorkEnvCompliance.STATUS_S)
-	flammables = serializers.ChoiceField(choices=WorkEnvCompliance.STATUS_S)
-	estinguishers = serializers.ChoiceField(choices=WorkEnvCompliance.STATUS_S)
-	no_of_estinquishers = serializers.CharField(max_length=20)
+	first_aid = serializers.ChoiceField(choices=WorkEnvCompliance.STATUS_S,required=False,allow_blank=True)
+	safety_stickers = serializers.ChoiceField(choices=WorkEnvCompliance.STATUS_S,required=False,allow_blank=True)
+	fire_alarm = serializers.ChoiceField(choices=WorkEnvCompliance.STATUS_S,required=False,allow_blank=True)
+	first_aid = serializers.ChoiceField(choices=WorkEnvCompliance.STATUS_S,required=False,allow_blank=True)
+	flooding = serializers.ChoiceField(choices=WorkEnvCompliance.STATUS_S,required=False,allow_blank=True)
+	flammables = serializers.ChoiceField(choices=WorkEnvCompliance.STATUS_S,required=False,allow_blank=True)
+	estinguishers = serializers.ChoiceField(choices=WorkEnvCompliance.STATUS_S,required=False,allow_blank=True)
+	no_of_estinquishers = serializers.CharField(max_length=20,required=False,allow_blank=True)
 
 class WarehouseSerializer(serializers.ModelSerializer):
 	class Meta:

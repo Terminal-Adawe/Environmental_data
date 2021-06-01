@@ -48,14 +48,14 @@ class modules(models.Model):
 		
 		
 class Storage_facility(models.Model):
-	GOOD = 'GD'
-	SLIGHTLY_DISTURBED = 'SD'
-	BLOCKED = 'BL'
-	STABLE = 'STB'
-	SIGNS_OF_EROSION = 'SOE'
-	REHABILITATED = 'RBT'
-	YES = 'Y'
-	NO = 'N'
+	GOOD = 'Good'
+	SLIGHTLY_DISTURBED = 'Slightly Disturbed'
+	BLOCKED = 'Blocked'
+	STABLE = 'Stable'
+	SIGNS_OF_EROSION = 'Signs of Erosion'
+	REHABILITATED = 'Rehabilitated'
+	YES = 'Yes'
+	NO = 'No'
 
 	SEEPAGE_POINTS_S = [
 		(GOOD,'Good'),
@@ -93,11 +93,11 @@ class Storage_facility(models.Model):
 	updated_at = models.DateTimeField(auto_now=True)
 		
 class Grease_and_hydocarbon_spillage(models.Model):
-	COMPLETELY_IMPERVIOUS_SURFACE = 'CIS'
-	PARTIALLY_IMPERVIOUS = 'PI'
-	NON_IMPERVIOUS = 'NI'
-	STORED_IN_CONTAINMENT = 'SIC'
-	NOT_STORED_IN_CONTAINMENT = 'NSIC'
+	COMPLETELY_IMPERVIOUS_SURFACE = 'Completely Impervious Surface'
+	PARTIALLY_IMPERVIOUS = 'Partially Impervious'
+	NON_IMPERVIOUS = 'Non Impervious'
+	STORED_IN_CONTAINMENT = 'Stored in Containment'
+	NOT_STORED_IN_CONTAINMENT = 'Not Stored in Containment'
 
 	STORAGE_CONDITION_S = [
 		(COMPLETELY_IMPERVIOUS_SURFACE,'Completely Impervious Surface'),
@@ -119,10 +119,10 @@ class Grease_and_hydocarbon_spillage(models.Model):
 	updated_at = models.DateTimeField(auto_now=True)
 
 class Waste_Management(models.Model):
-	EFFECTIVE = 'EF'
-	NOT_EFFECTIVE = 'NEF'
-	PARTIALLY_EFFECTIVE = 'PEF'
-	SORTED_AT_DUMP_SITE = 'SDS'
+	EFFECTIVE = 'Effective'
+	NOT_EFFECTIVE = 'Not Effective'
+	PARTIALLY_EFFECTIVE = 'Partially Effective'
+	SORTED_AT_DUMP_SITE = 'Sorted at Dump Site'
 
 	SEGREGATION_S = [
 		(EFFECTIVE,'Effective'),
@@ -163,8 +163,8 @@ class Inceneration(models.Model):
 	updated_at = models.DateTimeField(auto_now=True)
 
 class Liquid_waste_oil(models.Model):
-	MAINTENANCE_WORKSHOP = 'MW'
-	OTHER_AREA = 'OA'
+	MAINTENANCE_WORKSHOP = 'Maintenance Workshop'
+	OTHER_AREA = 'Other Area'
 
 	SOURCE = [
 		(MAINTENANCE_WORKSHOP,'Maintenance Workshop'),
@@ -216,9 +216,9 @@ class Energy_management(models.Model):
 	updated_at = models.DateTimeField(auto_now=True)
 
 class Complaints_register(models.Model):
-	RESOLVED = 'RSD'
-	PENDING = 'PEN'
-	OTHER = 'OTR'
+	RESOLVED = 'Resolved'
+	PENDING = 'Pending'
+	OTHER = 'Other'
 
 	STATUS_S = [
 		(RESOLVED,'Resolved'),
@@ -239,10 +239,10 @@ class Complaints_register(models.Model):
 	updated_at = models.DateTimeField(auto_now=True)
 
 class Slope_stabilization_and_surface_water_retention(models.Model):
-	STABILIZED = 'STD'
-	WORKING_PROGRESS = 'WP'
-	PENDING = 'PEN'
-	OTHER = 'OTR'
+	STABILIZED = 'Stabilized'
+	WORKING_PROGRESS = 'Working Progress'
+	PENDING = 'Pending'
+	OTHER = 'Other'
 
 	STATUS_S = [
 		(STABILIZED,'Stabilized'),
@@ -280,8 +280,8 @@ class Safety_training(models.Model):
 	updated_at = models.DateTimeField(auto_now=True)
 		
 class Safety_permission_system(models.Model):
-	WORK_ENDED_SAFELY = 'WES'
-	WORK_ENDED_UNSAFELY = 'WEU'
+	WORK_ENDED_SAFELY = 'Work Ended Safely'
+	WORK_ENDED_UNSAFELY = 'Work did not end safely'
 
 	STATUS_S = [
 		(WORK_ENDED_SAFELY,'Work Ended Safely'),
@@ -301,12 +301,12 @@ class Safety_permission_system(models.Model):
 	updated_at = models.DateTimeField(auto_now=True)
 
 class Safety_tools(models.Model):
-	ACTIVE = 'AC'
-	NOT_ACTIVE = 'INA'
-	MINE = 'MN'
-	PORT = 'PRT'
-	SERVICED = 'SER'
-	EXPIRED = 'EX'
+	ACTIVE = 'Active'
+	NOT_ACTIVE = 'Inactive'
+	MINE = 'Mine'
+	PORT = 'Port'
+	SERVICED = 'Serviced'
+	EXPIRED = 'Expired'
 
 	STATUS_S = [
 		(ACTIVE,'Active'),
@@ -436,12 +436,12 @@ class GeoReferencePoints(models.Model):
 	updated_at = models.DateTimeField(auto_now=True)
 
 class FuelFarm(models.Model):
-	IMPERVIOUS = 'IMPERVIOUS'
-	SEMI_IMPERVIOUS = 'SEMI_IMPERVIOUS'
-	NOT_IMPERVIOUS = 'NOT_IMPERVIOUS'
-	HIGH_SPILLAGE = 'HIGH_SPILLAGE'
-	LOW_SPILLAGE = 'LOW_SPILLAGE'
-	NO_SPILLAGE = 'NO_SPILLAGE'
+	IMPERVIOUS = 'Impervious'
+	SEMI_IMPERVIOUS = 'Semi Impervious'
+	NOT_IMPERVIOUS = 'Not Impervious'
+	HIGH_SPILLAGE = 'High Spillage'
+	LOW_SPILLAGE = 'Low Spillage'
+	NO_SPILLAGE = 'No Spillage'
 
 	STATUS_S = [
 		(NO_SPILLAGE,'No Spillage'),

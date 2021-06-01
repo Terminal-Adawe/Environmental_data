@@ -23,7 +23,7 @@ class Axis extends React.Component {
                     		 
 							{
 								this.props.graphbuilder  ?
-								<select id={ name } name={ name } defaultValue="" className="input-element" onChange={(e)=>this.props.handleAxisChanged(e,axis)}>
+								<select id={ name } name={ name } value={this.props.valueType} className="input-element" onChange={(e)=>this.props.handleAxisChanged(e,axis)}>
 										{ this.props.title === "Y-Axis" ? <option value="sequence">Sequence</option> : <option value=""></option> }
 										{
 								this.props.graphbuilder.filter(field=>field.module==this.props.moduleid).map((field,i)=>{

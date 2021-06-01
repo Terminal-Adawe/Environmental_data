@@ -26,6 +26,7 @@ urlpatterns = [
     path('graph-builder', index.graph_builder, name='graph-builder'),
     path('report-builder', index.report_builder, name='report-builder'),
     path('table-builder', index.table_builder, name='table-builder'),
+    path('get-tables/', dashboard.GetTablesViewSet.as_view(), name='get-tables'),
     path('component_values',views.component_values, name='component_values'),
     path('reports',views.reports, name='reports'),
     path('graphs',views.graphs, name='graphs'),

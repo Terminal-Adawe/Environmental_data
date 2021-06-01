@@ -16,6 +16,7 @@ from .models import Graph_builder_field
 from .models import Chart
 from .models import Graph_config
 from .models import Notifications
+from .models import Custom_table
 from .models import Tasks
 from django.contrib.auth.models import User
 
@@ -102,6 +103,10 @@ class randColumnSerializer(serializers.Serializer):
 	# sum = serializers.CharField(max_length=100, source='*')
 	# count = serializers.CharField(max_length=100, source='*')
 		
+class CustomTablesSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Custom_table
+		fields = ['id','table_name','group_type','module','x_column','y_column','value','created_at']
 
 
 

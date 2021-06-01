@@ -505,7 +505,9 @@ class Form extends React.Component {
 							}
 						} else {
 							// console.log("How come???")
-							form.[tag.formField[i][0].name] = "" 
+							if(tag.formField[i][0].name!=""){
+								form.[tag.formField[i][0].name] = "" 
+							}
 						}
 						
 					}
@@ -566,7 +568,7 @@ class Form extends React.Component {
 	Waste_ManagementTags(){
 		const tags = [
 			{formField: [[{inputtype:'desc',name:'',placeholder:'Waste management data.',label:'',showlabel:0}]]},
-			{formField: [[{inputtype:'dropdown',name:'segregation_at_source_and_bins',placeholder:'',label:'Segregation at source and use of colored bins',showlabel:1,options:[['Effective','EF'],['Not Effective','NEF'],['Partially Effective','PEF'],['Sorted at Dump Site','SDS']]}]]},
+			{formField: [[{inputtype:'dropdown',name:'segregation_at_source_and_bins',placeholder:'',label:'Segregation at source and use of colored bins',showlabel:1,options:[['Effective','Effective'],['Not Effective','Not Effective'],['Partially Effective','Partially Effective'],['Sorted at Dump Site','Sorted at Dump Site']]}]]},
 			{formField: [[{inputtype: 'text', position:0, name:'glass_waste_source',type:'array',placeholder:'Source',label:'Glass waste source',showlabel:1}],[{inputtype: 'text', position:0, type:'array', name:'glass_waste_weight',placeholder:'Weight',label:'Glass waste weightage',showlabel:1}],[{inputtype: 'add-more', name:'glass_waste'}]]},
 			{formField: [[{inputtype: 'text', position:0, name:'plastic_waste_source',type:'array',placeholder:'Source',label:'Plastic waste source',showlabel:1}],[{inputtype: 'text', position:0, type:'array', name:'plastic_waste_weight',placeholder:'Weight',label:'Plastic waste weightage',showlabel:1}],[{inputtype: 'add-more', name:'plastic_waste'}]]},
 			{formField: [[{inputtype: 'text', position:0, name:'metal_waste_source',type:'array',placeholder:'Source',label:'Metal waste source',showlabel:1}],[{inputtype: 'text', position:0, type:'array', name:'metal_waste_weight',placeholder:'Weight',label:'Metal waste weightage',showlabel:1}],[{inputtype: 'add-more', name:'metal_waste'}]]},
@@ -655,7 +657,7 @@ class Form extends React.Component {
 		const tags = [
 			{formField: [[{inputtype:'desc',name:'',placeholder:'Do people complain?',label:'',showlabel:0}]]},
 			{formField: [[{inputtype: 'text', name:'no_of_complaints',placeholder:'Number of complaints',label:'Number of complaints',showlabel:1}]]},
-			{formField: [[{inputtype:'dropdown',name:'status_of_complaints',placeholder:'',label:'Status',showlabel:1,options:[['Resolved','RSD'],['Pending','PEN'],['Other (State reason in comments)','OTR']]}]]},
+			{formField: [[{inputtype:'dropdown',name:'status_of_complaints',placeholder:'',label:'Status',showlabel:1,options:[['Resolved','Resolved'],['Pending','Pending'],['Other (State reason in comments)','Other']]}]]},
 			{formField: [[{inputtype: 'text', name:'comment',placeholder:'Any Comment?',label:'Comment',showlabel:1}]]},
 			{formField: [[{inputtype: 'image', name:'image',placeholder:'',label:'Upload image(s)',showlabel:1}]]},
 			]
@@ -670,7 +672,7 @@ class Form extends React.Component {
 		const tags = [
 			{formField: [[{inputtype:'desc',name:'',placeholder:'Slope stabilization and surface water retention',label:'',showlabel:0}]]},
 			{formField: [[{inputtype: 'text', name:'no_of_exposed_unstabilized_slopes',placeholder:'Number of exposed unstabilized slopes',label:'Number of exposed unstabilized slopes',showlabel:1}]]},
-			{formField: [[{inputtype:'dropdown',name:'status',placeholder:'',label:'Source',showlabel:1,options:[['Stabilized','STD'],['Working Progress','WP'],['Pending','PEN'],['Other (State reason in comments)','OTR']]}]]},
+			{formField: [[{inputtype:'dropdown',name:'status',placeholder:'',label:'Source',showlabel:1,options:[['Stabilized','Stabilized'],['Working Progress','Working Progress'],['Pending','Pending'],['Other (State reason in comments)','Other']]}]]},
 			{formField: [[{inputtype: 'text', name:'comment',placeholder:'Any Comment?',label:'Comment',showlabel:1}]]},
 			{formField: [[{inputtype: 'image', name:'image',placeholder:'',label:'Upload image(s)',showlabel:1}]]},
 			]
@@ -703,7 +705,7 @@ class Form extends React.Component {
 		const tags = [
 			{formField: [[{inputtype:'desc',name:'',placeholder:'Safety Pemitting records',label:'',showlabel:0}]]},
 			{formField: [[{inputtype: 'text', name:'Safety permits',placeholder:'Number of permits issued',label:'Number of permits issued',showlabel:1}]]},
-			{formField: [[{inputtype:'dropdown',name:'status',placeholder:'',label:'Status',showlabel:1,options:[['Work Ended Safely','WES'],['Work did not end safely','WEU']]}]]},
+			{formField: [[{inputtype:'dropdown',name:'status',placeholder:'',label:'Status',showlabel:1,options:[['Work Ended Safely','Work Ended Safely'],['Work did not end safely','Work did not end safely']]}]]},
 			{formField: [[{inputtype: 'text', name:'comment',placeholder:'Any Comment?',label:'Comment',showlabel:1}]]},
 			{formField: [[{inputtype: 'image', name:'image',placeholder:'',label:'Upload image(s)',showlabel:1}]]},
 			]
@@ -718,8 +720,8 @@ class Form extends React.Component {
 		const tags = [
 			{formField: [[{inputtype:'desc',name:'',placeholder:'Safety Tools available',label:'',showlabel:0}]]},
 			{formField: [[{inputtype: 'text', name:'no_of_estinquishers',placeholder:'Number of Estinguishers',label:'Number of Estinguishers',showlabel:1}]]},
-			{formField: [[{inputtype:'dropdown',name:'fire_alarm',placeholder:'',label:'Fire Alarm',showlabel:1,options:[['Active','AC'],['Not Active','INA']]}]]},
-			{formField: [[{inputtype:'dropdown',name:'status_of_estinguishers',placeholder:'',label:'Status of Estinguishers',showlabel:1,options:[['Mine','MN'],['Port','PRT'],['Serviced','SER'],['Expired','EX']]}]]},
+			{formField: [[{inputtype:'dropdown',name:'fire_alarm',placeholder:'',label:'Fire Alarm',showlabel:1,options:[['Active','Active'],['Not Active','Not Active']]}]]},
+			{formField: [[{inputtype:'dropdown',name:'status_of_estinguishers',placeholder:'',label:'Status of Estinguishers',showlabel:1,options:[['Mine','Mine'],['Port','Port'],['Serviced','Serviced'],['Expired','Expired']]}]]},
 			{formField: [[{inputtype: 'text', name:'comment',placeholder:'Any Comment?',label:'Comment',showlabel:1}]]},
 			{formField: [[{inputtype: 'image', name:'image',placeholder:'',label:'Upload image(s)',showlabel:1}]]},
 			]
@@ -746,8 +748,8 @@ class Form extends React.Component {
 	fuel_farm(){
 		const tags = [
 			{formField: [[{inputtype:'desc',name:'',placeholder:'Status of the fuel farms on site.',label:'',showlabel:0}]]},
-			{formField: [[{inputtype:'dropdown',name:'spillage_status',placeholder:'',label:'Spillage Status',showlabel:1,options:[['No Spillage','NO_SPILLAGE'],['High Spillage','HIGH_SPILLAGE'],['Low Spillage','LOW_SPILLAGE']]}]]},
-			{formField: [[{inputtype:'dropdown',name:'impervious_status',placeholder:'',label:'Impervious Status',showlabel:1,options:[['Not Impervious','NOT_IMPERVIOUS'],['Impervious','IMPERVIOUS'],['Semi Impervious','SEMI_IMPERVIOUS']]}]]},
+			{formField: [[{inputtype:'dropdown',name:'spillage_status',placeholder:'',label:'Spillage Status',showlabel:1,options:[['No Spillage','No Spillage'],['High Spillage','High Spillage'],['Low Spillage','Low Spillage']]}]]},
+			{formField: [[{inputtype:'dropdown',name:'impervious_status',placeholder:'',label:'Impervious Status',showlabel:1,options:[['Not Impervious','Not Impervious'],['Impervious','Impervious'],['Semi Impervious','Semi Impervious']]}]]},
 			{formField: [[{inputtype: 'text', name:'comment',placeholder:'comment',label:'Comment',showlabel:1}]]},
 			{formField: [[{inputtype: 'image', name:'image',placeholder:'',label:'Upload image(s)',showlabel:1}]]},
 			]
@@ -761,13 +763,13 @@ class Form extends React.Component {
 	work_env_compliance(){
 		const tags = [
 			{formField: [[{inputtype:'desc',name:'',placeholder:'Work environment compliance.',label:'',showlabel:0}]]},
-			{formField: [[{inputtype:'dropdown',name:'first_aid',placeholder:'',label:'First Aid Available?',showlabel:1,options:[['Yes','YES'],['No','NO']]}]]},
-			{formField: [[{inputtype:'dropdown',name:'safety_stickers',placeholder:'',label:'Safety Stickers Available?',showlabel:1,options:[['Yes','YES'],['No','NO']]}]]},
-			{formField: [[{inputtype:'dropdown',name:'estinquishers',placeholder:'',label:'Fire Estinguishers Available?',showlabel:1,options:[['Yes','YES'],['No','NO']]}]]},
+			{formField: [[{inputtype:'dropdown',name:'first_aid',placeholder:'',label:'First Aid Available?',showlabel:1,options:[['Yes','Yes'],['No','No']]}]]},
+			{formField: [[{inputtype:'dropdown',name:'safety_stickers',placeholder:'',label:'Safety Stickers Available?',showlabel:1,options:[['Yes','Yes'],['No','No']]}]]},
+			{formField: [[{inputtype:'dropdown',name:'estinquishers',placeholder:'',label:'Fire Estinguishers Available?',showlabel:1,options:[['Yes','Yes'],['No','No']]}]]},
 			{formField: [[{inputtype: 'text', name:'no_of_estinquishers',placeholder:'Number of Fire Estinguishers',label:'Number of Fire Estinguishers',showlabel:1}]]},
-			{formField: [[{inputtype:'dropdown',name:'fire_alarm',placeholder:'',label:'Fire Alarms Available?',showlabel:1,options:[['Yes','YES'],['No','NO']]}]]},
-			{formField: [[{inputtype:'dropdown',name:'flooding',placeholder:'',label:'Is there flooding?',showlabel:1,options:[['Yes','YES'],['No','NO']]}]]},
-			{formField: [[{inputtype:'dropdown',name:'flammables',placeholder:'',label:'Are there any flammables?',showlabel:1,options:[['Yes','YES'],['No','NO']]}]]},
+			{formField: [[{inputtype:'dropdown',name:'fire_alarm',placeholder:'',label:'Fire Alarms Available?',showlabel:1,options:[['Yes','Yes'],['No','No']]}]]},
+			{formField: [[{inputtype:'dropdown',name:'flooding',placeholder:'',label:'Is there flooding?',showlabel:1,options:[['Yes','Yes'],['No','No']]}]]},
+			{formField: [[{inputtype:'dropdown',name:'flammables',placeholder:'',label:'Are there any flammables?',showlabel:1,options:[['Yes','Yes'],['No','No']]}]]},
 			{formField: [[{inputtype: 'text', name:'comment',placeholder:'Extra Comments',label:'comment',showlabel:1}]]},
 			{formField: [[{inputtype: 'image', name:'image',placeholder:'',label:'Upload image(s)',showlabel:1}]]},
 			]
