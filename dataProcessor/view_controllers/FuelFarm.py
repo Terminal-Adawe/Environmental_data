@@ -21,25 +21,29 @@ class FuelFarmViewSet(viewsets.ViewSet):
         # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
 
         if serializer.is_valid(raise_exception=True):
-            user = User.objects.get(username=serializer.data['username'])
-            created_by_id = user.id
-            # created_by_id = 4
-
-            # queryset = GeoReferencePoints.objects.filter(report_name=serializer.data['report_name'])
-
-            data_save = FuelFarm(
-                    spillage_status=serializer.data['spillage_status'],
-                    impervious_status=serializer.data['impervious_status'],
-                    comment=serializer.data['comment'],
-                    location=serializer.data['location'],
-                    created_by_id=created_by_id)
-
-            data_save.save()
-            data_save.report_name = formulate_insert_id(14,str(data_save.id))
-            data_save.save()
-
-            insert_notification(14,"Fuel Farm",data_save.report_name,user)
-
-            return Response(FuelFarmSerializer(data_save).data, status=status.HTTP_201_CREATED)
+            user = User.objects.get(username=serializer.data['auth_user'])
+            if user.check_password(serializer.data['auth_password']):
+                user = User.objects.get(username=serializer.data['username'])
+                created_by_id = user.id
+                # created_by_id = 4
+    
+                # queryset = GeoReferencePoints.objects.filter(report_name=serializer.data['report_name'])
+    
+                data_save = FuelFarm(
+                        spillage_status=serializer.data['spillage_status'],
+                        impervious_status=serializer.data['impervious_status'],
+                        comment=serializer.data['comment'],
+                        location=serializer.data['location'],
+                        created_by_id=created_by_id)
+    
+                data_save.save()
+                data_save.report_name = formulate_insert_id(14,str(data_save.id))
+                data_save.save()
+    
+                insert_notification(14,"Fuel Farm",data_save.report_name,user)
+    
+                return Response(FuelFarmSerializer(data_save).data, status=status.HTTP_201_CREATED)
+            else:
+                return Response(status=status.HTTP_401_UNAUTHORIZED)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)

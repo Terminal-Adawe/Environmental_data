@@ -20,24 +20,28 @@ class Slope_stabilization_and_surface_water_retentionViewSet(viewsets.ViewSet):
         # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
 
         if serializer.is_valid(raise_exception=True):
-            serializer.data['report_name'] = "Zip_1"
-            user = User.objects.get(username=serializer.data['username'])
-            created_by_id = user.id
-            # created_by_id = 4
-
-            data_save = Slope_stabilization_and_surface_water_retention(
-                    no_of_exposed_unstabilized_slopes=serializer.data['no_of_exposed_unstabilized_slopes'],
-                    status=serializer.data['status'],
-                    location=serializer.data['location'],
-                    created_by_id=created_by_id)
-
-            data_save.save()
-
-            data_save.report_name = formulate_insert_id(9,str(data_save.id))
-            data_save.save()
-
-            insert_notification(9,"Slope Stabilization and Surface water retention",data_save.report_name,user)
-
-            return Response(Slope_stabilization_and_surface_water_retentionSerializer(data_save).data, status=status.HTTP_201_CREATED)
+            user = User.objects.get(username=serializer.data['auth_user'])
+            if user.check_password(serializer.data['auth_password']):
+                serializer.data['report_name'] = "Zip_1"
+                user = User.objects.get(username=serializer.data['username'])
+                created_by_id = user.id
+                # created_by_id = 4
+    
+                data_save = Slope_stabilization_and_surface_water_retention(
+                        no_of_exposed_unstabilized_slopes=serializer.data['no_of_exposed_unstabilized_slopes'],
+                        status=serializer.data['status'],
+                        location=serializer.data['location'],
+                        created_by_id=created_by_id)
+    
+                data_save.save()
+    
+                data_save.report_name = formulate_insert_id(9,str(data_save.id))
+                data_save.save()
+    
+                insert_notification(9,"Slope Stabilization and Surface water retention",data_save.report_name,user)
+    
+                return Response(Slope_stabilization_and_surface_water_retentionSerializer(data_save).data, status=status.HTTP_201_CREATED)
+            else:
+                return Response(status=status.HTTP_401_UNAUTHORIZED)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)

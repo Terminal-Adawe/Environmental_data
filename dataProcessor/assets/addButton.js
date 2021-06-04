@@ -47,9 +47,6 @@ class AddButton extends React.Component {
 
 	getFormData(){		
 
-		console.log("Info sent is ")
-		console.log(this.props.states.form)
-
         this.props.loader(true)
 		this.insertData(this.props.states.form)
 	}
@@ -63,6 +60,9 @@ class AddButton extends React.Component {
         axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
 
         this.props.getLocation
+
+        const auth_user = 'system_user'
+        const auth_password = 'j6d^tUBJ8tS9=URF'
 
         // inputs.forEach((input,i)=>{
               
@@ -79,6 +79,9 @@ class AddButton extends React.Component {
             }
         }
 
+        form_data.append('auth_user', auth_user)
+        form_data.append('auth_password', auth_password)
+
         // form_data.append('image', formData.image);
         // form_data.append('location', formData.location);
 
@@ -86,6 +89,9 @@ class AddButton extends React.Component {
         // console.log(form_data)
         // console.log(" and ")
         // console.log(formData.image)
+
+        console.log("Info sent is ")
+        console.log(form_data)
 
         const url = this.props.states.url
         const image_url = this.props.states.image_url
@@ -124,6 +130,8 @@ class AddButton extends React.Component {
                 form_data_2.append('report_id', response.data.id)
                 form_data_2.append('module_id', response.data.module)
                 form_data_2.append('image', formData.image[i])
+                form_data_2.append('auth_user', auth_user)
+                form_data_2.append('auth_password', auth_password)
 
                 // console.log("image file is ")
                 // console.log(formData.image[i])

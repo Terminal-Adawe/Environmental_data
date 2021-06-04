@@ -21,6 +21,9 @@ from analytics.models import IncidentReport
 from analytics.models import Water_management
 
 
+class AuthSerializer(serializers.Serializer):
+	auth_user = serializers.CharField(max_length=30)
+	auth_password = serializers.CharField(max_length=30)
 
 class Storage_facilitySerializer(serializers.ModelSerializer):
 	# status_of_seepage_point = serializers.ChoiceField(choices=Storage_facility.SEEPAGE_POINTS_S)
@@ -36,6 +39,8 @@ class ImageSerializer_serializer(serializers.Serializer):
 	username = serializers.CharField(max_length=100)
 	report_id = serializers.CharField(max_length=10)
 	module_id = serializers.CharField(max_length=10)
+	auth_user = serializers.CharField(max_length=30)
+	auth_password = serializers.CharField(max_length=30)
 
 	def create(self, validated_data):
 		return Image(id=None, **validated_data)
@@ -60,6 +65,8 @@ class Storage_facilitySerializer_serializer(serializers.Serializer):
 	location = serializers.CharField(max_length=200)
 	# signs_of_erosion_spillway_tip = serializers.CharField(max_length=10)
 	username = serializers.CharField(max_length=100)
+	auth_user = serializers.CharField(max_length=30)
+	auth_password = serializers.CharField(max_length=30)
 
 	def create(self, validated_data):
 		return Storage_facility(id=None, **validated_data)
@@ -74,6 +81,8 @@ class Grease_and_hydrogenSerializer_serializer(serializers.Serializer):
 	comment = serializers.CharField(max_length=500, required=False,allow_blank=True)
 	username = serializers.CharField(max_length=100)
 	location = serializers.CharField(max_length=200)
+	auth_user = serializers.CharField(max_length=30)
+	auth_password = serializers.CharField(max_length=30)
 
 	def create(self, validated_data):
 		return Grease_and_hydocarbon_spillage(id=None, **validated_data)
@@ -94,6 +103,8 @@ class Waste_ManagementSerializer_serializer(serializers.Serializer):
 	comment = serializers.CharField(max_length=500, required=False,allow_blank=True)
 	username = serializers.CharField(max_length=100)
 	location = serializers.CharField(max_length=100)
+	auth_user = serializers.CharField(max_length=30)
+	auth_password = serializers.CharField(max_length=30)
 
 	def create(self, validated_data):
 		return Waste_Management(id=None, **validated_data)
@@ -110,6 +121,8 @@ class IncenerationSerializer_serializer(serializers.Serializer):
 	comment = serializers.CharField(max_length=500, required=False,allow_blank=True)
 	username = serializers.CharField(max_length=100)
 	location = serializers.CharField(max_length=100)
+	auth_user = serializers.CharField(max_length=30)
+	auth_password = serializers.CharField(max_length=30)
 
 	def create(self, validated_data):
 		return Inceneration(id=None, **validated_data)
@@ -125,9 +138,8 @@ class Liquid_waste_oilSerializer_serializer(serializers.Serializer):
 	comment = serializers.CharField(max_length=500, required=False,allow_blank=True)
 	username = serializers.CharField(max_length=100)
 	location = serializers.CharField(max_length=100)
-
-	def create(self, validated_data):
-		return Liquid_waste_oil(id=None, **validated_data)
+	auth_user = serializers.CharField(max_length=30)
+	auth_password = serializers.CharField(max_length=30)
 
 class Health_and_hygiene_awarenessSerializer(serializers.ModelSerializer):
 	class Meta:
@@ -142,9 +154,8 @@ class Health_and_hygiene_awarenessSerializer_serializer(serializers.Serializer):
 	comment = serializers.CharField(max_length=500,required=False,allow_blank=True)
 	username = serializers.CharField(max_length=100)
 	location = serializers.CharField(max_length=100)
-
-	def create(self, validated_data):
-		return Health_and_hygiene_awareness(id=None, **validated_data)
+	auth_user = serializers.CharField(max_length=30)
+	auth_password = serializers.CharField(max_length=30)
 
 class Energy_managementSerializer(serializers.ModelSerializer):
 	class Meta:
@@ -161,9 +172,8 @@ class Energy_managementSerializer_serializer(serializers.Serializer):
 	comment = serializers.CharField(max_length=500,required=False,allow_blank=True)
 	username = serializers.CharField(max_length=100)
 	location = serializers.CharField(max_length=100)
-
-	def create(self, validated_data):
-		return Energy_management(id=None, **validated_data)
+	auth_user = serializers.CharField(max_length=30)
+	auth_password = serializers.CharField(max_length=30)
 
 class Water_managementSerializer(serializers.ModelSerializer):
 	class Meta:
@@ -181,6 +191,8 @@ class Water_managementSerializer_serializer(serializers.Serializer):
 	comment = serializers.CharField(max_length=500,required=False,allow_blank=True)
 	username = serializers.CharField(max_length=100)
 	location = serializers.CharField(max_length=100)
+	auth_user = serializers.CharField(max_length=30)
+	auth_password = serializers.CharField(max_length=30)
 
 class Complaints_registerSerializer(serializers.ModelSerializer):
 	class Meta:
@@ -193,10 +205,9 @@ class Complaints_registerSerializer_serializer(serializers.Serializer):
 	comment = serializers.CharField(max_length=500,required=False,allow_blank=True)
 	username = serializers.CharField(max_length=100)
 	location = serializers.CharField(max_length=200)
-	image = ImageSerializer_serializer
+	auth_user = serializers.CharField(max_length=30)
+	auth_password = serializers.CharField(max_length=30)
 
-	def create(self, validated_data):
-		return Complaints_register(id=None, **validated_data)
 
 class Slope_stabilization_and_surface_water_retentionSerializer(serializers.ModelSerializer):
 	class Meta:
@@ -204,14 +215,15 @@ class Slope_stabilization_and_surface_water_retentionSerializer(serializers.Mode
 		fields = '__all__'
 
 class Slope_stabilization_and_surface_water_retentionSerializer_serializer(serializers.Serializer):
+	auth = AuthSerializer(many=True)
+
 	no_of_exposed_unstabilized_slopes = serializers.CharField(max_length=100)
 	status = serializers.ChoiceField(choices=Slope_stabilization_and_surface_water_retention.STATUS_S)
 	comment = serializers.CharField(max_length=500,required=False,allow_blank=True)
 	username = serializers.CharField(max_length=100)
 	location = serializers.CharField(max_length=200)
-
-	def create(self, validated_data):
-		return Slope_stabilization_and_surface_water_retention(id=None, **validated_data)
+	auth_user = serializers.CharField(max_length=30)
+	auth_password = serializers.CharField(max_length=30)
 
 class Safety_trainingSerializer(serializers.ModelSerializer):
 	class Meta:
@@ -227,6 +239,8 @@ class Safety_trainingSerializer_serializer(serializers.Serializer):
 	comment = serializers.CharField(max_length=500,required=False,allow_blank=True)
 	username = serializers.CharField(max_length=100)
 	location = serializers.CharField(max_length=200)
+	auth_user = serializers.CharField(max_length=30)
+	auth_password = serializers.CharField(max_length=30)
 
 	def create(self, validated_data):
 		return Safety_training(id=None, **validated_data)
@@ -242,6 +256,8 @@ class Safety_permission_systemSerializer_serializer(serializers.Serializer):
 	comment = serializers.CharField(max_length=500,required=False,allow_blank=True)
 	username = serializers.CharField(max_length=100)
 	location = serializers.CharField(max_length=200)
+	auth_user = serializers.CharField(max_length=30)
+	auth_password = serializers.CharField(max_length=30)
 
 	def create(self, validated_data):
 		return Safety_permission_system(id=None, **validated_data)
@@ -258,6 +274,8 @@ class Safety_toolsSerializer_serializer(serializers.Serializer):
 	comment = serializers.CharField(max_length=500,required=False,allow_blank=True)
 	username = serializers.CharField(max_length=100)
 	location = serializers.CharField(max_length=200)
+	auth_user = serializers.CharField(max_length=30)
+	auth_password = serializers.CharField(max_length=30)
 
 	def create(self, validated_data):
 		return Safety_tools(id=None, **validated_data)
@@ -288,6 +306,8 @@ class GeoReferencePointsSerializer_serializer(serializers.Serializer):
 	comment = serializers.CharField(max_length=500,required=False,allow_blank=True)
 	username = serializers.CharField(max_length=100)
 	location = serializers.CharField(max_length=200)
+	auth_user = serializers.CharField(max_length=30)
+	auth_password = serializers.CharField(max_length=30)
 
 class FuelFarmSerializer(serializers.ModelSerializer):
 	class Meta:
@@ -301,6 +321,8 @@ class FuelFarmSerializer_serializer(serializers.Serializer):
 	location = serializers.CharField(max_length=200)
 	spillage_status = serializers.ChoiceField(choices=FuelFarm.STATUS_S)
 	impervious_status = serializers.ChoiceField(choices=FuelFarm.STATUS_I)
+	auth_user = serializers.CharField(max_length=30)
+	auth_password = serializers.CharField(max_length=30)
 
 class WorkEnvComplianceSerializer(serializers.ModelSerializer):
 	class Meta:
@@ -320,6 +342,8 @@ class WorkEnvComplianceSerializer_serializer(serializers.Serializer):
 	flammables = serializers.ChoiceField(choices=WorkEnvCompliance.STATUS_S,required=False,allow_blank=True)
 	estinguishers = serializers.ChoiceField(choices=WorkEnvCompliance.STATUS_S,required=False,allow_blank=True)
 	no_of_estinquishers = serializers.CharField(max_length=20,required=False,allow_blank=True)
+	auth_user = serializers.CharField(max_length=30)
+	auth_password = serializers.CharField(max_length=30)
 
 class WarehouseSerializer(serializers.ModelSerializer):
 	class Meta:
@@ -333,6 +357,8 @@ class WarehouseSerializer_serializer(serializers.Serializer):
 	location = serializers.CharField(max_length=200)
 	eye_wash = serializers.ChoiceField(choices=Warehouse.STATUS_S)
 	shower = serializers.ChoiceField(choices=Warehouse.STATUS_S)
+	auth_user = serializers.CharField(max_length=30)
+	auth_password = serializers.CharField(max_length=30)
 
 class ConveyersSerializer(serializers.ModelSerializer):
 	class Meta:
@@ -346,6 +372,8 @@ class ConveyersSerializer_serializer(serializers.Serializer):
 	location = serializers.CharField(max_length=200)
 	electrical_safety_insulation = serializers.ChoiceField(choices=Conveyers.STATUS_S)
 	shower = serializers.ChoiceField(choices=Conveyers.STATUS_S)
+	auth_user = serializers.CharField(max_length=30)
+	auth_password = serializers.CharField(max_length=30)
 
 class IncidentReportSerializer(serializers.ModelSerializer):
 	class Meta:
@@ -367,5 +395,7 @@ class IncidentReportSerializer_serializer(serializers.Serializer):
 	further_actions_taken = serializers.CharField(max_length=300)
 	corrective_measures = serializers.CharField(max_length=400)
 	responsible_person = serializers.CharField(max_length=200)
+	auth_user = serializers.CharField(max_length=30)
+	auth_password = serializers.CharField(max_length=30)
 		
 		
