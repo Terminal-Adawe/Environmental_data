@@ -157,43 +157,42 @@ def view_report(request, module, report_id):
 		reportid = report_id
 		module = module
 		modules_queryset = modules.objects.filter(active=1)
-	
+		
+		url = 'analytics/dashboard/view_report.html'
 	
 		# queryset = modules.objects.filter(id=module)
 		# module = queryset[0].module_name
-	
-	
-		myModel = Storage_facility
-	
-		for module_i in modules_queryset.values():
-			logger.info("Model is ")
-			logger.info(module_i['id'])
-			logger.info(" vs ")
-			logger.info(module)
-			if int(module) == module_i['id']:
-				myModel = str_to_class(module_i['table'])
-				logger.info(" Matches!! ")
-				logger.info(module_i['table'])
-	
-	
-		modules_queryset_single = modules.objects.filter(id=module)
-	
-		queryset = myModel.objects.filter(report_name=reportid)
-	
-		logger.info("Queryset is ")
-		logger.info(queryset)
-		logger.info("And report ID is ")
-		logger.info(reportid)
-
-		# try:
-		insert_view_notification(user,reportid,module)
-		# except:
-		# 	logger.info("No notification sent ")
-
+		if module=="custom":
+			queryset = reportid
+			url = 'analytics/dashboard/custom_table_view.html'
+			module = 0
+		else:
+			myModel = Storage_facility
 		
+			for module_i in modules_queryset.values():
+				if int(module) == module_i['id']:
+					myModel = str_to_class(module_i['table'])
+					logger.info(" Matches!! ")
+					logger.info(module_i['table'])
+		
+			
+		
+			queryset = myModel.objects.filter(report_name=reportid)
+		
+			# logger.info("Queryset is ")
+			# logger.info(queryset)
+			# logger.info("And report ID is ")
+			# logger.info(reportid)
+	
+			# try:
+			insert_view_notification(user,reportid,module)
+			# except:
+			# 	logger.info("No notification sent ")
+
+		modules_queryset_single = modules.objects.filter(id=module)
 		image_queryset = Image.objects.filter(report_id=reportid, module_id__in=modules_queryset_single.values('id'))
 	
-		return render(request, 'analytics/dashboard/view_report.html',{'report_data':queryset,'module':int(module),'modules':modules_queryset,'images':image_queryset})
+		return render(request, url,{'report_data':queryset,'module':int(module),'modules':modules_queryset,'images':image_queryset})
 	else:
 		return HttpResponseRedirect('login')
 

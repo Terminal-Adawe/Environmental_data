@@ -8,7 +8,8 @@ module.exports = {
     notifications: './assets/notifications.js',
     task_scheduler: './assets/task_scheduler.js',
     table_builder: './assets/table_builder.js',
-    custom_tables: './assets/custom_tables.js'
+    custom_tables: './assets/custom_tables.js',
+    custom_table: './assets/custom_table.js'
   },
   output: {
     filename: '[name]-bundle.js',  // output bundle file name

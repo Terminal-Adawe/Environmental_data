@@ -94,6 +94,7 @@ class reportBuilderSerializerGet(serializers.Serializer):
 	module = serializers.CharField(max_length=120, required=True)
 	x_column = serializers.CharField(max_length=50, allow_null=True)
 	y_column = serializers.CharField(max_length=50, allow_null=True)
+	description = serializers.CharField(max_length=100, allow_null=True)
 	value = serializers.CharField(max_length=50, allow_null=True)
 	groupType = serializers.CharField(max_length=50, allow_null=True)
 	username = serializers.CharField(max_length=100)
@@ -109,6 +110,7 @@ class CustomTablesSerializer(serializers.ModelSerializer):
 		fields = ['id','table_name','group_type','module','x_column','y_column','value','created_at']
 
 
-
+class customTableSerializer(serializers.Serializer):
+	table_id = serializers.CharField(max_length=10)
 
 

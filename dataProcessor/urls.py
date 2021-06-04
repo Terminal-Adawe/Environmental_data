@@ -9,6 +9,7 @@ from .view_controllers import Inceneration
 from .view_controllers import Liquid_waste_oil
 from .view_controllers import Health_and_hygiene
 from .view_controllers import Energy_management
+from .view_controllers import Water_management
 from .view_controllers import Complaints_register
 from .view_controllers import Slope_stabilization_and_surface_water_retention
 from .view_controllers import Safety_training
@@ -34,6 +35,7 @@ router.register(r'add-inceneration', Inceneration.IncenerationViewSet, basename=
 router.register(r'add-liquid-waste-oil', Liquid_waste_oil.liquid_waste_oilViewSet, basename='add-liquid-waste-oil')
 router.register(r'add-health-and-hygiene-awareness', Health_and_hygiene.Health_and_hygieneViewSet, basename='add-health-and-hygiene-awareness')
 router.register(r'add-energy-management', Energy_management.Energy_managementViewSet, basename='add-energy-management')
+router.register(r'add-water-management', Water_management.Water_managementViewSet, basename='add-water-management')
 router.register(r'add-complaints-register', Complaints_register.Complaints_registerViewSet, basename='add-complaints-register')
 router.register(r'add-slope-stabilization', Slope_stabilization_and_surface_water_retention.Slope_stabilization_and_surface_water_retentionViewSet, basename='add-slope-stabilization')
 router.register(r'add-safety-training', Safety_training.Safety_trainingViewSet, basename='add-safety-training')
@@ -60,6 +62,7 @@ urlpatterns = [
     path('liquid-waste-oil', views.liquid_waste_oilView, name='liquid-waste-oil'),
     path('health-and-hygiene-awareness', views.health_and_hygiene_awarenessView, name='health-and-hygiene-awareness'),
     path('energy-management', views.energy_managementView, name='energy-management'),
+    path('water-management', views.water_managementView, name='water-management'),
     path('complaints-register', views.complaints_registerView, name='complaints-register'),
     path('slope-stabilization', views.slope_stabilizationView, name='slope-stabilization'),
     path('safety-training', views.safety_trainingView, name='safety-training'),

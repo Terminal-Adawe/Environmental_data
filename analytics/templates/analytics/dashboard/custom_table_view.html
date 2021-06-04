@@ -1,0 +1,27 @@
+{% extends "analytics/dashboard/template.html" %}
+
+{% load static %}
+
+{% block main_content %}
+	<div class="container-fluid">
+		<input type="hidden" class="table_id" value="{{ report_data }}">
+		<section class="panel">
+			<div class="panel-body">
+				<a class="go-back-link" href="{% url 'analytics:tables' %}"><i class="fa fa-long-arrow-left fa-lg"></i> Go back</a> 
+			</div>
+		</section>
+
+		<section class="panel">
+			<header class="panel-heading">
+				<div class="panel-actions">
+				</div>
+			</header>
+			<div class="panel-body">
+				<div id="custom-table"></div>
+			</div>
+		</section>
+
+	</div>
+
+	<script src="{% static 'custom_table-bundle.js' %}"></script>
+{% endblock %}

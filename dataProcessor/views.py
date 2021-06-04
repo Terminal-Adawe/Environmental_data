@@ -87,6 +87,8 @@ def get_template(request, module):
         url = 'dataProcessor/health_and_hygiene_awareness/health_and_hygiene_awareness.html'
     elif module == "energy_management":
         url = 'dataProcessor/energy_management/energy_management.html'
+    elif module == "water_management":
+        url = 'dataProcessor/forms/water_management.html'
     elif module == "complaints_register":
         url = 'dataProcessor/forms/complaints_register.html'
     elif module == "slope_stabilization":
@@ -109,6 +111,7 @@ def get_template(request, module):
         url = 'dataProcessor/forms/conveyers.html'
     elif module == "incident_report":
         url = 'dataProcessor/forms/incidentReport.html'
+
 
     logger.info("url is ")
     logger.info(url)
@@ -142,6 +145,11 @@ def health_and_hygiene_awarenessView(request):
 def energy_managementView(request):
 	queryset = modules.objects.filter(active=1)
 	return render(request, 'dataProcessor/energy_management/energy_management.html', {'modules' : queryset})
+
+def water_managementView(request):
+    queryset = modules.objects.filter(active=1)
+    return render(request, 'dataProcessor/forms/water_management.html', {'modules' : queryset})
+
 
 def complaints_registerView(request):
 	queryset = modules.objects.filter(active=1)

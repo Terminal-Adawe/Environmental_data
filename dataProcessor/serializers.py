@@ -18,6 +18,7 @@ from analytics.models import WorkEnvCompliance
 from analytics.models import Warehouse
 from analytics.models import Conveyers
 from analytics.models import IncidentReport
+from analytics.models import Water_management
 
 
 
@@ -163,6 +164,23 @@ class Energy_managementSerializer_serializer(serializers.Serializer):
 
 	def create(self, validated_data):
 		return Energy_management(id=None, **validated_data)
+
+class Water_managementSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Water_management
+		fields = '__all__'
+
+class Water_managementSerializer_serializer(serializers.Serializer):
+	total_water_quantity_available = serializers.CharField(max_length=100)
+	camp_consumption = serializers.CharField(max_length=100)
+	admin_consumption = serializers.CharField(max_length=100)
+	workshop_consumption = serializers.CharField(max_length=100)
+	mine_plant_consumption = serializers.CharField(max_length=100)
+	cafeteria_consumption = serializers.CharField(max_length=100)
+	other_consumption = serializers.CharField(max_length=100)
+	comment = serializers.CharField(max_length=500,required=False,allow_blank=True)
+	username = serializers.CharField(max_length=100)
+	location = serializers.CharField(max_length=100)
 
 class Complaints_registerSerializer(serializers.ModelSerializer):
 	class Meta:

@@ -187,9 +187,7 @@ class Test extends React.Component {
                                                             columns = [...columns, row.column]
                                                             if(row.column){
                                                                 return <th key={i}>{ row.column }</th>
-                                                            } else {
-                                                                return null
-                                                            }
+                                                            } 
                                                         }
                                                         })
                                                 }
@@ -213,17 +211,20 @@ class Test extends React.Component {
                                                     
                                                         this.state.data.map((row,i)=>{
                                                             if(main_row.column && main_row.row){
+                                                                console.log("Testing")
                                                                 if(row.column == columns[i] && row.row == main_row.row){
                                                                     return <th key={i}>{ row.value }</th>
-                                                                } else {
-                                                                    return <th key={i}></th>
-                                                                }
+                                                                } 
                                                             } else if (main_row.column && !main_row.row){
-                                    
+                                                                if(row.column == columns[i]){
                                                                     return <th key={i}>{ row.value }</th>
+                                                                }
     
-                                                            } else {
-                                                                return <th key={i}></th>
+                                                            } else if (!main_row.column && main_row.row) {
+                                                                console.log("Testing 2")
+                                                                if(row.row == main_row.row){
+                                                                    return <th key={i}>{ row.value }</th>
+                                                                }
                                                             }
                                                         })
                                                     

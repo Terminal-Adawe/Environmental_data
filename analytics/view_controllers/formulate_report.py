@@ -123,6 +123,7 @@ class saveTableViewSet(viewsets.ViewSet):
             table_name = serializer.data['table_name']
             groupType = serializer.data['groupType']
             module_ = serializer.data['module']
+            description = serializer.data['description']
             x_column = serializer.data['x_column']
             y_column = serializer.data['y_column']
             value = serializer.data['value']
@@ -143,6 +144,7 @@ class saveTableViewSet(viewsets.ViewSet):
                         x_column = x_column,
                         y_column = y_column,
                         value = value,
+                        description=description,
                         active = 1,
                         created_by = user
                     )

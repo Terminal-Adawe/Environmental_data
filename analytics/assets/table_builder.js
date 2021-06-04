@@ -23,6 +23,7 @@ class TableBuilder extends React.Component {
 			x_column: "",
 			y_column: "",
 			groupType: "sum",
+			description: "",
 			baseUrl: "https://d12m8zkkfoc9oy.cloudfront.net",
 			valueType: "",
 			add_report_url: "add/save-table/",
@@ -235,6 +236,20 @@ class TableBuilder extends React.Component {
 										name="table_name" 
 										className="input-element" 
 										onChange={(e)=>this.handleInputChanged(e,"table_name")}
+										 />
+								</div>
+							</div>
+
+							<div className="row mt-2">
+								<div className="col-12">
+									<label>Description</label>
+									<input 
+										type="text" 
+										id="description" 
+										placeholder="Table description" 
+										name="description" 
+										className="input-element" 
+										onChange={(e)=>this.handleInputChanged(e,"description")}
 										 />
 								</div>
 							</div>

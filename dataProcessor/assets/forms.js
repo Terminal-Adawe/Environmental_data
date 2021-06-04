@@ -238,6 +238,7 @@ class Form extends React.Component {
 		this.Safety_toolsTags = this.Safety_toolsTags.bind(this)
 		this.Complaints_registerTags = this.Complaints_registerTags.bind(this)
 		this.Safety_permission_systemTags = this.Safety_permission_systemTags.bind(this)
+		this.water_management = this.water_management.bind(this)
 
 
 		this.toggleLoader = this.toggleLoader.bind(this)
@@ -323,6 +324,9 @@ class Form extends React.Component {
 		} else if (this.state.formtype=="incident_report"){
 			console.log("incident_report chosen")
 			this.incident_report()
+		} else if (this.state.formtype=="water_management"){
+			console.log("water_management chosen")
+			this.water_management()
 		} 
 
 		})
@@ -534,13 +538,13 @@ class Form extends React.Component {
 	storage_facilitiesTags(){
 		const tags = [
 			{formField: [[{inputtype:'desc',name:'',placeholder:'Seepage point showing the amount of seepage of the dam walls.',label:'',showlabel:0}]]},
-			{formField: [[{inputtype:'dropdown',name:'status_of_seepage_point',placeholder:'',label:'Status of Seepage Point',showlabel:1,options:[['Good','GD'],['Slightly Disturbed','SD'],['Blocked','BL']]}]]},
-			{formField: [[{inputtype:'dropdown',name:'stability_of_dam_walls',placeholder:'',label:'Stability of Dam Walls',showlabel:1,options:[['Stable','STB'],['Signs of Erosion','SOE'],['Rehabilitated','RBT']]}]]},
+			{formField: [[{inputtype:'dropdown',name:'status_of_seepage_point',placeholder:'',label:'Status of Seepage Point',showlabel:1,options:[['Good','Good'],['Slightly Disturbed','Slightly Disturbed'],['Blocked','Blocked']]}]]},
+			{formField: [[{inputtype:'dropdown',name:'stability_of_dam_walls',placeholder:'',label:'Stability of Dam Walls',showlabel:1,options:[['Stable','Stable'],['Signs of Erosion','Signs of Erosion'],['Rehabilitated','Rehabilitated']]}]]},
 			{formField: [[{inputtype: 'text', name:'holding_capacity',placeholder:'Enter Holding Capacity',label:'Holding Capacity',showlabel:1}]]},
 			{formField: [[{inputtype:'text',name:'current_capacity',placeholder:'Enter Current Capacity',label:'Current Capacity',showlabel:1}]]},
 			{formField: [[{inputtype:'text',name:'spillways_capacity',placeholder:'Enter Spillways Capacity',label:'Spillways Capacity',showlabel:1}]]},
 			{formField: [[{inputtype:'text',name:'spillways_stability',placeholder:'Enter Spillways Stability',label:'Spillways Stability',showlabel:1}]]},
-			{formField: [[{inputtype:'dropdown',name:'signs_of_erosion_spillway_tip',placeholder:'Erosion Signs',label:'Signs of Erosion on Spillway Tip',showlabel:1,options:[['Yes','Y'],['No','N']]}]]},
+			{formField: [[{inputtype:'dropdown',name:'signs_of_erosion_spillway_tip',placeholder:'Erosion Signs',label:'Signs of Erosion on Spillway Tip',showlabel:1,options:[['Yes','Yes'],['No','No']]}]]},
 			{formField: [[{inputtype: 'text', name:'comment',placeholder:'Any Comment?',label:'Comment',showlabel:1}]]},
 			{formField: [[{inputtype: 'image', name:'image',placeholder:'',label:'Upload image(s)',showlabel:1}]]},
 		]
@@ -554,7 +558,7 @@ class Form extends React.Component {
 	Grease_and_hydocarbon_spillageTags(){
 		const tags = [
 			{formField: [[{inputtype:'desc',name:'',placeholder:'Grease and Hydrocarbon storage condition',label:'',showlabel:0}]]},
-			{formField: [[{inputtype:'dropdown',name:'storage_condition',placeholder:'',label:'Storage Condition',showlabel:1,options:[['Completely Impervious Surface','CIS'],['Partially Impervious','PI'],['Non Impervious','NI'],['Stored in Containment','SIC'],['Not Stored in Containment','NSIC']]}]]},
+			{formField: [[{inputtype:'dropdown',name:'storage_condition',placeholder:'',label:'Storage Condition',showlabel:1,options:[['Completely Impervious Surface','Completely Impervious Surface'],['Partially Impervious','Partially Impervious'],['Non Impervious','Non Impervious'],['Stored in Containment','Stored in Containment'],['Not Stored in Containment','Not Stored in Containment']]}]]},
 			{formField: [[{inputtype: 'text', name:'comment',placeholder:'Any Comment?',label:'Comment',showlabel:1}]]},
 			{formField: [[{inputtype: 'image', name:'image',placeholder:'',label:'Upload image(s)',showlabel:1}]]},
 			]
@@ -602,7 +606,7 @@ class Form extends React.Component {
 		const tags = [
 			{formField: [[{inputtype:'desc',name:'',placeholder:'Liquid waste oil',label:'',showlabel:0}]]},
 			{formField: [[{inputtype: 'text', name:'discharge_point',placeholder:'Effluent Discharge Point',label:'Effluent Discharge Point',showlabel:1}]]},
-			{formField: [[{inputtype:'dropdown',name:'source',placeholder:'',label:'Source',showlabel:1,options:[['Maintenance Workshop','MW'],['Other Area','OA']]}]]},
+			{formField: [[{inputtype:'dropdown',name:'source',placeholder:'',label:'Source',showlabel:1,options:[['Maintenance Workshop','Maintenance Workshop'],['Other Area','Other Area']]}]]},
 			{formField: [[{inputtype: 'text', name:'comment',placeholder:'Any Comment?',label:'Comment',showlabel:1}]]},
 			{formField: [[{inputtype: 'image', name:'image',placeholder:'',label:'Upload image(s)',showlabel:1}]]},
 			]
@@ -647,6 +651,27 @@ class Form extends React.Component {
 			]
 
 		const action_url = 'add/add-energy-management/'
+
+		this.tagDeclaration(tags)
+		this.setUrl(action_url)
+	}
+
+	water_management(){
+		console.log("I have been called")
+		const tags = [
+			{formField: [[{inputtype:'desc',name:'',placeholder:'Water consumption in the camp',label:'',showlabel:0}]]},
+			{formField: [[{inputtype: 'text', name:'total_water_quantity_available',placeholder:'Total Water Quantity Available',label:'Total Water Quantity Available',showlabel:1}]]},
+			{formField: [[{inputtype: 'text', name:'camp_consumption',placeholder:'Camp Consumption',label:'Camp Consumption',showlabel:1}]]},
+			{formField: [[{inputtype: 'text', name:'cafeteria_consumption',placeholder:'Cafeteria Consumption',label:'Cafeteria Consumption',showlabel:1}]]},
+			{formField: [[{inputtype: 'text', name:'admin_consumption',placeholder:'Admin Consumption',label:'Admin Consumption',showlabel:1}]]},
+			{formField: [[{inputtype: 'text', name:'workshop_consumption',placeholder:'Workshop Consumption',label:'Workshop Consumption',showlabel:1}]]},
+			{formField: [[{inputtype: 'text', name:'mine_plant_consumption',placeholder:'Mine Plant Consumption',label:'Mine Plant Consumption',showlabel:1}]]},
+			{formField: [[{inputtype: 'text', name:'other_consumption',placeholder:'Other Consumption',label:'Other Consumption',showlabel:1}]]},
+			{formField: [[{inputtype: 'text', name:'comment',placeholder:'Any Comment?',label:'Comment',showlabel:1}]]},
+			{formField: [[{inputtype: 'image', name:'image',placeholder:'',label:'Upload image(s)',showlabel:1}]]},
+			]
+
+		const action_url = 'add/add-water-management/'
 
 		this.tagDeclaration(tags)
 		this.setUrl(action_url)
@@ -704,7 +729,7 @@ class Form extends React.Component {
 	Safety_permission_systemTags(){
 		const tags = [
 			{formField: [[{inputtype:'desc',name:'',placeholder:'Safety Pemitting records',label:'',showlabel:0}]]},
-			{formField: [[{inputtype: 'text', name:'Safety permits',placeholder:'Number of permits issued',label:'Number of permits issued',showlabel:1}]]},
+			{formField: [[{inputtype: 'text', name:'no_of_permits_issued',placeholder:'Number of permits issued',label:'Number of permits issued',showlabel:1}]]},
 			{formField: [[{inputtype:'dropdown',name:'status',placeholder:'',label:'Status',showlabel:1,options:[['Work Ended Safely','Work Ended Safely'],['Work did not end safely','Work did not end safely']]}]]},
 			{formField: [[{inputtype: 'text', name:'comment',placeholder:'Any Comment?',label:'Comment',showlabel:1}]]},
 			{formField: [[{inputtype: 'image', name:'image',placeholder:'',label:'Upload image(s)',showlabel:1}]]},
@@ -765,7 +790,7 @@ class Form extends React.Component {
 			{formField: [[{inputtype:'desc',name:'',placeholder:'Work environment compliance.',label:'',showlabel:0}]]},
 			{formField: [[{inputtype:'dropdown',name:'first_aid',placeholder:'',label:'First Aid Available?',showlabel:1,options:[['Yes','Yes'],['No','No']]}]]},
 			{formField: [[{inputtype:'dropdown',name:'safety_stickers',placeholder:'',label:'Safety Stickers Available?',showlabel:1,options:[['Yes','Yes'],['No','No']]}]]},
-			{formField: [[{inputtype:'dropdown',name:'estinquishers',placeholder:'',label:'Fire Estinguishers Available?',showlabel:1,options:[['Yes','Yes'],['No','No']]}]]},
+			{formField: [[{inputtype:'dropdown',name:'estinguishers',placeholder:'',label:'Fire Estinguishers Available?',showlabel:1,options:[['Yes','Yes'],['No','No']]}]]},
 			{formField: [[{inputtype: 'text', name:'no_of_estinquishers',placeholder:'Number of Fire Estinguishers',label:'Number of Fire Estinguishers',showlabel:1}]]},
 			{formField: [[{inputtype:'dropdown',name:'fire_alarm',placeholder:'',label:'Fire Alarms Available?',showlabel:1,options:[['Yes','Yes'],['No','No']]}]]},
 			{formField: [[{inputtype:'dropdown',name:'flooding',placeholder:'',label:'Is there flooding?',showlabel:1,options:[['Yes','Yes'],['No','No']]}]]},
@@ -783,8 +808,8 @@ class Form extends React.Component {
 	warehouse(){
 		const tags = [ 
 			{formField: [[{inputtype:'desc',name:'',placeholder:'Warehouse details.',label:'',showlabel:0}]]},
-			{formField: [[{inputtype:'dropdown',name:'eye_wash',placeholder:'',label:'Eye wash Available?',showlabel:1,options:[['Yes','YES'],['No','NO']]}]]},
-			{formField: [[{inputtype:'dropdown',name:'shower',placeholder:'',label:'Shower Available?',showlabel:1,options:[['Yes','YES'],['No','NO']]}]]},
+			{formField: [[{inputtype:'dropdown',name:'eye_wash',placeholder:'',label:'Eye wash Available?',showlabel:1,options:[['Yes','Yes'],['No','No']]}]]},
+			{formField: [[{inputtype:'dropdown',name:'shower',placeholder:'',label:'Shower Available?',showlabel:1,options:[['Yes','Yes'],['No','No']]}]]},
 			{formField: [[{inputtype: 'text', name:'comment',placeholder:'Comment',label:'Description',showlabel:1}]]},
 			{formField: [[{inputtype: 'image', name:'image',placeholder:'',label:'Upload image(s)',showlabel:1}]]},
 			]
@@ -798,7 +823,7 @@ class Form extends React.Component {
 	conveyers(){
 		const tags = [
 			{formField: [[{inputtype:'desc',name:'',placeholder:'Information about conveyors.',label:'',showlabel:0}]]},
-			{formField: [[{inputtype:'dropdown',name:'electrical_safety_insulation',placeholder:'',label:'Are there Electrical Safety Insulations?',showlabel:1,options:[['Yes','YES'],['No','NO']]}]]},
+			{formField: [[{inputtype:'dropdown',name:'electrical_safety_insulation',placeholder:'',label:'Are there Electrical Safety Insulations?',showlabel:1,options:[['Yes','Yes'],['No','No']]}]]},
 			{formField: [[{inputtype: 'text', name:'comment',placeholder:'Comment',label:'Comment',showlabel:1}]]},
 			{formField: [[{inputtype: 'image', name:'image',placeholder:'',label:'Upload image(s)',showlabel:1}]]},
 			]
@@ -812,7 +837,7 @@ class Form extends React.Component {
 	incident_report(){
 		const tags = [
 			{formField: [[{inputtype:'desc',name:'',placeholder:'Incident report on an incident that may have taken place.',label:'',showlabel:0}]]},
-			{formField: [[{inputtype:'dropdown',name:'incident_category',placeholder:'',label:'Select an incident category',showlabel:1,options:[['Personal Injury','PERSONAL INJURY'],['Property Damage','PROPERTY DAMAGE'],['Fires','FIRES'],['Loss to Process','LOSS TO PROCESS'],['Environment','ENVIRONMENT'],['Near Miss','NEAR MISS'],['Community','COMMUNITY'],['Death','DEATH']]}]]},
+			{formField: [[{inputtype:'dropdown',name:'incident_category',placeholder:'',label:'Select an incident category',showlabel:1,options:[['Personal Injury','Personal Injury'],['Property Damage','Property Damage'],['Fires','Fires'],['Loss to Process','Loss to Process'],['Environment','Environment'],['Near Miss','Near Miss'],['Community','Community'],['Death','Death']]}]]},
 			{formField: [[{inputtype: 'text', name:'incident_location',placeholder:'Incident Location',label:'Incident Location',showlabel:1}]]},
 			{formField: [[{inputtype: 'text', name:'victim_name',placeholder:'Victim Name',label:'Victim Name',showlabel:1}]]},
 			{formField: [[{inputtype: 'date', name:'incident_start',placeholder:'Incident Start date',label:'Incident Start date',showlabel:1}]]},

@@ -32,6 +32,8 @@
 								<td>{{ value.created_at }}</td>
 							</tr>
 							{% endfor %}
+							<tr class="grade"><td colspan="2"><a href="{% url 'analytics:view_all_reports' module=module1.module_name %}" class="btn btn-outline-danger">View details</a></td>
+							<td colspan="1" style="border: none;"><a href="#" class="btn btn-outline-danger export-all-selected"  data-toggle="modal" data-target="#report-date-selector">Export All</a><input type="hidden" id="module_s" value="{{ module1.module_name }}"></td></tr>
 						</tbody>
 					</table>
 				</div>

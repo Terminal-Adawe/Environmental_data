@@ -24,13 +24,16 @@ class CustomTables extends React.Component {
 			x_column: "",
 			y_column: "",
 			groupType: "sum",
+			description: "",
 			baseUrl: "https://d12m8zkkfoc9oy.cloudfront.net",
 			valueType: "",
-			get_report_url: "/analytics/get-tables/",
+			get_report_url: "/analytics/get-table/",
+			table_id: "",
 			// baseUrl: "http://localhost:8002",
 		}
 
 		this.getDetails = this.getDetails.bind(this)
+
 	}
 
 	componentDidMount(){
@@ -39,10 +42,12 @@ class CustomTables extends React.Component {
 
 		const baseUrl = document.getElementById("baseUrl").value
 		const username = document.querySelector(".username").value
+		const table_id = document.querySelector(".table_id").value
 
 		this.setState({
 			baseUrl: baseUrl,
-			username: username
+			username: username,
+			table_id: table_id
 		},()=>{
 			this.getDetails()
 		})
@@ -50,13 +55,26 @@ class CustomTables extends React.Component {
 
 	getDetails(){
 		const url = this.state.get_report_url
+		const table_id = this.state.table_id
 
-		axios.get(`${this.state.baseUrl}${url}`)
+		let form_data = new FormData();
+
+		form_data.append('table_id', table_id)
+
+		axios.get(`${this.state.baseUrl}${url}`,{
+							params: {
+								table_id: table_id
+							}
+							},{
+                headers: {
+                     'X-CSRFTOKEN': cookie.load("csrftoken"),
+                 },
+            })
         	.then(response => {
         		console.log("response is ")
         		console.log(response)
           this.setState({
-            data: response.data.Custom_table,
+            data: response.data,
           })
         })
         .catch(error => {
@@ -75,7 +93,6 @@ class CustomTables extends React.Component {
 				return <section key={i} className="panel">
 				<header className="panel-heading">
 					<div className="panel-actions">
-						<a href="#" className="fa fa-caret-down"></a>
 					</div>
 		
 					<h2 className="panel-title">{table.table_name}</h2>
@@ -94,7 +111,7 @@ class CustomTables extends React.Component {
 
 export default CustomTables
 
-if (document.getElementById('custom-tables')) {
+if (document.getElementById('custom-table')) {
 	console.log("ID INTACT")
-    ReactDOM.render(<CustomTables />, document.getElementById('custom-tables'));
+    ReactDOM.render(<CustomTables />, document.getElementById('custom-table'));
 }

@@ -184,7 +184,7 @@ class Liquid_waste_oil(models.Model):
 	updated_at = models.DateTimeField(auto_now=True)
 
 class Health_and_hygiene_awareness(models.Model):
-	report_name = models.CharField(max_length=100, default='REPORT_1', null=True, blank=True)
+	report_name = models.CharField(max_length=100, default='REPORT_6', null=True, blank=True)
 	location = models.CharField(max_length=200, default='0,0')
 	training = models.CharField(max_length=100)
 	no_of_staff = models.CharField(max_length=10)
@@ -199,7 +199,7 @@ class Health_and_hygiene_awareness(models.Model):
 	updated_at = models.DateTimeField(auto_now=True)
 
 class Energy_management(models.Model):
-	report_name = models.CharField(max_length=100, default='REPORT_1', null=True, blank=True)
+	report_name = models.CharField(max_length=100, default='REPORT_17', null=True, blank=True)
 	location = models.CharField(max_length=200, default='0,0')
 	total_energy_available = models.CharField(max_length=50)
 	camp_consumption = models.CharField(max_length=20)
@@ -209,6 +209,24 @@ class Energy_management(models.Model):
 	other_consumption = models.CharField(max_length=20)
 	comment = models.TextField(null=True, blank=True)
 	module = models.CharField(max_length=50, default="7")
+	created_by = models.ForeignKey(User,
+		on_delete=models.PROTECT)
+	updated_by = models.IntegerField(null=True, blank=True)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+
+class Water_management(models.Model):
+	report_name = models.CharField(max_length=100, default='REPORT_19', null=True, blank=True)
+	location = models.CharField(max_length=200, default='0,0')
+	total_water_quantity_available = models.CharField(max_length=50)
+	camp_consumption = models.CharField(max_length=20)
+	admin_consumption = models.CharField(max_length=20)
+	workshop_consumption = models.CharField(max_length=20)
+	mine_plant_consumption = models.CharField(max_length=20)
+	cafeteria_consumption = models.CharField(max_length=20)
+	other_consumption = models.CharField(max_length=20)
+	comment = models.TextField(null=True, blank=True)
+	module = models.CharField(max_length=50, default="19")
 	created_by = models.ForeignKey(User,
 		on_delete=models.PROTECT)
 	updated_by = models.IntegerField(null=True, blank=True)
@@ -469,8 +487,8 @@ class FuelFarm(models.Model):
 
 class WorkEnvCompliance(models.Model):
 	"""docstring for WorkEnvCompliance"""
-	YES = 'YES'
-	NO = 'NO'
+	YES = 'Yes'
+	NO = 'No'
 
 	STATUS_S = [
 		(YES,'Yes'),
@@ -480,7 +498,7 @@ class WorkEnvCompliance(models.Model):
 	report_name = models.CharField(max_length=100, default='REPORT_15', null=True, blank=True)
 	first_aid = models.CharField(max_length=10,choices=STATUS_S)
 	safety_stickers = models.CharField(max_length=10,choices=STATUS_S)
-	estinquishers = models.CharField(max_length=10,choices=STATUS_S)
+	estinguishers = models.CharField(max_length=10,choices=STATUS_S)
 	no_of_estinquishers = models.CharField(max_length=10, null=True, blank=True)
 	fire_alarm = models.CharField(max_length=10,choices=STATUS_S)
 	flooding = models.CharField(max_length=10,choices=STATUS_S)
@@ -496,8 +514,8 @@ class WorkEnvCompliance(models.Model):
 
 class Warehouse(models.Model):
 	"""docstring for Warehouse"""
-	YES = 'YES'
-	NO = 'NO'
+	YES = 'Yes'
+	NO = 'No'
 
 	STATUS_S = [
 		(YES,'Yes'),
@@ -518,8 +536,8 @@ class Warehouse(models.Model):
 
 class Conveyers(models.Model):
 	"""docstring for Warehouse"""
-	YES = 'YES'
-	NO = 'NO'
+	YES = 'Yes'
+	NO = 'No'
 
 	STATUS_S = [
 		(YES,'Yes'),
@@ -540,16 +558,16 @@ class Conveyers(models.Model):
 
 class IncidentReport(models.Model):
 	"""docstring for IncidentReport"""
-	YES = 'YES'
-	NO = 'NO'
-	PERSONAL_INJURY = 'PERSONAL INJURY'
-	PROPERTY_DAMAGE = 'PROPERTY DAMAGE'
-	FIRES = 'FIRES'
-	LOSS_TO_PROCESS = 'LOSS TO PROCESS'
-	ENVIRONMENT = 'ENVIRONMENT'
-	NEAR_MISS = 'NEAR MISS'
-	COMMUNITY = 'COMMUNITY'
-	DEATH = 'DEATH'
+	YES = 'Yes'
+	NO = 'No'
+	PERSONAL_INJURY = 'Personal Injury'
+	PROPERTY_DAMAGE = 'Property Damage'
+	FIRES = 'Fires'
+	LOSS_TO_PROCESS = 'Loss to Process'
+	ENVIRONMENT = 'Environment'
+	NEAR_MISS = 'Near Miss'
+	COMMUNITY = 'Community'
+	DEATH = 'Death'
 
 	STATUS_C = [
 		(PERSONAL_INJURY,'Personal Injury'),
@@ -607,6 +625,7 @@ class Custom_table(models.Model):
 	table_name = models.CharField(max_length=50, null=True, blank=True)
 	group_type = models.CharField(max_length=10)
 	module = models.CharField(max_length=10, null=True, blank=True)
+	description = models.CharField(max_length=100, null=True, blank=True)
 	x_column = models.CharField(max_length=50, null=True, blank=True)
 	y_column = models.CharField(max_length=50, null=True, blank=True)
 	value = models.CharField(max_length=50, null=True, blank=True)

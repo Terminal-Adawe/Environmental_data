@@ -21,6 +21,7 @@ from analytics.serializers import GraphConfigSerializer
 from analytics.serializers import UsernameSerializerGet
 from analytics.serializers import TasksSerializerGet
 from analytics.serializers import CustomTablesSerializer
+from analytics.serializers import customTableSerializer
 from analytics.models import Storage_facility
 from analytics.models import ComplianceValue
 from analytics.models import Grease_and_hydocarbon_spillage
@@ -43,6 +44,7 @@ from analytics.models import NotificationViewer
 from analytics.models import Tasks
 from analytics.models import Custom_table
 from rest_framework.response import Response
+from rest_framework import status
 from django.contrib.auth.models import User
 from django.http import HttpResponse, JsonResponse
 from drf_multiple_model.views import ObjectMultipleModelAPIView
@@ -103,4 +105,16 @@ class GetTablesViewSet(ObjectMultipleModelAPIView):
 	querylist=[
 			{'queryset': Custom_table.objects.filter(active=1), 'serializer_class': CustomTablesSerializer}
 	]
+
+
+class GetTableViewSet(viewsets.ViewSet):
+	def retrieve(self, request):
+		serializer = customTableSerializer(data=request.query_params)
+
+		if serializer.is_valid(raise_exception=True):
+			table = Custom_table.objects.filter(id=request.query_params.get('table_id')).values()
+
+			return Response(table, status=status.HTTP_200_OK)
+		else:
+			return Response("Request Failed", status=status.HTTP_201_CREATED)
 

@@ -21,6 +21,7 @@ class FormulateReportData extends React.Component {
             valueType: "",
             table_name: "",
             url: "add/build-table/",
+            description: ""
 		}
 
         this.getReport = this.getReport.bind(this)
@@ -40,12 +41,13 @@ class FormulateReportData extends React.Component {
                 valueType: this.props.valueType,
                 groupType: this.props.groupType,
                 table_name: this.props.table_name,
-                username: this.props.username
+                username: this.props.username,
+                description: this.props.description
 
             },()=>{
                 console.log("Params are "+this.props.module_name+" ++ "+this.props.x_column+" ++ "+this.props.y_column+" ++ "+this.props.valueType+" ++ "+this.props.groupType)
                 if(this.props.module_name != ""){
-                    this.getReport(this.props.username,this.props.table_name,this.props.module_name,this.props.x_column,this.props.y_column,this.props.valueType, this.props.groupType)
+                    this.getReport(this.props.username,this.props.table_name,this.props.module_name,this.props.x_column,this.props.y_column,this.props.valueType, this.props.groupType, this.props.description)
                 } 
             })
 
@@ -63,7 +65,7 @@ class FormulateReportData extends React.Component {
 		if(prevProps.module_name != this.props.module_name || prevProps.x_column != this.props.x_column || prevProps.y_column != this.props.y_column || prevProps.valueType != this.props.valueType){
 			// console.log("processing graph 2... ")
 			// console.log(this.props)
-			this.getReport(this.props.username,this.props.table_name,this.props.module_name,this.props.x_column,this.props.y_column,this.props.valueType, this.props.groupType)
+			this.getReport(this.props.username,this.props.table_name,this.props.module_name,this.props.x_column,this.props.y_column,this.props.valueType, this.props.groupType, this.props.description)
 		}
 
         if(prevProps.groupType != this.props.groupType){
@@ -71,7 +73,7 @@ class FormulateReportData extends React.Component {
         }
 	}
 
-    getReport(username,table_name,module_, x_column, y_column, valueType, groupType){
+    getReport(username,table_name,module_, x_column, y_column, valueType, groupType, description){
         let form_data = new FormData();
 
         const url = this.state.url
@@ -90,6 +92,8 @@ class FormulateReportData extends React.Component {
         form_data.append('y_column', y_column)
         form_data.append('value', valueType)
         form_data.append('groupType', groupType)
+        form_data.append('description', groupType)
+
 
         axios.post(`${baseUrl}/api/${url}`,form_data,{
                 headers: {
@@ -130,10 +134,6 @@ class FormulateReportData extends React.Component {
                 data: response.data
             })
 
-            setTimeout(function(){
-                document.getElementById('success-message').innerHTML = ""
-            },4000)
-
         } else // response failed
         {
             document.getElementById('error-message').innerHTML = response.data.message
@@ -172,13 +172,11 @@ class FormulateReportData extends React.Component {
                                 {
                                     this.state.data.map((row,i)=>{
                                         let trigger = 0;
-                                        if(columns.length){
-                                            for(var r = 0; r < columns.length; r++){
-                                                if(columns[r]==row.column){
-                                                    trigger = 1;
+                                        for(var r = 0; r < columns.length; r++){
+                                            if(columns[r]==row.column){
+                                                trigger = 1;
 
-                                                    break;
-                                                }
+                                                break;
                                             }
                                         }
                                         
@@ -187,8 +185,6 @@ class FormulateReportData extends React.Component {
                                             columns = [...columns, row.column]
                                             if(row.column){
                                                 return <th key={i}>{ row.column }</th>
-                                            } else {
-                                                return null
                                             }
                                         }
                                     })
@@ -201,48 +197,70 @@ class FormulateReportData extends React.Component {
                                         this.state.data.map((main_row,r)=>{
                                             let trigger = 0;
 
-                                            if(rows.length){
-                                                for(var r = 0; r < rows.length; r++){
-                                                    if(rows[r]==main_row.row){
+                                            for(var r = 0; r < rows.length; r++){
+                                                if(rows[r]==main_row.row){
                                                     trigger = 1;
 
                                                     break;
                                                 }
                                             }
-                                        }
                                         
 
                                         if (trigger == 0){
                                             rows = [...rows, main_row.row]
-                                            if(main_row.row){
+               
                                             return <tr key={r}>
-                                                <th>{ main_row.row }</th>
+                                                <td>{ main_row.row }</th>
                                                 {   
-                                                    
-                                                        this.state.data.map((row,i)=>{
-                                                            if(main_row.column && main_row.row){
-                                                                if(row.column == main_row.column && row.row == main_row.row){
-                                                                    return <th key={i}>{ row.value }</th>
+                                                    columns.map((col,c)=>{
+                                                        return <th key={c}>
+                                                        {
+                                                            this.state.data.map((row,i)=>{
+                                                                if(main_row.column && main_row.row){
+                                                                    console.log("col col is "+row.column)
+                                                                    console.log("column is "+col)
+                                                                    console.log("col row is "+row.row)
+                                                                    console.log("main row is "+main_row.row)
+                                                                        if(row.column == col && row.row == main_row.row){
+                                                                            console.log("they match "+col)
+                                                                            return <React.Fragment key={i}>{ row.value }</React.Fragment>
+                                                                        } else {
+                                                                            return <React.Fragment key={i}></React.Fragment>
+                                                                        }
+                                                                    
+                                                                    
+                                                                } else if (main_row.column && !main_row.row){
+                                                                    if(row.column == col){
+                                                                        return <React.Fragment key={i}>{ row.value }</React.Fragment>
+                                                                    } else {
+                                                                        return <React.Fragment key={i}></React.Fragment>
+                                                                    }
+        
+                                                                } else if (!main_row.column && main_row.row) {
+                                                                    console.log("Testing 2")
+                                                                    if(row.row == main_row.row){
+                                                                        return <React.Fragment key={i}>{ row.value }</React.Fragment>
+                                                                    } else {
+                                                                        return <React.Fragment key={i}></React.Fragment>
+                                                                    }
                                                                 } else {
-                                                                    return <th key={i}></th>
-                                                                }
-                                                            } else if (main_row.column && !main_row.row){
-                                    
-                                                                    return <th key={i}>{ row.value }</th>
-    
-                                                            } else {
-                                                                return <th key={i}></th>
-                                                            }
-                                                        })
-                                                    
+                                                                        return <React.Fragment key={i}></React.Fragment>
+                                                                    }
+                                                            })
+                                                        }
+                                                        </td>
+                                                    })   
                                                 }
                                                 </tr>
-                                            } else {
-                                                return <tr><th>{ main_row.row }</th><th>{ main_row.value }</th></tr>
-                                            }
+                                                
                                         }
                                         })
                                     }
+                                    <tr><td>{ this.state.description }</td></tr>
+                                    <tr>
+                                        <th className="do_btns"><a href="#" className="btn btn-outline-danger mx-auto">Export table</a></th>
+                                        <th className="do_btns"><a href="#" className="btn btn-outline-danger mx-auto">Add to Report</a></th>
+                                    </tr>
                                </tbody>
                             </table>
                         </div>
