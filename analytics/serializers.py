@@ -127,9 +127,7 @@ class formSerializer(serializers.Serializer):
 	auth_password = serializers.CharField(max_length=30)
 	module = serializers.CharField(max_length=100)
 	fields = serializers.ListField(
-		child=serializers.ListField(
 			child=serializers.CharField(max_length=400)
-			)
 		)
 
 
