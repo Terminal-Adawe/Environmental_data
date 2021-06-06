@@ -14,8 +14,6 @@ from analytics.view_controllers.notifications import insert_notification
 
 class Energy_managementViewSet(viewsets.ViewSet):
     def create(self, request):
-        queryset = Energy_management.objects.all()
-
         serializer = Energy_managementSerializer_serializer(data=request.data)
         # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
 

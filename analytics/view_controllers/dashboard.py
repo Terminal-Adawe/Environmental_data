@@ -20,6 +20,7 @@ from dataProcessor.serializers import WorkEnvComplianceSerializer
 from dataProcessor.serializers import WarehouseSerializer
 from dataProcessor.serializers import ConveyersSerializer
 from dataProcessor.serializers import IncidentReportSerializer
+from dataProcessor.serializers import Water_managementSerializer
 from analytics.serializers import ModulesSerializer
 from analytics.serializers import FieldsSerializer_serializer
 from analytics.serializers import ChartSerializer
@@ -36,6 +37,7 @@ from analytics.models import Inceneration
 from analytics.models import Liquid_waste_oil
 from analytics.models import Health_and_hygiene_awareness
 from analytics.models import Energy_management
+from analytics.models import Water_management
 from analytics.models import Complaints_register
 from analytics.models import Slope_stabilization_and_surface_water_retention
 from analytics.models import Safety_training
@@ -100,6 +102,7 @@ class DashboardViewSet(ObjectMultipleModelAPIView):
 			{'queryset': Warehouse.objects.all(), 'serializer_class': WarehouseSerializer},
 			{'queryset': Conveyers.objects.all(), 'serializer_class': ConveyersSerializer},
 			{'queryset': IncidentReport.objects.all(), 'serializer_class': IncidentReportSerializer},
+			{'queryset': Water_management.objects.all(), 'serializer_class': Water_managementSerializer},
 			{'queryset': modules.objects.all(), 'serializer_class': ModulesSerializer},
 		]
 

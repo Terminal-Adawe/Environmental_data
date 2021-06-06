@@ -19,6 +19,7 @@ from analytics.models import Warehouse
 from analytics.models import Conveyers
 from analytics.models import IncidentReport
 from analytics.models import Water_management
+from analytics.models import WasteDetails
 
 
 class AuthSerializer(serializers.Serializer):
@@ -397,5 +398,9 @@ class IncidentReportSerializer_serializer(serializers.Serializer):
 	responsible_person = serializers.CharField(max_length=200)
 	auth_user = serializers.CharField(max_length=30)
 	auth_password = serializers.CharField(max_length=30)
-		
+
+class WasteDetailsSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = WasteDetails
+		fields = '__all__'
 		

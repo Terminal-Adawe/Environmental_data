@@ -5,6 +5,8 @@ from django.contrib.auth import authenticate, login as auth_login, logout
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.shortcuts import redirect
+from rest_framework.response import Response
+from rest_framework import viewsets
 
 from analytics.models import ComplianceValue
 from analytics.models import modules
@@ -29,10 +31,19 @@ from analytics.models import Conveyers
 from analytics.models import IncidentReport
 from analytics.models import Graph_config
 
+from analytics.serializers import ModulesSerializer
+from analytics.serializers import formSerializer
+
 from  analytics.forms import loginForm
 from  analytics.forms import indexloginForm
 from  analytics.forms import registerForm
 from  analytics.forms import editForm
+
+from rest_framework import status
+
+import logging
+
+logger = logging.getLogger("django")
 
 import json 
 
@@ -232,5 +243,31 @@ def edituser(request):
             return render(request, 'analytics/dashboard/edituser.html',{'form': form,'users':users})
     else:
         return HttpResponseRedirect('login')
+
+class getModulesViewSet(viewsets.ViewSet):
+    def retrieve(self, request, pk=None):
+        queryset = modules.objects.all()
+
+        return Response(ModulesSerializer(queryset, many=True).data,status.HTTP_202_ACCEPTED)
+        # serializer = ModulesSerializer(data=request.data)
+
+class postRequestViewSet(viewsets.ViewSet):
+    def create(self, request):
+        serializer = formSerializer(data=request.data)
+
+        logger.info("data is ")
+        logger.info(serializer)
+
+        if serializer.is_valid(raise_exception=True):
+            user = User.objects.get(username=serializer.data['auth_user'])
+            if user.check_password(serializer.data['auth_password']):
+                queryset = modules.objects.all()
+                return Response(request.data,status.HTTP_202_ACCEPTED)
+            else:
+                return Response(status=status.HTTP_401_UNAUTHORIZED)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
 
 

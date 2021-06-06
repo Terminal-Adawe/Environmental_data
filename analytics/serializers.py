@@ -117,4 +117,19 @@ class graphConfigSerializer(serializers.Serializer):
 	id = serializers.CharField(max_length=10)
 	value = serializers.CharField(max_length=10)
 
+class ModulesSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = modules
+		fields = '__all__'
+
+class formSerializer(serializers.Serializer):
+	auth_user = serializers.CharField(max_length=30)
+	auth_password = serializers.CharField(max_length=30)
+	module = serializers.CharField(max_length=100)
+	fields = serializers.ListField(
+		child=serializers.ListField(
+			child=serializers.CharField(max_length=400)
+			)
+		)
+
 
