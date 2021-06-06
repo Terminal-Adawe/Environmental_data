@@ -14,6 +14,12 @@ from dataProcessor.serializers import Slope_stabilization_and_surface_water_rete
 from dataProcessor.serializers import Safety_trainingSerializer
 from dataProcessor.serializers import Safety_permission_systemSerializer
 from dataProcessor.serializers import Safety_toolsSerializer
+from dataProcessor.serializers import GeoReferencePointsSerializer
+from dataProcessor.serializers import FuelFarmSerializer
+from dataProcessor.serializers import WorkEnvComplianceSerializer
+from dataProcessor.serializers import WarehouseSerializer
+from dataProcessor.serializers import ConveyersSerializer
+from dataProcessor.serializers import IncidentReportSerializer
 from analytics.serializers import ModulesSerializer
 from analytics.serializers import FieldsSerializer_serializer
 from analytics.serializers import ChartSerializer
@@ -35,6 +41,13 @@ from analytics.models import Slope_stabilization_and_surface_water_retention
 from analytics.models import Safety_training
 from analytics.models import Safety_permission_system
 from analytics.models import Safety_tools
+from analytics.models import WasteDetails
+from analytics.models import GeoReferencePoints
+from analytics.models import FuelFarm
+from analytics.models import WorkEnvCompliance
+from analytics.models import Warehouse
+from analytics.models import Conveyers
+from analytics.models import IncidentReport
 from analytics.models import modules
 from analytics.models import Graph_builder_field
 from analytics.models import Chart
@@ -81,6 +94,12 @@ class DashboardViewSet(ObjectMultipleModelAPIView):
 			{'queryset': Safety_training.objects.all(), 'serializer_class': Safety_trainingSerializer},
 			{'queryset': Safety_permission_system.objects.all(), 'serializer_class': Safety_permission_systemSerializer},
 			{'queryset': Safety_tools.objects.all(), 'serializer_class': Safety_toolsSerializer},
+			{'queryset': GeoReferencePoints.objects.all(), 'serializer_class': GeoReferencePointsSerializer},
+			{'queryset': FuelFarm.objects.all(), 'serializer_class': FuelFarmSerializer},
+			{'queryset': WorkEnvCompliance.objects.all(), 'serializer_class': WorkEnvComplianceSerializer},
+			{'queryset': Warehouse.objects.all(), 'serializer_class': WarehouseSerializer},
+			{'queryset': Conveyers.objects.all(), 'serializer_class': ConveyersSerializer},
+			{'queryset': IncidentReport.objects.all(), 'serializer_class': IncidentReportSerializer},
 			{'queryset': modules.objects.all(), 'serializer_class': ModulesSerializer},
 		]
 

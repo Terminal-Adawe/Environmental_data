@@ -27,11 +27,15 @@ from analytics.models import modules
 from analytics.models import Image
 from analytics.models import Tasks
 from analytics.models import Custom_table
+from analytics.models import Graph_config
 from analytics.serializers import TasksSerializer
+from analytics.serializers import graphConfigSerializer
 from analytics.serializers import UsernameSerializer
 from django.contrib.auth.models import User
 from django.http import HttpResponse, JsonResponse
 from drf_multiple_model.views import ObjectMultipleModelAPIView
+from rest_framework.response import Response
+from rest_framework import status
 import json
 import logging
 import sys
@@ -239,6 +243,26 @@ def add_task(request):
 			return redirect(request.META['HTTP_REFERER'])
 	else:
 		return HttpResponseRedirect('login')
+
+class Update_graph(viewsets.ViewSet):
+	def create(self, request):
+		serializer = graphConfigSerializer(data=request.data)
+
+		if serializer.is_valid(raise_exception=True):
+			graph_config = Graph_config.objects.get(id=int(serializer.data['id']))
+			on_dashboard = True
+			if serializer.data['value'] == 'true':
+				on_dashboard=True
+			else:
+				on_dashboard=False
+
+			graph_config.on_dashboard = on_dashboard
+			graph_config.save()
+	
+			return Response("updated",status=status.HTTP_202_ACCEPTED)
+		else:
+			return Response(status=status.HTTP_400_BAD_REQUEST)
+
 
 
 class GetUsers(ObjectMultipleModelAPIView):

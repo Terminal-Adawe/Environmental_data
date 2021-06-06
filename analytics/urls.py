@@ -13,10 +13,12 @@ app_name = 'analytics'
 
 router = routers.DefaultRouter()
 router.register(r'add_task', views.Add_task, basename='add_task')
+router.register(r'update-graph-config', views.Update_graph, basename='update-graph-config')
 
 urlpatterns = [
     path('', index.index, name='index'),
     path('add/', include(router.urls)),
+    # path('update/', include(router.urls)),
     # path('accounts/', include('django.contrib.auth.urls')),
     path('add_task', views.add_task, name='add_task'),
     path('dashboard', index.dashboard, name='dashboard'),

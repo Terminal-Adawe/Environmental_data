@@ -42,7 +42,7 @@ class BarGraph extends React.Component {
     const BarSeries =  VerticalBarSeries;
     return (
       <div>
-        <FlexibleWidthXYPlot xType="ordinal" height={300} xDistance={100}>
+        <FlexibleWidthXYPlot xType="ordinal" height={289} xDistance={100}>
           <VerticalGridLines />
           <HorizontalGridLines />
           <XAxis />

@@ -62,7 +62,7 @@ class FormulateReportData extends React.Component {
 	}
 
 	componentDidUpdate(prevProps, prevState){
-		if(prevProps.module_name != this.props.module_name || prevProps.x_column != this.props.x_column || prevProps.y_column != this.props.y_column || prevProps.valueType != this.props.valueType){
+		if(prevProps.module_name != this.props.module_name || prevProps.x_column != this.props.x_column || prevProps.y_column != this.props.y_column || prevProps.valueType != this.props.valueType || prevProps.groupType != this.props.groupType){
 			// console.log("processing graph 2... ")
 			// console.log(this.props)
 			this.getReport(this.props.username,this.props.table_name,this.props.module_name,this.props.x_column,this.props.y_column,this.props.valueType, this.props.groupType, this.props.description)
@@ -185,6 +185,8 @@ class FormulateReportData extends React.Component {
                                             columns = [...columns, row.column]
                                             if(row.column){
                                                 return <th key={i}>{ row.column }</th>
+                                            } else {
+                                                return <th key={i}>{this.props.groupType} of { this.props.y_column }</th>
                                             }
                                         }
                                     })
@@ -210,10 +212,10 @@ class FormulateReportData extends React.Component {
                                             rows = [...rows, main_row.row]
                
                                             return <tr key={r}>
-                                                <td>{ main_row.row }</th>
+                                                <td>{ main_row.row }</td>
                                                 {   
                                                     columns.map((col,c)=>{
-                                                        return <th key={c}>
+                                                        return <td key={c}>
                                                         {
                                                             this.state.data.map((row,i)=>{
                                                                 if(main_row.column && main_row.row){

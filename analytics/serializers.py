@@ -113,4 +113,8 @@ class CustomTablesSerializer(serializers.ModelSerializer):
 class customTableSerializer(serializers.Serializer):
 	table_id = serializers.CharField(max_length=10)
 
+class graphConfigSerializer(serializers.Serializer):
+	id = serializers.CharField(max_length=10)
+	value = serializers.CharField(max_length=10)
+
 

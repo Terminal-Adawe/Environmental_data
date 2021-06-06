@@ -17,7 +17,7 @@ class LineGraph extends React.Component {
 
     this.showHint = this.showHint.bind(this)
     this._onMouseLeave = this._onMouseLeave.bind(this)
-    this._onNearestX = this._onNearestX.bind(this)
+    this._onNearestXY = this._onNearestXY.bind(this)
 	}
 
 
@@ -32,8 +32,10 @@ class LineGraph extends React.Component {
       this.setState({crosshairValues: []});
     };
 
-  _onNearestX (value, {index}) {
-      this.setState({crosshairValues: this.props.data.map(d => d[index])});
+  _onNearestXY (value, {event, innerX, innerY, index}) {
+      console.log("value is "+value.x+" and inner x is "+innerX+" and inner Y is "+innerY+" and index is "+index)
+      console.log(value)
+      this.setState({crosshairValues: [value.x,value.y]});
     };
 
 
@@ -42,21 +44,32 @@ class LineGraph extends React.Component {
 	render(){
 		console.log("Line graph data graph is ")
 		console.log(this.props.data)
+
+    const crosshairvalues_all = this.state.crosshairValues
+
+    console.log(crosshairvalues_all)
+
 		return (<FlexibleWidthXYPlot
-  					height={300}
+  					height={289}
             onMouseLeave={this._onMouseLeave}>
   					<HorizontalGridLines />
   					<VerticalGridLines />
   					<LineSeries
     					data={this.props.data}
     					style={{ fill: 'none' }}
-              onNearestX={this._onNearestX}
+              onNearestXY={this._onNearestXY}
   					/>
   					<XAxis />
   					<YAxis />
             <Crosshair
               values={this.state.crosshairValues}
-            />
+            >
+              <div style={{background: 'black'}}>
+                <h3>Values of crosshair:</h3>
+                <p>Series 1: {crosshairvalues_all[0]}</p>
+                <p>Series 2: {crosshairvalues_all[1]}</p>
+              </div>
+            </Crosshair>
 				</FlexibleWidthXYPlot>)
 			}
 	}

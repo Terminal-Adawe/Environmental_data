@@ -168,8 +168,7 @@ class GraphBuilder extends React.Component {
                     		<h5>Predictive</h5>
                       	<input 
                       		type="checkbox" 
-                      		className="form-check-input 
-                      		current input-element" 
+                      		className="form-check-input current input-element" 
                       		name="predictive" 
                       		defaultValue="1" 
                       		onChange={(e)=>this.handleCheckboxInputChanged(e)}

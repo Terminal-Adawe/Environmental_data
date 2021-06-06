@@ -126,8 +126,32 @@ class FormulateGraphData extends React.Component {
                 rawData = this.props.data.Waste_Management
                 // rawData = this.Waste_Management(rawData)
                 break;
-            case "Waste_Management":
-                rawData = this.props.data.Waste_Management
+            case "geo_reference":
+                rawData = this.props.data.GeoReferencePoints
+                // rawData = this.Waste_Management(rawData)
+                break;
+            case "fuel_farm":
+                rawData = this.props.data.FuelFarm
+                // rawData = this.Waste_Management(rawData)
+                break;
+            case "work_env_compliance":
+                rawData = this.props.data.WorkEnvCompliance
+                // rawData = this.Waste_Management(rawData)
+                break;
+            case "warehouse":
+                rawData = this.props.data.Warehouse
+                // rawData = this.Waste_Management(rawData)
+                break;
+            case "conveyers":
+                rawData = this.props.data.Conveyers
+                // rawData = this.Waste_Management(rawData)
+                break;
+            case "incident_report":
+                rawData = this.props.data.IncidentReport
+                // rawData = this.Waste_Management(rawData)
+                break;
+            case "water_management":
+                rawData = this.props.data.Water_management
                 // rawData = this.Waste_Management(rawData)
                 break;
     		default:

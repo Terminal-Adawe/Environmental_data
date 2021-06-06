@@ -50,7 +50,7 @@ class ReportGraphs extends React.Component {
 
 	render(){
 		return (<React.Fragment>
-				<Template data={ this.state.data } module={ this.state.module } view={ this.state.view }/>
+				<Template data={ this.state.data } module={ this.state.module } view={ this.state.view } baseUrl={this.state.baseUrl}/>
   			</React.Fragment>)
 	}
 }

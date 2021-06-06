@@ -6,6 +6,9 @@ import Widgets_b from './widget2';
 import Widgets_c from './widget3';
 import FormulateGraphData from './formulateGraphData';
 
+import axios from "axios";
+import cookie from "react-cookies";
+
 function ColumnMaker(props){
 	
 	// console.log("Props are ")
@@ -19,12 +22,32 @@ function ColumnMaker(props){
   props.data ? data = props.data : data = ""
   props.module.descriptions ? module_name=props.module.description : ""
 
-  console.log("module name is "+props.module.description)
+  console.log("module name is "+data)
+  console.log(data)
 									
-		return (<div className="col-lg-6 col-sm-12 my-2">
+		return (<div className="col-lg-6 col-sm-12 my-4">
               <div className="card graph-card my-2">
                 <div className="card-body">
                   <FormulateGraphData data={data} module={props.module} graphConfig={ props.graphConfig }/>
+                </div>
+              </div>
+              <div className="row mb-2">
+                <div className="col">
+                  <label className="form-check-label predictive_label mx-4">
+                    <h5>Show on dashboard</h5>
+                    <input 
+                      type="checkbox" 
+                      className="form-check-input current input-element" 
+                      name="on_dashboard" 
+                      defaultChecked={props.graphConfig.on_dashboard} 
+                      onChange={(e)=>props.handleCheckboxInputChanged(e, props.graphConfig.id)}
+                      />
+                  </label>
+                </div>
+                <div className="col">
+                  <span>
+                    <a href="#">Edit Graph</a>
+                  </span>
                 </div>
               </div>
             </div>)
@@ -58,12 +81,59 @@ class Template extends React.Component {
       widget2: "Chemical Oxygen Demand",
       widget3: "Total Arsenic",
       widgets: [["Turbidity","#17c1f3"],["Chemical Oxygen Demand","#f0be08"],["Total Arsenic","#bb8fce"]],
+      url: 'analytics/add/update-graph-config/'
     }
 
+    this.handleCheckboxInputChanged = this.handleCheckboxInputChanged.bind(this)
+    this.setDashboard = this.setDashboard.bind(this)
 	}
 
 
-  
+  handleCheckboxInputChanged(e, id){
+    console.log("value is ")
+    console.log(id)
+    console.log(e.target.checked)
+
+    this.setDashboard(e.target.checked, id)
+  }
+
+  setDashboard(value,id){
+    const url = this.state.url
+    const baseUrl = this.props.baseUrl
+    let form_data = new FormData();
+
+
+    form_data.append('value', value)
+    form_data.append('id', id)
+
+    axios.post(`${baseUrl}/${url}`,form_data,{
+                    headers: {
+                     'X-CSRFTOKEN': cookie.load("csrftoken"),
+                     enctype: 'multipart/form-data'
+                    },
+                })
+                .then(response => {
+                    console.log("graph response is ")
+                    console.log(response)
+
+                    if(response.status == "201"){
+                        // Successful upload
+                    } else {
+                        // Failed upload
+                    }
+
+                })
+                .catch(error => {
+                    this.props.loader(false)
+                    console.log(error)
+                    document.getElementById('error-message').innerHTML = error
+                    setTimeout(function(){
+                        document.getElementById('error-message').innerHTML = ""
+                    },10000)
+                // console.log("an error occurred!!")
+                })
+
+  }
 
 
 	render(){
@@ -82,7 +152,7 @@ class Template extends React.Component {
                     {
                       this.props.data.modules ?
                       this.props.data.modules.filter(module=>(module.id==graph.module && this.props.module=="all") || (module.id==graph.module && module.module_name==this.props.module)).map((module,i)=>{
-                        return <ColumnMaker key={i} data={ this.props.data } module={ module } graphConfig={ graph }/>
+                        return <ColumnMaker key={i} data={ this.props.data } module={ module } graphConfig={ graph } handleCheckboxInputChanged={ this.handleCheckboxInputChanged }/>
                       })
                     : ""
                     }
