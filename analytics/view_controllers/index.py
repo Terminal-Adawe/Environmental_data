@@ -266,7 +266,7 @@ class postRequestViewSet(viewsets.ViewSet):
             # user = User.objects.get(username=serializer.data['auth_user'])
             # if user.check_password(serializer.data['auth_password']):
             queryset = modules.objects.all()
-            return Response(request.data,status.HTTP_202_ACCEPTED)
+            return Response(serializer.data,status.HTTP_202_ACCEPTED)
             # else:
             #     return Response(status=status.HTTP_401_UNAUTHORIZED)
         else:
