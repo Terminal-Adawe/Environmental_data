@@ -1,0 +1,40 @@
+{% extends "analytics/dashboard/template.html" %}
+
+{% load static %}
+
+{% block main_content %}
+<div class="container-fluid">
+		<section class="panel">
+			<header class="panel-heading">
+				<div class="panel-actions">
+					<a href="#" class="fa fa-caret-down"></a>
+					<!-- <a href="#" class="fa fa-times"></a> -->
+				</div>
+		
+				<h2 class="panel-title">Custom Tables</h2>
+			</header>
+			<div class="panel-body">
+				<table class="table table-bordered table-striped mb-none" id="datatable-details">
+					<thead>
+						<tr>
+							<th>Report Name</th>
+							<th>Description</th>
+							<th>Report Date</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for table in data %}
+						<tr class="grade">
+							<td><a class="row-link" href="{% url 'analytics:view_report' report_id=table.id module='custom' %}">{{ table.table_name }}</a></td>
+							<td>{{ table.description }}</td>
+							<td>{{ table.created_at }}</td>
+						</tr>
+						{% endfor %}
+						<tr class="grade"><td colspan="1" style="border: none;"><a href="#" class="btn btn-outline-danger export-all-selected"  data-toggle="modal" data-target="#report-date-selector">Export All</a><input type="hidden" id="module_s" value="custom"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
+	</div>
+{% endblock %}

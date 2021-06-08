@@ -86,6 +86,7 @@ class Storage_facility(models.Model):
 	signs_of_erosion_spillway_tip = models.CharField(max_length=10,choices=YES_NO)
 	comment = models.TextField(null=True, blank=True)
 	module = models.CharField(max_length=50, default="1")
+	active = models.IntegerField(default=1)
 	created_by = models.ForeignKey(User,
 		on_delete=models.PROTECT)
 	updated_by = models.IntegerField(null=True, blank=True)
@@ -112,6 +113,7 @@ class Grease_and_hydocarbon_spillage(models.Model):
 	storage_condition = models.CharField(max_length=50, choices=STORAGE_CONDITION_S)
 	comment = models.TextField(null=True, blank=True)
 	module = models.CharField(max_length=50, default="2")
+	active = models.IntegerField(default=1)
 	created_by = models.ForeignKey(User,
 		on_delete=models.PROTECT)
 	updated_by = models.IntegerField(null=True, blank=True)
@@ -142,6 +144,7 @@ class Waste_Management(models.Model):
 	metal_waste_weight = models.CharField(max_length=10)
 	comment = models.TextField(null=True, blank=True)
 	module = models.CharField(max_length=50, default="3")
+	active = models.IntegerField(default=1)
 	created_by = models.ForeignKey(User,
 		on_delete=models.PROTECT)
 	updated_by = models.IntegerField(null=True, blank=True)
@@ -156,6 +159,7 @@ class Inceneration(models.Model):
 	temperature = models.CharField(max_length=20)
 	comment = models.TextField(null=True, blank=True)
 	module = models.CharField(max_length=50, default="4")
+	active = models.IntegerField(default=1)
 	created_by = models.ForeignKey(User,
 		on_delete=models.PROTECT)
 	updated_by = models.IntegerField(null=True, blank=True)
@@ -177,6 +181,7 @@ class Liquid_waste_oil(models.Model):
 	source = models.CharField(max_length=50, choices=SOURCE)
 	comment = models.TextField(null=True, blank=True)
 	module = models.CharField(max_length=50, default="5")
+	active = models.IntegerField(default=1)
 	created_by = models.ForeignKey(User,
 		on_delete=models.PROTECT)
 	updated_by = models.IntegerField(null=True, blank=True)
@@ -192,6 +197,7 @@ class Health_and_hygiene_awareness(models.Model):
 	duration = models.CharField(max_length=15)
 	comment = models.TextField(null=True, blank=True)
 	module = models.CharField(max_length=50, default="6")
+	active = models.IntegerField(default=1)
 	created_by = models.ForeignKey(User,
 		on_delete=models.PROTECT)
 	updated_by = models.IntegerField(null=True, blank=True)
@@ -209,6 +215,7 @@ class Energy_management(models.Model):
 	other_consumption = models.CharField(max_length=20)
 	comment = models.TextField(null=True, blank=True)
 	module = models.CharField(max_length=50, default="7")
+	active = models.IntegerField(default=1)
 	created_by = models.ForeignKey(User,
 		on_delete=models.PROTECT)
 	updated_by = models.IntegerField(null=True, blank=True)
@@ -227,6 +234,7 @@ class Water_management(models.Model):
 	other_consumption = models.CharField(max_length=20)
 	comment = models.TextField(null=True, blank=True)
 	module = models.CharField(max_length=50, default="19")
+	active = models.IntegerField(default=1)
 	created_by = models.ForeignKey(User,
 		on_delete=models.PROTECT)
 	updated_by = models.IntegerField(null=True, blank=True)
@@ -250,6 +258,7 @@ class Complaints_register(models.Model):
 	status_of_complaints = models.CharField(max_length=80,choices=STATUS_S)
 	comment = models.TextField(null=True, blank=True)
 	module = models.CharField(max_length=50, default="8")
+	active = models.IntegerField(default=1)
 	created_by = models.ForeignKey(User,
 		on_delete=models.PROTECT)
 	updated_by = models.IntegerField(null=True, blank=True)
@@ -275,6 +284,7 @@ class Slope_stabilization_and_surface_water_retention(models.Model):
 	status = models.CharField(max_length=100,choices=STATUS_S)
 	comment = models.TextField(null=True, blank=True)
 	module = models.CharField(max_length=50, default="9")
+	active = models.IntegerField(default=1)
 	created_by = models.ForeignKey(User,
 		on_delete=models.PROTECT)
 	updated_by = models.IntegerField(null=True, blank=True)
@@ -291,6 +301,7 @@ class Safety_training(models.Model):
 	duration = models.CharField(max_length=15)
 	comment = models.TextField(null=True, blank=True)
 	module = models.CharField(max_length=50, default="11")
+	active = models.IntegerField(default=1)
 	created_by = models.ForeignKey(User,
 		on_delete=models.PROTECT)
 	updated_by = models.IntegerField(null=True, blank=True)
@@ -312,6 +323,7 @@ class Safety_permission_system(models.Model):
 	status = models.CharField(max_length=100,choices=STATUS_S)
 	comment = models.TextField(null=True, blank=True)
 	module = models.CharField(max_length=50, default="10")
+	active = models.IntegerField(default=1)
 	created_by = models.ForeignKey(User,
 		on_delete=models.PROTECT)
 	updated_by = models.IntegerField(null=True, blank=True)
@@ -345,6 +357,7 @@ class Safety_tools(models.Model):
 	status_of_estinguishers = models.CharField(max_length=100,choices=STATUS_T)
 	comment = models.TextField(null=True, blank=True)
 	module = models.CharField(max_length=50, default="12")
+	active = models.IntegerField(default=1)
 	created_by = models.ForeignKey(User,
 		on_delete=models.PROTECT)
 	updated_by = models.IntegerField(null=True, blank=True)
@@ -357,6 +370,7 @@ class Image(models.Model):
 		on_delete=models.PROTECT)
 	report_id = models.CharField(max_length=10)
 	image = models.ImageField(upload_to='report_images')
+	active = models.IntegerField(default=1)
 	created_by = models.ForeignKey(User,
 		related_name="users_key",
 		on_delete=models.PROTECT)
@@ -387,6 +401,7 @@ class Graph_builder_field(models.Model):
 		related_name="graphbuildermodules",
 		on_delete=models.PROTECT)
 	column_fields = models.TextField(null=True, blank=True)
+	active = models.IntegerField(default=1)
 	active = models.CharField(max_length=10)
 	created_by = models.ForeignKey(User,
 		related_name="graphbuilderuser",
@@ -398,6 +413,7 @@ class Graph_builder_field(models.Model):
 class Chart(models.Model):
 	chart_name = models.CharField(max_length=90)
 	image = models.ImageField(upload_to='chart_images')
+	active = models.IntegerField(default=1)
 	created_by = models.ForeignKey(User,
 		related_name="chartsuser",
 		on_delete=models.PROTECT)
@@ -410,6 +426,7 @@ class Notifications(models.Model):
 	module = models.IntegerField(null=True, blank=True)
 	message = models.TextField(null=True, blank=True)
 	report = models.CharField(max_length=100,null=True, blank=True)
+	active = models.IntegerField(default=1)
 	created_by = models.ForeignKey(User,
 		related_name="notificationsuser",
 		on_delete=models.PROTECT)
@@ -423,6 +440,7 @@ class NotificationViewer(models.Model):
 		related_name="notificationsvieweruser",
 		on_delete=models.PROTECT)
 	notificationsId = models.CharField(max_length=10,null=True, blank=True)
+	active = models.IntegerField(default=1)
 	created_by = models.ForeignKey(User,
 		related_name="notificationvieweruser",
 		on_delete=models.PROTECT)
@@ -435,6 +453,7 @@ class WasteDetails(models.Model):
 	waste_type = models.CharField(max_length=100)
 	waste_source = models.CharField(max_length=100)
 	waste_weightage = models.IntegerField()
+	active = models.IntegerField(default=1)
 	created_by = models.ForeignKey(User,
 		related_name="wastedetailsvieweruser",
 		on_delete=models.PROTECT)
@@ -448,6 +467,7 @@ class GeoReferencePoints(models.Model):
 	location = models.CharField(max_length=200, default='0,0')
 	comment = models.TextField(null=True, blank=True)
 	module = models.CharField(max_length=50, default="13")
+	active = models.IntegerField(default=1)
 	created_by = models.ForeignKey(User,
 	on_delete=models.PROTECT)
 	updated_by = models.IntegerField(null=True, blank=True)
@@ -480,6 +500,7 @@ class FuelFarm(models.Model):
 	location = models.CharField(max_length=200, default='0,0')								
 	comment = models.TextField(null=True, blank=True)
 	module = models.CharField(max_length=50, default="14")
+	active = models.IntegerField(default=1)
 	created_by = models.ForeignKey(User,
 	on_delete=models.PROTECT)
 	updated_by = models.IntegerField(null=True, blank=True)
@@ -507,6 +528,7 @@ class WorkEnvCompliance(models.Model):
 	location = models.CharField(max_length=200, default='0,0')								
 	comment = models.TextField(null=True, blank=True)
 	module = models.CharField(max_length=50, default="15")
+	active = models.IntegerField(default=1)
 	created_by = models.ForeignKey(User,
 	on_delete=models.PROTECT)
 	updated_by = models.IntegerField(null=True, blank=True)
@@ -529,6 +551,7 @@ class Warehouse(models.Model):
 	location = models.CharField(max_length=200, default='0,0')								
 	comment = models.TextField(null=True, blank=True)
 	module = models.CharField(max_length=50, default="16")
+	active = models.IntegerField(default=1)
 	created_by = models.ForeignKey(User,
 	on_delete=models.PROTECT)
 	updated_by = models.IntegerField(null=True, blank=True)
@@ -551,6 +574,7 @@ class Conveyers(models.Model):
 	location = models.CharField(max_length=200, default='0,0')								
 	comment = models.TextField(null=True, blank=True)
 	module = models.CharField(max_length=50, default="17")
+	active = models.IntegerField(default=1)
 	created_by = models.ForeignKey(User,
 	on_delete=models.PROTECT)
 	updated_by = models.IntegerField(null=True, blank=True)
@@ -594,6 +618,7 @@ class IncidentReport(models.Model):
 	responsible_person = models.CharField(max_length=200)
 	location = models.CharField(max_length=200, default='0,0')								
 	comment = models.TextField(null=True, blank=True)
+	active = models.IntegerField(default=1)
 	module = models.CharField(max_length=50, default="18")
 	created_by = models.ForeignKey(User,
 	on_delete=models.PROTECT)
@@ -614,6 +639,7 @@ class Tasks(models.Model):
 	task = models.CharField(max_length=200)
 	task_for = models.CharField(max_length=100)
 	description = models.CharField(max_length=200,null=True, blank=True)
+	active = models.IntegerField(default=1)
 	start_time = models.DateTimeField()
 	end_time = models.DateTimeField()
 	created_by = models.ForeignKey(User,
@@ -637,5 +663,14 @@ class Custom_table(models.Model):
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 
+class reports(models.Model):
+	report_name = models.CharField(max_length=50, null=True, blank=True)
+	report_structure = models.TextField(null=True, blank=True)
+	active = models.IntegerField(default=1)
+	created_by = models.ForeignKey(User,
+	on_delete=models.PROTECT)
+	updated_by = models.IntegerField(null=True, blank=True)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
 
 		

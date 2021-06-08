@@ -123,11 +123,13 @@ class ModulesSerializer(serializers.ModelSerializer):
 		fields = '__all__'
 
 class formSerializer(serializers.Serializer):
-	auth_user = serializers.CharField(max_length=30)
-	auth_password = serializers.CharField(max_length=30)
+	# auth_user = serializers.CharField(max_length=30)
+	# auth_password = serializers.CharField(max_length=30)
 	module = serializers.CharField(max_length=100)
 	fields = serializers.ListField(
-			child=serializers.CharField(max_length=400)
+			child=serializers.JSONField()
 		)
+	image = serializers.ImageField(required=False)
+
 
 

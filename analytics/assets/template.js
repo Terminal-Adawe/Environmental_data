@@ -30,9 +30,12 @@ function ColumnMaker(props){
                 <div className="card-body">
                   <FormulateGraphData data={data} module={props.module} graphConfig={ props.graphConfig }/>
                 </div>
-              </div>
-              <div className="row mb-2">
-                <div className="col">
+                <hr/>
+                {
+                props.view == "graph" ?
+                  <div className="container-fluid my-3">
+              <div className="row mb-4">
+                <div className="col-lg-4 col-md-4 col-sm-6">
                   <label className="form-check-label predictive_label mx-4">
                     <h5>Show on dashboard</h5>
                     <input 
@@ -44,12 +47,27 @@ function ColumnMaker(props){
                       />
                   </label>
                 </div>
-                <div className="col">
-                  <span>
-                    <a href="#">Edit Graph</a>
-                  </span>
+                <div className="col-lg-6 col-md-6 col-sm-6">
+                  <div className="row mt-1">
+                    <div className="col-lg-6 col-md-6 col-sm-6">
+                      <span className="mx-4">
+                        <a href="analytics/view-graph">Edit Graph</a>
+                      </span>
+                    </div>
+                    <div className="col-lg-6 col-md-6 col-sm-6">
+                      <span className="mx-4">
+                        <a href="#">Add to Report</a>
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
+              </div>
+                : ""
+              }
+              </div>
+              
+              
             </div>)
 									
 								
@@ -147,12 +165,12 @@ class Template extends React.Component {
 								
                 {
                   this.props.data.Graph_config ? 
-                  this.props.data.Graph_config.map((graph,i)=>{
+                  this.props.data.Graph_config.filter(config=>((this.props.view=="dashboard" && config.on_dashboard==1) || this.props.view=="graph")).map((graph,i)=>{
                     return <React.Fragment key={i}>
                     {
                       this.props.data.modules ?
                       this.props.data.modules.filter(module=>(module.id==graph.module && this.props.module=="all") || (module.id==graph.module && module.module_name==this.props.module)).map((module,i)=>{
-                        return <ColumnMaker key={i} data={ this.props.data } module={ module } graphConfig={ graph } handleCheckboxInputChanged={ this.handleCheckboxInputChanged }/>
+                        return <ColumnMaker key={i} data={ this.props.data } module={ module } graphConfig={ graph } handleCheckboxInputChanged={ this.handleCheckboxInputChanged } view={this.props.view}/>
                       })
                     : ""
                     }

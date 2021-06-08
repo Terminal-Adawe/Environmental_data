@@ -205,17 +205,19 @@ def view_all_reports(request, module):
 
 	modules_queryset = modules.objects.filter(active=1)
 
-	myModel = Storage_facility
+	myModel =  Custom_table
+	url = 'analytics/dashboard/custom_tables_all.html'
 
 	for module_i in modules_queryset.values():
 			if module == module_i['module_name']:
 				myModel = str_to_class(module_i['table'])
+				url = 'analytics/dashboard/reports_all_records.html'
 
-	queryset13 = modules.objects.all()
+	queryset13 = modules.objects.filter(active=1)
 
-	queryset = myModel.objects.all()
+	queryset = myModel.objects.filter(active=1)
 
-	return render(request, 'analytics/dashboard/reports_all_records.html',{'data':queryset,'module':module, 'modules':queryset13})
+	return render(request, url,{'data':queryset,'module':module, 'modules':queryset13})
 
 def add_task(request):
 	if request.user.is_authenticated:

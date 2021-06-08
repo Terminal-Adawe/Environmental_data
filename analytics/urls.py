@@ -35,6 +35,7 @@ urlpatterns = [
     path('reports',views.reports, name='reports'),
     path('graphs',views.graphs, name='graphs'),
     path('tables',views.tables, name='tables'),
+    path('view-graph', views.GetUsers.as_view(), name='view-graph'),
     path('view_report/<module>/<report_id>/',views.view_report, name='view_report'),
     path('view_all_reports/<module>/',views.view_all_reports, name='view_all_reports'),
     path('register_user', index.registerUser, name='register_user'),

@@ -154,6 +154,7 @@ def graph_builder(request):
             x_axis = request.POST['x-axis']
             y_axis = request.POST['y-axis']
             graph_name = request.POST['graph_name']
+            description = request.POST['description']
 
             if 'predictive' in request.POST:
                 predictive = request.POST['predictive']
@@ -163,6 +164,7 @@ def graph_builder(request):
             create_graph = Graph_config(
                 graph_name=graph_name,
                 graph_type=chart_type, 
+                description=description,
                 x_column=x_axis, 
                 y_column=y_axis, 
                 predictive=predictive,
@@ -255,16 +257,18 @@ class postRequestViewSet(viewsets.ViewSet):
     def create(self, request):
         serializer = formSerializer(data=request.data)
 
-        logger.info("data is ")
-        logger.info(serializer)
+        
 
         if serializer.is_valid(raise_exception=True):
-            user = User.objects.get(username=serializer.data['auth_user'])
-            if user.check_password(serializer.data['auth_password']):
-                queryset = modules.objects.all()
-                return Response(request.data,status.HTTP_202_ACCEPTED)
-            else:
-                return Response(status=status.HTTP_401_UNAUTHORIZED)
+            logger.info("data is ")
+            # data_json = json.loads(serializer.data['fields'][0])
+            logger.info(serializer.data['fields'][0]['DamStabilty'])
+            # user = User.objects.get(username=serializer.data['auth_user'])
+            # if user.check_password(serializer.data['auth_password']):
+            queryset = modules.objects.all()
+            return Response(request.data,status.HTTP_202_ACCEPTED)
+            # else:
+            #     return Response(status=status.HTTP_401_UNAUTHORIZED)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 

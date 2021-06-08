@@ -25,6 +25,8 @@ class FormulateReportData extends React.Component {
 		}
 
         this.getReport = this.getReport.bind(this)
+        this.setModalValue = this.setModalValue.bind(this)
+        this.selectReport = this.selectReport.bind(this)
 
 	}
 
@@ -50,14 +52,6 @@ class FormulateReportData extends React.Component {
                     this.getReport(this.props.username,this.props.table_name,this.props.module_name,this.props.x_column,this.props.y_column,this.props.valueType, this.props.groupType, this.props.description)
                 } 
             })
-
-
-             // this.props.data ? 
-             // data = this.formulateGraph(this.props.graphData)
-             // : data = []
-
-    		// console.log("manipulated data is ")
-    		// console.log(data)
 
 	}
 
@@ -153,6 +147,30 @@ class FormulateReportData extends React.Component {
         },10000)
         // console.log("an error occurred!!")
       })
+    }
+
+    setModalValue(e,val,type){
+        console.log("value is ")
+        console.log(val)
+
+        var mod_val = document.getElementById('module_name')
+        var modal_report_type = document.getElementById('modal_report_type')
+        mod_val.value = val
+        modal_report_type.value = type
+
+        console.log(mod_val.value)
+    }
+
+    selectReport(e,val,type){
+        console.log("value is ")
+        console.log(val)
+
+        var mod_val = document.getElementById('module_name')
+        var report_type = document.getElementById('report_type')
+        mod_val.value = val
+        report_type.value = type
+
+        console.log(mod_val.value)
     }
 
 
@@ -258,14 +276,26 @@ class FormulateReportData extends React.Component {
                                         }
                                         })
                                     }
-                                    <tr><td>{ this.state.description }</td></tr>
-                                    <tr>
-                                        <th className="do_btns"><a href="#" className="btn btn-outline-danger mx-auto">Export table</a></th>
-                                        <th className="do_btns"><a href="#" className="btn btn-outline-danger mx-auto">Add to Report</a></th>
-                                    </tr>
                                </tbody>
                             </table>
                         </div>
+                            <div className="container-fluid">
+                                    <div className="row">
+                                        <span className="mx-auto">{ this.state.description }</span>
+                                    </div>
+                                    <div className="row mt-1">
+                                      <div className="col-lg-6 col-md-6 col-sm-6">
+                                        <span className="mx-4">
+                                          <a href="#" data-toggle="modal" data-target="#report-date-selector" onClick={ (e)=>this.setModalValue(e,this.props.table_name,'custom') }>Export Table</a>
+                                        </span>
+                                      </div>
+                                      <div className="col-lg-6 col-md-6 col-sm-6">
+                                        <span className="mx-4">
+                                          <a href="#" data-toggle="modal" data-target="#reports" onClick={ (e)=>this.selectReport(e,this.props.table_name,'table') }>Add to Report</a>
+                                        </span>
+                                      </div>
+                                    </div>
+                            </div>
                         </div>)
 		}
 		

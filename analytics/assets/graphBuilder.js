@@ -121,6 +121,16 @@ class GraphBuilder extends React.Component {
 									 />
 							</div>
 							<div className="row mt-2">
+								<label><h5>Description</h5></label>
+								<input 
+									type="text" 
+									id="description" 
+									placeholder="Description" 
+									name="description" 
+									className="input-element" 
+									 />
+							</div>
+							<div className="row mt-2">
                     			<div className="col-12">
 								<label><h4>Select Graph Type</h4></label>
                     		 	<select id="chart" name="chart" defaultValue="" className="input-element" onChange={(e)=>this.handleChartChange(e)}>

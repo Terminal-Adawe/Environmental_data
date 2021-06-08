@@ -59,6 +59,7 @@ let location_array
     	const module_s = $(this).siblings("#module_s").val();
     	console.log("Module is "+module_s);
     	$("#module_name").val(module_s);
+        $("#modal_report_type").val("default");
     	console.log("Module is "+$("#module_name").val());
     })
 
