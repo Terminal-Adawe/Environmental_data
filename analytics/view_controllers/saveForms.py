@@ -52,7 +52,8 @@ class postRequestViewSet(viewsets.ViewSet):
             logger.info(serializer.data['fields'])
             for x in serializer.data['fields']:
                 logger.info("other data is ")
-                logger.info(x['stability_of_dam_walls'])
+                logger.info(x)
+                # logger.info(x['stability_of_dam_walls'])
             # user = User.objects.get(username=serializer.data['auth_user'])
             # if user.check_password(serializer.data['auth_password']):
             queryset = modules.objects.all()
