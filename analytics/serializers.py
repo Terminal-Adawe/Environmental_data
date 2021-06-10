@@ -129,7 +129,6 @@ class formSerializer(serializers.Serializer):
 	fields = serializers.ListField(
 			child=serializers.JSONField()
 		)
-	image = serializers.ImageField(required=False)
 
 
 
