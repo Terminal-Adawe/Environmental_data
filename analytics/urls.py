@@ -5,6 +5,7 @@ from . import views
 from .view_controllers import index
 from .view_controllers import dashboard
 from .view_controllers import report_exports
+from .view_controllers import saveForms
 
 app_name = 'analytics'
 
@@ -14,7 +15,7 @@ app_name = 'analytics'
 router = routers.DefaultRouter()
 router.register(r'add_task', views.Add_task, basename='add_task')
 router.register(r'update-graph-config', views.Update_graph, basename='update-graph-config')
-router.register(r'post-request', index.postRequestViewSet, basename='post-request')
+router.register(r'post-request', saveForms.postRequestViewSet, basename='post-request')
 
 urlpatterns = [
     path('', index.index, name='index'),
@@ -48,7 +49,7 @@ urlpatterns = [
     path('/dataProcessor/',include('dataProcessor.urls')),
     path('get-module-details/', dashboard.buildGraphViewSet.as_view(), name='get-module-details'),
     path('get-modules/', index.getModulesViewSet.as_view({'get': 'retrieve'}), name='get-modules'),
-    path('post-request/', index.postRequestViewSet, name='post-request'),
+    path('post-request/', saveForms.postRequestViewSet, name='post-request'),
     # path(r'^export/csv$', report_exports.export_single_report, name='export_report'),
     path(r'^export/csv/$', report_exports.export_report, name='export_report'),
 ]

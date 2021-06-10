@@ -230,12 +230,12 @@ def edituser(request):
             form = editForm()
     
             if form.is_valid():
-                username = form.cleaned_data['username']
+                # username = form.cleaned_data['username']
                 firstname = form.cleaned_data['first_name']
                 lastname = form.cleaned_data['last_name']
                 email = form.cleaned_data['email']
     
-                user = User.objects.create_user(username, email, password)
+                user = User.objects.get(username=username)
                 user.last_name = lastname
                 user.first_name = firstname
                 user.save()
