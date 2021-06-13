@@ -15,8 +15,6 @@ from analytics.view_controllers.notifications import insert_notification
 
 class WorkEnvComplianceViewSet(viewsets.ViewSet):
     def create(self, request):
-        queryset = WorkEnvCompliance.objects.all()
-
         serializer = WorkEnvComplianceSerializer_serializer(data=request.data)
         # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
 

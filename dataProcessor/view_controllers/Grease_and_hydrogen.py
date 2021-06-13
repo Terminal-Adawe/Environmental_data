@@ -17,9 +17,6 @@ from analytics.view_controllers.notifications import insert_notification
 
 class Grease_and_hydrogenViewSet(viewsets.ViewSet):
     def create(self, request):
-        parser_classes = (FormParser, MultiPartParser)
-        queryset = Grease_and_hydocarbon_spillage.objects.all()
-
         serializer = Grease_and_hydrogenSerializer_serializer(data=request.data)
         # image_serializer = ImageSerializer_serializer(data=request.data)
         

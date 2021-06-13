@@ -25,7 +25,7 @@ from analytics.view_controllers.notifications import insert_notification
 
 class Storage_facilityViewSet(viewsets.ViewSet):
     def create(self, request):
-        queryset = Storage_facility.objects.all()
+        # queryset = Storage_facility.objects.all()
 
         serializer = Storage_facilitySerializer_serializer(data=request.data)
     	# serializer = Storage_facilitySerializer_serializer(request.data, many=True).data

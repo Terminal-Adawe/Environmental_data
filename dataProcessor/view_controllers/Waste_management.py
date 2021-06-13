@@ -20,8 +20,6 @@ logger = logging.getLogger("django")
 
 class Waste_managementViewSet(viewsets.ViewSet):
     def create(self, request):
-        queryset = Waste_Management.objects.all()
-
         serializer = Waste_ManagementSerializer_serializer(data=request.data)
         # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
 
@@ -70,3 +68,5 @@ class Waste_managementViewSet(viewsets.ViewSet):
                 return Response(status=status.HTTP_401_UNAUTHORIZED)
         else:
             return Response(serializer.validated_data, status=status.HTTP_400_BAD_REQUEST)
+
+            

@@ -14,8 +14,6 @@ from analytics.view_controllers.notifications import insert_notification
 
 class liquid_waste_oilViewSet(viewsets.ViewSet):
     def create(self, request):
-        queryset = Liquid_waste_oil.objects.all()
-
         serializer = Liquid_waste_oilSerializer_serializer(data=request.data)
         # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
 

@@ -13,8 +13,6 @@ from analytics.view_controllers.notifications import insert_notification
 
 class WarehouseViewSet(viewsets.ViewSet):
     def create(self, request):
-        queryset = Warehouse.objects.all()
-
         serializer = WarehouseSerializer_serializer(data=request.data)
         # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
 

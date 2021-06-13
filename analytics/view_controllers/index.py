@@ -248,9 +248,11 @@ def edituser(request):
 
 class getModulesViewSet(viewsets.ViewSet):
     def retrieve(self, request, pk=None):
+        # queryset = modules.objects.values('module_name')
         queryset = modules.objects.all()
 
         return Response(ModulesSerializer(queryset, many=True).data,status.HTTP_202_ACCEPTED)
+        # return Response(queryset,status.HTTP_202_ACCEPTED)
         # serializer = ModulesSerializer(data=request.data)
 
 class postRequestViewSet(viewsets.ViewSet):

@@ -14,7 +14,7 @@ from analytics.view_controllers.notifications import insert_notification
 
 class Safety_toolsViewSet(viewsets.ViewSet):
     def create(self, request):
-        queryset = Safety_tools.objects.all()
+        # queryset = Safety_tools.objects.all()
 
         serializer = Safety_toolsSerializer_serializer(data=request.data)
         # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data

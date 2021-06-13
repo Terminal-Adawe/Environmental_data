@@ -14,8 +14,6 @@ from analytics.view_controllers.notifications import insert_notification
 
 class Complaints_registerViewSet(viewsets.ViewSet):
     def create(self, request):
-        queryset = Complaints_register.objects.all()
-
         serializer = Complaints_registerSerializer_serializer(data=request.data)
         # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
 

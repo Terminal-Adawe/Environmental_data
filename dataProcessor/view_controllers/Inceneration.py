@@ -14,8 +14,6 @@ from analytics.view_controllers.notifications import insert_notification
 
 class IncenerationViewSet(viewsets.ViewSet):
     def create(self, request):
-        queryset = Inceneration.objects.all()
-
         serializer = IncenerationSerializer_serializer(data=request.data)
         # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
 
