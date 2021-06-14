@@ -21,6 +21,12 @@ from .models import Tasks
 from django.contrib.auth.models import User
 
 
+class UserSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = User
+		fields =('username','password')
+
+
 
 class Storage_facilitySerializer(serializers.ModelSerializer):
 	# status_of_seepage_point = serializers.ChoiceField(choices=Storage_facility.SEEPAGE_POINTS_S)

@@ -1,11 +1,14 @@
 from django.urls import include, path
 from rest_framework import routers
+from rest_framework_jwt.views import obtain_jwt_token
+from rest_framework_jwt.views import verify_jwt_token
 
 from . import views
 from .view_controllers import index
 from .view_controllers import dashboard
 from .view_controllers import report_exports
 from .view_controllers import saveForms
+from .view_controllers import loginAPI
 
 app_name = 'analytics'
 
@@ -16,10 +19,12 @@ router = routers.DefaultRouter()
 router.register(r'add_task', views.Add_task, basename='add_task')
 router.register(r'update-graph-config', views.Update_graph, basename='update-graph-config')
 router.register(r'post-request', saveForms.postRequestViewSet, basename='post-request')
+# router.register(r'authenticate-user', loginAPI.loginViewSet_s, basename='authenticate-user')
 
 urlpatterns = [
     path('', index.index, name='index'),
-    path('add/', include(router.urls)),
+    path('api/', include(router.urls)),
+    # path('authenticate-user/', include('rest_auth.urls')),
     # path('update/', include(router.urls)),
     # path('accounts/', include('django.contrib.auth.urls')),
     path('add_task', views.add_task, name='add_task'),
@@ -52,4 +57,6 @@ urlpatterns = [
     path('post-request/', saveForms.postRequestViewSet, name='post-request'),
     # path(r'^export/csv$', report_exports.export_single_report, name='export_report'),
     path(r'^export/csv/$', report_exports.export_report, name='export_report'),
+    path(r'authenticate-user/login/', obtain_jwt_token),
+    path(r'api-token-verify/', verify_jwt_token),
 ]

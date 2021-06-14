@@ -99,7 +99,7 @@ class Template extends React.Component {
       widget2: "Chemical Oxygen Demand",
       widget3: "Total Arsenic",
       widgets: [["Turbidity","#17c1f3"],["Chemical Oxygen Demand","#f0be08"],["Total Arsenic","#bb8fce"]],
-      url: 'analytics/add/update-graph-config/'
+      url: 'analytics/api/update-graph-config/'
     }
 
     this.handleCheckboxInputChanged = this.handleCheckboxInputChanged.bind(this)

@@ -90,7 +90,7 @@ class Task_scheduler extends React.Component {
 
 	addTask(){
 		console.log("add task")
-		axios.get(`${this.state.baseUrl}/analytics/add/add-task/`,)
+		axios.get(`${this.state.baseUrl}/analytics/api/add-task/`,)
         	.then(response => {
         		// console.log("Add task response is ")
         		// console.log(response.data.User)
