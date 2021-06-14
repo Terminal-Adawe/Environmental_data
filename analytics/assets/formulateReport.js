@@ -204,7 +204,7 @@ class FormulateReportData extends React.Component {
                                             if(row.column){
                                                 return <th key={i}>{ row.column }</th>
                                             } else {
-                                                return <th key={i}>{this.props.groupType} of { this.props.y_column }</th>
+                                                return <th key={i}>{this.props.groupType} of { this.props.valueType }</th>
                                             }
                                         }
                                     })
