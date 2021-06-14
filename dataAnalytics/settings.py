@@ -169,6 +169,10 @@ REST_AUTH_SERIALIZERS = {
     'LOGIN_SERIALIZER': 'analytics.serializers.UserSerializer'
 }
 
+JWT_AUTH = {
+    'JWT_RESPONSE_PAYLOAD_HANDLER': 'analytics.view_controllers.jwt_response.jwt_response_payload_handler',
+}
+
 
 
 # Internationalization
