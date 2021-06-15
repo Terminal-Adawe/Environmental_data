@@ -142,6 +142,8 @@ class Waste_Management(models.Model):
 	plastic_waste_weight = models.CharField(max_length=10)
 	metal_waste_source = models.CharField(max_length=100)
 	metal_waste_weight = models.CharField(max_length=10)
+	organic_waste_source = models.CharField(max_length=100)
+	organic_waste_weight = models.CharField(max_length=10)
 	comment = models.TextField(null=True, blank=True)
 	module = models.CharField(max_length=50, default="3")
 	active = models.IntegerField(default=1)

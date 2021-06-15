@@ -573,6 +573,7 @@ class Form extends React.Component {
 		const tags = [
 			{formField: [[{inputtype:'desc',name:'',placeholder:'Waste management data.',label:'',showlabel:0}]]},
 			{formField: [[{inputtype:'dropdown',name:'segregation_at_source_and_bins',placeholder:'',label:'Segregation at source and use of colored bins',showlabel:1,options:[['Effective','Effective'],['Not Effective','Not Effective'],['Partially Effective','Partially Effective'],['Sorted at Dump Site','Sorted at Dump Site']]}]]},
+			{formField: [[{inputtype: 'text', position:0, name:'organic_waste_source',type:'array',placeholder:'Source',label:'Organic waste source',showlabel:1}],[{inputtype: 'text', position:0, type:'array', name:'organic_waste_weight',placeholder:'Weight',label:'Organic waste weightage',showlabel:1}],[{inputtype: 'add-more', name:'organic_waste'}]]},
 			{formField: [[{inputtype: 'text', position:0, name:'glass_waste_source',type:'array',placeholder:'Source',label:'Glass waste source',showlabel:1}],[{inputtype: 'text', position:0, type:'array', name:'glass_waste_weight',placeholder:'Weight',label:'Glass waste weightage',showlabel:1}],[{inputtype: 'add-more', name:'glass_waste'}]]},
 			{formField: [[{inputtype: 'text', position:0, name:'plastic_waste_source',type:'array',placeholder:'Source',label:'Plastic waste source',showlabel:1}],[{inputtype: 'text', position:0, type:'array', name:'plastic_waste_weight',placeholder:'Weight',label:'Plastic waste weightage',showlabel:1}],[{inputtype: 'add-more', name:'plastic_waste'}]]},
 			{formField: [[{inputtype: 'text', position:0, name:'metal_waste_source',type:'array',placeholder:'Source',label:'Metal waste source',showlabel:1}],[{inputtype: 'text', position:0, type:'array', name:'metal_waste_weight',placeholder:'Weight',label:'Metal waste weightage',showlabel:1}],[{inputtype: 'add-more', name:'metal_waste'}]]},
@@ -910,6 +911,14 @@ class Form extends React.Component {
 			
 			form.metal_waste_source = this.arrayArranger(form.metal_waste_source,inputLength)
 			form.metal_waste_weight = this.arrayArranger(form.metal_waste_weight,inputLength)
+		}
+
+		if(name=="organic_waste"){
+			inputLength = document.getElementsByName("organic_waste_source").length
+			inputs = {formField: [[{inputtype: 'text', position:inputLength, name:'organic_waste_source',type:'array',placeholder:'Source',label:'Organic waste source',showlabel:1}],[{inputtype: 'text', type:'array', name:'organic_waste_weight',placeholder:'Weight',label:'Organic waste weightage',showlabel:1}],[{inputtype: '', name:'organic_waste'}]]}
+			
+			form.organic_waste_source = this.arrayArranger(form.organic_waste_source,inputLength)
+			form.organic_waste_weight = this.arrayArranger(form.organic_waste_weight,inputLength)
 		}
 
 		console.log("inputs length is ")
