@@ -55,9 +55,9 @@ urlpatterns = [
     path('get-module-details/', dashboard.buildGraphViewSet.as_view(), name='get-module-details'),
     path('get-modules/', index.getModulesViewSet.as_view({'get': 'retrieve'}), name='get-modules'),
     path('post-request/', saveForms.postRequestViewSet, name='post-request'),
-    path('authenticate-user/user/login/', loginAPI.loginViewSet_s.as_view(), name='authenticate-user'),
+    path('authenticate-user/login/', loginAPI.loginViewSet_s.as_view(), name='authenticate-user'),
     # path(r'^export/csv$', report_exports.export_single_report, name='export_report'),
     path(r'^export/csv/$', report_exports.export_report, name='export_report'),
-    path(r'authenticate-user/login/', obtain_jwt_token),
+    path(r'authenticate-user/user/login/', obtain_jwt_token),
     path(r'api-token-verify/', verify_jwt_token),
 ]
