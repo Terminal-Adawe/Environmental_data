@@ -32,7 +32,7 @@ class loginViewSet_s(APIView):
         logger.info("data is ")
         logger.info(request.session.session_key)
 
-        response_message = "Invalid request"
+        response_message = "unsuccessful"
 
         token = "null"
         status_resp = status.HTTP_400_BAD_REQUEST
@@ -56,12 +56,12 @@ class loginViewSet_s(APIView):
 
             try:
                 user = User.objects.get(username=username)
-                response_message = "User credentials are incorrect"
+                response_message = "unsuccessful"
 
                 user_detais = ""
 
                 if user.check_password(password):
-                    response_message = "Successful Authentication"
+                    response_message = "successful"
                     user_detais = UsernameSerializer(user).data
                     token = request.session.session_key
                     status_resp = status.HTTP_202_ACCEPTED
@@ -73,7 +73,8 @@ class loginViewSet_s(APIView):
 
             except User.DoesNotExist:
                 # raise exceptions.AuthenticationFailed('No such user')
-                response_message = "User credentials are incorrect"
+                # response_message = "User credentials are incorrect"
+                response_message = "unsuccessful"
                 response_payload.response_message = response_message
 
             return Response(UserResponseAuth(response_payload).data, status=status.HTTP_202_ACCEPTED)
