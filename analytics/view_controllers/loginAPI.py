@@ -1,5 +1,7 @@
 from django.contrib.auth.models import User
 from analytics.serializers import UserSerializer
+from analytics.serializers import UsernameSerializer
+from analytics.serializers import UserResponseAuth
 from rest_framework.views import APIView
 from rest_framework import generics
 
@@ -14,6 +16,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import authentication
 from rest_framework import exceptions
 
+from django.contrib.auth.hashers import make_password
+
 from rest_framework import status
 
 import logging
@@ -25,22 +29,56 @@ class loginViewSet_s(APIView):
         # username = request.META.get('HTTP_X_USERNAME')
         serializer = UserSerializer(data=request.data)
 
+        logger.info("data is ")
+        logger.info(request.session.session_key)
+
+        response_message = "Invalid request"
+
+        token = "null"
+        status_resp = status.HTTP_400_BAD_REQUEST
+
+        class R_payload: pass
+
+        response_payload = R_payload()
+
+        response_payload.token = token
+        response_payload.response_message = response_message
+        response_payload.user = ""
+        response_payload.response_code = status_resp
+
         if serializer.is_valid(raise_exception=True):
             username = serializer.data['username']
             password = serializer.data['password']
+            # password = make_password(serializer.data['password'])
             # username = request.META.get('username')
             if not username:
                 return None
 
             try:
                 user = User.objects.get(username=username)
-                response_message = "Successful Authentication"
-            except User.DoesNotExist:
-                raise exceptions.AuthenticationFailed('No such user')
+                response_message = "User credentials are incorrect"
 
-            return Response(user, status=status.HTTP_202_ACCEPTED)
+                user_detais = ""
+
+                if user.check_password(password):
+                    response_message = "Successful Authentication"
+                    user_detais = UsernameSerializer(user).data
+                    token = request.session.session_key
+                    status_resp = status.HTTP_202_ACCEPTED
+
+                response_payload.token = token
+                response_payload.response_message = response_message
+                response_payload.user = user_detais
+                response_payload.response_code = status_resp
+
+            except User.DoesNotExist:
+                # raise exceptions.AuthenticationFailed('No such user')
+                response_message = "User credentials are incorrect"
+                response_payload.response_message = response_message
+
+            return Response(UserResponseAuth(response_payload).data, status=status.HTTP_202_ACCEPTED)
         else:
-            return Response(response_message, status=status.HTTP_400_BAD_REQUEST)
+            return Response(UserResponseAuth(response_payload).data, status=status.HTTP_400_BAD_REQUEST)
 
 
 # class loginViewSet(APIView):

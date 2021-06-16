@@ -21,12 +21,16 @@ from .models import Tasks
 from django.contrib.auth.models import User
 
 
-class UserSerializer(serializers.ModelSerializer):
-	class Meta:
-		model = User
-		fields =('username','password')
+class UserSerializer(serializers.Serializer):
+	username = serializers.CharField(max_length=150, required=True)
+	password = serializers.CharField(style={'input_type': 'password', 'placeholder': 'Password'}, required=True)
 
 
+class UserResponseAuth(serializers.Serializer):
+	token = serializers.CharField(max_length=150)
+	response_message = serializers.CharField(max_length=255)
+	user = serializers.CharField(max_length=255)
+	response_code = serializers.CharField(max_length=255)
 
 class Storage_facilitySerializer(serializers.ModelSerializer):
 	# status_of_seepage_point = serializers.ChoiceField(choices=Storage_facility.SEEPAGE_POINTS_S)
