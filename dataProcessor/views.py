@@ -69,7 +69,7 @@ class Storage_facilityViewSet(viewsets.ViewSet):
 
 def get_template(request, module):
     module = module
-    queryset = modules.objects.filter(active=1,is_fillable=0)
+    queryset = modules.objects.filter(active=1,is_fillable=1)
 
     url = ''
 
