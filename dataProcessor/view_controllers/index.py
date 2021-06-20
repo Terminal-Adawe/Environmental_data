@@ -8,8 +8,7 @@ from analytics.models import modules
 
 def index(request):
 	if request.user.is_authenticated:
-		print(request.user)
-		queryset = modules.objects.all()
+		queryset = modules.objects.filter(active=1,is_fillable=1)
 		return render(request, 'dataProcessor/index.html', {'modules' : queryset})
 	else:
 		return HttpResponseRedirect('/analytics/login/')
