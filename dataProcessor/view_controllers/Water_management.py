@@ -40,7 +40,7 @@ class Water_managementViewSet(viewsets.ViewSet):
                         created_by=user)
     
                 data_save.save()
-                data_save.report_name = formulate_insert_id(15,str(data_save.id))
+                data_save.report_name = formulate_insert_id(19,str(data_save.id))
                 data_save.save()
     
                 insert_notification(19,"Water Management",data_save.report_name,user)

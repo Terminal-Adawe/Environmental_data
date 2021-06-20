@@ -40,6 +40,7 @@ class modules(models.Model):
 	description = models.CharField(max_length=200, default="None")
 	table = models.CharField(max_length=50, default="None")
 	priority = models.IntegerField(default=1)
+	is_fillable = models.BooleanField(default=1)
 	default_report_path = models.CharField(max_length=200, default="None")
 	icon = models.CharField(max_length=50, default="fa-tasks")
 	active = models.IntegerField(default=1)
@@ -452,6 +453,7 @@ class NotificationViewer(models.Model):
 
 class WasteDetails(models.Model):
 	"""docstring for WasteDetails"""
+	report_name = models.CharField(max_length=100, default='REPORT_NONAME', null=True, blank=True)
 	waste_type = models.CharField(max_length=100)
 	waste_source = models.CharField(max_length=100)
 	waste_weightage = models.IntegerField()

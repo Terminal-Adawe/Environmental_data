@@ -19,6 +19,7 @@ from analytics.models import WorkEnvCompliance
 from analytics.models import Warehouse
 from analytics.models import Conveyers
 from analytics.models import IncidentReport
+from analytics.models import WasteDetails
 from analytics.models import modules
 from django.db.models.fields.reverse_related import ManyToOneRel
 import logging
@@ -47,7 +48,7 @@ def get_model_using_modulesid(module):
 		logger.info(" vs ")
 		logger.info(module)
 		if module_i.id == module:
-			logger.info(" modules match ")
+			logger.info(" modules match  ")
 			logger.info(module)
 			myModel = str_to_class(module_i.table)
 			return myModel

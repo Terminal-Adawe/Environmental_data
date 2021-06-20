@@ -29,6 +29,7 @@ from analytics.serializers import UsernameSerializerGet
 from analytics.serializers import TasksSerializerGet
 from analytics.serializers import CustomTablesSerializer
 from analytics.serializers import customTableSerializer
+from analytics.serializers import reportsSerializer
 from analytics.models import Storage_facility
 from analytics.models import ComplianceValue
 from analytics.models import Grease_and_hydocarbon_spillage
@@ -55,6 +56,7 @@ from analytics.models import Graph_builder_field
 from analytics.models import Chart
 from analytics.models import Graph_config
 from analytics.models import Notifications
+from analytics.models import reports
 from analytics.models import NotificationViewer
 from analytics.models import Tasks
 from analytics.models import Custom_table
@@ -112,7 +114,7 @@ class buildGraphViewSet(ObjectMultipleModelAPIView):
 			{'queryset': Chart.objects.all(), 'serializer_class': ChartSerializer},
 			{'queryset': Graph_builder_field.objects.all(), 'serializer_class': FieldsSerializer_serializer},
 			{'queryset': ComplianceValue.objects.all(), 'serializer_class': ComplianceValueSerializer},
-			{'queryset': modules.objects.all(), 'serializer_class': ModulesSerializer},
+			{'queryset': modules.objects.filter(active=1), 'serializer_class': ModulesSerializer},
 		]
 		
 class NotificationsViewSet(ObjectMultipleModelAPIView):
@@ -139,4 +141,10 @@ class GetTableViewSet(viewsets.ViewSet):
 			return Response(table, status=status.HTTP_200_OK)
 		else:
 			return Response("Request Failed", status=status.HTTP_201_CREATED)
+
+class GetReportsViewSet(viewsets.ViewSet):
+	def retrieve(self, request):
+		reports_queryset = reports.objects.filter(active=1)
+
+		return Response(reportsSerializer(reports_queryset).data,status=status.HTTP_201_CREATED)
 

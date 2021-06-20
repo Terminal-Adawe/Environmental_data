@@ -37,7 +37,7 @@ class FormulateReportData extends React.Component {
 
             this.setState({
                 baseUrl: baseUrl,
-                module_name: this.props.module_name,
+                module: this.props.module_name,
                 x_column: this.props.x_column,
                 y_column: this.props.y_column,
                 valueType: this.props.valueType,

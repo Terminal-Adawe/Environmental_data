@@ -19,6 +19,7 @@ router = routers.DefaultRouter()
 router.register(r'add_task', views.Add_task, basename='add_task')
 router.register(r'update-graph-config', views.Update_graph, basename='update-graph-config')
 router.register(r'post-request', saveForms.postRequestViewSet, basename='post-request')
+router.register(r'get-reports', dashboard.GetReportsViewSet, basename='get-reports')
 # router.register(r'authenticate-user', loginAPI.loginViewSet_s, basename='authenticate-user')
 
 urlpatterns = [
@@ -54,6 +55,7 @@ urlpatterns = [
     path('/dataProcessor/',include('dataProcessor.urls')),
     path('get-module-details/', dashboard.buildGraphViewSet.as_view(), name='get-module-details'),
     path('get-modules/', index.getModulesViewSet.as_view({'get': 'retrieve'}), name='get-modules'),
+    path('get-reports/', dashboard.GetReportsViewSet.as_view({'get': 'retrieve'}), name='get-reports'),
     path('post-request/', saveForms.postRequestViewSet, name='post-request'),
     path('authenticate-user/login/', loginAPI.loginViewSet_s.as_view(), name='authenticate-user'),
     # path(r'^export/csv$', report_exports.export_single_report, name='export_report'),

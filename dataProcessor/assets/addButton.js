@@ -16,6 +16,7 @@ class AddButton extends React.Component {
 
 		this.getFormData = this.getFormData.bind(this)
 		this.insertData = this.insertData.bind(this)
+        this.formulateFormFromInputFields = this.formulateFormFromInputFields.bind(this)
 
 	}
 
@@ -48,18 +49,51 @@ class AddButton extends React.Component {
 	getFormData(){		
 
         this.props.loader(true)
-		this.insertData(this.props.states.form)
+        const formData = this.formulateFormFromInputFields()
+		this.insertData(formData)
 	}
 
-	insertData(formData){
+    formulateFormFromState(){
+        let form_data = new FormData();
+
+        formData = this.props.states.form
+
+        for (var key in formData) {
+            if (formData.hasOwnProperty(key)) {
+                // console.log(key + " -> " + formData[key]);
+                form_data.append(key, formData[key])
+            }
+        }
+
+        return form_data
+
+    }
+
+    formulateFormFromInputFields(){
+        var inputs = document.querySelectorAll('.input-element')
+
+        let form_data = new FormData();
+
+        inputs.forEach((input,i)=>{
+            console.log("Input name is ")
+            console.log(input.name)
+            console.log(input.value)
+            form_data.append(input.name, input.value)
+        })
+
+        return form_data
+    }
+
+	insertData(form_data){
 
         // var axios = require('axios');
-        let form_data = new FormData();
+
+        var formData = this.props.states.form
 
         axios.defaults.xsrfCookieName = "csrftoken";
         axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
 
-        this.props.getLocation
+        // this.props.getLocation
 
         const auth_user = 'system_user'
         const auth_password = 'j6d^tUBJ8tS9=URF'
@@ -72,15 +106,12 @@ class AddButton extends React.Component {
         //     })
 
         // Looping through object
-        for (var key in formData) {
-            if (formData.hasOwnProperty(key)) {
-                // console.log(key + " -> " + formData[key]);
-                form_data.append(key, formData[key])
-            }
-        }
-
+        
         form_data.append('auth_user', auth_user)
         form_data.append('auth_password', auth_password)
+
+        form_data.append('username', formData.username)
+        form_data.append('location', formData.location)
 
         // form_data.append('image', formData.image);
         // form_data.append('location', formData.location);

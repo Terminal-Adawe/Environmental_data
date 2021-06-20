@@ -21,6 +21,7 @@ from analytics.models import WorkEnvCompliance
 from analytics.models import Warehouse
 from analytics.models import Conveyers
 from analytics.models import IncidentReport
+from analytics.models import WasteDetails
 from analytics.models import Custom_table
 from rest_framework.response import Response
 from django.contrib.auth.models import User

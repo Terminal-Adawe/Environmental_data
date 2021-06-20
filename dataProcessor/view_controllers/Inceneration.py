@@ -36,7 +36,7 @@ class IncenerationViewSet(viewsets.ViewSet):
                         created_by_id=created_by_id)
     
                 data_save.save()
-                data_save.report_name = formulate_insert_id(15,str(data_save.id))
+                data_save.report_name = formulate_insert_id(4,str(data_save.id))
                 data_save.save()
     
                 insert_notification(4,"Inceneration",data_save.report_name,user)

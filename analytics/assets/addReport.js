@@ -1,11 +1,10 @@
 import React from 'react';
 import ReactDOM from "react-dom";
-import Template from './template';
 
 import axios from "axios";
 import cookie from "react-cookies";
 
-class Reports extends React.Component {
+class AddReport extends React.Component {
 	constructor(){
 		super()
 
@@ -14,21 +13,29 @@ class Reports extends React.Component {
 			module: "",
 			view: "graph",
 			baseUrl: "https://d12m8zkkfoc9oy.cloudfront.net",
-			url: '/analytics/get-reports/'
+			url: '/analytics/add-report/'
 			// baseUrl: "http://localhost:8002",
 		}
 
 		this.getDetails = this.getDetails.bind(this)
+		this.addReportBtn = this.addReportBtn.bind(this)
 	}
 
 	componentDidMount(){
 		const baseUrl = document.getElementById("baseUrl").value
 
+		this.addReportBtn()
+
 		this.setState({
 			baseUrl: baseUrl
-		},()=>{
-			this.getDetails()
 		})
+	}
+
+	addReportBtn(){
+		var report_value = document.getElementById("report_name").value
+
+		console.log("Value is ")
+		console.log(report_value)
 	}
 
 	getDetails(){
@@ -52,14 +59,12 @@ class Reports extends React.Component {
 
 
 	render(){
-		return (<React.Fragment>
-				<Template data={ this.state.data } module={ this.state.module } view={ this.state.view } baseUrl={this.state.baseUrl}/>
-  			</React.Fragment>)
+		return (<button className="btn btn-light" type="button" onClick={ this.addReportBtn } >Add Report</button>)
 	}
 }
 
-export default Reports
+export default AddReport
 
-if (document.getElementById('report_list')) {
-    ReactDOM.render(<Reports />, document.getElementById('report_list'));
+if (document.getElementById('add_report_btn')) {
+    ReactDOM.render(<AddReport />, document.getElementById('add_report_btn'));
 }

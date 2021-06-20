@@ -10,7 +10,8 @@ module.exports = {
     table_builder: './assets/table_builder.js',
     custom_tables: './assets/custom_tables.js',
     custom_table: './assets/custom_table.js',
-    report_list: './assets/reports.js'
+    report_list: './assets/reports.js',
+    add_report: './assets/addReport.js'
   },
   output: {
     filename: '[name]-bundle.js',  // output bundle file name
