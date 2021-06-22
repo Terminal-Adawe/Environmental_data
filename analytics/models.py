@@ -390,6 +390,8 @@ class Graph_config(models.Model):
 	x_column = models.CharField(max_length=90,null=True, blank=True)
 	y_column = models.CharField(max_length=90, null=True, blank=True)
 	predictive = models.BooleanField(default=False)
+	predictive_balance = models.CharField(max_length=9, null=True, blank=True, default=5)
+	predictive_to = models.CharField(max_length=9, null=True, blank=True, default=5)
 	on_dashboard = models.BooleanField(default=True)
 	active = models.CharField(max_length=10)
 	created_by = models.ForeignKey(User,

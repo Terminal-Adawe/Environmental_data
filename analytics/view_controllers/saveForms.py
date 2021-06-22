@@ -30,6 +30,7 @@ from analytics.models import Warehouse
 from analytics.models import Conveyers
 from analytics.models import IncidentReport
 from analytics.models import Graph_config
+from analytics.models import WasteDetails
 
 from analytics.serializers import ModulesSerializer
 from analytics.serializers import formSerializer
@@ -170,21 +171,94 @@ def Waste_Management(payload):
             logger.debug(glassWeight)
             i=0
             for item in glassSource:
-                weight = glassWeight[i][1]
-                logger.debug("Weight is ")
-                logger.debug(weight)
-                if glassWeight[i][1]=='':
-                    weight = 0
-                else:
-                    weight = int(glassWeight[i][1])
-                save_item = WasteDetails(
-                    waste_type="Glass",
-                    waste_source=item[1],
-                    waste_weightage=weight,
-                    created_by_id=created_by_id
-                    )
-                i += 1
-                save_item.save()
+                if item != "":
+                    weight = glassWeight[i]
+                    logger.debug("Weight is ")
+                    logger.debug(weight)
+                    if glassWeight[i][1]=='':
+                        weight = 0
+                    else:
+                        weight = int(glassWeight[i])
+                    save_item = WasteDetails(
+                        waste_type="Glass",
+                        waste_source=item,
+                        waste_weightage=weight,
+                        created_by_id=created_by_id
+                        )
+                    i += 1
+                    save_item.save()
+
+            #Save Organic Details
+                organicSource = serializer.data['organic_waste_source']
+                organicWeight = serializer.data['organic_waste_weight']
+                logger.debug(organicWeight)
+                i=0
+                for item in organicSource:
+                    if item != "":
+                        weight = organicWeight[i]
+                        logger.debug("Weight is ")
+                        logger.debug(weight)
+                        if organicWeight[i]=='':
+                            weight = 0
+                        else:
+                            weight = int(organicWeight[i])
+                        save_item = WasteDetails(
+                            report_name=data_save.report_name,
+                            waste_type="Organic",
+                            waste_source=item,
+                            waste_weightage=weight,
+                            created_by_id=created_by_id
+                            )
+                        i += 1
+                        save_item.save()
+
+                #Save Plastic Details
+                plasticSource = serializer.data['plastic_waste_source']
+                plasticWeight = serializer.data['plastic_waste_weight']
+                logger.debug(glassWeight)
+                i=0
+                for item in plasticSource:
+                    if item != "":
+                        weight = plasticWeight[i]
+                        logger.debug("Weight is ")
+                        logger.debug(weight)
+                        if plasticWeight[i]=='':
+                            weight = 0
+                        else:
+                            weight = int(plasticWeight[i])
+                        save_item = WasteDetails(
+                            report_name=data_save.report_name,
+                            waste_type="Plastic",
+                            waste_source=item,
+                            waste_weightage=weight,
+                            created_by_id=created_by_id
+                            )
+                        i += 1
+                        save_item.save()
+
+                #Save Metal Details
+                metalSource = serializer.data['metal_waste_source']
+                metalWeight = serializer.data['metal_waste_weight']
+                logger.debug(metalWeight)
+                i=0
+                for item in metalSource:
+                    if item != "":
+                        weight = metalWeight[i]
+                        logger.debug("Weight is ")
+                        logger.debug(weight)
+                        if metalWeight[i]=='':
+                            weight = 0
+                        else:
+                            weight = int(metalWeight[i])
+                        save_item = WasteDetails(
+                            report_name=data_save.report_name,
+                            waste_type="Glass",
+                            waste_source=item,
+                            waste_weightage=weight,
+                            created_by_id=created_by_id
+                            )
+                        i += 1
+                        save_item.save()
             
             logger.error("Error processings")
             logger.debug(glassWeight)
@@ -764,7 +838,10 @@ class postRequestViewSet(viewsets.ViewSet):
                         #Convert string to function
                         func_to_run = globals()[m.module_name]
                         response_m = func_to_run(payload)
-               
+                    
+                    logger.info("additional data is ")
+                    logger.info(serializer.data['additionalFields'])
+
             # user = User.objects.get(username=serializer.data['auth_user'])
             # if user.check_password(serializer.data['auth_password']):
             queryset = modules.objects.all()

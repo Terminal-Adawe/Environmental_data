@@ -51,12 +51,12 @@ function ColumnMaker(props){
                   <div className="row mt-1">
                     <div className="col-lg-6 col-md-6 col-sm-6">
                       <span className="mx-4">
-                        <a href="analytics/view-graph">Edit Graph</a>
+                        <a href="#" data-toggle="modal" data-target="#edit-graph" onClick={ (e)=>props.editGraph(e,props.graphConfig) }>Edit Graph</a>
                       </span>
                     </div>
                     <div className="col-lg-6 col-md-6 col-sm-6">
                       <span className="mx-4">
-                        <a href="#">Add to Report</a>
+                        <a href="#" data-toggle="modal" data-target="#reports" onClick={ (e)=>props.selectReport(e,props.table_name,'graph') }>Add to Report</a>
                       </span>
                     </div>
                   </div>
@@ -104,6 +104,8 @@ class Template extends React.Component {
 
     this.handleCheckboxInputChanged = this.handleCheckboxInputChanged.bind(this)
     this.setDashboard = this.setDashboard.bind(this)
+    this.selectReport = this.selectReport.bind(this)
+    this.editGraph = this.editGraph.bind(this)
 	}
 
 
@@ -113,6 +115,46 @@ class Template extends React.Component {
     console.log(e.target.checked)
 
     this.setDashboard(e.target.checked, id)
+  }
+
+  selectReport(e,val,type){
+        console.log("value is ")
+        console.log(val)
+
+        var mod_val = document.getElementById('module_name')
+        var report_type = document.getElementById('report_type')
+        mod_val.value = val
+        report_type.value = type
+
+        console.log(mod_val.value)
+    }
+
+  editGraph(e, graphConfig){
+    console.log("graph config is ")
+    console.log(graphConfig)
+
+    // Set predictive check
+    var predictive = document.querySelector(".predictive")
+    predictive.checked = graphConfig.predictive
+
+    // Set predictive Balance
+    var predictive_balance = document.querySelector(".predictive_balance")
+    predictive_balance.value = graphConfig.predictive_balance
+
+    document.querySelector(".predictive_range_value").innerHTML = graphConfig.predictive_balance
+
+    // Set predictive added values
+    var predictive_added_values = document.querySelector(".predictive_added_values")
+    predictive_added_values.value = graphConfig.predictive_to
+
+    document.querySelector(".predictive_added_value").innerHTML = graphConfig.predictive_to
+
+    // Set show on dashboard
+    var show_on_dashboard = document.querySelector(".show_on_dashboard")
+    show_on_dashboard.checked = graphConfig.on_dashboard
+
+
+
   }
 
   setDashboard(value,id){
@@ -170,7 +212,7 @@ class Template extends React.Component {
                     {
                       this.props.data.modules ?
                       this.props.data.modules.filter(module=>(module.id==graph.module && this.props.module=="all") || (module.id==graph.module && module.module_name==this.props.module)).map((module,i)=>{
-                        return <ColumnMaker key={i} data={ this.props.data } module={ module } graphConfig={ graph } handleCheckboxInputChanged={ this.handleCheckboxInputChanged } view={this.props.view}/>
+                        return <ColumnMaker key={i} data={ this.props.data } module={ module } graphConfig={ graph } handleCheckboxInputChanged={ this.handleCheckboxInputChanged } view={this.props.view} selectReport={ this.selectReport } editGraph={ this.editGraph }/>
                       })
                     : ""
                     }

@@ -100,6 +100,19 @@ let location_array
 
     })
 
+    $('.predictive_range_value').html($('.predictive_balance').val());
+
+    $('.predictive_balance').on('change',function(){
+        $('.predictive_range_value').html($('.predictive_balance').val());
+    })
+
+    $('.predictive_added_value').html($('.predictive_added_values').val());
+
+    $('.predictive_added_values').on('change',function(){
+        $('.predictive_added_value').html($('.predictive_added_values').val());
+    })
+    
+
     // All code should be above the code below since it picks location
     // and location has not been implemented in all the templates
     const location_i = document.querySelector('.location').value
