@@ -140,7 +140,7 @@ class formSerializer(serializers.Serializer):
 			child=serializers.JSONField()
 		)
 	additionalFields = serializers.ListField(
-			child=serializers.CharField(max_length=255),
+			child=serializers.CharField(max_length=255,allow_null=True,allow_blank=True,required=False),
 			allow_null=True, 
 			required=False
 		)
