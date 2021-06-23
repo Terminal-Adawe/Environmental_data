@@ -139,11 +139,13 @@ class formSerializer(serializers.Serializer):
 	fields = serializers.ListField(
 			child=serializers.JSONField()
 		)
-	additionalFields = serializers.ListField(
-			child=serializers.CharField(max_length=255,allow_null=True,allow_blank=True,required=False),
-			allow_null=True, 
-			required=False
-		)
+	# additionalFields = serializers.ListField(
+	# 		child=serializers.CharField(max_length=255,allow_null=True,allow_blank=True,required=False),
+	# 		allow_null=True, 
+	# 		required=False
+	# 	)
+	additionalFields = serializers.CharField(max_length=255,allow_null=True,allow_blank=True,required=False)
+
 
 class reportsSerializer(serializers.Serializer):
 	report_name = serializers.CharField(max_length=255, allow_null=True)

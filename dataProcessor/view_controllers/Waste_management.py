@@ -25,6 +25,9 @@ class Waste_managementViewSet(viewsets.ViewSet):
 
         if serializer.is_valid(raise_exception=True):
             user = User.objects.get(username=serializer.data['auth_user'])
+
+            logger.debug("data is ")
+            logger.debug(serializer)
             if user.check_password(serializer.data['auth_password']):
                 user = User.objects.get(username=serializer.data['username'])
                 created_by_id = user.id

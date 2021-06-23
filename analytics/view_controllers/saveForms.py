@@ -839,8 +839,13 @@ class postRequestViewSet(viewsets.ViewSet):
                         func_to_run = globals()[m.module_name]
                         response_m = func_to_run(payload)
                     
-                    logger.info("additional data is ")
-                    logger.info(serializer.data['additionalFields'])
+            logger.info("additional data is ")
+            logger.info(serializer.data['additionalFields'])
+
+            additionalFields = serializer.data['additionalFields']
+
+            additionalFields_list = list(additionalFields.split(","))
+            logger.info(additionalFields_list)
 
             # user = User.objects.get(username=serializer.data['auth_user'])
             # if user.check_password(serializer.data['auth_password']):
