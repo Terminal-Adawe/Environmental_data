@@ -809,6 +809,7 @@ class postRequestViewSet(viewsets.ViewSet):
         if serializer.is_valid(raise_exception=True):
             logger.info("data is ")
             # data_json = json.loads(serializer.data['fields'][0])
+            logger.info(serializer.data)
             logger.info(serializer.data['fields'])
 
             logger.info("additional data is ")
