@@ -806,18 +806,19 @@ class postRequestViewSet(viewsets.ViewSet):
     def create(self, request):
         serializer = formSerializer(data=request.data)
 
-        logger.info("additional data is ")
-        logger.info(serializer.data['additionalFields'])
-
-        additionalFields = serializer.data['additionalFields']
-
-        additionalFields_list = list(additionalFields.split(","))
-        logger.info(additionalFields_list)
-
         if serializer.is_valid(raise_exception=True):
             logger.info("data is ")
             # data_json = json.loads(serializer.data['fields'][0])
             logger.info(serializer.data['fields'])
+
+            logger.info("additional data is ")
+            logger.info(serializer.data['additionalFields'])
+
+            additionalFields = serializer.data['additionalFields']
+
+            additionalFields_list = list(additionalFields.split(","))
+            logger.info(additionalFields_list)
+
             response_m = "incomplete"
             for payload in serializer.data['fields']:
                 logger.info("other data is ")
