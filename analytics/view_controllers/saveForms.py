@@ -829,7 +829,7 @@ class postRequestViewSet(viewsets.ViewSet):
             for payload in serializer.data['fields']:
                 logger.info("other data is ")
                 logger.info(payload)
-                logger.info(payload['additionalFields'])
+                logger.info(payload['additionalFields'][0])
 
                 # Manipulate payload
 
