@@ -829,7 +829,7 @@ class postRequestViewSet(viewsets.ViewSet):
             for payload in serializer.data['fields']:
                 logger.info("other data is ")
                 logger.info(payload)
-                 # logger.info(payload['stability_of_dam_walls'])
+                logger.info(payload['additionalFields'])
 
                 # Manipulate payload
 
@@ -843,9 +843,9 @@ class postRequestViewSet(viewsets.ViewSet):
 
                 modulesx = modules.objects.filter(active=1)
 
-                additionalFields = payload['additionalFields']
+                # additionalFields = payload['additionalFields']
 
-                payload = delattr(payload, "additionalFields")
+                # payload = delattr(payload, "additionalFields")
 
                 for m in modulesx:
                     logger.info("other data is ")
