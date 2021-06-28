@@ -765,8 +765,12 @@ def incident_report(payload):
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
-def water_management(payload):
+def water_management(payload, additionalFields):
     # queryset = Energy_management.objects.all()
+
+    logger.info("Additional fields are ")
+
+    logger.info(additionalFields)
     
     serializer = Water_managementSerializer_serializer(data=payload)
     # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
@@ -817,8 +821,9 @@ class postRequestViewSet(viewsets.ViewSet):
 
             additionalFields = serializer.data['additionalFields']
 
-            additionalFields_list = list(additionalFields.split(","))
-            logger.info(additionalFields_list)
+            if additionalFields is not None:
+                additionalFields_list = list(additionalFields.split(","))
+                logger.info(additionalFields_list)
 
             response_m = "incomplete"
             for payload in serializer.data['fields']:
@@ -838,6 +843,10 @@ class postRequestViewSet(viewsets.ViewSet):
 
                 modulesx = modules.objects.filter(active=1)
 
+                additionalFields = payload['additionalFields']
+
+                payload = delattr(payload, "additionalFields")
+
                 for m in modulesx:
                     logger.info("other data is ")
                     logger.info(m.module_name)
@@ -845,7 +854,7 @@ class postRequestViewSet(viewsets.ViewSet):
                     if m.module_name == serializer.data['module']:
                         #Convert string to function
                         func_to_run = globals()[m.module_name]
-                        response_m = func_to_run(payload)
+                        response_m = func_to_run(payload, additionalFields)
                     
 
 
