@@ -132,7 +132,7 @@ class Waste_managementViewSet(viewsets.ViewSet):
                             weight = int(metalWeight[i])
                         save_item = WasteDetails(
                             report_name=data_save.report_name,
-                            waste_type="Glass",
+                            waste_type="Metal",
                             waste_source=item,
                             waste_weightage=weight,
                             created_by_id=created_by_id

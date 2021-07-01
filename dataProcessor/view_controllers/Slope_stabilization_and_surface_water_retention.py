@@ -31,6 +31,7 @@ class Slope_stabilization_and_surface_water_retentionViewSet(viewsets.ViewSet):
                         no_of_exposed_unstabilized_slopes=serializer.data['no_of_exposed_unstabilized_slopes'],
                         status=serializer.data['status'],
                         location=serializer.data['location'],
+                        comment=serializer.data['comment'],
                         created_by_id=created_by_id)
     
                 data_save.save()

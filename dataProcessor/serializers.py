@@ -108,6 +108,25 @@ class Waste_ManagementSerializer_serializer(serializers.Serializer):
 	def create(self, validated_data):
 		return Waste_Management(id=None, **validated_data)
 
+class Waste_ManagementSerializer_serializer_alt(serializers.Serializer):
+	segregation_at_source_and_bins = serializers.ChoiceField(choices=Waste_Management.SEGREGATION_S)
+	glass_waste_source = serializers.CharField(max_length=100)
+	glass_waste_weight = serializers.CharField(max_length=100)
+	plastic_waste_source = serializers.CharField(max_length=100)
+	plastic_waste_weight = serializers.CharField(max_length=100)
+	organic_waste_source = serializers.CharField(max_length=100)
+	organic_waste_weight = serializers.CharField(max_length=100)
+	metal_waste_source = serializers.CharField(max_length=100)
+	metal_waste_weight = serializers.CharField(max_length=100)
+	comments = serializers.CharField(max_length=500, required=False,allow_blank=True)
+	username = serializers.CharField(max_length=100)
+	location = serializers.CharField(max_length=100)
+	auth_user = serializers.CharField(max_length=30)
+	auth_password = serializers.CharField(max_length=30)
+
+	def create(self, validated_data):
+		return Waste_Management(id=None, **validated_data)
+
 class IncenerationSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Inceneration

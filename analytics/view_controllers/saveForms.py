@@ -43,7 +43,7 @@ from dataProcessor.serializers import Grease_and_hydrogenSerializer_serializer
 from dataProcessor.serializers import IncenerationSerializer
 from dataProcessor.serializers import IncenerationSerializer_serializer
 from dataProcessor.serializers import Waste_ManagementSerializer
-from dataProcessor.serializers import Waste_ManagementSerializer_serializer
+from dataProcessor.serializers import Waste_ManagementSerializer_serializer_alt
 from dataProcessor.serializers import Water_managementSerializer
 from dataProcessor.serializers import Water_managementSerializer_serializer
 from dataProcessor.serializers import WorkEnvComplianceSerializer
@@ -83,7 +83,18 @@ import logging
 
 logger = logging.getLogger("django")
 
-def storage_facility(payload, additionalFields):
+def save_waste_details(report_name, waste_type, source, weight, created_by):
+    save_item = WasteDetails(
+                    report_name=report_name,
+                    waste_type=waste_type,
+                    waste_source=source,
+                    waste_weightage=weight,
+                    created_by=created_by
+                            )
+
+    save_item.save()
+
+def storage_facility_func(payload, additionalFields):
     logger.info("data is ")
     logger.info(payload)
     serializer = Storage_facilitySerializer_serializer(data=payload)
@@ -102,7 +113,7 @@ def storage_facility(payload, additionalFields):
                         status_of_seepage_point=serializer.data['status_of_seepage_point'],
                         stability_of_dam_walls=serializer.data['stability_of_dam_walls'],
                         holding_capacity=serializer.data['holding_capacity'],
-                        comment=serializer.data['comment'],
+                        comment=serializer.data['comments'],
                         location=serializer.data['location'],
                         current_capacity=serializer.data['current_capacity'],
                         spillways_capacity=serializer.data['spillways_capacity'],
@@ -116,13 +127,18 @@ def storage_facility(payload, additionalFields):
     
             insert_notification(1,"Storage Facility",data_save.report_name,user)
     
-            return Response(Storage_facilitySerializer(data_save).data, status=status.HTTP_201_CREATED)
-        else:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
-    else:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+            response_back = {
+                'status_code': status.HTTP_201_CREATED,
+                'status_message': "successfully inserted"
+            }
 
-def Grease_and_hydocarbon(payload, additionalFields):
+            return response_back
+        else:
+            return status.HTTP_401_UNAUTHORIZED
+    else:
+        return status.HTTP_400_BAD_REQUEST
+
+def Grease_and_hydocarbon_func(payload, additionalFields):
     serializer = Grease_and_hydrogenSerializer_serializer(data=payload)
         # image_serializer = ImageSerializer_serializer(data=request.data)
         
@@ -139,7 +155,7 @@ def Grease_and_hydocarbon(payload, additionalFields):
 
             data_save = Grease_and_hydocarbon_spillage(
                   storage_condition=serializer.data['storage_condition'],
-                  comment=serializer.data['comment'],
+                  comment=serializer.data['comments'],
                   location=serializer.data['location'],
                   created_by_id=created_by_id)
 
@@ -149,14 +165,22 @@ def Grease_and_hydocarbon(payload, additionalFields):
             
             insert_notification(2,"Grease and Hydrocarbon spillage",data_save.report_name,user)
 
-            return Response(Grease_and_hydrogenSerializer(data_save).data, status=status.HTTP_201_CREATED)
-        else:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
-    else:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+            response_back = {
+                'status_code': status.HTTP_201_CREATED,
+                'status_message': "successfully inserted"
+            }
 
-def Waste_Management(payload, additionalFields):
-    serializer = Waste_ManagementSerializer_serializer(data=payload)
+            return response_back
+        else:
+            return status.HTTP_401_UNAUTHORIZED
+    else:
+        return status.HTTP_400_BAD_REQUEST
+
+
+def Waste_Management_func(payload, additionalFields):
+    logger.info("payload data is ")
+    logger.info(payload)
+    serializer = Waste_ManagementSerializer_serializer_alt(data=payload)
         # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
 
     if serializer.is_valid(raise_exception=True):
@@ -166,119 +190,92 @@ def Waste_Management(payload, additionalFields):
             created_by_id = user.id
             # created_by_id = 4
 
-            glassSource = serializer.data['glass_waste_source']
-            glassWeight = serializer.data['glass_waste_weight']
-            logger.debug(glassWeight)
-            i=0
-            for item in glassSource:
-                if item != "":
-                    weight = glassWeight[i]
-                    logger.debug("Weight is ")
-                    logger.debug(weight)
-                    if glassWeight[i][1]=='':
-                        weight = 0
-                    else:
-                        weight = int(glassWeight[i])
-                    save_item = WasteDetails(
-                        waste_type="Glass",
-                        waste_source=item,
-                        waste_weightage=weight,
-                        created_by_id=created_by_id
-                        )
-                    i += 1
-                    save_item.save()
+            logger.info("Waste Management data is ")
+            logger.info(serializer.data)
 
-            #Save Organic Details
-                organicSource = serializer.data['organic_waste_source']
-                organicWeight = serializer.data['organic_waste_weight']
-                logger.debug(organicWeight)
-                i=0
-                for item in organicSource:
-                    if item != "":
-                        weight = organicWeight[i]
-                        logger.debug("Weight is ")
-                        logger.debug(weight)
-                        if organicWeight[i]=='':
-                            weight = 0
-                        else:
-                            weight = int(organicWeight[i])
-                        save_item = WasteDetails(
-                            report_name=data_save.report_name,
-                            waste_type="Organic",
-                            waste_source=item,
-                            waste_weightage=weight,
-                            created_by_id=created_by_id
-                            )
-                        i += 1
-                        save_item.save()
-
-                #Save Plastic Details
-                plasticSource = serializer.data['plastic_waste_source']
-                plasticWeight = serializer.data['plastic_waste_weight']
-                logger.debug(glassWeight)
-                i=0
-                for item in plasticSource:
-                    if item != "":
-                        weight = plasticWeight[i]
-                        logger.debug("Weight is ")
-                        logger.debug(weight)
-                        if plasticWeight[i]=='':
-                            weight = 0
-                        else:
-                            weight = int(plasticWeight[i])
-                        save_item = WasteDetails(
-                            report_name=data_save.report_name,
-                            waste_type="Plastic",
-                            waste_source=item,
-                            waste_weightage=weight,
-                            created_by_id=created_by_id
-                            )
-                        i += 1
-                        save_item.save()
-
-                #Save Metal Details
-                metalSource = serializer.data['metal_waste_source']
-                metalWeight = serializer.data['metal_waste_weight']
-                logger.debug(metalWeight)
-                i=0
-                for item in metalSource:
-                    if item != "":
-                        weight = metalWeight[i]
-                        logger.debug("Weight is ")
-                        logger.debug(weight)
-                        if metalWeight[i]=='':
-                            weight = 0
-                        else:
-                            weight = int(metalWeight[i])
-                        save_item = WasteDetails(
-                            report_name=data_save.report_name,
-                            waste_type="Glass",
-                            waste_source=item,
-                            waste_weightage=weight,
-                            created_by_id=created_by_id
-                            )
-                        i += 1
-                        save_item.save()
-            
-            logger.error("Error processings")
-            logger.debug(glassWeight)
             data_save = Waste_Management(
-                report_name=serializer.data['report_name'],
                 segregation_at_source_and_bins=serializer.data['segregation_at_source_and_bins'],
                 location=serializer.data['location'],
-                comment=serializer.data['comment'],
-                created_by_id=created_by_id)
+                comment=serializer.data['comments'],
+                created_by=user)
             data_save.save()
-            data_save.report_name = formulate_insert_id(15,str(data_save.id))
+            data_save.report_name = formulate_insert_id(3,str(data_save.id))
             data_save.save()
             insert_notification(3,"Waste Management",data_save.report_name,user)
-            return Response(Waste_ManagementSerializer(data_save).data, status=status.HTTP_201_CREATED)
-        else:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
-    else:
-        return Response(serializer.validated_data, status=status.HTTP_400_BAD_REQUEST)
 
-def Inceneration(payload, additionalFields):
+            glassSource = serializer.data['glass_waste_source']
+            glassWeight = serializer.data['glass_waste_weight']
+
+            save_waste_details(data_save.report_name, "Glass", glassSource, glassWeight, user)
+
+            logger.debug(glassWeight)
+
+
+            #Save Organic Details
+            organicSource = serializer.data['organic_waste_source']
+            organicWeight = serializer.data['organic_waste_weight']
+
+            save_waste_details(data_save.report_name, "Organic", organicSource, organicWeight, user)
+
+
+            #Save Plastic Details
+            plasticSource = serializer.data['plastic_waste_source']
+            plasticWeight = serializer.data['plastic_waste_weight']
+
+            save_waste_details(data_save.report_name, "Plastic", plasticSource, plasticWeight, user)
+
+            #Save Metal Details
+            metalSource = serializer.data['metal_waste_source']
+            metalWeight = serializer.data['metal_waste_weight']
+
+            save_waste_details(data_save.report_name, "Metal", metalSource, metalWeight, user)
+
+            response_back = {
+                'status_code': status.HTTP_201_CREATED,
+                'status_message': "successfully inserted"
+            }
+
+            if additionalFields:
+                # logger.info("Waste Management additional fields are ")
+                # logger.info(additionalFields[0])
+
+                additional_field_list = additionalFields[0]
+
+                for obj in additional_field_list:
+                    logger.info("Additional field is  ")
+                    logger.info(obj)
+
+                    if 'OrganicWasteSource' in obj:
+                        source = obj['OrganicWasteSource']
+                        weight = obj['OrganicWasteWt']
+
+                        save_waste_details(data_save.report_name, "Organic", source, weight, user)
+
+                    if 'PlasticWasteSource' in obj:
+                        source = obj['PlasticWasteSource']
+                        weight = obj['PlasticWasteWt']
+
+                        save_waste_details(data_save.report_name, "Plastic", source, weight, user)
+
+                    if 'GlassWasteSource' in obj:
+                        source = obj['GlassWasteSource']
+                        weight = obj['GlassWasteWt']
+
+                        save_waste_details(data_save.report_name, "Glass", source, weight, user)
+
+                    if 'MetalWasteSource' in obj:
+                        source = obj['MetalWasteSource']
+                        weight = obj['MetalWasteWt']
+
+                        save_waste_details(data_save.report_name, "Metal", source, weight, user)
+
+            return response_back
+        else:
+            return status.HTTP_401_UNAUTHORIZED
+    else:
+        return status.HTTP_400_BAD_REQUEST
+
+def Inceneration_func(payload, additionalFields):
     serializer = IncenerationSerializer_serializer(data=payload)
     # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
     if serializer.is_valid(raise_exception=True):
@@ -295,7 +292,7 @@ def Inceneration(payload, additionalFields):
                     items_incenerated=serializer.data['items_incenerated'],
                     quantity=serializer.data['quantity'],
                     temperature=serializer.data['temperature'],
-                    comment=serializer.data['comment'],
+                    comment=serializer.data['comments'],
                     location=serializer.data['location'],
                     created_by_id=created_by_id)
 
@@ -311,7 +308,7 @@ def Inceneration(payload, additionalFields):
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
-def liquid_waste_and_oil(payload, additionalFields):
+def liquid_waste_and_oil_func(payload, additionalFields):
     serializer = Liquid_waste_oilSerializer_serializer(data=payload)
     # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
     if serializer.is_valid(raise_exception=True):
@@ -325,7 +322,7 @@ def liquid_waste_and_oil(payload, additionalFields):
             data_save = Liquid_waste_oil(
                     discharge_point=serializer.data['discharge_point'],
                     source=serializer.data['source'],
-                    comment=serializer.data['comment'],
+                    comment=serializer.data['comments'],
                     location=serializer.data['location'],
                     created_by_id=created_by_id)
 
@@ -335,13 +332,18 @@ def liquid_waste_and_oil(payload, additionalFields):
             
             insert_notification(5,"Liquid Waste Oil",data_save.report_name,user)
 
-            return Response(Liquid_waste_oilSerializer(data_save).data, status=status.HTTP_201_CREATED)
-        else:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
-    else:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+            response_back = {
+                'status_code': status.HTTP_201_CREATED,
+                'status_message': "successfully inserted"
+            }
 
-def health_and_hygiene_awareness(payload, additionalFields):
+            return response_back
+        else:
+            return status.HTTP_401_UNAUTHORIZED
+    else:
+        return status.HTTP_400_BAD_REQUEST
+
+def health_and_hygiene_awareness_func(payload, additionalFields):
     queryset = Health_and_hygiene_awareness.objects.all()
     serializer = Health_and_hygiene_awarenessSerializer_serializer(data=payload)
     # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
@@ -357,7 +359,7 @@ def health_and_hygiene_awareness(payload, additionalFields):
                     training=serializer.data['training'],
                     no_of_staff=serializer.data['no_of_staff'],
                     duration=serializer.data['duration'],
-                    comment=serializer.data['comment'],
+                    comment=serializer.data['comments'],
                     location=serializer.data['location'],
                     created_by_id=created_by_id)
 
@@ -367,13 +369,18 @@ def health_and_hygiene_awareness(payload, additionalFields):
             
             insert_notification(6,"Health and Hygeine",data_save.report_name,user)
 
-            return Response(Health_and_hygiene_awarenessSerializer(data_save).data, status=status.HTTP_201_CREATED)
-        else:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
-    else:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+            response_back = {
+                'status_code': status.HTTP_201_CREATED,
+                'status_message': "successfully inserted"
+            }
 
-def energy_management(payload, additionalFields):
+            return response_back
+        else:
+            return status.HTTP_401_UNAUTHORIZED
+    else:
+        return status.HTTP_400_BAD_REQUEST
+
+def energy_management_func(payload, additionalFields):
     serializer = Energy_managementSerializer_serializer(data=payload)
     # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
     if serializer.is_valid(raise_exception=True):
@@ -391,7 +398,7 @@ def energy_management(payload, additionalFields):
                     workshop_consumption=serializer.data['workshop_consumption'],
                     mine_plant_consumption=serializer.data['mine_plant_consumption'],
                     other_consumption=serializer.data['other_consumption'],
-                    comment=serializer.data['comment'],
+                    comment=serializer.data['comments'],
                     location=serializer.data['location'],
                     created_by_id=created_by_id)
 
@@ -401,13 +408,18 @@ def energy_management(payload, additionalFields):
 
             insert_notification(7,"Energy Management",data_save.report_name,user)
 
-            return Response(Energy_managementSerializer(data_save).data, status=status.HTTP_201_CREATED)
-        else:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
-    else:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+            response_back = {
+                'status_code': status.HTTP_201_CREATED,
+                'status_message': "successfully inserted"
+            }
 
-def complaints_register(payload, additionalFields):
+            return response_back
+        else:
+            return status.HTTP_401_UNAUTHORIZED
+    else:
+        return status.HTTP_400_BAD_REQUEST
+
+def complaints_register_func(payload, additionalFields):
     serializer = Complaints_registerSerializer_serializer(data=payload)
     # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
     if serializer.is_valid(raise_exception=True):
@@ -420,7 +432,7 @@ def complaints_register(payload, additionalFields):
             data_save = Complaints_register(
                     no_of_complaints=serializer.data['no_of_complaints'],
                     status_of_complaints=serializer.data['status_of_complaints'],
-                    comment=serializer.data['comment'],
+                    comment=serializer.data['comments'],
                     location=serializer.data['location'],
                     created_by_id=created_by_id)
             data_save.save()
@@ -429,19 +441,23 @@ def complaints_register(payload, additionalFields):
             
             insert_notification(8,"Complaints Register",data_save.report_name,user)
 
-            return Response(Complaints_registerSerializer(data_save).data, status=status.HTTP_201_CREATED)
-        else:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
-    else:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+            response_back = {
+                'status_code': status.HTTP_201_CREATED,
+                'status_message': "successfully inserted"
+            }
 
-def slope_stabilization(payload, additionalFields):
+            return response_back
+        else:
+            return status.HTTP_401_UNAUTHORIZED
+    else:
+        return status.HTTP_400_BAD_REQUEST
+
+def slope_stabilization_func(payload, additionalFields):
     serializer = Slope_stabilization_and_surface_water_retentionSerializer_serializer(data=payload)
     # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
     if serializer.is_valid(raise_exception=True):
         user = User.objects.get(username=serializer.data['auth_user'])
         if user.check_password(serializer.data['auth_password']):
-            serializer.data['report_name'] = "Zip_1"
             user = User.objects.get(username=serializer.data['username'])
             created_by_id = user.id
             # created_by_id = 4
@@ -450,6 +466,7 @@ def slope_stabilization(payload, additionalFields):
                     no_of_exposed_unstabilized_slopes=serializer.data['no_of_exposed_unstabilized_slopes'],
                     status=serializer.data['status'],
                     location=serializer.data['location'],
+                    comment=serializer.data['comments'],
                     created_by_id=created_by_id)
 
             data_save.save()
@@ -459,13 +476,18 @@ def slope_stabilization(payload, additionalFields):
 
             insert_notification(9,"Slope Stabilization and Surface water retention",data_save.report_name,user)
 
-            return Response(Slope_stabilization_and_surface_water_retentionSerializer(data_save).data, status=status.HTTP_201_CREATED)
-        else:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
-    else:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+            response_back = {
+                'status_code': status.HTTP_201_CREATED,
+                'status_message': "successfully inserted"
+            }
 
-def safety_permission_system(payload, additionalFields):
+            return response_back
+        else:
+            return status.HTTP_401_UNAUTHORIZED
+    else:
+        return status.HTTP_400_BAD_REQUEST
+
+def safety_permission_system_func(payload, additionalFields):
     serializer = Safety_permission_systemSerializer_serializer(data=payload)
     # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
     if serializer.is_valid(raise_exception=True):
@@ -480,7 +502,7 @@ def safety_permission_system(payload, additionalFields):
             data_save = Safety_permission_system(
                     no_of_permits_issued=serializer.data['no_of_permits_issued'],
                     status=serializer.data['status'],
-                    comment=serializer.data['comment'],
+                    comment=serializer.data['comments'],
                     location=serializer.data['location'],
                     created_by_id=created_by_id)
 
@@ -490,13 +512,18 @@ def safety_permission_system(payload, additionalFields):
 
             insert_notification(10,"Safety Permission System",data_save.report_name,user)
 
-            return Response(Safety_permission_systemSerializer(data_save).data, status=status.HTTP_201_CREATED)
-        else:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
-    else:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+            response_back = {
+                'status_code': status.HTTP_201_CREATED,
+                'status_message': "successfully inserted"
+            }
 
-def safety_training(payload, additionalFields):
+            return response_back
+        else:
+            return status.HTTP_401_UNAUTHORIZED
+    else:
+        return status.HTTP_400_BAD_REQUEST
+
+def safety_training_func(payload, additionalFields):
     queryset = Safety_training.objects.all()
     serializer = Safety_trainingSerializer_serializer(data=payload)
     # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
@@ -515,7 +542,7 @@ def safety_training(payload, additionalFields):
                     no_of_visitors=serializer.data['no_of_visitors'],
                     location=serializer.data['location'],
                     duration=serializer.data['duration'],
-                    comment=serializer.data['comment'],
+                    comment=serializer.data['comments'],
                     created_by_id=created_by_id)
 
             data_save.save()
@@ -524,13 +551,18 @@ def safety_training(payload, additionalFields):
 
             insert_notification(11,"Slope Stabilization and Surface Water Retention",data_save.report_name,user)
 
-            return Response(Safety_trainingSerializer(data_save).data, status=status.HTTP_201_CREATED)
-        else:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
-    else:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+            response_back = {
+                'status_code': status.HTTP_201_CREATED,
+                'status_message': "successfully inserted"
+            }
 
-def safety_tools(payload, additionalFields):
+            return response_back
+        else:
+            return status.HTTP_401_UNAUTHORIZED
+    else:
+        return status.HTTP_400_BAD_REQUEST
+
+def safety_tools_func(payload, additionalFields):
     # queryset = Safety_tools.objects.all()
     serializer = Safety_toolsSerializer_serializer(data=payload)
     # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
@@ -547,7 +579,7 @@ def safety_tools(payload, additionalFields):
                     no_of_estinquishers=serializer.data['no_of_estinquishers'],
                     fire_alarm=serializer.data['fire_alarm'],
                     status_of_estinguishers=serializer.data['status_of_estinguishers'],
-                    comment=serializer.data['comment'],
+                    comment=serializer.data['comments'],
                     location=serializer.data['location'],
                     created_by_id=created_by_id)
 
@@ -557,13 +589,18 @@ def safety_tools(payload, additionalFields):
 
             insert_notification(12,"Safety Tools",data_save.report_name,user)
 
-            return Response(Safety_toolsSerializer(data_save).data, status=status.HTTP_201_CREATED)
-        else:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
-    else:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+            response_back = {
+                'status_code': status.HTTP_201_CREATED,
+                'status_message': "successfully inserted"
+            }
 
-def geo_reference(payload, additionalFields):
+            return response_back
+        else:
+            return status.HTTP_401_UNAUTHORIZED
+    else:
+        return status.HTTP_400_BAD_REQUEST
+
+def geo_reference_func(payload, additionalFields):
     serializer = GeoReferencePointsSerializer_serializer(data=payload)
     # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
     if serializer.is_valid(raise_exception=True):
@@ -576,7 +613,7 @@ def geo_reference(payload, additionalFields):
             # queryset = GeoReferencePoints.objects.filter(report_name=serializer.data['report_name'])
 
             data_save = GeoReferencePoints(
-                    comment=serializer.data['comment'],
+                    comment=serializer.data['comments'],
                     location=serializer.data['location'],
                     created_by_id=created_by_id)
 
@@ -586,13 +623,18 @@ def geo_reference(payload, additionalFields):
 
             insert_notification(13,"Geo-reference",data_save.report_name,user)
 
-            return Response(GeoReferencePointsSerializer(data_save).data, status=status.HTTP_201_CREATED)
-        else:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
-    else:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+            response_back = {
+                'status_code': status.HTTP_201_CREATED,
+                'status_message': "successfully inserted"
+            }
 
-def fuel_farm(payload, additionalFields):
+            return response_back
+        else:
+            return status.HTTP_401_UNAUTHORIZED
+    else:
+        return status.HTTP_400_BAD_REQUEST
+
+def fuel_farm_func(payload, additionalFields):
     serializer = FuelFarmSerializer_serializer(data=payload)
     # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
     if serializer.is_valid(raise_exception=True):
@@ -607,7 +649,7 @@ def fuel_farm(payload, additionalFields):
             data_save = FuelFarm(
                     spillage_status=serializer.data['spillage_status'],
                     impervious_status=serializer.data['impervious_status'],
-                    comment=serializer.data['comment'],
+                    comment=serializer.data['comments'],
                     location=serializer.data['location'],
                     created_by_id=created_by_id)
 
@@ -617,13 +659,18 @@ def fuel_farm(payload, additionalFields):
 
             insert_notification(14,"Fuel Farm",data_save.report_name,user)
 
-            return Response(FuelFarmSerializer(data_save).data, status=status.HTTP_201_CREATED)
-        else:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
-    else:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+            response_back = {
+                'status_code': status.HTTP_201_CREATED,
+                'status_message': "successfully inserted"
+            }
 
-def work_env_compliance(payload, additionalFields):
+            return response_back
+        else:
+            return status.HTTP_401_UNAUTHORIZED
+    else:
+        return status.HTTP_400_BAD_REQUEST
+
+def work_env_compliance_func(payload, additionalFields):
     serializer = WorkEnvComplianceSerializer_serializer(data=payload)
     # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
     if serializer.is_valid(raise_exception=True):
@@ -643,7 +690,7 @@ def work_env_compliance(payload, additionalFields):
                     flammables=serializer.data['flammables'],
                     estinguishers=serializer.data['estinguishers'],
                     no_of_estinquishers=serializer.data['no_of_estinquishers'],
-                    comment=serializer.data['comment'],
+                    comment=serializer.data['comments'],
                     location=serializer.data['location'],
                     created_by=user)
 
@@ -653,13 +700,18 @@ def work_env_compliance(payload, additionalFields):
 
             insert_notification(15,"Work Environment Compliance",data_save.report_name,user)
 
-            return Response(WorkEnvComplianceSerializer(data_save).data, status=status.HTTP_201_CREATED)
-        else:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
-    else:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+            response_back = {
+                'status_code': status.HTTP_201_CREATED,
+                'status_message': "successfully inserted"
+            }
 
-def warehouse(payload, additionalFields):
+            return response_back
+        else:
+            return status.HTTP_401_UNAUTHORIZED
+    else:
+        return status.HTTP_400_BAD_REQUEST
+
+def warehouse_func(payload, additionalFields):
     serializer = WarehouseSerializer_serializer(data=payload)
     # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
     if serializer.is_valid(raise_exception=True):
@@ -674,7 +726,7 @@ def warehouse(payload, additionalFields):
             data_save = Warehouse(
                     eye_wash=serializer.data['eye_wash'],
                     shower=serializer.data['shower'],
-                    comment=serializer.data['comment'],
+                    comment=serializer.data['comments'],
                     location=serializer.data['location'],
                     created_by_id=created_by_id)
 
@@ -684,13 +736,18 @@ def warehouse(payload, additionalFields):
 
             insert_notification(16,"Warehouse",data_save.report_name,user)
 
-            return Response(WarehouseSerializer(data_save).data, status=status.HTTP_201_CREATED)
-        else:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
-    else:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+            response_back = {
+                'status_code': status.HTTP_201_CREATED,
+                'status_message': "successfully inserted"
+            }
 
-def conveyers(payload, additionalFields):
+            return response_back
+        else:
+            return status.HTTP_401_UNAUTHORIZED
+    else:
+        return status.HTTP_400_BAD_REQUEST
+
+def conveyers_func(payload, additionalFields):
     queryset = WorkEnvCompliance.objects.all()
     serializer = WorkEnvComplianceSerializer_serializer(data=payload)
     # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
@@ -710,7 +767,7 @@ def conveyers(payload, additionalFields):
                     flooding=serializer.data['flooding'],
                     flammables=serializer.data['flammables'],
                     no_of_estinquishers=serializer.data['no_of_estinquishers'],
-                    comment=serializer.data['comment'],
+                    comment=serializer.data['comments'],
                     location=serializer.data['location'],
                     created_by_id=created_by_id)
 
@@ -720,13 +777,18 @@ def conveyers(payload, additionalFields):
 
             insert_notification(17,"Conveyers",data_save.report_name,user)
 
-            return Response(WorkEnvComplianceSerializer(data_save).data, status=status.HTTP_201_CREATED)
-        else:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
-    else:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+            response_back = {
+                'status_code': status.HTTP_201_CREATED,
+                'status_message': "successfully inserted"
+            }
 
-def incident_report(payload, additionalFields):
+            return response_back
+        else:
+            return status.HTTP_401_UNAUTHORIZED
+    else:
+        return status.HTTP_400_BAD_REQUEST
+
+def incident_report_func(payload, additionalFields):
     serializer = IncidentReportSerializer_serializer(data=payload)
     # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
     if serializer.is_valid(raise_exception=True):
@@ -749,7 +811,7 @@ def incident_report(payload, additionalFields):
                     further_actions_taken=serializer.data['further_actions_taken'],
                     corrective_measures=serializer.data['corrective_measures'],
                     responsible_person=serializer.data['responsible_person'],
-                    comment=serializer.data['comment'],
+                    comment=serializer.data['comments'],
                     location=serializer.data['location'],
                     created_by_id=created_by_id)
 
@@ -759,13 +821,18 @@ def incident_report(payload, additionalFields):
 
             insert_notification(18,"Incident Report",data_save.report_name,user)
 
-            return Response(IncidentReportSerializer(data_save).data, status=status.HTTP_201_CREATED)
-        else:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
-    else:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+            response_back = {
+                'status_code': status.HTTP_201_CREATED,
+                'status_message': "successfully inserted"
+            }
 
-def water_management(payload, additionalFields):
+            return response_back
+        else:
+            return status.HTTP_401_UNAUTHORIZED
+    else:
+        return status.HTTP_400_BAD_REQUEST
+
+def water_management_func(payload, additionalFields):
     # queryset = Energy_management.objects.all()
 
     logger.info("Additional fields are ")
@@ -790,7 +857,7 @@ def water_management(payload, additionalFields):
                     workshop_consumption=serializer.data['workshop_consumption'],
                     mine_plant_consumption=serializer.data['mine_plant_consumption'],
                     other_consumption=serializer.data['other_consumption'],
-                    comment=serializer.data['comment'],
+                    comment=serializer.data['comments'],
                     location=serializer.data['location'],
                     created_by=user)
 
@@ -800,11 +867,16 @@ def water_management(payload, additionalFields):
 
             insert_notification(19,"Water Management",data_save.report_name,user)
 
-            return Response(Water_managementSerializer(data_save).data, status=status.HTTP_201_CREATED)
+            response_back = {
+                'status_code': status.HTTP_201_CREATED,
+                'status_message': "successfully inserted"
+            }
+
+            return response_back
         else:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
+            return status.HTTP_401_UNAUTHORIZED
     else:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+        return status.HTTP_400_BAD_REQUEST
 
 class postRequestViewSet(viewsets.ViewSet):
     def create(self, request):
@@ -844,6 +916,11 @@ class postRequestViewSet(viewsets.ViewSet):
                 elif payload['location'] == "null":
                     payload['location'] = "0,0"
 
+                if "username" in payload:
+                    pass
+                else:
+                    payload['username'] = "inputter"
+
                 modulesx = modules.objects.filter(active=1)
 
                 # additionalFields = payload['additionalFields']
@@ -851,12 +928,11 @@ class postRequestViewSet(viewsets.ViewSet):
                 # payload = delattr(payload, "additionalFields")
 
                 for m in modulesx:
-                    logger.info("other data is ")
-                    logger.info(m.module_name)
-
                     if m.module_name == serializer.data['module']:
                         #Convert string to function
-                        func_to_run = globals()[m.module_name]
+                        logger.info("module is ")
+                        logger.info(m.module_name)
+                        func_to_run = globals()[m.module_name+"_func"]
                         response_m = func_to_run(payload, additionalFields)
                     
 
