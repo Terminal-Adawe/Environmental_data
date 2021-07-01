@@ -113,7 +113,7 @@ def storage_facility_func(payload, additionalFields):
                         status_of_seepage_point=serializer.data['status_of_seepage_point'],
                         stability_of_dam_walls=serializer.data['stability_of_dam_walls'],
                         holding_capacity=serializer.data['holding_capacity'],
-                        comment=serializer.data['comments'],
+                        comment=serializer.data['comment'],
                         location=serializer.data['location'],
                         current_capacity=serializer.data['current_capacity'],
                         spillways_capacity=serializer.data['spillways_capacity'],
@@ -155,7 +155,7 @@ def Grease_and_hydocarbon_func(payload, additionalFields):
 
             data_save = Grease_and_hydocarbon_spillage(
                   storage_condition=serializer.data['storage_condition'],
-                  comment=serializer.data['comments'],
+                  comment=serializer.data['comment'],
                   location=serializer.data['location'],
                   created_by_id=created_by_id)
 
@@ -292,7 +292,7 @@ def Inceneration_func(payload, additionalFields):
                     items_incenerated=serializer.data['items_incenerated'],
                     quantity=serializer.data['quantity'],
                     temperature=serializer.data['temperature'],
-                    comment=serializer.data['comments'],
+                    comment=serializer.data['comment'],
                     location=serializer.data['location'],
                     created_by_id=created_by_id)
 
@@ -322,7 +322,7 @@ def liquid_waste_and_oil_func(payload, additionalFields):
             data_save = Liquid_waste_oil(
                     discharge_point=serializer.data['discharge_point'],
                     source=serializer.data['source'],
-                    comment=serializer.data['comments'],
+                    comment=serializer.data['comment'],
                     location=serializer.data['location'],
                     created_by_id=created_by_id)
 
@@ -359,7 +359,7 @@ def health_and_hygiene_awareness_func(payload, additionalFields):
                     training=serializer.data['training'],
                     no_of_staff=serializer.data['no_of_staff'],
                     duration=serializer.data['duration'],
-                    comment=serializer.data['comments'],
+                    comment=serializer.data['comment'],
                     location=serializer.data['location'],
                     created_by_id=created_by_id)
 
@@ -398,7 +398,7 @@ def energy_management_func(payload, additionalFields):
                     workshop_consumption=serializer.data['workshop_consumption'],
                     mine_plant_consumption=serializer.data['mine_plant_consumption'],
                     other_consumption=serializer.data['other_consumption'],
-                    comment=serializer.data['comments'],
+                    comment=serializer.data['comment'],
                     location=serializer.data['location'],
                     created_by_id=created_by_id)
 
@@ -432,7 +432,7 @@ def complaints_register_func(payload, additionalFields):
             data_save = Complaints_register(
                     no_of_complaints=serializer.data['no_of_complaints'],
                     status_of_complaints=serializer.data['status_of_complaints'],
-                    comment=serializer.data['comments'],
+                    comment=serializer.data['comment'],
                     location=serializer.data['location'],
                     created_by_id=created_by_id)
             data_save.save()
@@ -466,7 +466,7 @@ def slope_stabilization_func(payload, additionalFields):
                     no_of_exposed_unstabilized_slopes=serializer.data['no_of_exposed_unstabilized_slopes'],
                     status=serializer.data['status'],
                     location=serializer.data['location'],
-                    comment=serializer.data['comments'],
+                    comment=serializer.data['comment'],
                     created_by_id=created_by_id)
 
             data_save.save()
@@ -502,7 +502,7 @@ def safety_permission_system_func(payload, additionalFields):
             data_save = Safety_permission_system(
                     no_of_permits_issued=serializer.data['no_of_permits_issued'],
                     status=serializer.data['status'],
-                    comment=serializer.data['comments'],
+                    comment=serializer.data['comment'],
                     location=serializer.data['location'],
                     created_by_id=created_by_id)
 
@@ -542,7 +542,7 @@ def safety_training_func(payload, additionalFields):
                     no_of_visitors=serializer.data['no_of_visitors'],
                     location=serializer.data['location'],
                     duration=serializer.data['duration'],
-                    comment=serializer.data['comments'],
+                    comment=serializer.data['comment'],
                     created_by_id=created_by_id)
 
             data_save.save()
@@ -579,7 +579,7 @@ def safety_tools_func(payload, additionalFields):
                     no_of_estinquishers=serializer.data['no_of_estinquishers'],
                     fire_alarm=serializer.data['fire_alarm'],
                     status_of_estinguishers=serializer.data['status_of_estinguishers'],
-                    comment=serializer.data['comments'],
+                    comment=serializer.data['comment'],
                     location=serializer.data['location'],
                     created_by_id=created_by_id)
 
@@ -613,7 +613,7 @@ def geo_reference_func(payload, additionalFields):
             # queryset = GeoReferencePoints.objects.filter(report_name=serializer.data['report_name'])
 
             data_save = GeoReferencePoints(
-                    comment=serializer.data['comments'],
+                    comment=serializer.data['comment'],
                     location=serializer.data['location'],
                     created_by_id=created_by_id)
 
@@ -649,7 +649,7 @@ def fuel_farm_func(payload, additionalFields):
             data_save = FuelFarm(
                     spillage_status=serializer.data['spillage_status'],
                     impervious_status=serializer.data['impervious_status'],
-                    comment=serializer.data['comments'],
+                    comment=serializer.data['comment'],
                     location=serializer.data['location'],
                     created_by_id=created_by_id)
 
@@ -690,7 +690,7 @@ def work_env_compliance_func(payload, additionalFields):
                     flammables=serializer.data['flammables'],
                     estinguishers=serializer.data['estinguishers'],
                     no_of_estinquishers=serializer.data['no_of_estinquishers'],
-                    comment=serializer.data['comments'],
+                    comment=serializer.data['comment'],
                     location=serializer.data['location'],
                     created_by=user)
 
@@ -726,7 +726,7 @@ def warehouse_func(payload, additionalFields):
             data_save = Warehouse(
                     eye_wash=serializer.data['eye_wash'],
                     shower=serializer.data['shower'],
-                    comment=serializer.data['comments'],
+                    comment=serializer.data['comment'],
                     location=serializer.data['location'],
                     created_by_id=created_by_id)
 
@@ -767,7 +767,7 @@ def conveyers_func(payload, additionalFields):
                     flooding=serializer.data['flooding'],
                     flammables=serializer.data['flammables'],
                     no_of_estinquishers=serializer.data['no_of_estinquishers'],
-                    comment=serializer.data['comments'],
+                    comment=serializer.data['comment'],
                     location=serializer.data['location'],
                     created_by_id=created_by_id)
 
@@ -811,7 +811,7 @@ def incident_report_func(payload, additionalFields):
                     further_actions_taken=serializer.data['further_actions_taken'],
                     corrective_measures=serializer.data['corrective_measures'],
                     responsible_person=serializer.data['responsible_person'],
-                    comment=serializer.data['comments'],
+                    comment=serializer.data['comment'],
                     location=serializer.data['location'],
                     created_by_id=created_by_id)
 
@@ -857,7 +857,7 @@ def water_management_func(payload, additionalFields):
                     workshop_consumption=serializer.data['workshop_consumption'],
                     mine_plant_consumption=serializer.data['mine_plant_consumption'],
                     other_consumption=serializer.data['other_consumption'],
-                    comment=serializer.data['comments'],
+                    comment=serializer.data['comment'],
                     location=serializer.data['location'],
                     created_by=user)
 
@@ -897,6 +897,8 @@ class postRequestViewSet(viewsets.ViewSet):
                 # additionalFields_list = list(additionalFields.split(","))
                 additionalFields = []
                 # logger.info(additionalFields_list)
+            if additionalFields is "None":
+                additionalFields = []
 
             response_m = "incomplete"
             for payload in serializer.data['fields']:
@@ -948,4 +950,4 @@ class postRequestViewSet(viewsets.ViewSet):
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
-            
+
