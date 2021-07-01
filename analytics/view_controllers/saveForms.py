@@ -83,7 +83,7 @@ import logging
 
 logger = logging.getLogger("django")
 
-def storage_facility(payload):
+def storage_facility(payload, additionalFields):
     logger.info("data is ")
     logger.info(payload)
     serializer = Storage_facilitySerializer_serializer(data=payload)
@@ -122,7 +122,7 @@ def storage_facility(payload):
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
-def Grease_and_hydocarbon(payload):
+def Grease_and_hydocarbon(payload, additionalFields):
     serializer = Grease_and_hydrogenSerializer_serializer(data=payload)
         # image_serializer = ImageSerializer_serializer(data=request.data)
         
@@ -155,7 +155,7 @@ def Grease_and_hydocarbon(payload):
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
-def Waste_Management(payload):
+def Waste_Management(payload, additionalFields):
     serializer = Waste_ManagementSerializer_serializer(data=payload)
         # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
 
@@ -278,7 +278,7 @@ def Waste_Management(payload):
     else:
         return Response(serializer.validated_data, status=status.HTTP_400_BAD_REQUEST)
 
-def Inceneration(payload):
+def Inceneration(payload, additionalFields):
     serializer = IncenerationSerializer_serializer(data=payload)
     # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
     if serializer.is_valid(raise_exception=True):
@@ -311,7 +311,7 @@ def Inceneration(payload):
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
-def liquid_waste_and_oil(payload):
+def liquid_waste_and_oil(payload, additionalFields):
     serializer = Liquid_waste_oilSerializer_serializer(data=payload)
     # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
     if serializer.is_valid(raise_exception=True):
@@ -341,7 +341,7 @@ def liquid_waste_and_oil(payload):
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
-def health_and_hygiene_awareness(payload):
+def health_and_hygiene_awareness(payload, additionalFields):
     queryset = Health_and_hygiene_awareness.objects.all()
     serializer = Health_and_hygiene_awarenessSerializer_serializer(data=payload)
     # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
@@ -373,7 +373,7 @@ def health_and_hygiene_awareness(payload):
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
-def energy_management(payload):
+def energy_management(payload, additionalFields):
     serializer = Energy_managementSerializer_serializer(data=payload)
     # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
     if serializer.is_valid(raise_exception=True):
@@ -407,7 +407,7 @@ def energy_management(payload):
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
-def complaints_register(payload):
+def complaints_register(payload, additionalFields):
     serializer = Complaints_registerSerializer_serializer(data=payload)
     # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
     if serializer.is_valid(raise_exception=True):
@@ -435,7 +435,7 @@ def complaints_register(payload):
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
-def slope_stabilization(payload):
+def slope_stabilization(payload, additionalFields):
     serializer = Slope_stabilization_and_surface_water_retentionSerializer_serializer(data=payload)
     # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
     if serializer.is_valid(raise_exception=True):
@@ -465,7 +465,7 @@ def slope_stabilization(payload):
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
-def safety_permission_system(payload):
+def safety_permission_system(payload, additionalFields):
     serializer = Safety_permission_systemSerializer_serializer(data=payload)
     # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
     if serializer.is_valid(raise_exception=True):
@@ -496,7 +496,7 @@ def safety_permission_system(payload):
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
-def safety_training(payload):
+def safety_training(payload, additionalFields):
     queryset = Safety_training.objects.all()
     serializer = Safety_trainingSerializer_serializer(data=payload)
     # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
@@ -530,7 +530,7 @@ def safety_training(payload):
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
-def safety_tools(payload):
+def safety_tools(payload, additionalFields):
     # queryset = Safety_tools.objects.all()
     serializer = Safety_toolsSerializer_serializer(data=payload)
     # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
@@ -563,7 +563,7 @@ def safety_tools(payload):
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
-def geo_reference(payload):
+def geo_reference(payload, additionalFields):
     serializer = GeoReferencePointsSerializer_serializer(data=payload)
     # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
     if serializer.is_valid(raise_exception=True):
@@ -592,7 +592,7 @@ def geo_reference(payload):
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
-def fuel_farm(payload):
+def fuel_farm(payload, additionalFields):
     serializer = FuelFarmSerializer_serializer(data=payload)
     # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
     if serializer.is_valid(raise_exception=True):
@@ -623,7 +623,7 @@ def fuel_farm(payload):
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
-def work_env_compliance(payload):
+def work_env_compliance(payload, additionalFields):
     serializer = WorkEnvComplianceSerializer_serializer(data=payload)
     # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
     if serializer.is_valid(raise_exception=True):
@@ -659,7 +659,7 @@ def work_env_compliance(payload):
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
-def warehouse(payload):
+def warehouse(payload, additionalFields):
     serializer = WarehouseSerializer_serializer(data=payload)
     # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
     if serializer.is_valid(raise_exception=True):
@@ -690,7 +690,7 @@ def warehouse(payload):
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
-def conveyers(payload):
+def conveyers(payload, additionalFields):
     queryset = WorkEnvCompliance.objects.all()
     serializer = WorkEnvComplianceSerializer_serializer(data=payload)
     # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
@@ -726,7 +726,7 @@ def conveyers(payload):
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
-def incident_report(payload):
+def incident_report(payload, additionalFields):
     serializer = IncidentReportSerializer_serializer(data=payload)
     # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
     if serializer.is_valid(raise_exception=True):
@@ -821,9 +821,10 @@ class postRequestViewSet(viewsets.ViewSet):
 
             additionalFields = serializer.data['additionalFields']
 
-            if additionalFields is not None:
-                additionalFields_list = list(additionalFields.split(","))
-                logger.info(additionalFields_list)
+            if additionalFields is None:
+                # additionalFields_list = list(additionalFields.split(","))
+                additionalFields = []
+                # logger.info(additionalFields_list)
 
             response_m = "incomplete"
             for payload in serializer.data['fields']:
@@ -839,6 +840,8 @@ class postRequestViewSet(viewsets.ViewSet):
 
                 # check payload
                 if payload['location'] == "":
+                    payload['location'] = "0,0"
+                elif payload['location'] == "null":
                     payload['location'] = "0,0"
 
                 modulesx = modules.objects.filter(active=1)

@@ -11,7 +11,7 @@
 					<div class="row">
 						{% for module in modules %}
 							{% if module.priority > 2 %}
-								<div class="col-lg-2 col-sm-6 mt-3">
+								<div class="col-lg-2 col-sm-6 col-6 mt-3">
 									<div class="card carded-modules">
 										<a href="{% url 'dataProcessor:get_template' module=module.module_name %}"></a>
 										<span class="centerDiv"><i class="fa {{ module.icon }} fa-2x" style="color: #73c6b6;" aria-hidden="true"></i><br/>{{ module.description }}</span>
@@ -24,7 +24,7 @@
 					<div class="row mt-2">
 						{% for module in modules %}
 							{% if module.priority < 3 %}
-						<div class="col-lg-2 col-sm-6 mt-3">
+						<div class="col-lg-2 col-sm-6 col-6 mt-3">
 							<div class="card carded-modules">
 								<a href="{% url 'dataProcessor:get_template' module=module.module_name %}"></a>
 								<span class="centerDiv"><i class="fa {{ module.icon }} fa-2x" style="color: #73c6b6;" aria-hidden="true"></i><br/>{{ module.description }}</span>
