@@ -909,6 +909,7 @@ class postRequestViewSet(viewsets.ViewSet):
                 #assign authentication variables
                 payload['auth_user'] = 'system_user'
                 payload['auth_password'] = 'j6d^tUBJ8tS9=URF'
+                payload['comment'] = payload['comments']
 
                 # check payload
                 if payload['location'] == "":
@@ -946,3 +947,5 @@ class postRequestViewSet(viewsets.ViewSet):
             #     return Response(status=status.HTTP_401_UNAUTHORIZED)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+            
