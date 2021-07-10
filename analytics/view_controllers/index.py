@@ -80,6 +80,24 @@ def dashboard(request):
     else:
         return HttpResponseRedirect('login')
 
+def documentation(request):
+    if request.user.is_authenticated:
+        return render(request, 'analytics/documentation.html')
+    else:
+        return HttpResponseRedirect('login')
+
+def admin_documentation(request):
+    if request.user.is_authenticated:
+        return render(request, 'analytics/admin_documentation.html')
+    else:
+        return HttpResponseRedirect('login')
+
+def inputter_documentation(request):
+    if request.user.is_authenticated:
+        return render(request, 'analytics/inputter_documentation.html')
+    else:
+        return HttpResponseRedirect('login')
+
 def login(request):
     if request.method == 'POST':
         form = loginForm(request.POST)

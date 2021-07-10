@@ -392,6 +392,7 @@ class Graph_config(models.Model):
 	predictive = models.BooleanField(default=False)
 	predictive_balance = models.CharField(max_length=9, null=True, blank=True, default=5)
 	predictive_to = models.CharField(max_length=9, null=True, blank=True, default=5)
+	description = models.TextField(null=True, blank=True)
 	on_dashboard = models.BooleanField(default=True)
 	active = models.CharField(max_length=10)
 	created_by = models.ForeignKey(User,

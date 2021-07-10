@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>GeoMining Consultancy</title>
+  <link rel="shortcut icon" href="{% static 'analytics/image/png/favicon.png' %}" type="image/x-icon">
+  <!-- Bootstrap , fonts & icons  -->
+  <link rel="stylesheet" href="{% static 'analytics/css/bootstrap.css' %}">
+  <link rel="stylesheet" href="{% static 'analytics/fonts/icon-font/css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'analytics/fonts/typography-font/typo.css' %}">
+  <link rel="stylesheet" href="{% static 'analytics/fonts/typography-font/lucida-grande/typo.css' %}">
+  <link rel="stylesheet" href="{% static 'analytics/fonts/fontawesome-5/css/all.css' %}">
+  <!-- Plugin'stylesheets  -->
+  <link rel="stylesheet" href="{% static 'analytics/plugins/aos/aos.min.css' %}">
+  <link rel="stylesheet" href="{% static 'analytics/plugins/fancybox/jquery.fancybox.min.css' %}">
+  <link rel="stylesheet" href="{% static 'analytics/plugins/nice-select/nice-select.min.css' %}">
+  <link rel="stylesheet" href="{% static 'analytics/plugins/slick/slick.min.css' %}">
+  <!-- Vendor stylesheets  -->
+  <link rel="stylesheet" href="{% static 'analytics/plugins/theme-mode-switcher/switcher-panel.css' %}">
+  <link rel="stylesheet" href="{% static 'analytics/css/main.css' %}">
+  <!-- Custom stylesheet -->
+
+</head>
+
+  <div class="container" style="padding-top: 50px; padding-bottom: 50px">
+    <div class="row">
+      <div class="col-lg-3">
+        <a href="{% url 'analytics:dashboard' %}" class="btn">Go back</a>
+      </div>
+    </div>
+    <div class="row" style="padding-top: 50px; min-height: 70vh;">
+      <div class="col-lg-10 col-md-10 col-sm-12 col-12 mx-auto">
+        <p>
+          <h2>Inputter Documentation</h2>
+        </p>
+        <p>
+          The inputter enters information observe on the field into the provided fields as part of the data collection gathering.
+        </p>
+        <p>
+          <h4>Procedure</h4>
+        </p>
+        <p>
+          <ol>
+            <li>Login to the app
+              <br>
+              <img src="{% static 'analytics/images/inputterLogin.png' %}" class="mt-4" width="410" style="padding-bottom: 40px;">
+            </li>
+            <li>Select a module from the list. This is what you would like to fill information on
+            <br>
+              <img src="{% static 'analytics/images/inputter_main.png' %}" class="mt-4" width="510" style="padding-bottom: 40px;">
+            </li>
+            <li>
+              Fill in details of the form
+              <br>
+              <img src="{% static 'analytics/images/form1.png' %}" class="mt-4" width="510" style="padding-bottom: 40px;">
+              <br>
+              <img src="{% static 'analytics/images/form2.png' %}" class="mt-4" width="510" style="padding-bottom: 40px;">
+            </li>
+            <li>
+              You can include a picture of any observation made
+            </li>
+            <li>
+              Submit form when you have filled in all the details you need to. 
+            </li>
+          </ol>  
+        </p>
+      </div>
+    </div>
+  </div>
+
+{% include "analytics/landingpage/footer.html" %}

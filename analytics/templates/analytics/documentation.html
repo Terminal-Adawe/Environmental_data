@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>GeoMining Consultancy</title>
+  <link rel="shortcut icon" href="{% static 'analytics/image/png/favicon.png' %}" type="image/x-icon">
+  <!-- Bootstrap , fonts & icons  -->
+  <link rel="stylesheet" href="{% static 'analytics/css/bootstrap.css' %}">
+  <link rel="stylesheet" href="{% static 'analytics/fonts/icon-font/css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'analytics/fonts/typography-font/typo.css' %}">
+  <link rel="stylesheet" href="{% static 'analytics/fonts/typography-font/lucida-grande/typo.css' %}">
+  <link rel="stylesheet" href="{% static 'analytics/fonts/fontawesome-5/css/all.css' %}">
+  <!-- Plugin'stylesheets  -->
+  <link rel="stylesheet" href="{% static 'analytics/plugins/aos/aos.min.css' %}">
+  <link rel="stylesheet" href="{% static 'analytics/plugins/fancybox/jquery.fancybox.min.css' %}">
+  <link rel="stylesheet" href="{% static 'analytics/plugins/nice-select/nice-select.min.css' %}">
+  <link rel="stylesheet" href="{% static 'analytics/plugins/slick/slick.min.css' %}">
+  <!-- Vendor stylesheets  -->
+  <link rel="stylesheet" href="{% static 'analytics/plugins/theme-mode-switcher/switcher-panel.css' %}">
+  <link rel="stylesheet" href="{% static 'analytics/css/main.css' %}">
+  <!-- Custom stylesheet -->
+
+</head>
+
+  <div class="container" style="padding-top: 50px">
+    <div class="row">
+      <div class="col-lg-3">
+        <a href="{% url 'analytics:dashboard' %}" class="btn">Go back</a>
+      </div>
+    </div>
+    <div class="row" style="padding-top: 50px; height: 70vh;">
+      <div class="col-lg-4 col-md-4 col-sm-6 col-11 mx-auto" style="height: 100%">
+        <div class="centerDiv">
+          <a href="{% url 'analytics:inputter-documentation' %}" class="btn btn-block btn-primary my-4">Inputter Documentation</a>
+          <a href="{% url 'analytics:admin-documentation' %}" class="btn btn-block btn-primary">Admin Documentation</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% include "analytics/landingpage/footer.html" %}

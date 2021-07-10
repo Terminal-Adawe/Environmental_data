@@ -310,6 +310,7 @@ class Graph_configSerializer_serializer(serializers.Serializer):
 	x_column = serializers.CharField(max_length=40)
 	y_column = serializers.CharField(max_length=40)
 	predictive = serializers.BooleanField()
+	description = serializers.CharField(max_length=255)
 
 	def create(self, validated_data):
 		return Safety_tools(id=None, **validated_data)
