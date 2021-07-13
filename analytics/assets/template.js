@@ -12,7 +12,7 @@ import cookie from "react-cookies";
 function ColumnMaker(props){
 	
 	// console.log("Props are ")
-	// console.log(props.data.Storage_facility)
+	// console.log(props.data)
 	// console.log(props)
 
 	
@@ -22,8 +22,10 @@ function ColumnMaker(props){
   props.data ? data = props.data : data = ""
   props.module.descriptions ? module_name=props.module.description : ""
 
-  console.log("module name is "+data)
-  console.log(data)
+  // console.log("module name is "+data)
+  // console.log(data)
+  // console.log(props.module)
+
 									
 		return (<div className="col-lg-6 col-sm-12 my-4">
               <div className="card graph-card my-2">
@@ -130,8 +132,8 @@ class Template extends React.Component {
     }
 
   editGraph(e, graphConfig){
-    console.log("graph config is ")
-    console.log(graphConfig)
+    // console.log("graph config is ")
+    // console.log(graphConfig)
 
     // Set predictive check
     var predictive = document.querySelector(".predictive")
@@ -208,10 +210,15 @@ class Template extends React.Component {
                 {
                   this.props.data.Graph_config ? 
                   this.props.data.Graph_config.filter(config=>((this.props.view=="dashboard" && config.on_dashboard==1) || this.props.view=="graph")).map((graph,i)=>{
+                    console.log("Module selected is ")
+                    console.log(this.props.module)
                     return <React.Fragment key={i}>
                     {
                       this.props.data.modules ?
                       this.props.data.modules.filter(module=>(module.id==graph.module && this.props.module=="all") || (module.id==graph.module && module.module_name==this.props.module)).map((module,i)=>{
+                        console.log("Singular module is ")
+                        console.log(module.module_name)
+                        console.log(this.props.data)
                         return <ColumnMaker key={i} data={ this.props.data } module={ module } graphConfig={ graph } handleCheckboxInputChanged={ this.handleCheckboxInputChanged } view={this.props.view} selectReport={ this.selectReport } editGraph={ this.editGraph }/>
                       })
                     : ""

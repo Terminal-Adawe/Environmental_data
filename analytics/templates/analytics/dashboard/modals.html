@@ -116,8 +116,6 @@
 
       <!-- Modal body -->
       <div class="modal-body">
-        <input type="hidden" name="report_name" id="report_name" value="">
-        <input type="hidden" name="report_type" id="report_type" value="">
         <div id="report_list"></div>
         <script src="{% static 'report_list-bundle.js' %}"></script>
       </div>
@@ -141,16 +139,19 @@
       <!-- Modal body -->
       <div class="modal-body">
           <div class="container-fluid">
-            <div class="row">
-              <h4>Enter Report Title</h4>
-            </div>
-            <div class="row">
-              <input type="text" name="report_name" id="report_name">
-            </div>
-            <div class="row">
-              <div id="add_report_btn"></div>
-              <script src="{% static 'add_report-bundle.js' %}"></script>
-            </div>
+            <form action="{% url 'analytics:add_report' %}" method="post">
+              {% csrf_token %}
+              <div class="row">
+                <h4>Enter Report Title</h4>
+              </div>
+              <div class="row">
+                <input type="text" name="report_name" id="report_name">
+              </div>
+              <div class="row">
+                <div id="add_report_btn"></div>
+                <script src="{% static 'add_report-bundle.js' %}"></script>
+              </div>
+            </form>
           </div>
       </div>
 

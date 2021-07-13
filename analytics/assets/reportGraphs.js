@@ -33,8 +33,8 @@ class ReportGraphs extends React.Component {
 	getDetails(){
 		axios.get(`${this.state.baseUrl}/analytics/get-details/`)
         	.then(response => {
-        		console.log("response is ")
-        		console.log(response.data)
+        		// console.log("response is ")
+        		// console.log(response.data)
         		var module_i = document.getElementById('module').value
           this.setState({
             data: response.data,

@@ -17,7 +17,7 @@ class AddReport extends React.Component {
 			// baseUrl: "http://localhost:8002",
 		}
 
-		this.getDetails = this.getDetails.bind(this)
+		this.addReport = this.addReport.bind(this)
 		this.addReportBtn = this.addReportBtn.bind(this)
 	}
 
@@ -38,7 +38,9 @@ class AddReport extends React.Component {
 		console.log(report_value)
 	}
 
-	getDetails(){
+
+	// Add report mnemonics. Not yet in use.
+	addReport(){
 		const url = this.state.url
 
 		axios.get(`${this.state.baseUrl}${url}`)
@@ -59,7 +61,7 @@ class AddReport extends React.Component {
 
 
 	render(){
-		return (<button className="btn btn-light" type="button" onClick={ (e)=>this.addReportBtn(e) } >Add Report</button>)
+		return (<button className="btn btn-light" type="submit" onClick={ (e)=>this.addReportBtn(e) } >Add Report</button>)
 	}
 }
 

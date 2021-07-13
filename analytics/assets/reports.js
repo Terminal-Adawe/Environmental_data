@@ -12,7 +12,6 @@ class Reports extends React.Component {
 		this.state={
 			data: [],
 			module: "",
-			view: "graph",
 			baseUrl: "https://d12m8zkkfoc9oy.cloudfront.net",
 			url: '/analytics/get-reports/'
 			// baseUrl: "http://localhost:8002",
@@ -38,10 +37,9 @@ class Reports extends React.Component {
         	.then(response => {
         		console.log("reports response is ")
         		console.log(response.data)
-        		var module_i = document.getElementById('module').value
+        		// var module_i = document.getElementById('module').value
           this.setState({
-            data: response.data,
-            module: module_i
+            data: response.data
           })
         })
         .catch(error => {
@@ -53,7 +51,20 @@ class Reports extends React.Component {
 
 	render(){
 		return (<React.Fragment>
-				<Template data={ this.state.data } module={ this.state.module } view={ this.state.view } baseUrl={this.state.baseUrl}/>
+							<div className="row">
+								<div className="col-lg-12 col-12">
+									<h3>Select a report to add to</h3>
+								</div>
+							</div>
+					{
+						this.state.data ? this.state.data.map((report,i)=>{
+							console.log("report is ")
+							console.log(report)
+							return <div className="row"><div className="col-lg-12 col-12"><a href="#">{ report.report_name }</a></div>
+											</div>
+
+						}) : ""
+					}
   			</React.Fragment>)
 	}
 }

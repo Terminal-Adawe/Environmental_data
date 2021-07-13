@@ -21,6 +21,7 @@ from dataProcessor.serializers import WarehouseSerializer
 from dataProcessor.serializers import ConveyersSerializer
 from dataProcessor.serializers import IncidentReportSerializer
 from dataProcessor.serializers import Water_managementSerializer
+from dataProcessor.serializers import WasteDetailsSerializer
 from analytics.serializers import ModulesSerializer
 from analytics.serializers import FieldsSerializer_serializer
 from analytics.serializers import ChartSerializer
@@ -29,7 +30,7 @@ from analytics.serializers import UsernameSerializerGet
 from analytics.serializers import TasksSerializerGet
 from analytics.serializers import CustomTablesSerializer
 from analytics.serializers import customTableSerializer
-from analytics.serializers import reportsSerializer
+from analytics.serializers import reportsModelSerializer
 from analytics.models import Storage_facility
 from analytics.models import ComplianceValue
 from analytics.models import Grease_and_hydocarbon_spillage
@@ -105,6 +106,7 @@ class DashboardViewSet(ObjectMultipleModelAPIView):
 			{'queryset': Conveyers.objects.all(), 'serializer_class': ConveyersSerializer},
 			{'queryset': IncidentReport.objects.all(), 'serializer_class': IncidentReportSerializer},
 			{'queryset': Water_management.objects.all(), 'serializer_class': Water_managementSerializer},
+			{'queryset': WasteDetails.objects.all(), 'serializer_class': WasteDetailsSerializer},
 			{'queryset': modules.objects.all(), 'serializer_class': ModulesSerializer},
 		]
 
@@ -144,7 +146,7 @@ class GetTableViewSet(viewsets.ViewSet):
 
 class GetReportsViewSet(viewsets.ViewSet):
 	def retrieve(self, request):
-		reports_queryset = reports.objects.filter(active=1)
+		reports_queryset = reports.objects.filter(active=1).values()
 
-		return Response(reportsSerializer(reports_queryset).data,status=status.HTTP_201_CREATED)
+		return Response(reports_queryset,status=status.HTTP_201_CREATED)
 

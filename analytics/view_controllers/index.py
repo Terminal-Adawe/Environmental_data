@@ -27,9 +27,12 @@ from analytics.models import GeoReferencePoints
 from analytics.models import FuelFarm
 from analytics.models import WorkEnvCompliance
 from analytics.models import Warehouse
+from analytics.models import WasteDetails
 from analytics.models import Conveyers
 from analytics.models import IncidentReport
 from analytics.models import Graph_config
+
+from analytics.models import reports
 
 from analytics.serializers import ModulesSerializer
 from analytics.serializers import formSerializer
@@ -189,10 +192,14 @@ def graph_builder(request):
         return HttpResponseRedirect('login')
 
 def report_builder(request):
-    if request.user.is_authenticated:
-        return render(request, 'analytics/dashboard/report_builder.html')
-    else:
-        return HttpResponseRedirect('login')
+    queryset = reports.objects.all()
+
+    querysetm = modules.objects.filter(active=1)
+
+    return render(request, 'analytics/dashboard/report_builder.html',
+        {
+            'data':queryset,
+            'modules':querysetm})
 
 def table_builder(request):
     if request.user.is_authenticated:
@@ -225,7 +232,7 @@ def adduser(request):
                     user.first_name = firstname
                     user.save()
     
-                    return HttpResponseRedirect('register_user')
+                    return HttpResponseRedirect('add-user')
         else:
             form = registerForm()
             return render(request, 'analytics/dashboard/adduser.html',{'form': form})
@@ -236,10 +243,15 @@ def edituser(request):
     if request.user.is_authenticated:
         users = User.objects.filter(is_active=1)
         if request.method == 'POST':
-            form = editForm()
+            form = editForm(request.POST)
+
+            username = request.POST['username']
+
+            logger.info("username is ")
+            logger.info(username)
     
             if form.is_valid():
-                # username = form.cleaned_data['username']
+                logger.info("form is valid ")
                 firstname = form.cleaned_data['first_name']
                 lastname = form.cleaned_data['last_name']
                 email = form.cleaned_data['email']
@@ -247,13 +259,35 @@ def edituser(request):
                 user = User.objects.get(username=username)
                 user.last_name = lastname
                 user.first_name = firstname
+                user.email = email
                 user.save()
+
+                logger.info("email is ")
+                logger.info(user.email)
             return render(request, 'analytics/dashboard/edituser.html',{'form': form,'users':users})
         else:
             form = editForm()
             return render(request, 'analytics/dashboard/edituser.html',{'form': form,'users':users})
     else:
         return HttpResponseRedirect('login')
+
+def add_report(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            report_name = request.POST['report_name']
+
+            reports_save = reports(
+                            report_name=report_name,
+                            report_structure="["+report_name+"]",
+                            active=1,
+                            created_by=request.user
+                )
+            reports_save.save()
+
+        return HttpResponseRedirect('reports')
+
+    return HttpResponseRedirect('login')
+
 
 class getModulesViewSet(viewsets.ViewSet):
     def retrieve(self, request, pk=None):

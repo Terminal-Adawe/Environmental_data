@@ -74,10 +74,10 @@ class FormulateReportData extends React.Component {
         const baseUrl = this.state.baseUrl
 
 
-        console.log("sending info ... ")
-        console.log(module_+" + "+x_column+" + "+y_column+" + "+valueType+" + "+groupType)
-        console.log("Base url is ")
-        console.log(this.state.baseUrl)
+        // console.log("sending info ... ")
+        // console.log(module_+" + "+x_column+" + "+y_column+" + "+valueType+" + "+groupType)
+        // console.log("Base url is ")
+        // console.log(this.state.baseUrl)
 
         form_data.append('username', username)
         form_data.append('table_name', table_name)
@@ -96,8 +96,8 @@ class FormulateReportData extends React.Component {
             }
             )
       .then(response => {
-        console.log("Response generated is ")
-        console.log(response.data)
+        // console.log("Response generated is ")
+        // console.log(response.data)
         // this.props.loader(false)
 
         response.data.map((resp,i)=>{
@@ -150,8 +150,8 @@ class FormulateReportData extends React.Component {
     }
 
     setModalValue(e,val,type){
-        console.log("value is ")
-        console.log(val)
+        // console.log("value is ")
+        // console.log(val)
 
         var mod_val = document.getElementById('module_name')
         var modal_report_type = document.getElementById('modal_report_type')
@@ -162,8 +162,8 @@ class FormulateReportData extends React.Component {
     }
 
     selectReport(e,val,type){
-        console.log("value is ")
-        console.log(val)
+        // console.log("value is ")
+        // console.log(val)
 
         var mod_val = document.getElementById('module_name')
         var report_type = document.getElementById('report_type')
@@ -237,12 +237,12 @@ class FormulateReportData extends React.Component {
                                                         {
                                                             this.state.data.map((row,i)=>{
                                                                 if(main_row.column && main_row.row){
-                                                                    console.log("col col is "+row.column)
-                                                                    console.log("column is "+col)
-                                                                    console.log("col row is "+row.row)
-                                                                    console.log("main row is "+main_row.row)
+                                                                    // console.log("col col is "+row.column)
+                                                                    // console.log("column is "+col)
+                                                                    // console.log("col row is "+row.row)
+                                                                    // console.log("main row is "+main_row.row)
                                                                         if(row.column == col && row.row == main_row.row){
-                                                                            console.log("they match "+col)
+                                                                            // console.log("they match "+col)
                                                                             return <React.Fragment key={i}>{ row.value }</React.Fragment>
                                                                         } else {
                                                                             return <React.Fragment key={i}></React.Fragment>
@@ -257,7 +257,7 @@ class FormulateReportData extends React.Component {
                                                                     }
         
                                                                 } else if (!main_row.column && main_row.row) {
-                                                                    console.log("Testing 2")
+                                                                    // console.log("Testing 2")
                                                                     if(row.row == main_row.row){
                                                                         return <React.Fragment key={i}>{ row.value }</React.Fragment>
                                                                     } else {

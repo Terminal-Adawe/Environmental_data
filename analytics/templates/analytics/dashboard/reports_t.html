@@ -11,4 +11,18 @@
 				</div>
 			</div>
 		</section>
+
+		<section class="panel">
+			<div class="panel-body">
+				<div class="container">
+					{% for val in data %}
+					<div class="row">
+						<div class="col-12">
+							<a href="#">{{ val.report_name }}</a>
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</section>
 	</div>

@@ -60,6 +60,7 @@ class FormulateGraphData extends React.Component {
 	checkModule(module, graphConfig){
 		// console.log("In module check")
 		// console.log(module.module_name)
+  //       console.log(this.props.data)
 		let rawData = []
 		switch(module.module_name){
 			case "storage_facility":
@@ -155,13 +156,17 @@ class FormulateGraphData extends React.Component {
                 // rawData = this.Waste_Management(rawData)
                 break;
             case "wastedetails":
-                rawData = this.props.data.wastedetails
+                rawData = this.props.data.WasteDetails
                 // rawData = this.Waste_Management(rawData)
                 break;
     		default:
     			rawData=""
     			break;
 		}
+
+        // console.log("Raw data sent is ")
+
+        // console.log(rawData)
 
         rawData = this.formulateGraph(rawData, graphConfig)
 
@@ -204,8 +209,8 @@ class FormulateGraphData extends React.Component {
 			// console.log(this.state.data)
   			return (<></>)
 		} else {
-			console.log("graph configs are...")
-			console.log(this.props.graphConfig)
+			// console.log("graph configs are...")
+			// console.log(this.props.graphConfig)
             let graph = ""
             if(this.props.graphConfig.graph_type == "Line Chart"){
                 graph = <LineGraph data={this.state.data} />

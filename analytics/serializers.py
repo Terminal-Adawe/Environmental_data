@@ -10,6 +10,7 @@ from .models import Complaints_register
 from .models import Slope_stabilization_and_surface_water_retention
 from .models import Safety_training
 from .models import Safety_permission_system
+from .models import WasteDetails
 from .models import ComplianceValue
 from .models import modules
 from .models import Graph_builder_field
@@ -17,6 +18,7 @@ from .models import Chart
 from .models import Graph_config
 from .models import Notifications
 from .models import Custom_table
+from .models import reports
 from .models import Tasks
 from django.contrib.auth.models import User
 
@@ -155,5 +157,10 @@ class formSerializer(serializers.Serializer):
 class reportsSerializer(serializers.Serializer):
 	report_name = serializers.CharField(max_length=255, allow_null=True)
 	report_structure = serializers.CharField(max_length=255, allow_null=True)
+
+class reportsModelSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = reports
+		fields = '__all__'
 
 

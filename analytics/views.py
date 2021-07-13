@@ -28,6 +28,7 @@ from analytics.models import Image
 from analytics.models import Tasks
 from analytics.models import Custom_table
 from analytics.models import Graph_config
+from analytics.models import reports
 from analytics.serializers import TasksSerializer
 from analytics.serializers import graphConfigSerializer
 from analytics.serializers import UsernameSerializer
@@ -55,51 +56,14 @@ def component_values(request):
 	queryset = ComplianceValue.objects.all()
 	return render(request, 'analytics/dashboard/component_values.html',{'data':queryset})
 
-def reports(request):
-	queryset = Storage_facility.objects.all().order_by('-created_at')[:4]
-	queryset2 = Grease_and_hydocarbon_spillage.objects.all().order_by('-created_at')[:4]
-	queryset3 = Waste_Management.objects.all().order_by('-created_at')[:4]
-	queryset4 = Inceneration.objects.all().order_by('-created_at')[:4]
-	queryset5 = Liquid_waste_oil.objects.all().order_by('-created_at')[:4]
-	queryset6 = Health_and_hygiene_awareness.objects.all().order_by('-created_at')[:4]
-	queryset7 = Energy_management.objects.all().order_by('-created_at')[:4]
-	queryset8 = Complaints_register.objects.all().order_by('-created_at')[:4]
-	queryset9 = Slope_stabilization_and_surface_water_retention.objects.all().order_by('-created_at')[:4]
-	queryset10 = Safety_training.objects.all().order_by('-created_at')[:4]
-	queryset11 = Safety_permission_system.objects.all().order_by('-created_at')[:4]
-	queryset12 = Safety_tools.objects.all().order_by('-created_at')[:4]
-	queryset13 = GeoReferencePoints.objects.all().order_by('-created_at')[:4]
-	queryset14 = FuelFarm.objects.all().order_by('-created_at')[:4]
-	queryset15 = WorkEnvCompliance.objects.all().order_by('-created_at')[:4]
-	queryset16 = Warehouse.objects.all().order_by('-created_at')[:4]
-	queryset17 = Conveyers.objects.all().order_by('-created_at')[:4]
-	queryset18 = IncidentReport.objects.all().order_by('-created_at')[:4]
-
-	custom_tables = Custom_table.objects.filter(active=1)
+def reports_f(request):
+	queryset = reports.objects.all()
 
 	querysetm = modules.objects.filter(active=1)
 
 	return render(request, 'analytics/dashboard/reports.html',
 		{
-			'custom_tables':custom_tables,
-			'data1':queryset,
-			'data2':queryset2,
-			'data3':queryset3,
-			'data4':queryset4,
-			'data5':queryset5,
-			'data6':queryset6,
-			'data7':queryset7,
-			'data8':queryset8,
-			'data9':queryset9,
-			'data10':queryset10,
-			'data11':queryset11,
-			'data12':queryset12,
-			'data13':queryset13,
-			'data14':queryset14,
-			'data15':queryset15,
-			'data16':queryset16,
-			'data17':queryset17,
-			'data18':queryset18,
+			'data':queryset,
 			'modules':querysetm})
 
 def graphs(request):

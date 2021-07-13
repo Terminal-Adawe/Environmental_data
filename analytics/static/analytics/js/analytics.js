@@ -82,10 +82,13 @@ let location_array
 
         var form_fields = document.querySelectorAll(".form-control"), i;
 
+        $('.username_f').val(username);
+
+        console.log("So inputter field is now ")
+        console.log($('.username_f').val())
+
         for (i = 0; i < form_fields.length; ++i) {
-            if(form_fields[i].name=="username"){
-                form_fields[i].value = username
-            }
+            
             if(form_fields[i].name=="email"){
                 form_fields[i].value = email
             }

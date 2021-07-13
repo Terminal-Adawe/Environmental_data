@@ -5,25 +5,29 @@
 {% block main_content %}
 	<div class="container-fluid">
 		<section class="panel">
-			<header class="panel-heading">
-				<div class="panel-actions">
-					<a href="#" class="fa fa-caret-down"></a>
-					<!-- <a href="#" class="fa fa-times"></a> -->
-				</div>
-		
-				<h2 class="panel-title">Report builder</h2>
-			</header>
 			<div class="panel-body">
-				<div class="container-fluid">
-					<form action="{% url 'analytics:report-builder' %}" method="post">
-						{% csrf_token %}
-						<div id="report-builder" class="container-fluid"></div>
-					</form>
+				<div class="container">
+					<div class="row">
+						<div class="col-6">
+							<button type="button" class="btn btn-light" data-toggle="modal" data-target="#add_report"><i class="fa fa-plus fa-2x mt-3"></i> <h5>Add Report</h5> </button>
+						</div>
+					</div>
 				</div>
 			</div>
 		</section>
 
+		<section class="panel">
+			<div class="panel-body">
+				<div class="container">
+					{% for val in data %}
+					<div class="row">
+						<div class="col-12">
+							<a href="#">{{ val.report_name }}</a>
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</section>
 	</div>
-
-	<script src="{% static 'graphbuilder-bundle.js' %}"></script>
-{% endblock %}
+{% endblock %}	
