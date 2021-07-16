@@ -7,6 +7,7 @@ from django.urls import reverse
 from django.shortcuts import redirect
 from rest_framework.response import Response
 from rest_framework import viewsets
+from django.utils.text import slugify
 
 from analytics.models import ComplianceValue
 from analytics.models import modules
@@ -44,7 +45,13 @@ from  analytics.forms import editForm
 
 from rest_framework import status
 
+from django.conf import settings
+
+from PIL import Image as PImage
+
 import logging
+import os
+import shutil
 
 logger = logging.getLogger("django")
 
@@ -153,8 +160,84 @@ def logout_user(request):
 def media(request):
     if request.user.is_authenticated:
         modules_queryset = modules.objects.filter(active=1)
-        image_queryset = Image.objects.select_related('module')
-        return render(request, 'analytics/dashboard/media.html',{'modules':modules_queryset,'images':image_queryset})
+        
+        media_directories = os.listdir(settings.MEDIA_ROOT)
+        image_queryset = []
+
+        logger.info("Media folders are ")
+        logger.info(settings.MEDIA_ROOT)
+        logger.info(os.listdir(settings.MEDIA_ROOT))
+
+        if request.method == 'POST':
+            logger.info("Media files are ")
+            logger.info(request.POST['folder'])
+
+            path = os.path.join('media',slugify(request.POST['folder']))
+            imagesList = os.listdir(path)
+
+
+            for image_r in imagesList:
+                class image:
+                    class image:
+                        url = ""
+
+                path = os.path.join(path, image_r)
+                logger.info(image_r)
+                image.image.url = "/"+path
+                # img = PImage.open(path)
+                # This is appending each image path which should not be so
+                logger.info("path is ")
+                logger.info(image.image.url)
+                logger.info(image)
+                image_queryset.append(image)
+
+                # Attempted destroying the object but for some reason it is still appended
+                del image
+
+            logger.info(image_queryset)
+        else:
+            image_queryset = Image.objects.select_related('module')
+        return render(request, 'analytics/dashboard/media.html',{'modules':modules_queryset,'images':image_queryset,'directories':media_directories})
+    else:
+        return HttpResponseRedirect('login')
+
+def add_folder(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            path = os.path.join('media',slugify(request.POST['folder_name']))
+            try:
+                os.mkdir(path)
+            except OSError:
+                pass
+
+        return HttpResponseRedirect('media')
+
+    else:
+        return HttpResponseRedirect('login')
+
+def add_to_folder(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            logger.info("Selected images are ")
+            logger.info(request.POST['selected_images'])
+            selected_images = request.POST['selected_images'].split(",")
+            folder_to_move_file_into = request.POST['folder_name']
+
+            destination_path = os.path.join(settings.MEDIA_ROOT,slugify(request.POST['folder_name']))
+
+            logger.info(selected_images)
+            logger.info(" and path ")
+            logger.info(destination_path)
+            queryset = Image.objects.filter(id__in=selected_images)
+
+            for value in queryset:
+                logger.info(value)
+                source_path = os.path.join(settings.MEDIA_ROOT,value.image.name)
+                shutil.copy(source_path, destination_path)
+
+            logger.info(queryset)
+
+        return HttpResponseRedirect('media')
     else:
         return HttpResponseRedirect('login')
 

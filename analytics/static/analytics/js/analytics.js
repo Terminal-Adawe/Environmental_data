@@ -114,7 +114,24 @@ let location_array
     $('.predictive_added_values').on('change',function(){
         $('.predictive_added_value').html($('.predictive_added_values').val());
     })
-    
+
+
+    // Select images
+    var selected_images = []
+    $(".file_i").off("click").on("click",function(){
+        if($(this).prop('checked')){
+            selected_images = [...selected_images, $(this).val()]
+            console.log(selected_images)
+        } else {
+            for(var i=0; i<selected_images.length; i++){
+                if(selected_images[i]==$(this).val()){
+                    selected_images.splice(i,1)
+                }
+            }
+        }
+
+        $('.selected_images').val(selected_images)
+    })
 
     // All code should be above the code below since it picks location
     // and location has not been implemented in all the templates

@@ -37,13 +37,17 @@
 												<div class="widget-header clearfix">
 													<h6 class="title pull-left mt-xs">Folders</h6>
 													<div class="pull-right">
-														<a href="#" class="btn btn-dark btn-sm btn-widget-act">Add Folder</a>
+														<a href="#" class="btn btn-dark btn-sm btn-widget-act" data-toggle="modal" data-target="#add_folder">Add Folder</a>
 													</div>
 												</div>
 												<div class="widget-content">
 													<ul class="mg-folders">
-														<li>
-															<a href="#" class="menu-item"><i class="fa fa-folder"></i> ProjectX</a>
+														{% for directory in directories %}
+															{% if directory != ".DS_Store" %}
+															{% if directory == "report_images"%}
+															<li>
+																<input type="hidden" name="folder" value="{{ directory }}" />
+																<a href="{% url 'analytics:media' %}" class="menu-item"><i class="fa fa-folder"></i> {{ directory }}</a>
 															<div class="item-options">
 																<a href="#">
 																	<i class="fa fa-edit"></i>
@@ -53,8 +57,13 @@
 																</a>
 															</div>
 														</li>
+															{% else %}
 														<li>
-															<a href="#" class="menu-item"><i class="fa fa-folder"></i> ProjectY</a>
+															<form method="POST" action="{% url 'analytics:media' %}">
+																{% csrf_token %}
+																<input type="hidden" name="folder" value="{{ directory }}" />
+																<button type="submit" class="menu-item"><i class="fa fa-folder"></i> {{ directory }}</button>
+															</form>
 															<div class="item-options">
 																<a href="#">
 																	<i class="fa fa-edit"></i>
@@ -64,68 +73,16 @@
 																</a>
 															</div>
 														</li>
-														<li>
-															<a href="#" class="menu-item"><i class="fa fa-folder"></i> ProjectZ</a>
-															<div class="item-options">
-																<a href="#">
-																	<i class="fa fa-edit"></i>
-																</a>
-																<a href="#" class="text-danger">
-																	<i class="fa fa-times"></i>
-																</a>
-															</div>
-														</li>
-														<li>
-															<a href="#" class="menu-item"><i class="fa fa-folder"></i> ProjectX</a>
-															<div class="item-options">
-																<a href="#">
-																	<i class="fa fa-edit"></i>
-																</a>
-																<a href="#" class="text-danger">
-																	<i class="fa fa-times"></i>
-																</a>
-															</div>
-														</li>
-														<li>
-															<a href="#" class="menu-item"><i class="fa fa-folder"></i> ProjectY</a>
-															<div class="item-options">
-																<a href="#">
-																	<i class="fa fa-edit"></i>
-																</a>
-																<a href="#" class="text-danger">
-																	<i class="fa fa-times"></i>
-																</a>
-															</div>
-														</li>
-														<li>
-															<a href="#" class="menu-item"><i class="fa fa-folder"></i> ProjectZ</a>
-															<div class="item-options">
-																<a href="#">
-																	<i class="fa fa-edit"></i>
-																</a>
-																<a href="#" class="text-danger">
-																	<i class="fa fa-times"></i>
-																</a>
-															</div>
-														</li>
-														<li>
-															<a href="#" class="menu-item"><i class="fa fa-folder"></i> ProjectX</a>
-															<div class="item-options">
-																<a href="#">
-																	<i class="fa fa-edit"></i>
-																</a>
-																<a href="#" class="text-danger">
-																	<i class="fa fa-times"></i>
-																</a>
-															</div>
-														</li>
+															{% endif %}
+															{% endif %}
+														{% endfor %}
 													</ul>
 												</div>
 											</div>
 							
 											<hr class="separator" />
 							
-											<div class="sidebar-widget m-none">
+											<!-- <div class="sidebar-widget m-none">
 												<div class="widget-header">
 													<h6 class="title">Labels</h6>
 													<span class="widget-toggle">+</span>
@@ -142,7 +99,7 @@
 														<li><a href="#">Takes</a></li>
 													</ul>
 												</div>
-											</div>
+											</div> -->
 										</div>
 									</div>
 								</div>
@@ -154,11 +111,11 @@
 										<li>
 											<a href="#" id="mgSelectAll"><i class="fa fa-check-square"></i> <span data-all-text="Select All" data-none-text="Select None">Select All</span></a>
 										</li>
-										<!-- <li>
-											<a href="#"><i class="fa fa-pencil"></i> Edit</a>
-										</li> -->
 										<li>
-											<a href="#"><i class="fa fa-trash-o"></i> Delete</a>
+											<a href="#" data-toggle="modal" data-target="#add_to_folder"><i class="fa fa-pencil"></i> Add to folder</a>
+										</li>
+										<li>
+											<a href="#" data-toggle="modal" data-target="#delete_confirm"><i class="fa fa-trash-o"></i> Delete</a>
 										</li>
 										<li class="right" data-sort-source data-sort-id="media-gallery">
 											<ul class="nav nav-pills nav-pills-primary">
@@ -168,9 +125,9 @@
 												<li class="active">
 													<a data-option-value="*" href="#all">All</a>
 												</li>
-												<li>
+												<!-- <li>
 													<a data-option-value=".document" href="#document">Documents</a>
-												</li>
+												</li> -->
 												<li>
 													<a data-option-value=".image" href="#image">Images</a>
 												</li>
@@ -193,7 +150,7 @@
 													<div class="mg-zoom" data-toggle="modal" data-target="#imageModal"><i class="fa fa-search mg-zoom-search"></i></div>
 													<div class="mg-toolbar">
 														<div class="mg-option checkbox-custom checkbox-inline">
-															<input type="checkbox" id="file_1" value="1">
+															<input type="checkbox" id="file_1" value="{{ image.id }}" class="file_i">
 															<label for="file_1">SELECT</label>
 														</div>
 														<div class="mg-group pull-right">
@@ -209,10 +166,10 @@
 													</div>
 												</div>
 											</div>
-											<h5 class="mg-title text-semibold">{{ image.image.name }}<small>.png</small></h5>
+											<h5 class="mg-title text-semibold">{{ image.image.url }}</h5>
 											<div class="mg-description">
-												<small class="pull-left text-muted">Site, X</small>
-												<small class="pull-right text-muted">07/10/2020</small>
+												<!-- <small class="pull-left text-muted">Site, X</small> -->
+												<small class="pull-right text-muted">{{ image.created_at }}</small>
 											</div>
 										</div>
 									</div>
@@ -224,5 +181,48 @@
 						</div>
 					</section>
 					<!-- end: page -->
+
+<!-- Add images to Folder Modal -->
+<div class="modal" id="add_to_folder">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+          <div class="container-fluid">
+          		<div class="row">
+          			<div class="col-12">
+          				<h5>Select folder to add images to</h5>
+          			</div>
+          		</div>
+              <div class="row my-4">
+                <ul class="mg-folders">
+					{% for directory in directories %}
+						{% if directory != ".DS_Store" %}
+							{% if directory == "report_images"%}
+							{% else %}
+								<li>
+									<form method="POST" action="{% url 'analytics:add_to_folder' %}">
+										{% csrf_token %}
+										<input type="hidden" name="folder_name" value="{{ directory }}" />
+										<input type="hidden" name="selected_images" class="selected_images" value="">
+										<button type="submit" class="menu-item my-2"><i class="fa fa-folder"></i> {{ directory }}</button>
+									</form>
+								</li>
+							{% endif %}
+						{% endif %}
+					{% endfor %}
+				</ul>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
 				</section>
 {% endblock %}
