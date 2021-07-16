@@ -21,8 +21,9 @@ class FormulateGraphData extends React.Component {
 	}
 
 	componentDidMount(){
-			// console.log("processing graph ... ")
-			// console.log(this.props)
+			console.log("processing graph ... ")
+			console.log(this.props.module)
+            console.log(this.props.graphConfig)
             
 			let data = []
 
@@ -34,8 +35,8 @@ class FormulateGraphData extends React.Component {
              // data = this.formulateGraph(this.props.graphData)
              // : data = []
 
-    		// console.log("manipulated data is ")
-    		// console.log(data)
+    		console.log("manipulated data is ")
+    		console.log(data)
 
 
 	
