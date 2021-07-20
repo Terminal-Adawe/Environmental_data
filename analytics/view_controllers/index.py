@@ -241,6 +241,15 @@ def add_to_folder(request):
     else:
         return HttpResponseRedirect('login')
 
+def delete_images(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            selected_images = request.POST['selected_images'].split(",")
+            Image.objects.filter(id__in=selected_images).delete()
+        return HttpResponseRedirect('media')
+    else:
+        return HttpResponseRedirect('login')
+
 def graph_builder(request):
     if request.user.is_authenticated:
         if request.method == 'POST':

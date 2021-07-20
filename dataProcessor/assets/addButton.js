@@ -116,10 +116,10 @@ class AddButton extends React.Component {
         // form_data.append('image', formData.image);
         // form_data.append('location', formData.location);
 
-        // console.log("User Location is ")
-        // console.log(form_data)
-        // console.log(" and ")
-        // console.log(formData.image)
+        console.log("User Location is ")
+        console.log(form_data)
+        console.log(" and ")
+        console.log(formData.image)
 
         console.log("Info sent is ")
         console.log(form_data)
@@ -152,6 +152,9 @@ class AddButton extends React.Component {
         	let count_p = 0 
         	let count_d = 0
 
+            console.log("length is ")
+            console.log(formData.image.length) 
+
 
              for(var i = 0; i<formData.image.length; i++){
                 this.props.loader(true)
@@ -164,8 +167,8 @@ class AddButton extends React.Component {
                 form_data_2.append('auth_user', auth_user)
                 form_data_2.append('auth_password', auth_password)
 
-                // console.log("image file is ")
-                // console.log(formData.image[i])
+                console.log("image file is ")
+                console.log(formData.image[i])
                 axios.post(`${baseUrl}/api/${image_url}`,form_data_2,{
                     headers: {
                      'X-CSRFTOKEN': cookie.load("csrftoken"),

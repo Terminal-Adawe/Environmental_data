@@ -8,6 +8,10 @@ from django.contrib.auth.models import User
 from rest_framework import status
 from analytics.models import Image
 
+import logging
+
+logger = logging.getLogger("django")
+
 
 class ImageUploader(viewsets.ViewSet):
     def create(self, request):
@@ -16,9 +20,12 @@ class ImageUploader(viewsets.ViewSet):
         image_serializer = ImageSerializer_serializer(data=request.data)
         # image_model_serializer = ImageSerializer(data=request.data)
 
+        logger.info("Selected images are ")
+        logger.info(request.data)
+
         if image_serializer.is_valid(raise_exception=True):
-            user = User.objects.get(username=serializer.data['auth_user'])
-            if user.check_password(serializer.data['auth_password']):
+            user = User.objects.get(username=image_serializer.data['auth_user'])
+            if user.check_password(image_serializer.data['auth_password']):
                 user = User.objects.get(username=image_serializer.data['username'])
                 created_by_id = user.id
                 # images = request.FILES.getlist['image']
@@ -34,7 +41,7 @@ class ImageUploader(viewsets.ViewSet):
                 return Response(status=status.HTTP_401_UNAUTHORIZED)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
-        # serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
+        # image_serializer = Storage_facilitySerializer_serializer(request.data, many=True).data
         
         
    

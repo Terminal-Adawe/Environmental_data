@@ -1030,10 +1030,16 @@ class Form extends React.Component {
 	}
 
 	handleImageChange(e){
+		console.log("value is ")
+		console.log(e.target.files)
 
+		let form = this.state.form
+
+		form.image = e.target.files
 		this.setState({
 			name: e.target.name,
 			value: e.target.files,
+			form: form
 		})
 	}
 

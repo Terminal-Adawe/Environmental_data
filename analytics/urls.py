@@ -38,6 +38,7 @@ urlpatterns = [
     path('media', index.media, name='media'),
     path('add_folder', index.add_folder, name='add_folder'),
     path('add_to_folder', index.add_to_folder, name='add_to_folder'),
+    path('delete_images', index.delete_images, name='delete_images'),
     path('graph-builder', index.graph_builder, name='graph-builder'),
     path('report-builder', index.report_builder, name='report-builder'),
     path('table-builder', index.table_builder, name='table-builder'),
