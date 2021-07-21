@@ -82,10 +82,13 @@ let location_array
 
         var form_fields = document.querySelectorAll(".form-control"), i;
 
+        $('.username_f').val(username);
+
+        console.log("So inputter field is now ")
+        console.log($('.username_f').val())
+
         for (i = 0; i < form_fields.length; ++i) {
-            if(form_fields[i].name=="username"){
-                form_fields[i].value = username
-            }
+            
             if(form_fields[i].name=="email"){
                 form_fields[i].value = email
             }
@@ -111,7 +114,44 @@ let location_array
     $('.predictive_added_values').on('change',function(){
         $('.predictive_added_value').html($('.predictive_added_values').val());
     })
-    
+
+
+    // Select images
+    var selected_images = []
+    $(".file_i").off("click").on("click",function(){
+        if($(this).prop('checked')){
+            selected_images = [...selected_images, $(this).val()]
+            console.log(selected_images)
+        } else {
+            for(var i=0; i<selected_images.length; i++){
+                if(selected_images[i]==$(this).val()){
+                    selected_images.splice(i,1)
+                }
+            }
+        }
+
+        $('.selected_images').val(selected_images)
+    })
+
+    // Select folder
+
+    $('.delete_folder').off("click").on("click",function(){
+        console.log("folder clicked is ")
+        console.log($(this).parent().siblings().children(".folder").val())
+
+        const folder_name = $(this).parent().siblings().children(".folder").val()
+
+        $('.selected_folder').val(folder_name)
+    })
+
+    $('.delete_graph_confirm_btn').off("click").on("click",function(){
+        console.log("Clicked graph is ")
+        console.log($(this).parent().parent().parent().siblings('.graphConfig').val())
+
+        $('.graphConfig_confirm').val($(this).parent().parent().parent().siblings('.graphConfig').val())
+        console.log("Clicked graph is ")
+        console.log($('.graphConfig_confirm').val())
+    })
 
     // All code should be above the code below since it picks location
     // and location has not been implemented in all the templates
