@@ -220,23 +220,26 @@ def add_to_folder(request):
         if request.method == 'POST':
             logger.info("Selected images are ")
             logger.info(request.POST['selected_images'])
-            selected_images = request.POST['selected_images'].split(",")
-            folder_to_move_file_into = request.POST['folder_name']
 
-            destination_path = os.path.join(settings.MEDIA_ROOT,slugify(request.POST['folder_name']))
-
-            logger.info(selected_images)
-            logger.info(" and path ")
-            logger.info(destination_path)
-            queryset = Image.objects.filter(id__in=selected_images)
-
-            for value in queryset:
-                logger.info(value)
-                source_path = os.path.join(settings.MEDIA_ROOT,value.image.name)
-                shutil.copy(source_path, destination_path)
-
-            logger.info(queryset)
-
+            if request.POST['selected_images'] != '':
+                logger.info("Not empty ")
+                selected_images = request.POST['selected_images'].split(",")
+                folder_to_move_file_into = request.POST['folder_name']
+    
+                destination_path = os.path.join(settings.MEDIA_ROOT,slugify(request.POST['folder_name']))
+    
+                logger.info(selected_images)
+                logger.info(" and path ")
+                logger.info(destination_path)
+                queryset = Image.objects.filter(id__in=selected_images)
+    
+                for value in queryset:
+                    logger.info(value)
+                    source_path = os.path.join(settings.MEDIA_ROOT,value.image.name)
+                    shutil.copy(source_path, destination_path)
+    
+                logger.info(queryset)
+    
         return HttpResponseRedirect('media')
     else:
         return HttpResponseRedirect('login')
@@ -245,8 +248,54 @@ def delete_images(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
             selected_images = request.POST['selected_images'].split(",")
-            Image.objects.filter(id__in=selected_images).delete()
+
+            destination_path = os.path.join(settings.MEDIA_ROOT,"report_images")
+
+            image_objects = Image.objects.filter(id__in=selected_images)
+
+            for s_file in image_objects:
+                logger.info("file is ")
+                logger.info(s_file)
+                file_to_be_deleted = os.path.join(settings.MEDIA_ROOT, s_file.image.name)
+
+                logger.info("Path is ")
+                logger.info(file_to_be_deleted)
+
+                if os.path.isfile(file_to_be_deleted):
+                    logger.info("Pass is_file ")
+                    os.remove(file_to_be_deleted)
+
+                Image.objects.filter(id__in=selected_images).delete()
+
         return HttpResponseRedirect('media')
+    else:
+        return HttpResponseRedirect('login')
+
+def delete_folder(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            selected_folder = request.POST['selected_folder']
+
+            destination_path = os.path.join(settings.MEDIA_ROOT,selected_folder)
+
+            # os.rmdir(destination_path)
+            shutil.rmtree(destination_path)
+
+        return HttpResponseRedirect('media')
+    else:
+        return HttpResponseRedirect('login')
+
+def delete_graph(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            selected_graph = request.POST['selected_graph']
+
+            logger.info("Graph to be deleted is ")
+            logger.info(selected_graph)
+
+            Graph_config.objects.filter(id=selected_graph).delete()
+
+        return HttpResponseRedirect('graphs')
     else:
         return HttpResponseRedirect('login')
 

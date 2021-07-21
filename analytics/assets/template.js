@@ -135,6 +135,14 @@ class Template extends React.Component {
     // console.log("graph config is ")
     // console.log(graphConfig)
 
+    // set graph config id
+    var graphConfig_id = document.querySelector(".graphConfig")
+    graphConfig_id.value = graphConfig.id
+
+    console.log("giving them ID ")
+    console.log(graphConfig_id.value)
+
+
     // Set predictive check
     var predictive = document.querySelector(".predictive")
     predictive.checked = graphConfig.predictive

@@ -49,11 +49,8 @@
 																<input type="hidden" name="folder" value="{{ directory }}" />
 																<a href="{% url 'analytics:media' %}" class="menu-item"><i class="fa fa-folder"></i> {{ directory }}</a>
 															<div class="item-options">
-																<a href="#">
+																<a href="{% url 'analytics:media' %}">
 																	<i class="fa fa-edit"></i>
-																</a>
-																<a href="#" class="text-danger">
-																	<i class="fa fa-times"></i>
 																</a>
 															</div>
 														</li>
@@ -61,15 +58,15 @@
 														<li>
 															<form method="POST" action="{% url 'analytics:media' %}">
 																{% csrf_token %}
-																<input type="hidden" name="folder" value="{{ directory }}" />
+																<input type="hidden" name="folder" value="{{ directory }}" class="folder" />
 																<button type="submit" class="menu-item"><i class="fa fa-folder"></i> {{ directory }}</button>
 															</form>
 															<div class="item-options">
 																<a href="#">
 																	<i class="fa fa-edit"></i>
 																</a>
-																<a href="#" class="text-danger">
-																	<i class="fa fa-times"></i>
+																<a href="#" class="text-danger delete_folder" id="delete_folder">
+																	<i class="fa fa-times" data-toggle="modal" data-target="#delete_folder_confirm"></i>
 																</a>
 															</div>
 														</li>

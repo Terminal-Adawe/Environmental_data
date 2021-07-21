@@ -133,6 +133,26 @@ let location_array
         $('.selected_images').val(selected_images)
     })
 
+    // Select folder
+
+    $('.delete_folder').off("click").on("click",function(){
+        console.log("folder clicked is ")
+        console.log($(this).parent().siblings().children(".folder").val())
+
+        const folder_name = $(this).parent().siblings().children(".folder").val()
+
+        $('.selected_folder').val(folder_name)
+    })
+
+    $('.delete_graph_confirm_btn').off("click").on("click",function(){
+        console.log("Clicked graph is ")
+        console.log($(this).parent().parent().parent().siblings('.graphConfig').val())
+
+        $('.graphConfig_confirm').val($(this).parent().parent().parent().siblings('.graphConfig').val())
+        console.log("Clicked graph is ")
+        console.log($('.graphConfig_confirm').val())
+    })
+
     // All code should be above the code below since it picks location
     // and location has not been implemented in all the templates
     const location_i = document.querySelector('.location').value
