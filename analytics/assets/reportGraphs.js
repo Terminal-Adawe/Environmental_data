@@ -13,6 +13,7 @@ class ReportGraphs extends React.Component {
 			data: [],
 			module: "",
 			view: "graph",
+			graphid: "all",
 			baseUrl: "https://d12m8zkkfoc9oy.cloudfront.net",
 			// baseUrl: "http://localhost:8002",
 		}
@@ -22,9 +23,29 @@ class ReportGraphs extends React.Component {
 
 	componentDidMount(){
 		const baseUrl = document.getElementById("baseUrl").value
+		var module_i = ""
+		if(document.getElementById('module')){
+			module_i = document.getElementById('module').value
+		}
+		 
+		var graphid = "all"
+
+		if(this.props.module){
+			module_i = this.props.module
+		}
+
+		if(this.props.graphid){
+			// console.log("graph has props ")
+			// console.log(this.props.graphid)
+			graphid = this.props.graphid
+
+		}
+		
 
 		this.setState({
-			baseUrl: baseUrl
+			baseUrl: baseUrl,
+			module: module_i,
+			graphid: graphid
 		},()=>{
 			this.getDetails()
 		})
@@ -35,10 +56,11 @@ class ReportGraphs extends React.Component {
         	.then(response => {
         		// console.log("response is ")
         		// console.log(response.data)
-        		var module_i = document.getElementById('module').value
+        		// console.log("graph is ")
+        		// console.log(this.state.graphid)
+        		
           this.setState({
-            data: response.data,
-            module: module_i
+            data: response.data
           })
         })
         .catch(error => {
@@ -50,7 +72,7 @@ class ReportGraphs extends React.Component {
 
 	render(){
 		return (<React.Fragment>
-				<Template data={ this.state.data } module={ this.state.module } view={ this.state.view } baseUrl={this.state.baseUrl}/>
+				<Template data={ this.state.data } graphid={this.state.graphid} module={ this.state.module } view={ this.state.view } baseUrl={this.state.baseUrl}/>
   			</React.Fragment>)
 	}
 }

@@ -23,26 +23,43 @@
  				   </tr>
  				 </thead> -->
  				 <tbody>
-                    <tr>
-                        <th scope="col">Report Name</th>
-                        <td>{{ data.report_name }}</td>
-                    </tr>
+            <tr>
+                <th scope="col">Report Name</th>
+                <td>{{ data.report_name }}</td>
+            </tr>
  				 	<tr>
-    				  <th scope="col">Training</th>
-    				  <td>{{ data.training }}</td>
+    				  <th scope="col">Total water quantity</th>
+    				  <td>{{ data.total_water_quantity_available }}</td>
     				</tr>
-                    <tr>
-                      <th scope="col">Number of Staff</th>
-                      <td>{{ data.no_of_staff }}</td>
-                    </tr>
-                    <tr>
-                      <th scope="col">Number of Visitors</th>
-                      <td>{{ data.no_of_visitors }}</td>
-                    </tr>
-                    <tr>
-                      <th scope="col">Duration</th>
-                      <td>{{ data.duration }}</td>
-                    </tr>
+            <tr>
+              <th scope="col">Camp Consumption</th>
+              <td>{{ data.camp_consumption }}</td>
+            </tr>
+            <tr>
+              <th scope="col">Admin Consumption</th>
+              <td>{{ data.admin_consumption }}</td>
+            </tr>
+
+            <tr>
+              <th scope="col">Workshop Consumption</th>
+              <td>{{ data.workshop_consumption }}</td>
+            </tr>
+
+            <tr>
+              <th scope="col">Mine plant Consumption</th>
+              <td>{{ data.mine_plant_consumption }}</td>
+            </tr>
+
+            <tr>
+              <th scope="col">Cafeteria Consumption</th>
+              <td>{{ data.cafeteria_consumption }}</td>
+            </tr>
+
+            <tr>
+              <th scope="col">Other Consumption</th>
+              <td>{{ data.other_consumption }}</td>
+            </tr>
+
     				<tr>
     					<th scope="col">Comment</th>
     				  	<td>{{ data.comment }}</td>
@@ -86,13 +103,12 @@
               </td>
              </tr>
  				 </tbody>
-         
 				</table>
+  			<!-- <button class="mr-4 btn btn-danger" type="button">Print</button> -->
         <input type="hidden" class="table_type_default" value="storage_facility">
         <input type="hidden" name="report_id" class="table_id" value="{{ data.id }}">
-  			<!-- <button class="mr-4 btn btn-danger" type="button">Print</button> -->
         <button class="mx-4 btn btn-info" type="submit">Export to Excel</button>
         <button class="btn btn-danger mx-4 delete_table_confirm_btn ml-auto" type="button" data-toggle="modal" data-target="#delete_table_confirm">Delete Table</button>
         {% endfor %}
-      </form>
+        </form>
 	</div>

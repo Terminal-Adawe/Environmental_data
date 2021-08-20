@@ -12,7 +12,8 @@ module.exports = {
     custom_table: './assets/custom_table.js',
     report_list: './assets/reports.js',
     add_report: './assets/addReport.js',
-    save_button: './assets/saveBtn.js'
+    save_button: './assets/saveBtn.js',
+    view_report: './assets/view_report.js',
   },
   output: {
     filename: '[name]-bundle.js',  // output bundle file name

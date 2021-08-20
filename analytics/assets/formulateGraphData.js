@@ -211,7 +211,7 @@ class FormulateGraphData extends React.Component {
   			return (<></>)
 		} else {
 			// console.log("graph configs are...")
-			// console.log(this.props.graphConfig)
+			console.log(this.props.graphConfig)
             let graph = ""
             if(this.props.graphConfig.graph_type == "Line Chart"){
                 graph = <LineGraph data={this.state.data} />

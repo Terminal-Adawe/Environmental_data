@@ -33,8 +33,8 @@ class LineGraph extends React.Component {
     };
 
   _onNearestXY (value, {event, innerX, innerY, index}) {
-      console.log("value is "+value.x+" and inner x is "+innerX+" and inner Y is "+innerY+" and index is "+index)
-      console.log(value)
+      // console.log("value is "+value.x+" and inner x is "+innerX+" and inner Y is "+innerY+" and index is "+index)
+      // console.log(value)
       this.setState({crosshairValues: [value.x,value.y]});
     };
 
@@ -42,8 +42,8 @@ class LineGraph extends React.Component {
 
 
 	render(){
-		console.log("Line graph data graph is ")
-		console.log(this.props.data)
+		// console.log("Line graph data graph is ")
+		// console.log(this.props.data)
 
     const crosshairvalues_all = this.state.crosshairValues
 

@@ -144,6 +144,7 @@ let location_array
         $('.selected_folder').val(folder_name)
     })
 
+    // Delete graph confirm
     $('.delete_graph_confirm_btn').off("click").on("click",function(){
         console.log("Clicked graph is ")
         console.log($(this).parent().parent().parent().siblings('.graphConfig').val())
@@ -151,6 +152,22 @@ let location_array
         $('.graphConfig_confirm').val($(this).parent().parent().parent().siblings('.graphConfig').val())
         console.log("Clicked graph is ")
         console.log($('.graphConfig_confirm').val())
+    })
+
+    // Delete table confirm
+
+    $('.delete_table_confirm_btn').off('click').on('click',function(){
+        console.log("Clicked table is ")
+        console.log($(this).siblings('.table_type_default').val())
+        console.log($(this).siblings('.table_id').val())
+
+        $('#delete_table_id').val($(this).siblings('.table_id').val())
+
+        $('#table_type').val($(this).siblings('.table_type_default').val())
+    })
+
+    $('.addToReport_btn').off('click').on('click',function(){
+        console.log('clicked')
     })
 
     // All code should be above the code below since it picks location

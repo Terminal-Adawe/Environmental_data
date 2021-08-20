@@ -32,16 +32,24 @@ from analytics.models import WasteDetails
 from analytics.models import Conveyers
 from analytics.models import IncidentReport
 from analytics.models import Graph_config
+from analytics.models import Custom_table
+from analytics.models import Report_notes
 
 from analytics.models import reports
 
 from analytics.serializers import ModulesSerializer
 from analytics.serializers import formSerializer
+from analytics.serializers import reportsSerializer
+from analytics.serializers import reportsInsertSerializer
+from analytics.serializers import reportsUpdateSerializer
+from analytics.serializers import notesInsertSerializer
 
 from  analytics.forms import loginForm
 from  analytics.forms import indexloginForm
 from  analytics.forms import registerForm
 from  analytics.forms import editForm
+
+from analytics.views import str_to_class
 
 from rest_framework import status
 
@@ -52,6 +60,7 @@ from PIL import Image as PImage
 import logging
 import os
 import shutil
+import ast
 
 logger = logging.getLogger("django")
 
@@ -244,6 +253,291 @@ def add_to_folder(request):
     else:
         return HttpResponseRedirect('login')
 
+def add_to_report(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            report_id = request.POST['report_id']
+            report_category = request.POST['report_cat']
+            logger.info("report selected is ")
+            logger.info(request.POST['report_id'])
+            logger.info("category is ")
+            logger.info(request.POST['report_cat'])
+
+            if report_category=="table":
+                logger.info("table selected is ")
+                logger.info(request.POST['report_id'])
+            elif report_category=="graph":
+                logger.info("graph selected is ")
+                logger.info(request.POST['report_id'])
+    
+                logger.info(queryset)
+    
+        return HttpResponseRedirect('media')
+    else:
+        return HttpResponseRedirect('login')
+
+def save_graph(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            predictive = 0
+            show_on_dashboard = 0
+            if 'predictive' in request.POST:
+                predictive = request.POST['predictive']
+                predictive = 1
+            if 'on_dashboard' in request.POST:
+                show_on_dashboard = request.POST['on_dashboard']
+                show_on_dashboard = 1
+
+            graphConfig = request.POST['graphConfig']
+            predictive_balance = request.POST['predictive_balance']
+            predictive_added_values = request.POST['predictive_added_values']
+            # logger.info("Saving the following items: ")
+            # logger.info("predictive: ")
+            # logger.info(predictive)
+            # logger.info("show_on_dashboard: ")
+            # logger.info(show_on_dashboard)
+            # logger.info("graphConfig: ")
+            # logger.info(graphConfig)
+            # logger.info("predictive_balance: ")
+            # logger.info(predictive_balance)
+            # logger.info("predictive_added_values: ")
+            # logger.info(predictive_added_values)
+
+            graphConfigRec = Graph_config.objects.get(id=graphConfig)
+            graphConfigRec.predictive = predictive
+            graphConfigRec.on_dashboard = show_on_dashboard
+            graphConfigRec.predictive_balance = predictive_balance
+            graphConfigRec.predictive_to = predictive_added_values
+            graphConfigRec.save()
+    
+        return HttpResponseRedirect('graphs')
+    else:
+        return HttpResponseRedirect('login')
+
+def listToString(s):
+    # initialize an empty string
+    str1 = ","
+
+    # return string  
+    return (str1.join(s))
+
+class addToReportViewSet(viewsets.ViewSet):
+    def create(self, request):
+        # queryset = modules.objects.values('module_name')
+        serializer = reportsInsertSerializer(data=request.data)
+
+        logger.info("Data to be added to report is ")
+        logger.info(request.data)
+
+        data = ""
+
+        if serializer.is_valid(raise_exception=True):
+            report_name_p = serializer.data['reportName']
+            insert_cat = serializer.data['category']
+            insert_id = serializer.data['the_id']
+            module_id_p = serializer.data['module_id']
+
+            firstLayerArray = []
+            reportStructureArray = []
+
+            logger.info(" also ... ")
+            logger.info(serializer.data)
+
+            # Create object from request received
+            # class insert_list:
+            #     category = insert_cat
+            #     reportName = report_name_p
+            #     the_id = insert_id
+            #     module_id = module_id_p
+
+            # Create dictionary from request received
+            insert_list = {
+                "category" : insert_cat,
+                "report_name": report_name_p,
+                "the_id": insert_id,
+                "module_id": module_id_p
+            }
+
+            # firstLayerArray.append(insert_list)
+
+            # Set final array to created dictionary
+            reportStructureArray=insert_list
+
+            logger.info("So insert list is ")
+            logger.info(reportStructureArray)
+
+            # Get report with the report name provided from the database
+            get_reports_queryset = reports.objects.filter(report_name=report_name_p).values()[0]
+            # reportStructure = get_reports_queryset
+
+            # Check if the report_structure field is empty from the returned report object
+            if get_reports_queryset['report_structure']!="":
+                reportStructureArray=get_reports_queryset['report_structure']+"|"+str(insert_list)
+    
+            # Save final report
+            reports_queryset = reports.objects.get(report_name=report_name_p)
+
+            reports_queryset.report_structure = reportStructureArray
+            reports_queryset.save()
+
+        return Response(reportsSerializer(reports_queryset).data,status.HTTP_202_ACCEPTED)
+        # return Response(queryset,status.HTTP_202_ACCEPTED)
+        # serializer = ModulesSerializer(data=request.data)
+
+class updateReportViewSet(viewsets.ViewSet):
+    def create(self, request):
+        # queryset = modules.objects.values('module_name')
+        serializer = reportUpdateSerializer(data=request.data)
+
+        logger.info("Data to be added to report is ")
+        logger.info(request.data)
+
+        data = ""
+
+        if serializer.is_valid(raise_exception=True):
+            report_id = serializer.data['reportid']
+            update_cat = serializer.data['category']
+            the_update_id = serializer.data['the_id']
+            module_id_p = serializer.data['module_id']
+            position = serializer.data['position']
+            action = serializer.data['action']
+            username = serializer.data['username']
+            full_struct = serializer.data['full_structure']
+
+            firstLayerArray = []
+            reportStructureArray = []
+
+            logger.info(" ... also ... ")
+            logger.info(full_struct)
+
+            # Create object from request received
+            # class insert_list:
+            #     category = insert_cat
+            #     reportName = report_name_p
+            #     the_id = insert_id
+            #     module_id = module_id_p
+
+            # Create dictionary from request received
+            insert_list = {
+                "category" : insert_cat,
+                "report_name": report_name_p,
+                "the_id": insert_id,
+                "module_id": module_id_p
+            }
+
+            # firstLayerArray.append(insert_list)
+
+            # Set final array to created dictionary
+            reportStructureArray=insert_list
+
+            logger.info("So insert list is ")
+            logger.info(reportStructureArray)
+
+            # Get report with the report name provided from the database
+            get_reports_queryset = reports.objects.filter(report_=report_name_p).values()[0]
+            # reportStructure = get_reports_queryset
+
+            # Check if the report_structure field is empty from the returned report object
+            if get_reports_queryset['report_structure']!="":
+                # Split the report_structure column into a list
+                initialReportStructureArray = get_reports_queryset['report_structure'].split("|")
+
+                # Loop through the report_structure list
+                for jsonStruc in initialReportStructureArray:
+                    # Change text structure of the report details into json
+                    jsonReportStructure = ast.literal_eval(jsonStruc)
+                    logger.info("Change json structure is:")
+                    logger.info(jsonReportStructure)
+
+                    # Check if the structure's report_name is same as the report name in the request
+                    if jsonReportStructure['the_id'] == insert_id and jsonReportStructure['category']=="note":
+                        # Perform operation to update report_structure list with new json from the request
+
+                        # Check the ID of the request dictionary
+                        reportStructureArray=get_reports_queryset['report_structure']+"|"+str(insert_list)
+                
+                    else:
+                        initialReportStructureArray.insert
+
+            # Save final report
+            reports_queryset = reports.objects.get(report_name=report_name_p)
+
+            reports_queryset.report_structure = reportStructureArray
+            reports_queryset.save()
+            
+
+            # logger.info("Data to be manipulated ")
+            # logger.info(get_reports_queryset['report_structure'])
+            # reportStructure = get_reports_queryset
+            
+            # str = str.replace("\'", "\"")
+            
+
+
+            # logger.info("So reports came out fine ")
+            # logger.info(reportStructureArray)
+            # logger.info(initialReportStructureArray)
+            # logger.info("This is the first array:")
+            # logger.info(initialReportStructureArray[0])
+            # logger.info("Sub of the first array:")
+            # logger.info(jsonReportStructure)
+            # logger.info(jsonReportStructure['category'])
+
+            # reportStructureArray=str(insert_list)
+            
+
+            
+            # data = reports_queryset
+
+            # logger.info("Data to be added to report is ")
+            # logger.info(reports_queryset)
+
+        return Response(reportsSerializer(reports_queryset).data,status.HTTP_202_ACCEPTED)
+        # return Response(queryset,status.HTTP_202_ACCEPTED)
+        # serializer = ModulesSerializer(data=request.data)
+
+
+
+class saveNotesViewSet(viewsets.ViewSet):
+    def create(self, request):
+        # queryset = modules.objects.values('module_name')
+        serializer = notesInsertSerializer(data=request.data)
+
+        logger.info("Notes to be added to report is ")
+        logger.info(request.data)
+
+        data = ""
+
+        if serializer.is_valid(raise_exception=True):
+            notes = serializer.data['notes']
+            action = serializer.data['action']
+            note_id = serializer.data['note_id']
+            report_id = serializer.data['report_id']
+            username = serializer.data['username']
+
+            user = User.objects.get(username=username)
+
+            if action == "add":
+                notes_ = Report_notes(
+                        notes=notes,
+                        report_id_id=report_id,
+                        created_by=user
+                    )
+                notes_.save()
+
+                note_id = notes_.id
+
+                pass
+            elif action == "update":
+                logger.info("Request to update")
+                pass
+            elif action == "del":
+                logger.info("Request to delete")
+                pass
+        return Response(note_id,status.HTTP_202_ACCEPTED)
+
+
+
 def delete_images(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
@@ -296,6 +590,31 @@ def delete_graph(request):
             Graph_config.objects.filter(id=selected_graph).delete()
 
         return HttpResponseRedirect('graphs')
+    else:
+        return HttpResponseRedirect('login')
+
+def delete_table(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            table_id = request.POST['table_id']
+            table_type = request.POST['table_type']
+
+            modules_queryset = modules.objects.filter(active=1)
+
+            logger.info("Table to be deleted is ")
+            logger.info(table_id)
+
+            if table_type == "custom":
+                Custom_table.objects.filter(id=table_id).delete()
+            else:
+                logger.info("about to check for module "+table_type)
+                for module_i in modules_queryset.values():
+                    if table_type == module_i['module_name']:
+                        myModel = str_to_class(module_i['table'])
+                        myModel.objects.filter(id=table_id).delete()
+                pass
+
+        return HttpResponseRedirect('tables')
     else:
         return HttpResponseRedirect('login')
 

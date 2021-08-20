@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from rest_framework import viewsets
 from analytics.models import ComplianceValue
 from analytics.models import Storage_facility
@@ -23,6 +24,7 @@ from analytics.models import WorkEnvCompliance
 from analytics.models import Warehouse
 from analytics.models import Conveyers
 from analytics.models import IncidentReport
+from analytics.models import Water_management
 from analytics.models import modules
 from analytics.models import Image
 from analytics.models import Tasks
@@ -88,6 +90,7 @@ def tables(request):
 	queryset16 = Warehouse.objects.all().order_by('-created_at')[:4]
 	queryset17 = Conveyers.objects.all().order_by('-created_at')[:4]
 	queryset18 = IncidentReport.objects.all().order_by('-created_at')[:4]
+	queryset19 = Water_management.objects.all().order_by('-created_at')[:4]
 
 	custom_tables = Custom_table.objects.filter(active=1)
 
@@ -114,19 +117,20 @@ def tables(request):
 			'data16':queryset16,
 			'data17':queryset17,
 			'data18':queryset18,
+			'data19':queryset19,
 			'modules':querysetm})
 
 def str_to_class(str):
     return getattr(sys.modules[__name__], str)
 
-def view_report(request, module, report_id):
+def view_table(request, module, report_id):
 	if request.user.is_authenticated:
 		user = request.user
 		reportid = report_id
 		module = module
 		modules_queryset = modules.objects.filter(active=1)
 		
-		url = 'analytics/dashboard/view_report.html'
+		url = 'analytics/dashboard/view_table.html'
 	
 		# queryset = modules.objects.filter(id=module)
 		# module = queryset[0].module_name
@@ -147,8 +151,8 @@ def view_report(request, module, report_id):
 		
 			queryset = myModel.objects.filter(report_name=reportid)
 		
-			# logger.info("Queryset is ")
-			# logger.info(queryset)
+			logger.info("Queryset is ")
+			logger.info(queryset)
 			# logger.info("And report ID is ")
 			# logger.info(reportid)
 	
@@ -161,6 +165,19 @@ def view_report(request, module, report_id):
 		image_queryset = Image.objects.filter(report_id=reportid, module_id__in=modules_queryset_single.values('id'))
 	
 		return render(request, url,{'report_data':queryset,'module':int(module),'modules':modules_queryset,'images':image_queryset})
+	else:
+		return HttpResponseRedirect('login')
+
+def view_report(request, report_id):
+	if request.user.is_authenticated:
+		user = request.user
+		reportid = report_id
+
+		modules_queryset = modules.objects.filter(active=1)
+		
+		url = 'analytics/dashboard/view_report.html'
+	
+		return render(request, url,{'report_id':reportid,'modules':modules_queryset})
 	else:
 		return HttpResponseRedirect('login')
 

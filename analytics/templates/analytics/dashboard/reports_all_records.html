@@ -27,7 +27,7 @@
 						<tbody>
 							{% for value in data %}
 							<tr class="grade">
-								<td><a class="row-link" href="{% url 'analytics:view_report' report_id=value.report_name module=module1.id %}">{{ value.report_name }}</a></td>
+								<td><a class="row-link" href="{% url 'analytics:view_table' report_id=value.report_name module=module1.id %}">{{ value.report_name }}</a></td>
 								<td>{{ module1.description }}</td>
 								<td>{{ value.created_at }}</td>
 							</tr>

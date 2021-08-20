@@ -6,7 +6,7 @@
 	<div class="container-fluid">
 		<section class="panel">
 			<div class="panel-body">
-				<a class="go-back-link" href="{% url 'analytics:reports' %}"><i class="fa fa-long-arrow-left fa-lg"></i> Go back</a> 
+				<a class="go-back-link" href="{% url 'analytics:tables' %}"><i class="fa fa-long-arrow-left fa-lg"></i> Go back</a> 
 			</div>
 		</section>
 
@@ -20,10 +20,11 @@
 				<h2 class="panel-title">Report</h2>
 			</header>
 			<div class="panel-body">
-				Report ID is {{ report_id }}
-				<input type="hidden" id="reportID" value="{{ report_id }}">
-				<div id="view_report"></div>
-                <script src="{% static 'view_report-bundle.js' %}"></script>
+				{% for module_i in modules %}
+					{% if module == module_i.id %}
+						{% include module_i.default_report_path %}
+					{% endif %}
+				{% endfor %}
 			</div>
 		</section>
 

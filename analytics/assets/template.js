@@ -58,7 +58,7 @@ function ColumnMaker(props){
                     </div>
                     <div className="col-lg-6 col-md-6 col-sm-6">
                       <span className="mx-4">
-                        <a href="#" data-toggle="modal" data-target="#reports" onClick={ (e)=>props.selectReport(e,props.table_name,'graph') }>Add to Report</a>
+                        <a href="#" data-toggle="modal" data-target="#reports" onClick={ (e)=>props.selectReport(e,props.graphConfig.id,'graph','custom') } >Add to Report</a>
                       </span>
                     </div>
                   </div>
@@ -119,16 +119,23 @@ class Template extends React.Component {
     this.setDashboard(e.target.checked, id)
   }
 
-  selectReport(e,val,type){
+  selectReport(e,id_,cat,table_type){
         console.log("value is ")
-        console.log(val)
+        console.log(id_)
 
-        var mod_val = document.getElementById('module_name')
-        var report_type = document.getElementById('report_type')
-        mod_val.value = val
-        report_type.value = type
+        // var mod_val = document.getElementById('module_name')
+        // var report_type = document.getElementById('report_type')
+        // mod_val.value = val
+        // report_type.value = type
 
-        console.log(mod_val.value)
+        var report_cat = document.getElementById('report_cat')
+        var report_table_type = document.getElementById('report_table_type')
+        var report_id = document.getElementById('report_id')
+        report_cat.value = cat
+        report_table_type.value = table_type
+        report_id.value = id_
+
+        // console.log(mod_val.value)
     }
 
   editGraph(e, graphConfig){
@@ -217,16 +224,17 @@ class Template extends React.Component {
 								
                 {
                   this.props.data.Graph_config ? 
-                  this.props.data.Graph_config.filter(config=>((this.props.view=="dashboard" && config.on_dashboard==1) || this.props.view=="graph")).map((graph,i)=>{
-                    console.log("Module selected is ")
-                    console.log(this.props.module)
+                  this.props.data.Graph_config.filter(config=>((this.props.view=="dashboard" && config.on_dashboard==1) || (this.props.view=="graph" && this.props.graphid=="all") || (this.props.view=="graph" && this.props.graphid==config.id))).map((graph,i)=>{
+                    // console.log("Module selected is ")
+                    // console.log(this.props.graphid)
+                    // console.log(config.id)
                     return <React.Fragment key={i}>
                     {
                       this.props.data.modules ?
                       this.props.data.modules.filter(module=>(module.id==graph.module && this.props.module=="all") || (module.id==graph.module && module.module_name==this.props.module)).map((module,i)=>{
-                        console.log("Singular module is ")
-                        console.log(module.module_name)
-                        console.log(this.props.data)
+                        // console.log("Singular module is ")
+                        // console.log(module.module_name)
+                        // console.log(this.props.data)
                         return <ColumnMaker key={i} data={ this.props.data } module={ module } graphConfig={ graph } handleCheckboxInputChanged={ this.handleCheckboxInputChanged } view={this.props.view} selectReport={ this.selectReport } editGraph={ this.editGraph }/>
                       })
                     : ""

@@ -680,4 +680,20 @@ class reports(models.Model):
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 
+class Report_notes(models.Model):
+	report_id = models.ForeignKey(reports,
+			on_delete=models.PROTECT,
+			related_name="report_id")
+	notes = models.TextField(null=True, blank=True)
+	created_by = models.ForeignKey(User,
+			on_delete=models.PROTECT,
+			related_name="report_notes")
+	updated_by = models.IntegerField(null=True, blank=True)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+
+
+
+
+
 		

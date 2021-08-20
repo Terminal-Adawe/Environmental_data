@@ -25,6 +25,7 @@ class CustomTables extends React.Component {
 			y_column: "",
 			groupType: "sum",
 			description: "",
+			is_editable: 1,
 			baseUrl: "https://d12m8zkkfoc9oy.cloudfront.net",
 			valueType: "",
 			get_report_url: "/analytics/get-table/",
@@ -42,12 +43,22 @@ class CustomTables extends React.Component {
 
 		const baseUrl = document.getElementById("baseUrl").value
 		const username = document.querySelector(".username").value
-		const table_id = document.querySelector(".table_id").value
+		let table_id = ""
+		let is_editable = 1
+
+		if(this.props.table_id){
+			table_id = this.props.table_id
+			is_editable = 0
+		} else {
+			table_id = document.querySelector(".table_id").value
+		}
+		
 
 		this.setState({
 			baseUrl: baseUrl,
 			username: username,
-			table_id: table_id
+			table_id: table_id,
+			is_editable: is_editable
 		},()=>{
 			this.getDetails()
 		})
@@ -63,7 +74,7 @@ class CustomTables extends React.Component {
 
 		axios.get(`${this.state.baseUrl}${url}`,{
 							params: {
-								table_id: table_id
+								id: table_id
 							}
 							},{
                 headers: {
@@ -91,6 +102,7 @@ class CustomTables extends React.Component {
 				console.log("table is ")
 				console.log(table)
 				return <section key={i} className="panel">
+				<input type="hidden" className="table_id" value="{table.table_name}"/>
 				<header className="panel-heading">
 					<div className="panel-actions">
 					</div>
@@ -98,7 +110,7 @@ class CustomTables extends React.Component {
 					<h2 className="panel-title">{table.table_name}</h2>
 				</header>
 				<div className="panel-body">
-					<FormulateReportData username={this.state.username} module_name={table.module} x_column={table.x_column} y_column={table.y_column} valueType={table.value} table_name={table.table_name} groupType={table.group_type} description={table.description} />
+					<FormulateReportData username={this.state.username} is_editable={this.state.is_editable} module_name={table.module} x_column={table.x_column} y_column={table.y_column} valueType={table.value} table_name={table.table_name} table_id={table.id} groupType={table.group_type} description={table.description} />
 				</div>
 			</section>
 			})

@@ -2,7 +2,7 @@
 <div class="card">
     <form method="POST" action="{% url 'analytics:export_report' %}">
       {% csrf_token %}
-      <input type="hidden" name="report_id" value={{ data.id }}>
+      {% for data in report_data %}
       {% for module_i in modules %}
         {% if module_i.id == module %}
         <div><h2>{{ module_i.description }}</h2></div>
@@ -22,7 +22,6 @@
              <th scope="col">Signs of Erosion on spillway tip</th>
            </tr>
          </thead> -->
-         {% for data in report_data %}
          <tbody>
             <tr>
                 <th scope="col">Report Name</th>
@@ -100,9 +99,12 @@
               </td>
              </tr>
          </tbody>
-         {% endfor %}
         </table>
         <!-- <button class="mr-4 btn btn-danger" type="button">Print</button> -->
+        <input type="hidden" class="table_type_default" value="storage_facility">
+        <input type="hidden" name="report_id" class="table_id" value="{{ data.id }}">
         <button class="mx-4 btn btn-info" type="submit">Export to Excel</button>
+        <button class="btn btn-danger mx-4 delete_table_confirm_btn ml-auto" type="button" data-toggle="modal" data-target="#delete_table_confirm">Delete Table</button>
+        {% endfor %}
       </form>
 </div>

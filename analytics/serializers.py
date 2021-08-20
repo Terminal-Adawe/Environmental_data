@@ -122,8 +122,8 @@ class CustomTablesSerializer(serializers.ModelSerializer):
 		fields = ['id','table_name','group_type','module','x_column','y_column','value','created_at']
 
 
-class customTableSerializer(serializers.Serializer):
-	table_id = serializers.CharField(max_length=10)
+class customIDSerializer(serializers.Serializer):
+	id = serializers.CharField(max_length=10)
 
 class graphConfigSerializer(serializers.Serializer):
 	id = serializers.CharField(max_length=10)
@@ -153,10 +153,15 @@ class formSerializer(serializers.Serializer):
 	# 	)
 	# additionalFields = serializers.CharField(max_length=255,allow_null=True,allow_blank=True,required=False)
 
-
 class reportsSerializer(serializers.Serializer):
 	report_name = serializers.CharField(max_length=255, allow_null=True)
 	report_structure = serializers.CharField(max_length=255, allow_null=True)
+
+class reportsInsertSerializer(serializers.Serializer):
+	reportName = serializers.CharField(max_length=255, allow_null=True)
+	category = serializers.CharField(max_length=255, allow_null=True)
+	the_id = serializers.CharField(max_length=255, allow_null=True)
+	module_id = serializers.CharField(max_length=255, allow_null=True)
 
 class reportsModelSerializer(serializers.ModelSerializer):
 	class Meta:
@@ -164,3 +169,23 @@ class reportsModelSerializer(serializers.ModelSerializer):
 		fields = '__all__'
 
 
+class notesInsertSerializer(serializers.Serializer):
+	notes = serializers.CharField(max_length=255, allow_null=True)
+	action = serializers.CharField(max_length=255, allow_null=True)
+	note_id = serializers.CharField(max_length=255, allow_null=True, required=False)
+	report_id = serializers.CharField(max_length=255, allow_null=True, required=False)
+	username = serializers.CharField(max_length=255, allow_null=True, required=False)
+
+
+class reportsUpdateSerializer(serializers.Serializer):
+	report_id = serializers.CharField(max_length=255, allow_null=True)
+	category = serializers.CharField(max_length=255, allow_null=True)
+	the_id = serializers.CharField(max_length=255, allow_null=True)
+	module_id = serializers.CharField(max_length=255, allow_null=True)
+	position = serializers.CharField(max_length=255, allow_null=True)
+	action = serializers.CharField(max_length=255, allow_null=True)
+	username = serializers.CharField(max_length=255, allow_null=True)
+	full_struct = serializers.ListField(
+			child=serializers.JSONField(allow_null=True,required=False),
+			allow_null=True
+		)

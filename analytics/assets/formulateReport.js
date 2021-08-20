@@ -149,28 +149,41 @@ class FormulateReportData extends React.Component {
       })
     }
 
-    setModalValue(e,val,type){
-        // console.log("value is ")
+    setModalValue(e,id_,val,type){
+        console.log("value is ")
         // console.log(val)
+        // console.log(type)
+        // console.log(id_)
+
 
         var mod_val = document.getElementById('module_name')
         var modal_report_type = document.getElementById('modal_report_type')
+
+        var del_mod_val = document.getElementById('delete_table_id')
+        var del_mod_type = document.getElementById('table_type')
+
         mod_val.value = val
         modal_report_type.value = type
 
-        console.log(mod_val.value)
+        del_mod_val.value = id_
+        del_mod_type.value = type
+
+        console.log(del_mod_val.value)
     }
 
-    selectReport(e,val,type){
-        // console.log("value is ")
-        // console.log(val)
 
-        var mod_val = document.getElementById('module_name')
-        var report_type = document.getElementById('report_type')
-        mod_val.value = val
-        report_type.value = type
+    selectReport(e,id_,cat,table_type){
+        console.log("value is ")
+        console.log(cat)
+        console.log(table_type)
+        console.log(id_)
 
-        console.log(mod_val.value)
+        var report_cat = document.getElementById('report_cat')
+        var report_table_type = document.getElementById('report_table_type')
+        var report_id = document.getElementById('report_id')
+        report_cat.value = cat
+        report_table_type.value = table_type
+        report_id.value = id_
     }
 
 
@@ -283,18 +296,27 @@ class FormulateReportData extends React.Component {
                                     <div className="row">
                                         <span className="mx-auto">{ this.state.description }</span>
                                     </div>
-                                    <div className="row mt-1">
-                                      <div className="col-lg-6 col-md-6 col-sm-6">
-                                        <span className="mx-4">
-                                          <a href="#" data-toggle="modal" data-target="#report-date-selector" onClick={ (e)=>this.setModalValue(e,this.props.table_name,'custom') }>Export Table</a>
-                                        </span>
-                                      </div>
-                                      <div className="col-lg-6 col-md-6 col-sm-6">
-                                        <span className="mx-4">
-                                          <a href="#" data-toggle="modal" data-target="#reports" onClick={ (e)=>this.selectReport(e,this.props.table_name,'table') }>Add to Report</a>
-                                        </span>
-                                      </div>
-                                    </div>
+                                    {
+                                        this.props.is_editable==0 ? "" :
+                                        <div className="row mt-1">
+                                          <div className="col-lg-4 col-md-4 col-sm-6">
+                                            <span className="mx-4">
+                                              <a href="#" data-toggle="modal" data-target="#report-date-selector" onClick={ (e)=>this.setModalValue(e,this.props.table_id,this.props.table_name,'custom') }>Export Table</a>
+                                            </span>
+                                          </div>
+                                          <div className="col-lg-4 col-md-4 col-sm-6">
+                                            <span className="mx-4">
+                                              <a href="#" data-toggle="modal" data-target="#reports" onClick={ (e)=>this.selectReport(e,this.props.table_id,'table','custom') }>Add to Report</a>
+                                            </span>
+                                          </div>
+                                          <div className="col-lg-4 col-md-4 col-sm-12">
+                                            <span className="mx-4">
+                                              <button className="btn btn-danger mt-3 delete_table_confirm_btn" type="button" onClick={ (e)=>this.setModalValue(e,this.props.table_id,this.props.table_name,'custom') } data-toggle="modal" data-target="#delete_table_confirm">Delete Table</button>
+                                            </span>
+                                          </div>
+                                        </div>
+                                    }
+                                    
                             </div>
                         </div>)
 		}

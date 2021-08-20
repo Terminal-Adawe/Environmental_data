@@ -29,8 +29,9 @@ from analytics.serializers import GraphConfigSerializer
 from analytics.serializers import UsernameSerializerGet
 from analytics.serializers import TasksSerializerGet
 from analytics.serializers import CustomTablesSerializer
-from analytics.serializers import customTableSerializer
+from analytics.serializers import customIDSerializer
 from analytics.serializers import reportsModelSerializer
+from analytics.serializers import reportsInsertSerializer
 from analytics.models import Storage_facility
 from analytics.models import ComplianceValue
 from analytics.models import Grease_and_hydocarbon_spillage
@@ -61,6 +62,7 @@ from analytics.models import reports
 from analytics.models import NotificationViewer
 from analytics.models import Tasks
 from analytics.models import Custom_table
+from analytics.models import Report_notes
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.models import User
@@ -68,6 +70,10 @@ from django.http import HttpResponse, JsonResponse
 from drf_multiple_model.views import ObjectMultipleModelAPIView
 from datetime import datetime
 import json
+import ast
+
+import logging
+logger = logging.getLogger("django")
 
 
 # class DashboardViewSet(viewsets.ViewSet):
@@ -135,10 +141,10 @@ class GetTablesViewSet(ObjectMultipleModelAPIView):
 
 class GetTableViewSet(viewsets.ViewSet):
 	def retrieve(self, request):
-		serializer = customTableSerializer(data=request.query_params)
+		serializer = customIDSerializer(data=request.query_params)
 
 		if serializer.is_valid(raise_exception=True):
-			table = Custom_table.objects.filter(id=request.query_params.get('table_id')).values()
+			table = Custom_table.objects.filter(id=request.query_params.get('id')).values()
 
 			return Response(table, status=status.HTTP_200_OK)
 		else:
@@ -149,4 +155,43 @@ class GetReportsViewSet(viewsets.ViewSet):
 		reports_queryset = reports.objects.filter(active=1).values()
 
 		return Response(reports_queryset,status=status.HTTP_201_CREATED)
+
+class GetReportViewSet(viewsets.ViewSet):
+	def retrieve(self, request):
+		serializer = customIDSerializer(data=request.query_params)
+
+		if serializer.is_valid(raise_exception=True):
+			report_details = reports.objects.filter(id=request.query_params.get('id')).values()
+
+			reportStructure = report_details[0]['report_structure'].split("|")
+
+			report = []
+
+			for report_structure in reportStructure:
+				logger.info("Report Data to be manipulated ")
+				
+				report_structure = ast.literal_eval(report_structure)
+
+				report.append(report_structure)
+
+				logger.info(report)
+
+			return Response(report, status=status.HTTP_200_OK)
+		else:
+			return Response("Request Failed", status=status.HTTP_201_CREATED)
+
+		return Response(reports_queryset,status=status.HTTP_201_CREATED)
+
+
+class GetNotesViewSet(viewsets.ViewSet):
+	def retrieve(self, request):
+		serializer = customIDSerializer(data=request.query_params)
+
+		if serializer.is_valid(raise_exception=True):
+			table = Report_notes.objects.filter(id=request.query_params.get('id')).values()
+
+			return Response(table, status=status.HTTP_200_OK)
+		else:
+			return Response("Request Failed", status=status.HTTP_201_CREATED)
+
 

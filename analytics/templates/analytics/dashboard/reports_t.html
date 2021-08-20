@@ -1,6 +1,6 @@
 {% load static %}
 	<div class="container-fluid">
-		<section class="panel">
+<!-- 		<section class="panel">
 			<div class="panel-body">
 				<div class="container">
 					<div class="row">
@@ -10,7 +10,7 @@
 					</div>
 				</div>
 			</div>
-		</section>
+		</section> -->
 
 		<section class="panel">
 			<div class="panel-body">
@@ -18,7 +18,7 @@
 					{% for val in data %}
 					<div class="row">
 						<div class="col-12">
-							<a href="#">{{ val.report_name }}</a>
+							<a href="{% url 'analytics:view_report' report_id=val.id %}">{{ val.report_name }}</a>
 						</div>
 					</div>
 					{% endfor %}

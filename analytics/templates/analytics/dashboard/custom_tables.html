@@ -21,7 +21,7 @@
 					<tbody>
 						{% for table in custom_tables %}
 						<tr class="grade">
-							<td><a class="row-link" href="{% url 'analytics:view_report' report_id=table.id module='custom' %}">{{ table.table_name }}</a></td>
+							<td><a class="row-link" href="{% url 'analytics:view_table' report_id=table.id module='custom' %}">{{ table.table_name }}</a></td>
 							<td>{{ module.description }}</td>
 							<td>{{ table.created_at }}</td>
 						</tr>

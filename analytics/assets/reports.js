@@ -4,6 +4,7 @@ import Template from './template';
 
 import axios from "axios";
 import cookie from "react-cookies";
+import ModalPortal from './modalPortal';
 
 class Reports extends React.Component {
 	constructor(){
@@ -18,6 +19,9 @@ class Reports extends React.Component {
 		}
 
 		this.getDetails = this.getDetails.bind(this)
+		this.addToReport = this.addToReport.bind(this)
+
+		this.buttonRef = React.createRef();
 	}
 
 	componentDidMount(){
@@ -27,7 +31,23 @@ class Reports extends React.Component {
 			baseUrl: baseUrl
 		},()=>{
 			this.getDetails()
+
+			if(this.buttonRef.current){
+				this.buttonRef.current.addEventListener('click', () => this.addToReport);
+			}
 		})
+	}
+
+	componentDidUpdate(prevState){
+		if(this.state.data != prevState.data){
+			console.log("Component updated")
+			if(this.buttonRef.current){
+				console.log("Button exists")
+				this.buttonRef.current.addEventListener('click', () => this.addToReport, { capture: true });
+			}
+			
+		}
+		
 	}
 
 	getDetails(){
@@ -48,9 +68,14 @@ class Reports extends React.Component {
      	})
 	}
 
+		addToReport(){
+			console.log("Report name is ")
+			console.log(report_name)
+		}
+
 
 	render(){
-		return (<React.Fragment>
+		return (<div className="container-fluid">
 							<div className="row">
 								<div className="col-lg-12 col-12">
 									<h3>Select a report to add to</h3>
@@ -60,12 +85,14 @@ class Reports extends React.Component {
 						this.state.data ? this.state.data.map((report,i)=>{
 							console.log("report is ")
 							console.log(report)
-							return <div className="row"><div className="col-lg-12 col-12"><a href="#">{ report.report_name }</a></div>
+							return <div className="row my-2" key={i} style={{ 'paddingBottom':'8px' }}>
+												<div className="col-lg-12 col-md-12 col-sm-12 col-12">
+														<button className="btn addToReport_btn" ref={this.buttonRef} onClick={()=>this.addToReport} type="button">{ report.report_name }</button>
+												</div>
 											</div>
-
 						}) : ""
 					}
-  			</React.Fragment>)
+  			</div>)
 	}
 }
 
