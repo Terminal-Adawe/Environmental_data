@@ -38,7 +38,7 @@ class Index extends React.Component {
 	}
 
 	getDetails(){
-		axios.get(`${this.state.baseUrl}/analytics/get-details/`)
+		axios.get(`${this.state.baseUrl}/agent/analytics/get-details/`)
         	.then(response => {
         		console.log("response is ")
         		console.log(response.data)

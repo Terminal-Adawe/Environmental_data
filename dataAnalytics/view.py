@@ -6,4 +6,4 @@ from django.urls import reverse
 
 
 def index(request):
-	return HttpResponseRedirect('analytics/login')
+	return HttpResponseRedirect('analytics/')
