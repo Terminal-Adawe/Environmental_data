@@ -34,11 +34,13 @@ class Index extends React.Component {
 			baseUrl: baseUrl
 		},()=>{
 			this.getDetails()
+
+			axios.defaults.baseURL = this.state.baseUrl
 		})
 	}
 
 	getDetails(){
-		axios.get(`${this.state.baseUrl}/agent/analytics/get-details/`)
+		axios.get(`${this.state.baseUrl}/analytics/get-details/`)
         	.then(response => {
         		console.log("response is ")
         		console.log(response.data)

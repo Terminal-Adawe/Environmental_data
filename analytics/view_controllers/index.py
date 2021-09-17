@@ -55,7 +55,7 @@ from rest_framework import status
 
 from django.conf import settings
 
-from PIL import Image as PImage
+# from PIL import Image as PImage
 
 import logging
 import os
@@ -108,6 +108,7 @@ def admin_documentation(request):
 def inputter_documentation(request):
     return render(request, 'analytics/inputter_documentation.html')
 
+@method_decorator(csrf_exempt)
 def login(request):
     if request.method == 'POST':
         form = loginForm(request.POST)
