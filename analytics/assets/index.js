@@ -35,7 +35,7 @@ class Index extends React.Component {
 		},()=>{
 			this.getDetails()
 
-			axios.defaults.baseURL = this.state.baseUrl
+			axios.defaults.baseURL = ""
 		})
 	}
 
