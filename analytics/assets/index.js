@@ -25,7 +25,7 @@ class Index extends React.Component {
 	}
 
 	componentDidMount(){
-		const baseUrl = document.getElementById("baseUrl").value
+		// const baseUrl = document.getElementById("baseUrl").value
 
 		console.log("Base url is ")
 		console.log(baseUrl)
