@@ -108,7 +108,6 @@ def admin_documentation(request):
 def inputter_documentation(request):
     return render(request, 'analytics/inputter_documentation.html')
 
-@method_decorator(csrf_exempt)
 def login(request):
     if request.method == 'POST':
         form = loginForm(request.POST)
