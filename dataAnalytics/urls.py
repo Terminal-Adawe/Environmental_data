@@ -32,10 +32,6 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
 ]
 
-urlpatterns += [
-   re_path('react/',render_react)  
-]
-
 
 if settings.DEBUG:
         urlpatterns += static(settings.MEDIA_URL,
