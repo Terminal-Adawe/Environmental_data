@@ -25,7 +25,7 @@ class Index extends React.Component {
 	}
 
 	componentDidMount(){
-		// const baseUrl = document.getElementById("baseUrl").value
+		const baseUrl = document.getElementById("baseUrl").value
 
 		console.log("Base url is ")
 		console.log(baseUrl)
@@ -35,12 +35,12 @@ class Index extends React.Component {
 		},()=>{
 			this.getDetails()
 
-			axios.defaults.baseURL = this.state.baseUrl
+			// axios.defaults.baseURL = this.state.baseUrl
 		})
 	}
 
 	getDetails(){
-		axios.get(`/analytics/get-details/`)
+		axios.get(`${this.state.baseUrl}/analytics/get-details/`)
         	.then(response => {
         		console.log("response is ")
         		console.log(response.data)
