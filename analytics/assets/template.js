@@ -81,7 +81,7 @@ function Widget_generator(props){
             <div className="row">
           {
             props.widgets.map((widget,i)=>{
-              return <div className="col-lg-4 col-sm-12">
+              return <div className="col-lg-4 col-sm-12" key={i}>
               <Widgets_custom compliance={ props.data.ComplianceValue } parameter={ widget[0] } background={ widget[1] } />
               </div>
             })
@@ -231,11 +231,11 @@ class Template extends React.Component {
                     return <React.Fragment key={i}>
                     {
                       this.props.data.modules ?
-                      this.props.data.modules.filter(module=>(module.id==graph.module && this.props.module=="all") || (module.id==graph.module && module.module_name==this.props.module)).map((module,i)=>{
+                      this.props.data.modules.filter(module=>(module.id==graph.module && this.props.module=="all") || (module.id==graph.module && module.module_name==this.props.module)).map((module,r)=>{
                         // console.log("Singular module is ")
                         // console.log(module.module_name)
                         // console.log(this.props.data)
-                        return <ColumnMaker key={i} data={ this.props.data } module={ module } graphConfig={ graph } handleCheckboxInputChanged={ this.handleCheckboxInputChanged } view={this.props.view} selectReport={ this.selectReport } editGraph={ this.editGraph }/>
+                        return <ColumnMaker key={r} data={ this.props.data } module={ module } graphConfig={ graph } handleCheckboxInputChanged={ this.handleCheckboxInputChanged } view={this.props.view} selectReport={ this.selectReport } editGraph={ this.editGraph }/>
                       })
                     : ""
                     }
