@@ -82,8 +82,8 @@ class CustomTables extends React.Component {
                  },
             })
         	.then(response => {
-        		console.log("response is ")
-        		console.log(response)
+        		// console.log("response is ")
+        		// console.log(response)
           this.setState({
             data: response.data,
           })
@@ -99,8 +99,8 @@ class CustomTables extends React.Component {
 		return (<React.Fragment>
 		{
 			this.state.data.map((table,i)=>{
-				console.log("table is ")
-				console.log(table)
+				// console.log("table is ")
+				// console.log(table)
 				return <section key={i} className="panel">
 				<input type="hidden" className="table_id" value="{table.table_name}"/>
 				<header className="panel-heading">

@@ -11,7 +11,8 @@ class Notes extends React.Component {
 
 		this.state={
 			data: [],
-			get_notes: '/api/analytics/get-notes/'
+			get_notes: '/analytics/get-notes/',
+			baseUrl: "https://d12m8zkkfoc9oy.cloudfront.net",
 			// baseUrl: "http://localhost:8002",
 		}
 
@@ -21,6 +22,7 @@ class Notes extends React.Component {
 	componentDidMount(){
 
 		let notes_id = ""
+		const baseUrl = document.getElementById("baseUrl").value
 
 		if(this.props.notes_id){
 			notes_id = this.props.notes_id
@@ -28,14 +30,26 @@ class Notes extends React.Component {
 			notes_id = document.querySelector(".notes_id").value
 		}
 
-		this.getNotes(notes_id)
+		this.setState({
+			baseUrl: baseUrl,
+		},()=>{
+			this.getNotes(notes_id)
+		})
+
+		
 	}
+
+	
 
 
 	getNotes(notes_id){
-		const url = this.state.get_notes
+		const baseUrl = this.state.baseUrl
+  	const url = this.state.get_notes
 
-		axios.get(`${this.state.baseUrl}${url}`,
+  	if(typeof(notes_id)=="string" && (notes_id.indexOf("above") != -1)){
+
+  	} else {
+  		axios.get(`${baseUrl}${url}`,
 							{
 							params: {
 								id: notes_id
@@ -58,6 +72,8 @@ class Notes extends React.Component {
           // here catch error messages from laravel validator and show them 
           console.log(error)
      	})
+  	}
+		
 	}
 
 
@@ -69,8 +85,8 @@ class Notes extends React.Component {
 				<div className="container-fluid">
 					{
 						this.state.data.map((note,i)=>{
-							<div className="row">
-								<div className="container-fluid">
+							return <div className="row">
+								<div className="container-fluid note-font">
 									<p>
 										{ note.notes }
 									</p>

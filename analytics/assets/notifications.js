@@ -166,7 +166,7 @@ class Notifications extends React.Component {
 									<ul>
 									{
 										this.state.notifications.map((notification,i)=>{
-											var url = `${this.state.baseUrl}/analytics/view_report/${notification.module}/${notification.report}/`
+											var url = `${this.state.baseUrl}/analytics/view_table/${notification.module}/${notification.report}/`
 											return <li key={ i }>
 													<a href={url} className="btn btn-default">
 														<p className="clearfix mb-xs">

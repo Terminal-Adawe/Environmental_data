@@ -9,6 +9,9 @@ import ReportGraphs from './reportGraphs';
 import AddText from './AddText'
 import Notes from './notes'
 
+import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
+import ReactPDF from '@react-pdf/renderer';
+
 
 class ViewReport extends React.Component {
 	constructor(){
@@ -24,7 +27,7 @@ class ViewReport extends React.Component {
 			edit_mode: 0,
 			baseUrl: "https://d12m8zkkfoc9oy.cloudfront.net",
 			get_report_url: '/analytics/get-report/',
-			save_report_structure: '/analytics/api/save_report_structure',
+			save_report_structure: '/analytics/api/save_report_structure/',
 			save_notes_url: '/analytics/api/save_notes/'
 			// baseUrl: "http://localhost:8002",
 		}
@@ -37,6 +40,7 @@ class ViewReport extends React.Component {
 		this.saveStructure_api = this.saveStructure_api.bind(this)
 		this.updateNotes = this.updateNotes.bind(this)
 		this.edit_mode_switch = this.edit_mode_switch.bind(this)
+		this.print_report = this.print_report.bind(this)
 	}
 
 	componentDidMount(){
@@ -59,6 +63,11 @@ class ViewReport extends React.Component {
 		this.setState({
 			edit_mode: !this.state.edit_mode
 		})
+
+	}
+
+	print_report(){
+		ReactPDF.render(<MyDocument />, `${__dirname}/example.pdf`);
 	}
 
 
@@ -76,8 +85,8 @@ class ViewReport extends React.Component {
                  },
             })
         	.then(response => {
-        		console.log("The report response is ")
-        		console.log(response.data)
+        		// console.log("The report response is ")
+        		// console.log(response.data)
           this.setState({
             data: response.data,
           })
@@ -89,14 +98,14 @@ class ViewReport extends React.Component {
 	}
 
 	textAreaChangeFunc(e, position, positionid){
-		console.log("Position is ")
-		console.log(position)
-		console.log(" + ")
-		console.log(positionid)
-		console.log(" + ")
-		console.log(e.target.value)
-		console.log(" + ")
-		console.log(this.state.data)
+		// console.log("Position is ")
+		// console.log(position)
+		// console.log(" + ")
+		// console.log(positionid)
+		// console.log(" + ")
+		// console.log(e.target.value)
+		// console.log(" + ")
+		// console.log(this.state.data)
 
 		const jsonStructure = {"category": "note", "report_name": this.state.report_id, "the_id": position+positionid, "module_id": "custom"}
 
@@ -128,7 +137,7 @@ class ViewReport extends React.Component {
 		let note_m = this.state.notes
 
 		// Initialize notes array with temp entries
-		note_s = [temp_id, value, 0]
+		note_s = {"id": temp_id, "report_id_id": this.state.report_id,"notes":value}
 
 		console.log("Structure is ")
 		console.log(structure)
@@ -157,23 +166,35 @@ class ViewReport extends React.Component {
 			// Initialize single note array. 
 			// ID of the note already stored in the structure.
 			// 
-			note_s = [struc.the_id, value, 0]
+			note_s = {"id": struc.the_id, "report_id_id": this.state.report_id,"notes":value}
 		})
 
-		if(exists==0){
-			structure.splice(positionid,0,nStructure)
-			note_m.push(note_s)
+		if(note_exist==0){
+			if(position=="below"){
+				structure.splice(calcPos,0,nStructure)
+			}
+			if(position=="above"){
+				structure.splice(positionid,0,nStructure)
+			}
+			
+			note_m.push([note_s])
 		}
 
 		if(note_exist==1){
-			note_m.filter(note=>note[0]==temp_id).map((note,i)=>{
-				note[1] = value
+			note_m.filter(note=>note[0]['id']==temp_id).map((note,i)=>{
+				note[0]['notes'] = value
 			})
 		}
+
+		// console.log("notes before ")
+		// console.log(this.state.notes)
 
 		this.setState({
 			notes: note_m
 		})
+
+		// console.log("restructured note is ")
+		// console.log(note_m)
 		
 	}
 
@@ -186,8 +207,13 @@ class ViewReport extends React.Component {
 			edit_mode: !this.state.edit_mode
 		})
 
-		console.log("I have data as")
-		console.log(data)
+		// console.log("I have data as")
+		// console.log(data)
+
+		let note_id = "none"
+		let note_ = ""
+		let action = "add"
+		let position = ""
 
 		// Loop through current array
 		// Check if the_id param is a string. Strings show it is newly inserted.
@@ -195,48 +221,103 @@ class ViewReport extends React.Component {
 			struct.the_id.indexOf("above") != -1) 
 		|| (typeof(struct.the_id)=="string" 
 			&& struct.the_id.indexOf("below") != -1)).map((struct,i)=>{
-			console.log("each Structure is ")
+			// console.log("About to add ")
 			// str = struct.the_id
-			console.log(struct)
+			// console.log(struct)
 
-			let action = "add"
-			let note_id = "none"
+			
+			note_id = struct.the_id
 
-			// Loop through notes array and compare with structure array
-			// If structure array already has note ID, then update else insert new note
-			notes.map((note,i)=>{
-				if(note[1]==struct.the_id){
-					action = "update"
-					note_id = struct.the_id
+			// Get position from some skematics
+				
+				if(struct.the_id.indexOf("above") != -1){
+					try{
+						position = struct.the_id.split('above')
+						position = position[1]
+
+						// console.log("above position is ")
+						// console.log(position)
+					} catch(err){
+						// console.log("Above Error enlisted is ")
+						// console.log(err)
+					}
 				}
 				
-
-				// Get position from some skematics
-				let position = note_id.split('above')
+				if(struct.the_id.indexOf("below") != -1){
+					try{
+						position = struct.the_id.split('below')
+						position = parseInt(position[1])+1
+						console.log("lower position is ")
+						console.log(position)
 	
-				try{
-					position = position.split('below')
-				} catch(err){
-					console.log("Error enlisted is ")
-					console.log(err)
+					} catch(err){
+						// console.log("Below Error enlisted is ")
+						// console.log(err)
+					}
 				}
 
-			console.log("Says to "+action)
-			console.log(position)
+				notes.map((note,i)=>{
+					// console.log("Each note is ")
+					// console.log(note)
+					if(note[0]['id'] == struct.the_id){
+						note_ = note[0]['notes']
 
-			this.saveNote_api(note[1],action,note_id,report_id,position[1])
+						// console.log("They match so note is now... ")
+						// console.log(note_)
+					}
+					
+					
+				})
 
-			})
-			
-			
+				console.log("Position is ")
+				console.log(position)
+
+				// console.log("ADD")
+				this.saveNote_api(note_,action,note_id,report_id,position)			
 		})
 
-		
+
+		// Loop through notes array and compare with structure array
+			// If structure array already has note ID, then update else insert new note
+			action = "update"
+		data.filter(struct=>(typeof(struct.the_id)=="string" && 
+			struct.the_id.indexOf("above") == -1) 
+		|| (typeof(struct.the_id)=="string" 
+			&& struct.the_id.indexOf("below") == -1)).map((struct,i)=>{
+			notes.map((note,i)=>{
+				// console.log("Note cycled is")
+				// console.log(note)
+
+				// console.log("compared with ")
+				// console.log(struct)
+
+				note_id = note[0]['id']
+
+				// if(note[0]==struct.the_id){
+
+				// 	action = "update"
+				// 	note_id = struct.the_id
+				// }
+
+
+				
+
+			// console.log("Position is "+position[1])
+			// console.log("Says to "+action)
+
+			// this.saveNote_api(note[1],action,note_id,report_id,i)
+
+			})
+
+		})
 	}
 
 
 	saveNote_api(note, action, note_id, report_id, position){
 		let form_data = new FormData();
+
+		console.log("Note about to be saved include the details below: ")
+		console.log("note: "+note+" |+| action: "+action+" |+| note ID: "+note_id+" |+| report ID: "+report_id+" |+| position: "+position)
 
 		const username = this.state.username
     
@@ -250,8 +331,6 @@ class ViewReport extends React.Component {
     	const baseUrl = this.state.baseUrl
     	const url = this.state.save_notes_url
 
-    	console.log("username being sent is ")
-    	console.log(username)
 
 		axios.post(`${baseUrl}${url}`,form_data,{
                     headers: {
@@ -260,38 +339,35 @@ class ViewReport extends React.Component {
                     },
                 })
                 .then(response => {
-                    console.log("report structure save response is ")
+                    console.log("Save note response is ")
                     console.log(response)
                     // this.props.loader(false)
 
-                    if(response.status == "201"){
+                    if(response.status == "201" || response.status == "202"){
                         // Successful upload
-                        console.log("Note ID is ")
-                        console.log(response.data.id)
-                        this.saveStructure_api("note", response.data.id, note_id, reportid, "custom", action, position)
+                        this.saveStructure_api("note", response.data, note_id, report_id, "custom", action, position)
                     } else {
                         // Failed upload
                     }
 
                 })
                 .catch(error => {
-                    this.props.loader(false)
                     console.log(error)
-                    document.getElementById('error-message').innerHTML = error
-                    setTimeout(function(){
-                        document.getElementById('error-message').innerHTML = ""
-                    },10000)
+                    // document.getElementById('error-message').innerHTML = error
+                    // setTimeout(function(){
+                    //     document.getElementById('error-message').innerHTML = ""
+                    // },10000)
                 // console.log("an error occurred!!")
                 })
 	}
 
 
-	saveStructure_api(category, the_id, old_note_id, reportid, module_id, action, position){
+	saveStructure_api(category, the_id, old_note_id, report_id, module_id, action, position){
 		let form_data = new FormData();
     
     	form_data.append('category', category)
     	form_data.append('the_id', the_id)
-    	form_data.append('reportid', reportid)
+    	form_data.append('report_id', report_id)
     	form_data.append('module_id', module_id)
     	form_data.append('action', action)
     	form_data.append('position', position)
@@ -301,8 +377,16 @@ class ViewReport extends React.Component {
     	// Get structure
     	let structure = this.state.data
 
+    	// console.log("The structure: ")
+    	// console.log(structure)
+
+    	// console.log("The old_note_id is ")
+    	// console.log(old_note_id)
+
     	// replace note ID with new inserted note ID
     	structure.filter(struct=>struct.the_id==old_note_id).map((struct,i)=>{
+    		// console.log("ID CHANGE HAPPENING")
+    		console.log("Structure ID and old ID match")
     		struct.the_id = the_id
     	})
 
@@ -312,47 +396,70 @@ class ViewReport extends React.Component {
     		console.log("Structure is now ")
     		console.log(this.state.data)
 
-    		form_data.append("full_structure",this.state.da)
+    		form_data.append("full_struct",this.state.data)
     	})
 
 
-		axios.post(`${baseUrl}${save_report_structure}`,form_data,{
-                    headers: {
-                     'X-CSRFTOKEN': cookie.load("csrftoken"),
-                     enctype: 'multipart/form-data'
-                    },
-                })
-                .then(response => {
-                    console.log("report structure save response is ")
-                    console.log(response)
-                    // this.props.loader(false)
+    	const baseUrl = this.state.baseUrl
+    	const url = this.state.save_report_structure
 
-                    if(response.status == "201"){
-                        // Successful upload
-                    } else {
-                        // Failed upload
-                    }
+    	if(action == "add"){
+			axios.post(`${baseUrl}${url}`,form_data,{
+        	            headers: {
+        	             'X-CSRFTOKEN': cookie.load("csrftoken"),
+        	             enctype: 'multipart/form-data'
+        	            },
+        	        })
+        	        .then(response => {
+        	            // console.log("report structure save response is ")
+        	            // console.log(response)
+        	            // this.props.loader(false)
+	
+        	            if(response.status == "201" || response.status == "202"){
+        	                // Successful upload
+        	                this.getReport(report_id)
 
-                })
-                .catch(error => {
-                    this.props.loader(false)
-                    console.log(error)
-                    document.getElementById('error-message').innerHTML = error
-                    setTimeout(function(){
-                        document.getElementById('error-message').innerHTML = ""
-                    },10000)
-                // console.log("an error occurred!!")
-                })
+        	                let structure = this.state.data
+		console.log("New Structure is ")
+		console.log(structure)
+        	            } else {
+        	                // Failed upload
+        	            }
+	
+        	        })
+        	        .catch(error => {
+        	            console.log(error)
+        	            // document.getElementById('error-message').innerHTML = error
+        	            // setTimeout(function(){
+        	            //     document.getElementById('error-message').innerHTML = ""
+        	            // },10000)
+        	        // console.log("an error occurred!!")
+        	        })
+    	}
 	}
 
 
 	render(){
-		return (
+		// Create styles
+		const styles = StyleSheet.create({
+		  page: {
+		    flexDirection: 'row',
+		    backgroundColor: '#E4E4E4'
+		  },
+		  section: {
+		    margin: 10,
+		    padding: 10,
+		    flexGrow: 1
+		  }
+		});
+
+		return (<Document>
+			<Page size="A4" style={styles.page}>
 				<div className="container-fluid">
 					{
 						this.state.data.map((structure,i)=>{
-							console.log("Going through this structure...")
-							console.log(structure)
+							// console.log("Going through this structure...")
+							// console.log(structure)
 							if(structure.category=="table" && structure.module_id=="custom"){
 								return <React.Fragment key={i}>
 												{
@@ -366,7 +473,6 @@ class ViewReport extends React.Component {
 													<AddText position="below" positionid={i} textAreaChangeFunc={this.textAreaChangeFunc}/>
 													: ''
 												}			
-												<hr/>
 											</React.Fragment>
 							} else if (structure.category=="graph" && structure.module_id == "custom"){
 								return <React.Fragment key={i}>
@@ -384,7 +490,7 @@ class ViewReport extends React.Component {
 												<hr/>
 											</React.Fragment>
 							} else if (structure.category=="note" && structure.module_id == "custom"){
-								console.log("matched note")
+								// console.log("matched note")
 								return <React.Fragment key={i}>
 												{
 													this.state.edit_mode ?
@@ -397,7 +503,7 @@ class ViewReport extends React.Component {
 													<AddText position="below" positionid={i} textAreaChangeFunc={this.textAreaChangeFunc}/>
 													: ''
 												}	
-												<hr/>
+											
 											</React.Fragment>
 							} else {
 								return <div key={i}></div>
@@ -411,9 +517,11 @@ class ViewReport extends React.Component {
 						:
 						<button className="btn btn-secondary mx-4" type="button" onClick={ this.edit_mode_switch }>Edit</button>
 					}
-						
+						<button className="btn btn-primary mx-4" type="submit" onClick={ this.print_report }>Print</button>
 					</div>
 				</div>
+				</Page>
+				</Document>
 			)
 	}
 }

@@ -387,7 +387,7 @@ class addToReportViewSet(viewsets.ViewSet):
 class updateReportViewSet(viewsets.ViewSet):
     def create(self, request):
         # queryset = modules.objects.values('module_name')
-        serializer = reportUpdateSerializer(data=request.data)
+        serializer = reportsUpdateSerializer(data=request.data)
 
         logger.info("Data to be added to report is ")
         logger.info(request.data)
@@ -395,17 +395,20 @@ class updateReportViewSet(viewsets.ViewSet):
         data = ""
 
         if serializer.is_valid(raise_exception=True):
-            report_id = serializer.data['reportid']
+            report_id = serializer.data['report_id']
             update_cat = serializer.data['category']
             the_update_id = serializer.data['the_id']
             module_id_p = serializer.data['module_id']
             position = serializer.data['position']
             action = serializer.data['action']
             username = serializer.data['username']
-            full_struct = serializer.data['full_structure']
+            full_struct = serializer.data['full_struct']
+            report_name = reports.objects.values_list('report_name', flat=True).filter(id=report_id)[0]
 
             firstLayerArray = []
             reportStructureArray = []
+
+            reportStructure = ""
 
             logger.info(" ... also ... ")
             logger.info(full_struct)
@@ -419,9 +422,9 @@ class updateReportViewSet(viewsets.ViewSet):
 
             # Create dictionary from request received
             insert_list = {
-                "category" : insert_cat,
-                "report_name": report_name_p,
-                "the_id": insert_id,
+                "category" : update_cat,
+                "report_name": report_name,
+                "the_id": the_update_id,
                 "module_id": module_id_p
             }
 
@@ -434,35 +437,40 @@ class updateReportViewSet(viewsets.ViewSet):
             logger.info(reportStructureArray)
 
             # Get report with the report name provided from the database
-            get_reports_queryset = reports.objects.filter(report_=report_name_p).values()[0]
+            get_reports_queryset = reports.objects.filter(id=report_id).values()[0]
             # reportStructure = get_reports_queryset
+
+            logger.info("Report queryset is ")
+            logger.info(get_reports_queryset)
 
             # Check if the report_structure field is empty from the returned report object
             if get_reports_queryset['report_structure']!="":
                 # Split the report_structure column into a list
                 initialReportStructureArray = get_reports_queryset['report_structure'].split("|")
 
+                if action=="add" :
+                    logger.info(" ... position is ... ")
+                    logger.info(position)
+                    initialReportStructureArray.insert(int(position),str(insert_list))
+
+                logger.info("Updated Report queryset is ")
+                logger.info(initialReportStructureArray)
+
                 # Loop through the report_structure list
                 for jsonStruc in initialReportStructureArray:
                     # Change text structure of the report details into json
-                    jsonReportStructure = ast.literal_eval(jsonStruc)
-                    logger.info("Change json structure is:")
-                    logger.info(jsonReportStructure)
-
-                    # Check if the structure's report_name is same as the report name in the request
-                    if jsonReportStructure['the_id'] == insert_id and jsonReportStructure['category']=="note":
-                        # Perform operation to update report_structure list with new json from the request
-
-                        # Check the ID of the request dictionary
-                        reportStructureArray=get_reports_queryset['report_structure']+"|"+str(insert_list)
-                
+                    # jsonReportStructure = ast.literal_eval(jsonStruc)
+                    # logger.info("Change json structure is:")
+                    # logger.info(jsonReportStructure)
+                    if reportStructure == "":
+                        reportStructure = jsonStruc
                     else:
-                        initialReportStructureArray.insert
+                        reportStructure = reportStructure+"|"+jsonStruc
 
             # Save final report
-            reports_queryset = reports.objects.get(report_name=report_name_p)
+            reports_queryset = reports.objects.get(id=report_id)
 
-            reports_queryset.report_structure = reportStructureArray
+            reports_queryset.report_structure = reportStructure
             reports_queryset.save()
             
 
@@ -530,6 +538,9 @@ class saveNotesViewSet(viewsets.ViewSet):
                 pass
             elif action == "update":
                 logger.info("Request to update")
+                notes_ = Report_notes.objects.get(id=report_id)
+                notes_.notes=notes
+                notes_.save()
                 pass
             elif action == "del":
                 logger.info("Request to delete")

@@ -21,9 +21,9 @@ class FormulateGraphData extends React.Component {
 	}
 
 	componentDidMount(){
-			console.log("processing graph ... ")
-			console.log(this.props.module)
-            console.log(this.props.graphConfig)
+			// console.log("processing graph ... ")
+			// console.log(this.props.module)
+   //          console.log(this.props.graphConfig)
             
 			let data = []
 
@@ -35,8 +35,8 @@ class FormulateGraphData extends React.Component {
              // data = this.formulateGraph(this.props.graphData)
              // : data = []
 
-    		console.log("manipulated data is ")
-    		console.log(data)
+    		// console.log("manipulated data is ")
+    		// console.log(data)
 
 
 	
@@ -211,7 +211,7 @@ class FormulateGraphData extends React.Component {
   			return (<></>)
 		} else {
 			// console.log("graph configs are...")
-			console.log(this.props.graphConfig)
+			// console.log(this.props.graphConfig)
             let graph = ""
             if(this.props.graphConfig.graph_type == "Line Chart"){
                 graph = <LineGraph data={this.state.data} />

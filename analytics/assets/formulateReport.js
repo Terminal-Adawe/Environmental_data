@@ -131,7 +131,7 @@ class FormulateReportData extends React.Component {
         } else // response failed
         {
             document.getElementById('error-message').innerHTML = response.data.message
-            console.log(response.data.message)
+            // console.log(response.data.message)
             setTimeout(function(){
                document.getElementById('error-message').innerHTML = ""
             },10000)

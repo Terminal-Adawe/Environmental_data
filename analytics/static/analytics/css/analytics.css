@@ -149,3 +149,8 @@ input:checked + .slider:before {
   font-size: 22px;
   color: #ec7063;
 }
+
+.note-font{
+  font-size: 25px;
+  color: black;
+}
