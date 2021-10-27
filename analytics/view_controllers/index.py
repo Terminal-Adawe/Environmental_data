@@ -682,6 +682,11 @@ def adduser(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
             form = registerForm(request.POST)
+
+            user_type = 0
+
+            if 'admin_user_check' in request.POST:
+                user_type = 1
     
             if form.is_valid():
                 username = form.cleaned_data['username']
@@ -701,6 +706,7 @@ def adduser(request):
                     user = User.objects.create_user(username, email, password)
                     user.last_name = lastname
                     user.first_name = firstname
+                    user.is_staff = user_type
                     user.save()
     
                     return HttpResponseRedirect('add-user')
