@@ -718,9 +718,11 @@ def edituser(request):
 
             username = request.POST['username']
 
+            action = request.POST['action']
+
             logger.info("username is ")
             logger.info(username)
-    
+        
             if form.is_valid():
                 logger.info("form is valid ")
                 firstname = form.cleaned_data['first_name']
@@ -728,10 +730,14 @@ def edituser(request):
                 email = form.cleaned_data['email']
     
                 user = User.objects.get(username=username)
-                user.last_name = lastname
-                user.first_name = firstname
-                user.email = email
-                user.save()
+
+                if action == "save":
+                    user.last_name = lastname
+                    user.first_name = firstname
+                    user.email = email
+                    user.save()
+                elif action == "delete":
+                    user.delete()
 
                 logger.info("email is ")
                 logger.info(user.email)

@@ -103,6 +103,27 @@ let location_array
 
     })
 
+
+    $(".save_btn").off("click").on("click",function(event){
+        event.preventDefault();
+
+        console.log("save")
+
+        $(".action").val("save")
+
+        $('.edit_form').submit();
+    })
+
+    $(".delete_btn").off("click").on("click",function(event){
+        event.preventDefault();
+
+        console.log("delete")
+
+        $(".action").val("delete")
+
+        $('.edit_form').submit();
+    })
+
     $('.predictive_range_value').html($('.predictive_balance').val());
 
     $('.predictive_balance').on('change',function(){
