@@ -34,7 +34,7 @@
 						</div>
 						<div class="panel-body">
 							<form action="{% url 'analytics:edit-user' %}" class="was-validated edit_form"  method="POST" name="form">
-								<input type="hidden" name="username" class="username_f" value="">
+								<input type="hidden" name="username" class="username_f" value="{{ edit_username }}">
 								<input type="hidden" name="action" class="action" value="">
 								{% if error_message %}
         	            	        <p class="bg-danger p-d ml-b">{{ error_message }}</p>

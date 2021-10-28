@@ -75,6 +75,7 @@ urlpatterns = [
     path('get-modules/', index.getModulesViewSet.as_view({'get': 'retrieve'}), name='get-modules'),
     path('get-reports/', dashboard.GetReportsViewSet.as_view({'get': 'retrieve'}), name='get-reports'),
     path('post-request/', saveForms.postRequestViewSet, name='post-request'),
+    path('download-documentation/', index.download_pdf_file, name='download-documentation'),
     path('authenticate-user/login/', loginAPI.loginViewSet_s.as_view(), name='authenticate-user'),
     # path(r'^export/csv$', report_exports.export_single_report, name='export_report'),
     path(r'^export/csv/$', report_exports.export_report, name='export_report'),

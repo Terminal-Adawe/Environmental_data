@@ -9,6 +9,9 @@ from rest_framework.response import Response
 from rest_framework import viewsets
 from django.utils.text import slugify
 
+# Import mimetypes module
+import mimetypes
+
 from analytics.models import ComplianceValue
 from analytics.models import modules
 from analytics.models import Image
@@ -34,6 +37,7 @@ from analytics.models import IncidentReport
 from analytics.models import Graph_config
 from analytics.models import Custom_table
 from analytics.models import Report_notes
+from analytics.models import Notifications
 
 from analytics.models import reports
 
@@ -622,6 +626,13 @@ def delete_table(request):
                 for module_i in modules_queryset.values():
                     if table_type == module_i['module_name']:
                         myModel = str_to_class(module_i['table'])
+                        
+                        report_name = myModel.objects.filter(id=table_id).values_list('report_name', flat=True)
+
+                        logger.info("report name to be deleted is ")
+                        logger.info(report_name[0])
+
+                        Notifications.objects.filter(report_name=report_name).delete()
                         myModel.objects.filter(id=table_id).delete()
                 pass
 
@@ -747,7 +758,7 @@ def edituser(request):
 
                 logger.info("email is ")
                 logger.info(user.email)
-            return render(request, 'analytics/dashboard/edituser.html',{'form': form,'users':users})
+            return render(request, 'analytics/dashboard/edituser.html',{'form': form,'users':users,'edit_username':username})
         else:
             form = editForm()
             return render(request, 'analytics/dashboard/edituser.html',{'form': form,'users':users})
@@ -801,5 +812,34 @@ class postRequestViewSet(viewsets.ViewSet):
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
+
+
+
+# Define function to download pdf file using template
+def download_pdf_file(request, filename='Geomining_admin_manual.pdf'):
+    if filename != '':
+        # Define Django project base directory
+        # BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+        BASE_DIR = str(settings.STATIC_ROOT)
+
+        # Define the full file path
+        filepath = BASE_DIR + '/documentation/' + filename
+        # Open the file for reading content
+        path = open(filepath, 'rb')
+        # Set the mime type
+        mime_type, _ = mimetypes.guess_type(filepath)
+
+        logger.info("file path is ")
+        logger.info(filepath)
+
+        # Set the return value of the HttpResponse
+        response = HttpResponse(path, content_type=mime_type)
+        # Set the HTTP header for sending to browser
+        response['Content-Disposition'] = "attachment; filename=%s" % filename
+        # Return the response value
+        return response
+    else:
+        # Load the template
+        return render(request, 'file.html')
 
 
