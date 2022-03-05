@@ -233,8 +233,6 @@ class Slope_stabilization_and_surface_water_retentionSerializer(serializers.Mode
 		fields = '__all__'
 
 class Slope_stabilization_and_surface_water_retentionSerializer_serializer(serializers.Serializer):
-	auth = AuthSerializer(many=True)
-
 	no_of_exposed_unstabilized_slopes = serializers.CharField(max_length=100)
 	status = serializers.ChoiceField(choices=Slope_stabilization_and_surface_water_retention.STATUS_S)
 	comment = serializers.CharField(max_length=500,required=False,allow_blank=True)
